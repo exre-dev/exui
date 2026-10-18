@@ -1,6 +1,19 @@
 import assert from "node:assert/strict"
 import test from "node:test"
-import { createFamilySnippet, addCapabilitySources, extractVerifiedModules, authoredGuideModules, glassSurfaceTypeContract } from "./docs-snippets.mjs"
+import { createFamilySnippet, validateFamilySnippet, addCapabilitySources, extractVerifiedModules, authoredGuideModules, glassSurfaceTypeContract } from "./docs-snippets.mjs"
+
+test("family excerpts accept Windows checkout newlines while rejecting source drift", () => {
+  const page = { group: "components", exampleFamily: "button", contentPath: "components/button.mdx" }
+  const document = { entry: "src/example.tsx", files: new Map([["src/example.tsx", 'import { Button } from "@exre/exui"\nexport default function Example() { return <Button>\n  Go\n</Button> }']]) }
+  const snippet = createFamilySnippet(document, "button")
+  const source = `\`\`\`tsx source="c-button-1"\n${snippet}\n\`\`\`\n\n[Source](../../../../examples/c-button-1/)\n`
+  for (const content of [source, source.replaceAll("\n", "\r\n")]) {
+    assert.equal(validateFamilySnippet(page, content, document), "c-button-1")
+    assert.throws(() => validateFamilySnippet(page, content.replace("Go", "Changed"), document), /differs/)
+    assert.throws(() => validateFamilySnippet(page, content.replace("c-button-1", "c-button-2"), document), /source-linked/)
+    assert.throws(() => validateFamilySnippet(page, content.replace("[Source]", "Source"), document), /link is missing/)
+  }
+})
 
 test("family excerpt keeps public SelectField import alias", () => {
   const document = { entry: "src/example.tsx", files: new Map([["src/example.tsx", `import { SelectField as Select, SelectTrigger } from "@exre/exui"\nexport function Example() { return <Select><SelectTrigger /></Select> }`]]) }

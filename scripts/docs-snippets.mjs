@@ -125,7 +125,7 @@ export async function writeFamilySnippets(root = repoRoot) {
   const documents = await familySourceDocuments(pages, root)
   for (const page of pages.filter((item) => item.exampleFamily)) {
     const path = join(root, "packages/docs/content", page.locale, page.contentPath)
-    let source = await readFile(path, "utf8")
+    let source = (await readFile(path, "utf8")).replaceAll("\r\n", "\n")
     const id = firstFamilyExampleId(page)
     const snippet = createFamilySnippet(documents.get(id), page.exampleFamily)
     const title = page.locale === "zh-CN" ? "当前示例源码摘录" : "Current example source excerpt"
@@ -154,6 +154,7 @@ async function verifyFamilySnippets(pages, root) {
 }
 
 export function validateFamilySnippet(page, source, document, path = page.contentPath) {
+  source = source.replaceAll("\r\n", "\n")
   const fences = [...source.matchAll(familyFence)]
   const expectedId = firstFamilyExampleId(page)
   if (fences.length !== 1 || fences[0][1] !== expectedId) throw new Error(`${path}: exactly one source-linked ${expectedId} TSX excerpt is required`)
