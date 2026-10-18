@@ -1,0 +1,42 @@
+---
+id: components/tree
+title: Tree
+description: Displays and navigates nested nodes.
+exampleFamily: tree
+---
+
+Tree: Displays and navigates nested nodes.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Provide stable node ids and children so expansion and selection remain tied to the same nodes.
+
+### Current example source excerpt
+
+```tsx source="c-tree-1"
+import { Tree, TreeItem, TreeItemLabel } from "@exre/exui"
+
+<Tree id={treeInstanceId + "-tree"} indent={indent} tree={tree}>
+        {<ExampleText>{tree.getItems().map((item) => {
+          return (
+            <TreeItem id={treeInstanceId + "-item-" + item.getId()} key={item.getId()} item={item}>
+              <TreeItemLabel />
+            </TreeItem>
+          )
+        })}</ExampleText>}
+      </Tree>
+```
+
+[View complete source](../../../../examples/c-tree-1/)

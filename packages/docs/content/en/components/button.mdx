@@ -1,0 +1,83 @@
+---
+id: components/button
+title: Button
+description: Starts an action with a clear visual priority.
+exampleFamily: button
+---
+
+Button: Starts an action with a clear visual priority.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI additions and adaptations**
+
+### ExUI actions
+
+ExUI `Button` uses shared tokens and has a capsule radius. ExUI's added `ActionButton` uses the same variant and size recipes but overrides the radius to `0.75rem`, giving it ordinary rounded corners. The default size reads shared density variables: `2.25rem` in standard density and `2rem` in compact density. Explicit `xs` is `1.5rem` high in both densities; `sm`, `lg` and icon sizes retain their geometry tokens. At a 16px root font size, these default heights are 36px, 32px and 24px respectively. Both offer `default`, `danger`, `destructive`, `outline`, `secondary`, `ghost` and `link` variants; `destructive` is a compatibility alias for the danger treatment. Glass is an independent opt-in and preserves the danger tone and focus state. Set `type="button"` outside form submission.
+
+```tsx verify
+import { ActionButton, Button } from "@exre/exui"
+
+export function ActionChoices() {
+  return <div>
+    <Button type="button">Save</Button>
+    <Button type="button" variant="outline">Preview</Button>
+    <Button type="button" variant="ghost">More</Button>
+    <ActionButton type="button">Continue</ActionButton>
+    <ActionButton type="button" variant="danger" glass>Delete</ActionButton>
+  </div>
+}
+```
+
+- [Live example](../../../../examples/exui-button-shapes/)
+- [Live example](../../../../examples/exui-button-glass/)
+- [Live example](../../../../examples/c-button-1/)
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Button`, `ActionButton`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Button } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Button>) {
+  return <Button {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/exui-button-glass/)
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/exui-button-shapes/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Set the button type for a click or submit action, and choose a variant that matches its priority.
+
+### Current example source excerpt
+
+```tsx source="c-button-1"
+import { Button } from "@exre/exui"
+
+<Button>{copy("Default", "默认")}</Button>
+```
+
+[View complete source](../../../../examples/c-button-1/)

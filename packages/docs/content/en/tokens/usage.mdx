@@ -1,0 +1,17 @@
+---
+id: tokens/usage
+title: Using Tokens
+description: Read framework-neutral JavaScript Tokens and CSS variables from the public subpaths.
+---
+
+`exuiTokens` holds typed visual values and `componentRecipes` holds geometry and states for non-React rendering. Import `tokens/style.css` for CSS variables; add `tokens/font.css` only when the font is wanted. Prefer semantic names such as `--primary` and `--foreground` in product CSS. Tokens-only use does not initialize React.
+
+## Basic usage
+
+```ts verify
+import "@exre/exui/tokens/style.css"
+import { exuiTokens, componentRecipes } from "@exre/exui/tokens"
+
+export const standardControlHeight = exuiTokens.density.standard.controlHeight
+export const buttonRecipe = componentRecipes.button
+```

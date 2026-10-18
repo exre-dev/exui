@@ -1,0 +1,57 @@
+{
+  "usage": "Pinned local copies of the country flag SVGs referenced by ReUI c-data-grid-1 at commit 3b67464bcad3c29fbdb12437afb70153384eee19. FlagCDN provides public-domain country flags.",
+  "license": "public domain",
+  "licenseSource": "https://flagpedia.net/download",
+  "files": [
+    {
+      "file": "us.svg",
+      "source": "https://flagcdn.com/us.svg",
+      "sha256": "e1792c011daad918fdbd99a21f7f46fd71018ffd052af5a7d7faf9954d593e31"
+    },
+    {
+      "file": "gb.svg",
+      "source": "https://flagcdn.com/gb.svg",
+      "sha256": "42f04826dd7a76e4ecdc9a55fb4a774a26e03a425ca1363628bb1c6f6ea1a87e"
+    },
+    {
+      "file": "ca.svg",
+      "source": "https://flagcdn.com/ca.svg",
+      "sha256": "3cd6c2b9fe12bc0617ef4374b570ad87920bae757a95b104384fc301352c6942"
+    },
+    {
+      "file": "au.svg",
+      "source": "https://flagcdn.com/au.svg",
+      "sha256": "b826e039804d5cf313bd7e22a40ea2239e8e22ddba7c19a8787dfaad1dda71aa"
+    },
+    {
+      "file": "de.svg",
+      "source": "https://flagcdn.com/de.svg",
+      "sha256": "595d7718f6a22e5ea9de0cbbcabd857ac1892f4a6c81beb1ef936050193d9323"
+    },
+    {
+      "file": "my.svg",
+      "source": "https://flagcdn.com/my.svg",
+      "sha256": "1d3284c77094859fb63c1880af4f8f9a3916935a12faae060678c6e3455e956d"
+    },
+    {
+      "file": "es.svg",
+      "source": "https://flagcdn.com/es.svg",
+      "sha256": "d672868d51fc5b4f2d76f510c9360a4401bdb3ca805349bd04cb4ba277d5b379"
+    },
+    {
+      "file": "jp.svg",
+      "source": "https://flagcdn.com/jp.svg",
+      "sha256": "e8e6f6e75bc02eeb35e5904edc13df9b5990da70ac1ff1daa7a9fcc61c709a03"
+    },
+    {
+      "file": "fr.svg",
+      "source": "https://flagcdn.com/fr.svg",
+      "sha256": "09645c97a47436337d63cd54625200542c65e0e1c83b774a58c9d28d0555b0e7"
+    },
+    {
+      "file": "it.svg",
+      "source": "https://flagcdn.com/it.svg",
+      "sha256": "7f818fa8e36ca606a8cbd35106fd7d277f094f10f2aa1f7a0585421a20e37070"
+    }
+  ]
+}

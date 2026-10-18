@@ -31,4 +31,20 @@ dist-ssr
 # <<< Comet managed project state <<<
 
 .playwright-cli
+output
 __screenshots__
+
+# Restored from the pinned source revision and verified against manifest hashes.
+/packages/components/upstream/reui/source/
+/packages/components/upstream/reui/style-luma.css
+.superpowers
+# Restorable pinned Showcase example sources
+/packages/docs/upstream/reui/cache/
+/packages/docs/build/
+/packages/docs/.generated/
+/packages/docs/.source/
+/packages/docs/.react-router/
+
+# Local development notes and downloaded reference archives.
+/.notes/
+/resources/

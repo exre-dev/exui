@@ -1,0 +1,9 @@
+[
+  {"file":"time-picker/c-time-picker-8.tsx","line":65,"context":"htmlFor","owner":"OriginalPattern","expression":"`${id}-start`","category":"identity","reason":"Stable DOM/model association or React identity; localizing it would break relationships/state."},
+  {"file":"time-picker/c-time-picker-8.tsx","line":68,"context":"id","owner":"OriginalPattern","expression":"`${id}-start`","category":"identity","reason":"Stable DOM/model association or React identity; localizing it would break relationships/state."},
+  {"file":"time-picker/c-time-picker-8.tsx","line":73,"context":"aria-labelledby","owner":"OriginalPattern","expression":"`${id}-start-label`","category":"identity","reason":"Stable DOM/model association or React identity; localizing it would break relationships/state."},
+  {"file":"time-picker/c-time-picker-8.tsx","line":77,"context":"id","owner":"OriginalPattern","expression":"`${id}-end-label`","category":"identity","reason":"Stable DOM/model association or React identity; localizing it would break relationships/state."},
+  {"file":"time-picker/c-time-picker-8.tsx","line":77,"context":"htmlFor","owner":"OriginalPattern","expression":"`${id}-end`","category":"identity","reason":"Stable DOM/model association or React identity; localizing it would break relationships/state."},
+  {"file":"time-picker/c-time-picker-8.tsx","line":82,"context":"id","owner":"OriginalPattern","expression":"`${id}-end`","category":"identity","reason":"Stable DOM/model association or React identity; localizing it would break relationships/state."},
+  {"file":"time-picker/c-time-picker-8.tsx","line":87,"context":"aria-labelledby","owner":"OriginalPattern","expression":"`${id}-end-label`","category":"identity","reason":"Stable DOM/model association or React identity; localizing it would break relationships/state."}
+]

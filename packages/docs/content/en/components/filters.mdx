@@ -1,0 +1,41 @@
+---
+id: components/filters
+title: Filters
+description: Builds structured conditions for a dataset.
+exampleFamily: filters
+---
+
+Filters: Builds structured conditions for a dataset.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Each filter appears as one joined control with internal dividers. Labels stay on one line; long field paths and operators shorten within narrow containers while their full text remains in the control's accessible name and editor. Keep the toolbar free to wrap whole filters rather than wrapping individual words.
+
+Describe each filter field and operator, then apply the structured result to the data query.
+
+### Current example source excerpt
+
+```tsx source="c-filters-1"
+import { Filters } from "@exre/exui"
+
+<Filters operatorLabels={exampleLocales.filterOperators} labels={exampleLocales.filters}
+        fields={copyExampleData(fields)}
+        query={query}
+        onQueryChange={setQuery}
+        showClear
+      />
+```
+
+[View complete source](../../../../examples/c-filters-1/)

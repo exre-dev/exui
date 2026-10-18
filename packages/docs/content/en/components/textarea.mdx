@@ -1,0 +1,55 @@
+---
+id: components/textarea
+title: Textarea
+description: Collects longer, multiline text.
+exampleFamily: textarea
+---
+
+Textarea: Collects longer, multiline text.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Textarea`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Textarea } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Textarea>) {
+  return <Textarea {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Pair the multiline field with a label and describe any length or format limits nearby.
+
+### Current example source excerpt
+
+```tsx source="c-textarea-1"
+import { Textarea } from "@exre/exui"
+
+<Textarea placeholder={copyExample("Type your message here…")} className="w-full" />
+```
+
+[View complete source](../../../../examples/c-textarea-1/)

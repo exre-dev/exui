@@ -1,0 +1,57 @@
+---
+id: exui/form
+title: Form
+description: Connects a shared draft to validation and submission.
+exampleFamily: form
+---
+
+Form: Connects a shared draft to validation and submission.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### ExUI Form lifecycle
+
+`useForm` owns one stable draft and validation schema; `Form` connects submission and field state. The schema's input and output types can differ after transformation, and validation or submission may be asynchronous. `FormItem` binds a named field; `FormErrorSummary` reports validation issues. Keep the form instance stable across rerenders and render field errors in the form even if a notification also appears.
+
+Install `zod` in the consuming application when using the Zod schema shown below.
+
+```tsx verify
+import { Button, Form, FormItem, useForm } from "@exre/exui"
+import { z } from "zod"
+
+const schema = z.object({ name: z.string().min(1) })
+export function ProjectForm() {
+  const form = useForm({ schema, defaultValues: { name: "" } })
+  return <Form form={form} onSubmit={(value) => console.log(value.name)}>
+    <FormItem form={form} name="name" label="Project name" control="text" />
+    <Button type="submit">Save</Button>
+  </Form>
+}
+```
+
+- [Live example](../../../../examples/exui-form-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Create one form draft, bind fields to it, and route validation errors to the corresponding controls.
+
+### Current example source excerpt
+
+```tsx source="exui-form-1"
+import { Form, FormErrorSummary, FormItem } from "@exre/exui"
+
+<Form form={form} onSubmit={(data) => setSaved(data.name)} formatIssue={(message) => c(message, issueTranslations[message] ?? message)}>
+  <FormErrorSummary title={c("Check these fields", "请检查以下字段")} />
+  <FormItem form={form} name="name" label={c("Project name", "项目名称")} />
+</Form>
+```
+
+[View complete source](../../../../examples/exui-form-1/)
+
+## Related guides
+
+Use [ExForm](./ex-form.mdx) for schema-driven field configuration and [ExItem](./ex-item.mdx) for a standalone labelled control.

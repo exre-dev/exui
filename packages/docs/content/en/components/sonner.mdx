@@ -1,0 +1,78 @@
+---
+id: components/sonner
+title: Sonner
+description: Displays temporary toast notifications.
+exampleFamily: sonner
+---
+
+Sonner: Displays temporary toast notifications.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Managed messages and Sonner
+
+Mount one `ExMessageContext` host before calling `ExMessage`. It renders the package's shared `Toaster`; do not add another for managed messages.
+
+Read [Managed messages and Sonner](../exui/ex-message.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-sonner-1/)
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+**ExUI adaptation**
+
+### Notification status icons
+
+`Toaster` uses Lucide outline icons for success, error, warning, info and loading, with `CircleX` for circular error notifications. Icons use a 1rem size and Lucide's default stroke width; the loading icon spins. Colors inherit from the toast icon container, so per-toast `classNames.icon` controls the color. The status example uses `text-primary` for the info icon's theme color. Use `Toaster.icons` for custom icons.
+
+- [Live example](../../../../examples/c-sonner-4/)
+
+**ExUI adaptation**
+
+### Notification card corners
+
+`Toaster` uses ExUI's `--radius-2xl` token for notification card corners: 18px at the default 16px root font size. Corners follow the root font size and scoped radius tokens. Override the `--border-radius` variable through `Toaster.style` when a composition needs a different radius.
+
+`toast.custom` renders an unstyled notification, so its content must apply its own card corners. The custom Sonner examples use `rounded-[var(--border-radius)]` to inherit the host's radius, including overrides, and `w-full` to follow its responsive width. Use the same classes on the outer card when composing custom notifications.
+
+- [Live example](../../../../examples/c-sonner-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Mount one Toaster for the surface, then call the public toast instance for events.
+
+### Current example source excerpt
+
+```tsx source="c-sonner-1"
+import { Button } from "@exre/exui"
+
+<Button
+        onClick={() => toast("Event has been created")}
+        variant="outline"
+        className="w-fit"
+      >
+        {<ExampleText>Show Toast </ExampleText>}</Button>
+```
+
+[View complete source](../../../../examples/c-sonner-1/)
+
+For an application-owned notification, mount the public host once and call the public toast instance:
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button, Toaster, toast } from "@exre/exui"
+
+export function NotificationExample() {
+  return <><Toaster /><Button type="button" onClick={() => toast.success("Saved")}>Save</Button></>
+}
+```

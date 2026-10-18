@@ -1,0 +1,27 @@
+---
+id: components/date-selector
+title: Date Selector
+description: 通过文本框与日历选择日期。
+exampleFamily: date-selector
+---
+
+Date Selector：通过文本框与日历选择日期。
+
+## 基本用法
+
+文本框负责直接输入，弹出日历负责选择同一个日期值。
+
+### 当前示例源码摘录
+
+```tsx source="c-date-selector-1"
+import { DateSelector } from "@exre/exui"
+
+<DateSelector i18n={exampleLocales.dateSelector}
+            value={value}
+            onChange={setValue}
+            label={copyExample("Due date")}
+            inputHint={copyExample("Try: 2025, Q4, 05/10/2025")}
+          />
+```
+
+[查看完整源码](../../../../examples/c-date-selector-1/)

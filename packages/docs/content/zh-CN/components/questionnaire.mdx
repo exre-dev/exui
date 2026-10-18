@@ -1,0 +1,32 @@
+---
+id: components/questionnaire
+title: Questionnaire
+description: 按顺序呈现结构化问题。
+exampleFamily: questionnaire
+---
+
+Questionnaire：按顺序呈现结构化问题。
+
+## 基本用法
+
+为问题提供稳定标识，按问题或分节推进填写流程。
+
+选项默认使用单选圆点。在 `QuestionnaireItem` 上设置 `multiple` 后改为复选框：选中时显示勾号，单选选中时显示内圆点。`QuestionnaireChoice` 会自动提供对应的选中标记。
+
+上一步、跳过、下一步与提交组件支持 Button 的 `size` 和 `variant`，在桌面和移动端均随共享 Button 的尺寸和密度变化，不额外设置最小高度。
+
+`QuestionnaireInput` 在桌面保持 `2.25rem`（默认根字号下为 36px）高度。选项使用 `2.25rem` 最小高度和上下各 `0.5rem` 内边距，文字换行或包含说明时自然增高。小于 `sm` 时，输入框与选项均保留 `2.75rem` 最小触控高度。
+
+### 当前示例源码摘录
+
+```tsx source="c-questionnaire-1"
+import { Card, CardFooter, Questionnaire } from "@exre/exui"
+
+<Questionnaire defaultItem="usage" items={ITEMS} shortcuts="letters">
+  <Card>
+    <CardFooter />
+  </Card>
+</Questionnaire>
+```
+
+[查看完整源码](../../../../examples/c-questionnaire-1/)

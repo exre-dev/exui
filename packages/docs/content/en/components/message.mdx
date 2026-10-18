@@ -1,0 +1,29 @@
+---
+id: components/message
+title: Message
+description: Composes conversation content and metadata.
+exampleFamily: message
+---
+
+Message: Composes conversation content and metadata.
+
+## Basic usage
+
+Separate author, time, content, and actions so a conversation stays scannable.
+
+### Current example source excerpt
+
+```tsx source="c-message-1"
+import { Bubble, BubbleContent, Message, MessageContent } from "@exre/exui"
+
+<Message>
+        <MessageContent>
+          <Bubble variant="muted">
+            <BubbleContent>
+              {<ExampleText>Staging is green on 4.2. Want me to promote it? </ExampleText>}</BubbleContent>
+          </Bubble>
+        </MessageContent>
+      </Message>
+```
+
+[View complete source](../../../../examples/c-message-1/)

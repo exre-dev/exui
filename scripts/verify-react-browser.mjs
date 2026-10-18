@@ -5,7 +5,7 @@ import { pathToFileURL } from "node:url"
 
 // The controller reuses the workspace's pinned browser tooling. The page
 // itself serves only the isolated consumer's production build and tarball.
-const requireFromShowcase = createRequire(new URL("../packages/showcase/package.json", import.meta.url))
+const requireFromShowcase = createRequire(new URL("../packages/docs/package.json", import.meta.url))
 
 async function verifyReactBrowser(consumerRoot) {
   const { chromium } = requireFromShowcase("playwright")
@@ -23,8 +23,165 @@ async function verifyReactBrowser(consumerRoot) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" })
     page.setDefaultTimeout(10_000)
     const pageErrors = []
+    const chunkRequests = []
     page.on("pageerror", (error) => pageErrors.push(error.message))
+    page.on("requestfinished", (request) => chunkRequests.push(request.url()))
     await page.goto(server.resolvedUrls.local[0])
+
+    const semanticPrimaryOf = (locator) => locator.evaluate((element) => {
+      const probe = document.createElement("span")
+      probe.style.color = "var(--primary)"
+      element.append(probe)
+      const color = getComputedStyle(probe).color
+      probe.remove()
+      return color
+    })
+    const brandBadge = page.locator("[data-testid='reui-brand-badge']")
+    const initialBrand = await brandBadge.evaluate((element) => getComputedStyle(element).backgroundColor)
+    await page.evaluate(() => document.documentElement.style.setProperty("--exui-control-primary", "#ff00aa"))
+    assert.equal(await semanticPrimaryOf(brandBadge), "rgb(255, 0, 170)",
+      "ReUI semantic primary must follow a consumer override of the ExUI brand Token")
+    assert.notEqual(await brandBadge.evaluate((element) => getComputedStyle(element).backgroundColor), initialBrand,
+      "Badge's contrast-adjusted fill must still respond to a brand Token override")
+    await page.evaluate(() => document.documentElement.style.removeProperty("--exui-control-primary"))
+    assert.equal(await brandBadge.evaluate((element) => getComputedStyle(element).backgroundColor), initialBrand)
+
+    const nestedDark = page.locator("[data-testid='nested-dark']")
+    const backgroundOf = (selector) => page.locator(selector).evaluate((element) => getComputedStyle(element).backgroundColor)
+    const lightBackground = await backgroundOf("[data-testid='root-background']")
+    assert.notEqual(await backgroundOf("[data-testid='nested-dark-background']"), lightBackground,
+      "a nested dark surface must resolve its own short semantic background")
+    assert.notEqual(await backgroundOf("[data-testid='nested-pitch-background']"), lightBackground,
+      "a nested pitch-black surface must resolve its own short semantic background")
+    const nestedBrandBadge = page.locator("[data-testid='nested-dark-badge']")
+    const initialNestedBrand = await backgroundOf("[data-testid='nested-dark-badge']")
+    await nestedDark.evaluate((element) => element.style.setProperty("--exui-control-primary", "#ff00aa"))
+    assert.equal(await semanticPrimaryOf(nestedBrandBadge), "rgb(255, 0, 170)",
+      "a scoped brand Token override must reach a ReUI short semantic alias")
+    assert.notEqual(await backgroundOf("[data-testid='nested-dark-badge']"), initialNestedBrand,
+      "a scoped override must update the contrast-adjusted Badge fill")
+    assert.equal(await brandBadge.evaluate((element) => getComputedStyle(element).backgroundColor), initialBrand,
+      "a scoped brand override must not change the root Badge")
+    await nestedDark.evaluate((element) => element.style.removeProperty("--exui-control-primary"))
+    assert.equal(await backgroundOf("[data-testid='nested-dark-badge']"), initialNestedBrand)
+
+    const geometry = async (selector) => page.locator(selector).evaluate((element) => {
+      const style = getComputedStyle(element)
+      return {
+        height: Number.parseFloat(style.height),
+        padding: Number.parseFloat(style.paddingLeft),
+        paddingBlock: Number.parseFloat(style.paddingTop),
+        gap: Number.parseFloat(style.columnGap),
+      }
+    })
+    for (const theme of ["light", "dark", "pitch-black"]) {
+      await page.evaluate((name) => {
+        document.documentElement.classList.remove("dark", "pitch-black")
+        if (name !== "light") document.documentElement.classList.add(name)
+      }, theme)
+      for (const [density, height, padding] of [["standard", 36, 12], ["compact", 32, 8]]) {
+        for (const control of ["button", "input"]) {
+          const actual = await geometry(`[data-testid='density-${density}-${control}']`)
+          assert.ok(Math.abs(actual.height - height) <= 0.5, `${theme}/${density} ${control} height: ${actual.height}`)
+          assert.ok(Math.abs(actual.padding - padding) <= 0.5, `${theme}/${density} ${control} padding: ${actual.padding}`)
+        }
+      }
+      for (const slot of ["select-trigger", "native-select", "input-group"]) {
+        const standard = await page.locator(`[data-testid='density-standard'] [data-slot='${slot}']`).evaluate((element) => getComputedStyle(element).height)
+        const compact = await page.locator(`[data-testid='density-compact'] [data-slot='${slot}']`).evaluate((element) => getComputedStyle(element).height)
+        assert.equal(standard, "36px", `${theme} standard ${slot}`)
+        assert.equal(compact, "32px", `${theme} compact ${slot}`)
+      }
+      const textStandard = await page.locator("[data-testid='density-standard-textarea']").evaluate((element) => getComputedStyle(element).paddingLeft)
+      const textCompact = await page.locator("[data-testid='density-compact-textarea']").evaluate((element) => getComputedStyle(element).paddingLeft)
+      assert.equal(textStandard, "12px", `${theme} standard Textarea padding`)
+      assert.equal(textCompact, "8px", `${theme} compact Textarea padding`)
+      for (const density of ["standard", "compact"]) {
+        const scope = page.getByTestId(`density-${density}`)
+        await scope.evaluate(async (element) => {
+          element.style.setProperty("--density-control-height", "44px")
+          element.style.setProperty("--density-control-padding-inline", "20px")
+          element.style.setProperty("--density-control-gap", "14px")
+          element.getBoundingClientRect()
+          await Promise.all(element.getAnimations({ subtree: true }).map((animation) => animation.finished))
+        })
+        try {
+          for (const slot of ["button", "input", "select-trigger", "native-select", "input-group"]) {
+            const actual = await geometry(`[data-testid='density-${density}'] [data-slot='${slot}']`)
+            assert.equal(actual.height, 44, `${theme}/${density} ${slot} must inherit the control height`)
+          }
+          for (const slot of ["button", "input", "textarea", "select-trigger", "native-select"]) {
+            const actual = await geometry(`[data-testid='density-${density}'] [data-slot='${slot}']`)
+            assert.equal(actual.padding, 20, `${theme}/${density} ${slot} must inherit inline padding`)
+          }
+          for (const [slot, dimension] of [["button", "gap"], ["textarea", "paddingBlock"]]) {
+            const actual = await geometry(`[data-testid='density-${density}'] [data-slot='${slot}']`)
+            assert.equal(actual[dimension], 14, `${theme}/${density} ${slot} must inherit the control gap`)
+          }
+        } finally {
+          await scope.evaluate(async (element) => {
+            element.style.removeProperty("--density-control-height")
+            element.style.removeProperty("--density-control-padding-inline")
+            element.style.removeProperty("--density-control-gap")
+            element.getBoundingClientRect()
+            await Promise.all(element.getAnimations({ subtree: true }).map((animation) => animation.finished))
+          })
+        }
+      }
+    }
+    await page.evaluate(() => document.documentElement.classList.remove("dark", "pitch-black"))
+    const draftInput = page.getByRole("textbox", { name: "Standard density input" })
+    await draftInput.fill("kept draft")
+    await draftInput.focus()
+    const focusedHeight = (await geometry("[data-testid='density-standard-input']")).height
+    await page.locator("[data-testid='density-standard']").evaluate(async (element) => {
+      element.classList.add("density-compact")
+      element.getBoundingClientRect()
+      await Promise.all(element.getAnimations({ subtree: true }).map((animation) => animation.finished))
+    })
+    assert.equal(await draftInput.inputValue(), "kept draft", "density changes must retain the draft")
+    assert.equal((await geometry("[data-testid='density-standard-input']")).height, 32,
+      "density changes must update a focused control in place")
+    await page.locator("[data-testid='density-standard']").evaluate(async (element) => {
+      element.classList.remove("density-compact")
+      element.getBoundingClientRect()
+      await Promise.all(element.getAnimations({ subtree: true }).map((animation) => animation.finished))
+    })
+    assert.equal((await geometry("[data-testid='density-standard-input']")).height, focusedHeight)
+    const glassButton = page.locator("[data-testid='density-standard-button']")
+    const glassHeight = (await geometry("[data-testid='density-standard-button']")).height
+    await glassButton.evaluate((element) => element.classList.remove("ex-glass"))
+    assert.equal((await geometry("[data-testid='density-standard-button']")).height, glassHeight,
+      "Glass toggling must not change default control geometry")
+    await glassButton.evaluate((element) => element.classList.add("ex-glass"))
+
+    const editableRating = page.getByRole("radiogroup", { name: "Rating" })
+    await editableRating.getByRole("radio", { name: "2 of 5" }).focus()
+    await page.keyboard.press("ArrowRight")
+    assert.equal(await editableRating.getByRole("radio", { name: "3 of 5" }).getAttribute("aria-checked"), "true")
+    await page.keyboard.press("End")
+    assert.equal(await editableRating.getByRole("radio", { name: "5 of 5" }).getAttribute("aria-checked"), "true")
+    await page.keyboard.press("Home")
+    const firstRating = editableRating.getByRole("radio", { name: "1 of 5" })
+    assert.equal(await firstRating.getAttribute("aria-checked"), "true", "Home must select the first rating")
+    assert.equal(await firstRating.evaluate((element) => element === document.activeElement), true,
+      "Home must move keyboard focus to the first rating")
+    const readonlyRating = page.getByRole("meter", { name: "Read-only rating" })
+    assert.equal(await readonlyRating.getAttribute("aria-valuenow"), "2.5")
+    assert.equal(await readonlyRating.getAttribute("aria-valuemax"), "5")
+
+    await page.locator("[data-sonner-toast]").getByText("Boot complete", { exact: true }).waitFor({ state: "visible" })
+    assert.equal(await page.locator("[data-sonner-toast]").getByText("Booting", { exact: true }).count(), 0,
+      "completing a loading handle before the host is ready must replace the pending loading state")
+
+    await page.locator("[data-slot='data-grid']").getByText("Ada", { exact: true }).waitFor({ state: "visible" })
+    assert.equal((await page.locator("[data-slot='data-grid']").getAttribute("class"))?.includes("ex-glass"), true,
+      "the packed grid container must accept Glass on its outer surface")
+    await page.locator("[data-slot='code-block-token']").first().waitFor({ state: "visible" })
+    assert.equal((await page.locator("[data-slot='code-block']").getAttribute("class"))?.includes("ex-glass"), true,
+      "the packed code block must accept Glass on its outer surface")
+    assert.ok(chunkRequests.some((url) => /typescript-[^/]+\.js$/.test(url)),
+      "highlighting must load the TypeScript grammar from the packed dynamic chunks")
 
     // Real chart data must reach ExUI's legend and tooltip via the same
     // Recharts context. A placeholder child or empty SSR result cannot pass.
@@ -57,62 +214,49 @@ async function verifyReactBrowser(consumerRoot) {
     await dialog.waitFor({ state: "hidden" })
     await page.waitForFunction(() => document.activeElement?.textContent === "Open")
 
-    // The modal arrives through the same public root export. Its responsive
-    // rules must be in the stylesheet on first paint, not decided by script.
-    const responsiveRule = await page.evaluate(() =>
-      [...document.styleSheets].flatMap((sheet) => {
-        try {
-          return [...sheet.cssRules]
-        } catch {
-          return []
-        }
-      })
-        .filter((rule) => rule instanceof CSSMediaRule)
-        .map((rule) => rule.cssText)
-        // The full-screen layout rule, not the static-viewport fallback beside it.
-        .filter((text) => text.includes("data-mobile-fullscreen") && /inset:\s*0/.test(text))
-    )
-    assert.equal(responsiveRule.length, 1,
-      "the packed stylesheet must carry exactly one modal full-screen media rule")
-    assert.match(responsiveRule[0], /max-width:\s*100%/, "the full-screen rule must lift the width cap")
-
-    const modalTrigger = page.getByRole("button", { name: "Open modal", exact: true })
-    await modalTrigger.click()
-    const modal = page.getByRole("dialog", { name: "Project profile" })
-    await modal.waitFor({ state: "visible" })
-    assert.equal(await modal.evaluate((element) => element.closest("#app") === null), true,
-      "Modal must mount through its portal outside the application root")
-    assert.equal(await modal.evaluate((element) => element.getAttribute("aria-describedby")),
+    const profileTrigger = page.getByRole("button", { name: "Open profile", exact: true })
+    await profileTrigger.click()
+    const profileDialog = page.getByRole("dialog", { name: "Project profile" })
+    await profileDialog.waitFor({ state: "visible" })
+    assert.equal(await profileDialog.evaluate((element) => element.closest("#app") === null), true,
+      "ReUI Dialog must mount through its portal outside the application root")
+    assert.equal(await profileDialog.evaluate((element) => element.getAttribute("aria-describedby")),
       await page.locator("[data-slot='dialog-description']").getAttribute("id"),
       "the description must be wired to the element that carries it")
 
     // The reduce path is the context default here: no motion, but fully usable.
-    const reduced = await modal.evaluate((element) => {
+    const reduced = await profileDialog.evaluate((element) => {
       const style = getComputedStyle(element)
       return { name: style.animationName, duration: style.animationDuration }
     })
-    assert.equal(reduced.name, "none", "the packed modal must drop its motion under reduce")
+    assert.equal(reduced.name, "none", "the packed dialog must drop its motion under reduce")
     assert.equal(reduced.duration, "0s", "and must not wait out a duration")
 
     // Crossing the breakpoint keeps one tree: the draft, the file control, and
     // the footer stay where the consumer put them.
-    await modal.getByLabel("Draft", { exact: true }).fill("kept draft")
+    await profileDialog.getByLabel("Draft", { exact: true }).fill("kept draft")
     await page.setViewportSize({ width: 390, height: 844 })
-    assert.equal(await modal.evaluate((element) => Math.round(element.getBoundingClientRect().width)), 390,
-      "a narrow viewport must fill the screen")
+    assert.equal(await profileDialog.evaluate((element) => element.getBoundingClientRect().right <= innerWidth), true,
+      "a narrow dialog must remain inside the viewport")
     await page.setViewportSize({ width: 1280, height: 900 })
-    assert.equal(await modal.getByLabel("Draft", { exact: true }).inputValue(), "kept draft",
+    assert.equal(await profileDialog.getByLabel("Draft", { exact: true }).inputValue(), "kept draft",
       "the draft must survive a breakpoint change")
-    assert.equal(await page.locator("#modal-file").count(), 1, "the file control must be the same one")
+    assert.equal(await page.locator("#dialog-file").count(), 1, "the file control must be the same one")
 
-    // A real outside click is a trusted pointer sequence closing the modal, and
+    // A real outside click is a trusted pointer sequence closing the dialog, and
     // focus must come back to the trigger that opened it.
-    const box = await modal.boundingBox()
+    const box = await profileDialog.boundingBox()
     await page.mouse.click(Math.max(4, Math.round(box.x) - 12), 4)
-    await modal.waitFor({ state: "hidden" })
-    await page.waitForFunction(() => document.activeElement?.textContent === "Open modal")
+    await profileDialog.waitFor({ state: "hidden" })
+    await page.waitForFunction(() => document.activeElement?.textContent === "Open profile")
 
     // A notification from the packed public API must reach its bundled host.
+    await page.getByRole("button", { name: "Notify", exact: true }).click()
+    await page.locator("[data-sonner-toast]").getByText("Packed message ready", { exact: true })
+      .waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Host off" }).click()
+    await page.locator("[data-sonner-toast]").waitFor({ state: "hidden" })
+    await page.getByRole("button", { name: "Host on" }).click()
     await page.getByRole("button", { name: "Notify", exact: true }).click()
     await page.locator("[data-sonner-toast]").getByText("Packed message ready", { exact: true })
       .waitFor({ state: "visible" })
@@ -230,10 +374,10 @@ async function verifyReactBrowser(consumerRoot) {
         if (!element) {
           return false
         }
-        return Math.abs(Number.parseFloat(getComputedStyle(element).paddingTop) - 48) <= 0.5
+        return Math.abs(Number.parseFloat(getComputedStyle(element).paddingTop) - 32) <= 0.5
       })
       const scaledPadding = await measure(scaledDialog, "padding-top")
-      closeEnough(scaledPadding.value, 48, "the portal Dialog padding at a 32px root font size")
+      closeEnough(scaledPadding.value, 32, "the portal Dialog padding at a 32px root font size")
       await page.keyboard.press("Escape")
       await scaledDialog.waitFor({ state: "hidden" })
     } finally {
@@ -244,38 +388,19 @@ async function verifyReactBrowser(consumerRoot) {
     const restored = await measure(trigger, "height")
     closeEnough(restored.value, 36, "the default Button height after restoring the root font size")
 
-    // Motion preference is a browser setting, so the normal path needs its own
-    // context: the modal must run its own opacity-only keyframes, and the old
-    // Dialog on the same page must keep the zoom it has always had.
+    // Motion preference is a browser setting, so the normal path needs its own context.
     const motionPage = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: "no-preference" })
     const motionErrors = []
     motionPage.on("pageerror", (error) => motionErrors.push(error.message))
     try {
       await motionPage.goto(server.resolvedUrls.local[0])
-      await motionPage.getByRole("button", { name: "Open modal", exact: true }).click()
-      const motionModal = motionPage.getByRole("dialog", { name: "Project profile" })
-      await motionModal.waitFor({ state: "visible" })
-      const motion = await motionModal.evaluate((element) => {
-        const overlay = document.querySelector(".ex-modal-overlay")
-        return {
-          name: getComputedStyle(element).animationName,
-          duration: getComputedStyle(element).animationDuration,
-          overlayName: overlay ? getComputedStyle(overlay).animationName : null,
-        }
-      })
-      assert.equal(motion.name, "ex-modal-in", "the packed modal must fade in with its own keyframes")
-      assert.equal(motion.overlayName, "ex-modal-in", "the overlay must share them")
-      assert.equal(motion.duration, "0.1s", "and use the dialog recipe duration")
+      await motionPage.getByRole("button", { name: "Open profile", exact: true }).click()
+      const motionDialog = motionPage.getByRole("dialog", { name: "Project profile" })
+      await motionDialog.waitFor({ state: "visible" })
+      assert.equal(await motionDialog.evaluate((element) => getComputedStyle(element).animationName), "enter",
+        "the composed Dialog must use the upstream enter animation")
       await motionPage.keyboard.press("Escape")
-      await motionModal.waitFor({ state: "hidden" })
-
-      await motionPage.getByRole("button", { name: "Open", exact: true }).click()
-      const legacyDialog = motionPage.getByRole("dialog", { name: "Subscribe" })
-      await legacyDialog.waitFor({ state: "visible" })
-      assert.equal(await legacyDialog.evaluate((element) => getComputedStyle(element).animationName), "enter",
-        "the existing Dialog must keep its own enter animation")
-      await motionPage.keyboard.press("Escape")
-      await legacyDialog.waitFor({ state: "hidden" })
+      await motionDialog.waitFor({ state: "hidden" })
 
       assert.deepEqual(motionErrors, [], "packed consumer must not raise browser runtime errors with motion enabled")
     } finally {
@@ -283,7 +408,7 @@ async function verifyReactBrowser(consumerRoot) {
     }
 
     assert.deepEqual(pageErrors, [], "packed consumer must not raise browser runtime errors")
-    console.log("Packed browser consumer passed: chart hover/legend, dialog portal, form submission, focus return, managed notification, glass material, rem scaling, modal portal/fullscreen/motion")
+    console.log("Packed browser consumer passed: chart hover/legend, composed Dialog portal, form submission, focus return, managed notification, glass material, rem scaling, density inheritance, Rating keyboard access, motion")
   } finally {
     try {
       await browser?.close()

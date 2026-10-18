@@ -1,0 +1,41 @@
+---
+id: components/filters
+title: Filters
+description: 为数据集构建结构化筛选条件。
+exampleFamily: filters
+---
+
+Filters：为数据集构建结构化筛选条件。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+每条筛选条件显示为一个带内部分隔线的连体控件。标签保持单行；窄容器里的长字段路径和运算符会缩短显示，完整文案仍保留在控件的可访问名称和编辑菜单中。让工具栏按整条筛选条件换行，避免把文字拆成多行。
+
+说明每个筛选字段与运算符，再把结构化结果应用于数据查询。
+
+### 当前示例源码摘录
+
+```tsx source="c-filters-1"
+import { Filters } from "@exre/exui"
+
+<Filters operatorLabels={exampleLocales.filterOperators} labels={exampleLocales.filters}
+        fields={copyExampleData(fields)}
+        query={query}
+        onQueryChange={setQuery}
+        showClear
+      />
+```
+
+[查看完整源码](../../../../examples/c-filters-1/)

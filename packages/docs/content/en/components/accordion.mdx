@@ -1,0 +1,52 @@
+---
+id: components/accordion
+title: Accordion
+description: Expands sections while keeping a compact list.
+exampleFamily: accordion
+---
+
+Accordion: Expands sections while keeping a compact list.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Nova-style Accordion
+
+ExUI's Accordion keeps the Radix single/multiple API but uses a plain Nova-style list: no outer panel border, separators between items and transparent open rows. The trigger has a visible keyboard focus ring. Expanded content follows its current content height, including nested items and text wrapping after width changes; do not set a fixed height to compensate.
+
+```tsx verify
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@exre/exui"
+
+export function Details() {
+  return <Accordion type="single" collapsible defaultValue="delivery">
+    <AccordionItem value="delivery"><AccordionTrigger>Delivery</AccordionTrigger>
+      <AccordionContent>Track the order in your account.</AccordionContent></AccordionItem>
+  </Accordion>
+}
+```
+
+- [Live example](../../../../examples/c-accordion-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Give each item a stable value and pair its trigger with the content that expands.
+
+### Current example source excerpt
+
+```tsx source="c-accordion-1"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@exre/exui"
+
+<Accordion type="single" collapsible defaultValue="item-1">
+        {items.map((item) => (
+          <AccordionItem key={item.value} value={item.value}>
+            <AccordionTrigger>{copy(item.trigger[0], item.trigger[1])}</AccordionTrigger>
+            <AccordionContent>{copy(item.content[0], item.content[1])}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+```
+
+[View complete source](../../../../examples/c-accordion-1/)

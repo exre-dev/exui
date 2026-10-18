@@ -1,0 +1,41 @@
+---
+id: components/navigation-menu
+title: Navigation Menu
+description: Connects top-level destinations and nested links.
+exampleFamily: navigation-menu
+---
+
+Navigation Menu: Connects top-level destinations and nested links.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### NavigationMenu viewport width
+
+The default `NavigationMenuViewport` follows its measured content width on desktop and uses full width below the `md` breakpoint. Menu options remain visible and clickable when application Tailwind utilities load after ExUI CSS. Use the default viewport without a manual width override for ordinary menus.
+
+Keep the default responsive width of `NavigationMenuContent` as well. An unconditional `w-full` on the content or viewport can constrain desktop measurement and clip the menu links.
+
+- [Live example](../../../../examples/c-navigation-menu-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Group destination links by navigation category and keep trigger text descriptive.
+
+### Current example source excerpt
+
+```tsx source="c-navigation-menu-1"
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@exre/exui"
+
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem />
+    <NavigationMenuItem />
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+[View complete source](../../../../examples/c-navigation-menu-1/)

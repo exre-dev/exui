@@ -1,0 +1,40 @@
+---
+id: getting-started/quick-start
+title: 快速开始
+description: 通过公开包入口渲染带样式的 ExUI 卡片与操作。
+---
+
+在应用入口加载一次组件样式表，其中已包含 ExUI Token 与字体。从 `@exre/exui` 导入具名 React 组件，再由宿主的 React root 挂载应用。下面是完整的可复用模块。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### 根入口导出冲突别名
+
+公共根入口使用带 `Reui` 前缀的名称解决组件模块间的名称冲突。应从 `@exre/exui` 导入这些准确名称，不能假设原始模块局部名称也被导出。别名包括排程辅助函数 `ReuigetDayKey`、`ReuiexpandRecurrence`、`ReuiMAX_OCCURRENCES`，以及 `ReuiBuildIndexOptions` 等类型。完整名单以维护中的导出清单为准。
+
+```tsx verify
+import { ReuigetDayKey } from "@exre/exui"
+
+export const getScheduleDayKey = ReuigetDayKey
+```
+{/* exui-capabilities:end:docs */}
+
+## Components 与 Blocks
+
+**Components 是基础组件**，提供按钮、输入框、对话框等独立的界面能力。
+
+**Blocks 是基础组件的组装**，将 Components 组合成可复用的界面区块。下面的欢迎卡片由 Card 与 Button 等基础组件组装而成。
+
+## 基本用法
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@exre/exui"
+
+export function WelcomeCard() {
+  return <Card><CardHeader><CardTitle>欢迎</CardTitle></CardHeader><CardContent><Button type="button">开始</Button></CardContent></Card>
+}
+```

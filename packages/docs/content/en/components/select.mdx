@@ -1,0 +1,87 @@
+---
+id: components/select
+title: Select
+description: Chooses an option from a styled popup list.
+exampleFamily: select
+---
+
+Select: Chooses an option from a styled popup list.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI additions and adaptations**
+
+### ExUI Select APIs
+
+ExUI adds the simplified `Select` wrapper: it requires `options` and reports the selected string through `onChange`. Its `className`, `size` and `glass` style the trigger only. The adapted `SelectField` exposes the Radix root for custom groups, items or a Glass popup; this root uses `onValueChange`. The popup opts into Glass separately on `SelectContent`.
+
+```tsx verify
+import { Select, SelectContent, SelectField, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@exre/exui"
+
+export function SelectChoices() {
+  return <div>
+    <Select options={[{ value: "design", label: "Design" }, { value: "build", label: "Build" }]} onChange={(value) => console.log(value)} placeholder="Team" glass />
+    <SelectField defaultValue="design" onValueChange={(value) => console.log(value)}>
+      <SelectTrigger glass><SelectValue placeholder="Team" /></SelectTrigger>
+      <SelectContent glass><SelectGroup><SelectItem value="design">Design</SelectItem></SelectGroup></SelectContent>
+    </SelectField>
+  </div>
+}
+```
+
+- [Live example](../../../../examples/exui-select-apis/)
+- [Live example](../../../../examples/c-select-1/)
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Select`, `SelectTrigger`, `SelectContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Select } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Select>) {
+  return <Select {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/exui-select-apis/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Provide a trigger and option content; use stable values distinct from displayed labels.
+
+### Current example source excerpt
+
+```tsx source="c-select-1"
+import { SelectField as Select, SelectContent, SelectGroup, SelectTrigger, SelectValue } from "@exre/exui"
+
+<Select>
+  <SelectTrigger>
+    <SelectValue placeholder={copyExample("Select a fruit")} />
+  </SelectTrigger>
+  <SelectContent position="popper">
+    <SelectGroup />
+  </SelectContent>
+</Select>
+```
+
+[View complete source](../../../../examples/c-select-1/)

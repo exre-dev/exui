@@ -1,0 +1,97 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/message-scroller.tsx b/packages/components/src/components/ui/message-scroller.tsx
+index 6402bba..e2f874c 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/message-scroller.tsx
++++ b/packages/components/src/components/ui/message-scroller.tsx
+@@ -1,5 +1,3 @@
+-"use client"
+-
+ import * as React from "react"
+ import {
+   MessageScroller as MessageScrollerPrimitive,
+@@ -7,15 +5,19 @@ import {
+   useMessageScrollerScrollable,
+   useMessageScrollerVisibility,
+ } from "@shadcn/react/message-scroller"
+-import { cn } from "cn"
+ 
+-import { Button } from "@/registry/bases/radix/ui/button"
+-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
++import { cn } from "@/lib/utils"
++import { Button } from "@/components/ui/button"
++import { ArrowDownIcon } from "lucide-react"
++import { useRootRem } from "@/hooks/use-root-rem"
+ 
+ function MessageScrollerProvider(
+-  props: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>
++  { scrollEdgeThreshold, scrollPreviousItemPeek, ...props }: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>
+ ) {
+-  return <MessageScrollerPrimitive.Provider {...props} />
++  const rem = useRootRem()
++  return <MessageScrollerPrimitive.Provider {...props}
++    scrollEdgeThreshold={scrollEdgeThreshold ?? 0.5 * rem}
++    scrollPreviousItemPeek={scrollPreviousItemPeek ?? 4 * rem} />
+ }
+ 
+ function MessageScroller({
+@@ -26,7 +28,7 @@ function MessageScroller({
+     <MessageScrollerPrimitive.Root
+       data-slot="message-scroller"
+       className={cn(
+-        "cn-message-scroller group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
++        "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
+         className
+       )}
+       {...props}
+@@ -42,7 +44,7 @@ function MessageScrollerViewport({
+     <MessageScrollerPrimitive.Viewport
+       data-slot="message-scroller-viewport"
+       className={cn(
+-        "cn-message-scroller-viewport size-full min-h-0 min-w-0 scroll-fade-b scrollbar-thin scrollbar-gutter-stable overflow-y-auto overscroll-contain contain-content data-autoscrolling:scrollbar-thumb-transparent data-autoscrolling:scrollbar-track-transparent data-pending-scroll:invisible",
++        "size-full min-h-0 min-w-0 scroll-fade-b scrollbar-thin scrollbar-gutter-stable overflow-y-auto overscroll-contain contain-content data-autoscrolling:scrollbar-thumb-transparent data-autoscrolling:scrollbar-track-transparent",
+         className
+       )}
+       {...props}
+@@ -57,10 +59,7 @@ function MessageScrollerContent({
+   return (
+     <MessageScrollerPrimitive.Content
+       data-slot="message-scroller-content"
+-      className={cn(
+-        "cn-message-scroller-content flex h-max min-h-full flex-col",
+-        className
+-      )}
++      className={cn("flex h-max min-h-full flex-col gap-8", className)}
+       {...props}
+     />
+   )
+@@ -76,7 +75,7 @@ function MessageScrollerItem({
+       data-slot="message-scroller-item"
+       scrollAnchor={scrollAnchor}
+       className={cn(
+-        "cn-message-scroller-item min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
++        "min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
+         className
+       )}
+       {...props}
+@@ -102,7 +101,7 @@ function MessageScrollerButton({
+       data-size={size}
+       direction={direction}
+       className={cn(
+-        "cn-message-scroller-button absolute inset-s-1/2 -translate-x-1/2 border-border bg-background text-foreground transition-[translate,scale,opacity] duration-200 hover:bg-muted hover:text-foreground data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180",
++        "absolute inset-s-1/2 -translate-x-1/2 border-border bg-background text-foreground transition-[translate,scale,opacity] duration-200 hover:bg-muted hover:text-foreground data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180",
+         className
+       )}
+       render={render ?? <Button variant={variant} size={size} />}
+@@ -110,12 +109,7 @@ function MessageScrollerButton({
+     >
+       {children ?? (
+         <>
+-          <IconPlaceholder
+-            lucide="ArrowDownIcon"
+-            tabler="IconArrowDown"
+-            hugeicons="ArrowDown02Icon"
+-            phosphor="ArrowDownIcon"
+-            remixicon="RiArrowDownLine"
++          <ArrowDownIcon
+           />
+           <span className="sr-only">
+             {direction === "end" ? "Scroll to end" : "Scroll to start"}

@@ -1,0 +1,1057 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/keenthemes/reui",
+  "commit": "067aa0dc7f8bbfec1cd76fc5ad31f842be5f569a",
+  "style": "radix-luma",
+  "license": "MIT",
+  "files": [
+    {
+      "source": "registry-reui/bases/radix/reui/alert.tsx",
+      "sourceSha256": "feebd86218ef90c8a6d98056ba52db7529859a20fe79ff3e9c179c1794f9148c",
+      "target": "components/reui/alert.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "0ed74b40dfbab581a1f4831ada9a5edbc518a0b024f7922328ff69229b76a9b9"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/autocomplete.tsx",
+      "sourceSha256": "2c37af7d16b19339dd713b1d6022a1d140d1f6b7fc90371505beb0805138ce4b",
+      "target": "components/reui/autocomplete.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "d304e91fc7fac24c5ab4ada45ed50f9516dbe33ea638b48bb72324820ea92365"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/badge.tsx",
+      "sourceSha256": "0426324c5fc92f6885988e32796395747b1baad955ae09f8f1e7ca8bc2e86237",
+      "target": "components/reui/badge.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "9ea5bf2a618dd2d65ac830059fb9423306540b7701243eb0f9936a270f6d2dbd"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-async.tsx",
+      "sourceSha256": "65e57295405798479e7a4f5679afdbc8459cd0263f48dc89b0a49b2f4ea39bf1",
+      "target": "components/reui/cascader/cascader-async.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "c07ed65e0a78e4f7c801dcf5260e9af339c321a977e0d414590476dd9ca5c589"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-columns.tsx",
+      "sourceSha256": "97a58bf5d8d0e86b0f394bf0cd42baf4a97e07a712b3cb5b5c97fa6c027ade4c",
+      "target": "components/reui/cascader/cascader-columns.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "356f396819c13c6e62c6ad02372a10e3c1b957878e3d760cf43dc9405a060b73"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-context.tsx",
+      "sourceSha256": "a92be21714ac75f35b6a992486fd498bb642c05b520717acb0c85eda23502af9",
+      "target": "components/reui/cascader/cascader-context.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "f2db7e1750a47a1796fc02aa706a984776959d92b2bb9932926e92a1e99b5d31"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-footer.tsx",
+      "sourceSha256": "d295448a9f46b57aa0016dac53ead6975af10e1d9eb32a75ebe4277f988dcb6a",
+      "target": "components/reui/cascader/cascader-footer.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "9d883481d96896e69eb20f4fd2cb390cae0d1fb0bba025b95dd6145422901a1a"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-i18n.tsx",
+      "sourceSha256": "75723509d2e15feddee777c157ea7bb56ec8633558ccad4a85a5ac05ee3f108a",
+      "target": "components/reui/cascader/cascader-i18n.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "dd2042e19f07f1573c2c085c2a9b466c77ec1bb7f30f41bfcc2194af288d3013"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-item.tsx",
+      "sourceSha256": "a4a0b31fb725c92ab46d0043c64b4ccc66aeb74d1f830587cd139bd83d55270d",
+      "target": "components/reui/cascader/cascader-item.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "40c5d97f05c791c78f13330581c2372efc022c38570f1855d25b03d6454a090f"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-lib.tsx",
+      "sourceSha256": "28c7df99cff3f2ee13bf9a63d1321dbfeb0bfca694aecf7d7486807c82ef8250",
+      "target": "components/reui/cascader/cascader-lib.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "960009c0ccc28869d6244d7b944a55c9c52664ffec4ace3b4a8c4a9d6c38f8d4"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-nav.tsx",
+      "sourceSha256": "b67ed439a3c16fc0d15562b74d36849c125f7cbeb96311b0c6170b87449347fb",
+      "target": "components/reui/cascader/cascader-nav.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "e8f620ee8556ae8c9814beeb1aed6d523d51cc6f80fba966e6bfdce7f691ee30"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-types.tsx",
+      "sourceSha256": "3dd58dad5881cf540b279732d030ef025d3a29d605bc5486da988b8aca773dac",
+      "target": "components/reui/cascader/cascader-types.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "ea215fecbf64a640b0a24a4d1dd2368d438ae10a9b667f351979dc0bb36ece83"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader-virtual.tsx",
+      "sourceSha256": "9b54b58dbc24be0dbae970be4747b1016c97f6d3edf25710b417b9469838a669",
+      "target": "components/reui/cascader/cascader-virtual.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "ec30244f712a20e622bc88799d33eea0216d09b5e37cca8b0f57a92e6ff70867"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/cascader/cascader.tsx",
+      "sourceSha256": "f15dbe83c3923e3e72c13d9d501379db35ffecb4e8725cc8fc1ca5a47e559dae",
+      "target": "components/reui/cascader/cascader.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "a0fe5ee5322fddecd1e4e13f4d6d168c47d34aff2eb91db408e0732ab8be3e7b"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/code-block/code-block-highlight.tsx",
+      "sourceSha256": "329dc2f35c0ce39b2c4372c5596609aa7fb64a19e4159722d6d5beaf1138791e",
+      "target": "components/reui/code-block/code-block-highlight.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "a231c063b817d28dac07d274ea5e9ee7aefe7aeabff0bbe0ed0fb07a86eda8b5"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/code-block/code-block.tsx",
+      "sourceSha256": "a6c71d3bff15f62910134d516dddc5879b88737c15d3e4d3ead156b13ca855b1",
+      "target": "components/reui/code-block/code-block.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "aaf072cb9fa1d8d37236ce39fdaca10b379a78ed72a4b18daaf62f4c3b43e558"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/color-picker.tsx",
+      "sourceSha256": "f6914aed4b97c796bd80744a472c7f2cd07600c1a959e1292d2986abd993f4b0",
+      "target": "components/reui/color-picker.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "fddd3008178f103922c2d64afb65758615205ad923f60a4fd532bb5cb198d0a5"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-cell-selection.tsx",
+      "sourceSha256": "a4916eb6da28a8700ae56d5ba3ba86f7021753427436c9be678e75c230f5befe",
+      "target": "components/reui/data-grid/data-grid-cell-selection.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "aedfc36d9e26472cfc02c8b8e6d97729d39637aa7c311c042e4ef043244d9013"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-filter.tsx",
+      "sourceSha256": "f132e85641bbbaa1fcaff6a8689661f750960a7721480b5435f301a637f2e40f",
+      "target": "components/reui/data-grid/data-grid-column-filter.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "803b7fa00272c333e0d9a0258687837564dc10a80365a66e722adafa218acefb"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-header.tsx",
+      "sourceSha256": "129ec008673847926edbb05a6fe0ff667e720d22c67b4240c021c74648661852",
+      "target": "components/reui/data-grid/data-grid-column-header.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "14893653388a2d23347b0b7fdff283fb583da476321a5f6d407cbbe8cc07e694"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-visibility.tsx",
+      "sourceSha256": "90a220de4462e8666533fe36a7b5dc23baf5456fce5062714aeecd5b21879867",
+      "target": "components/reui/data-grid/data-grid-column-visibility.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "a954f96a1f3b9b139242a77165aaeb75532ad007be933533b587d6d8f557b151"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-i18n.tsx",
+      "sourceSha256": "bc314f648968ae86a4a2f11a8c2107a1f83f0baea6ed2d6200a58f63e3c1d7b5",
+      "target": "components/reui/data-grid/data-grid-i18n.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "0fb8aa2f50e73381eda697978e9905686866f4d3cfe9ca029b14c26f3c8e8403"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-pagination.tsx",
+      "sourceSha256": "6654f1d3438f7bc7fbe7e41d1ecc8007e0738906231f8a5725c6d51d522293d2",
+      "target": "components/reui/data-grid/data-grid-pagination.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "35be7309b23037460038dfbbc4f126b5735de95217a9f06d223f17867f898314"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-scroll-area.tsx",
+      "sourceSha256": "7264d60f1135e49d6c9d296eae74f7e220b7aa99d499134ad7ebf9d2b13db552",
+      "target": "components/reui/data-grid/data-grid-scroll-area.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "2a0c1079fb9b030959b98fe019591308533d45c05401fe4316a1763ff7d20c70"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-dnd-rows.tsx",
+      "sourceSha256": "ead8a89d119a68599bca58d66706a8f3eb5b3aff1bd0827dc3e728e419ffb777",
+      "target": "components/reui/data-grid/data-grid-table-dnd-rows.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "3eeaf69c1752a369e5074f852194946a3b74c98218ae1dab486461df7ea8a44e"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-dnd.tsx",
+      "sourceSha256": "970c3a198d904a720824db7d8e7051df51986a246a71018d8aa2942d4a6849cb",
+      "target": "components/reui/data-grid/data-grid-table-dnd.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "e333676ca73f865512fb31a6177c3c714ed35cef43cb20388a31193118010ba7"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-virtual.tsx",
+      "sourceSha256": "560d0af6dddd3674153a0c24c1e83b5b15d8be1bc3db86fb53d760f44c249d5a",
+      "target": "components/reui/data-grid/data-grid-table-virtual.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "f9c4d6a96deb6f233921119ee929a3896fbb123cfb6d82d8adee1daf68239800"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table.tsx",
+      "sourceSha256": "46ac575b6f0b28b4631f2e27c2cf2b5b4f95e7fcf934362b16a4341e8e88e589",
+      "target": "components/reui/data-grid/data-grid-table.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "0f2877da73116b8bfd6d45bb3c8bbcfd1ede78dd3b99f7ee67d03e4e8908314f"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/data-grid/data-grid.tsx",
+      "sourceSha256": "718d349e005537ee45a65826d6768deedc4479f9f5b9b9afa7e8052509de9be4",
+      "target": "components/reui/data-grid/data-grid.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "6604e2b92ad1659f8ed62fd98c91c701d693c40b412d74097a6caedc98b47571"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/date-selector.tsx",
+      "sourceSha256": "03f0ba8867c154f08c99872ace3da302d042914c8341b8622b6a2580fbf2072b",
+      "target": "components/reui/date-selector.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "b887e5be03a44287961f15391d39c3cda806db4c00dd14be7749183e0c27e5e1"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/emoji-picker.tsx",
+      "sourceSha256": "c47ec6d73081b047491a99ccbe21c1fdd7b4cb6fded8a46e4c4a518442be72da",
+      "target": "components/reui/emoji-picker.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "048e67db14da332ab7a84aa153c43d1b89bb5dee6e1d3e7dd82c2e35a2ad52a0"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-agenda-view.tsx",
+      "sourceSha256": "37f676689d7cfe951405c1e6fb22b34c3ee0c7055c1d83ca7f9b55c97fae09c1",
+      "target": "components/reui/event-calendar/event-calendar-agenda-view.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "6d5b356424d4d2f06a4cacc554d8ef004bb1d76d52eb6798c3f4023d95c5820a"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-content.tsx",
+      "sourceSha256": "c0160bf7b5bd642be67d97378c042f37b8958931f026af72eaa41845ecdd58fd",
+      "target": "components/reui/event-calendar/event-calendar-content.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "f380d40011018f3fc167582b5f6557e20893c5da7c0c6f0b031008da9f67830e"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-dnd.tsx",
+      "sourceSha256": "afc1c2194551f74145015e2f158b5057269ac642ef5ea300b1ea34e5c40cf32f",
+      "target": "components/reui/event-calendar/event-calendar-dnd.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "fd5bbb5d767d97a61b5ca58669c977682ba215bad2bf98f432e773d0121f1ba6"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-event.tsx",
+      "sourceSha256": "dfd6ed54d20aa829c333a7e4ba20f1b2eb7f0403298e80ef55bab42dfad77077",
+      "target": "components/reui/event-calendar/event-calendar-event.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "213a1f5954858fbaaf42a2325699aa802b896d99429fb66a8298d024c2995d9c"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-i18n.tsx",
+      "sourceSha256": "7168af30e6200eec2b9b6e4b95b2de078bc5773cf280fa0b760b751fd1c7c66c",
+      "target": "components/reui/event-calendar/event-calendar-i18n.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "845b702a8d5d336f1dc9da1f792e8a2b383ee8d1c3f8f636f229033a4cddad81"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-lib.tsx",
+      "sourceSha256": "a19c5df16bc27543c8d629b5ed50078e568f0e6679fb7610d17eca3819e0ed6d",
+      "target": "components/reui/event-calendar/event-calendar-lib.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "6dc25db6ef7077737ec9f9668fbd1d847a353519db7988be160e11dc54428780"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-month-view.tsx",
+      "sourceSha256": "6a29cea2c7b128511dcdf70c86490eb9f86271c49d5109b1c93282d9279ecd1f",
+      "target": "components/reui/event-calendar/event-calendar-month-view.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "da11501f194b4d0078b0fe2d3ba87e8e231a5f177c423f1d691299716aecfaee"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-nav.tsx",
+      "sourceSha256": "8fa6ee3bb07c0c579c85fd83868243beb78a755d2efb322f2866c56e3eb4575e",
+      "target": "components/reui/event-calendar/event-calendar-nav.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "43ae95f5a090b404d002e5deee744c5fc090006c6f5e312ce0492f123e2cd289"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-recurrence.tsx",
+      "sourceSha256": "b3b7a3d417183fd8233ad6557543cb81270c3709edfe8d4da965cfdead4927ce",
+      "target": "components/reui/event-calendar/event-calendar-recurrence.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "b5e91f059fc68af6a8d9428c2f1ef407ba36ad1b7c134746c5f53309ae237f9b"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-resource-view.tsx",
+      "sourceSha256": "14b1d14a7f335ae04f2d39c0f5ae3efe959ce92d92d9a7b92f8c89e8bcde9513",
+      "target": "components/reui/event-calendar/event-calendar-resource-view.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "6fa6743ec386b82102631ad9ebf9fe741edd21e43722a73f8c8647f0d6d87e17"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-time-grid.tsx",
+      "sourceSha256": "4c99f2a0c33cf4339a776b7c3707c746762b5b1ee1cb6f3f39cad58320a9e810",
+      "target": "components/reui/event-calendar/event-calendar-time-grid.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "ffe8b30243b6535957b3f1eeb45a639f9fa4be50a5d231cb576a4a67929efbcc"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-types.tsx",
+      "sourceSha256": "7fbb243e5a6f68a6b526ee1aa5e9773edc98bbf8c3705b80542beb27bab5a268",
+      "target": "components/reui/event-calendar/event-calendar-types.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "ba492f0f72394a554e4e785fe0715bead36446d91f0ac474384f9ad66bf3dff9"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar.tsx",
+      "sourceSha256": "0effbb235a2782bc39c252d3404e35426e2b36b5fc7cdbebf2b9a1580e32e075",
+      "target": "components/reui/event-calendar/event-calendar.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "123f1def22fe12737111c0927f57db34308253427f6110a5d31a5593cdd7ff44"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/file-type.tsx",
+      "sourceSha256": "3a38a62de629e4e633ffff6be73ebfba2b70f338bd666d3d3f862aa87282931b",
+      "target": "components/reui/file-type.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "1eab11a1065c2a829ed4ffbdbd6171d436128aa7dad8ab66ea209f380b349a7b"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-advanced.tsx",
+      "sourceSha256": "5ac3fa1efb212314fbe34ee32c0d338c1758b436ec8220d87d303ca0c1454fd5",
+      "target": "components/reui/filters/filters-advanced.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "d289a84ae7571d760cddfec9135d7a4cb537b31686e0c2c0610d188baff926dd"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-builder.tsx",
+      "sourceSha256": "e7f3cf845e58a86b7ff57d8c7cff4c9ec0e1b94b357762b8ed5b6dbf4d6c7993",
+      "target": "components/reui/filters/filters-builder.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "17d25273ec35266262dd46b50e997ce0a430dc034348dc4957f7018c8fd1f13d"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-chip.tsx",
+      "sourceSha256": "7b5c33dcf58044d220cfe1d26265da9088b27d4670bc14e3a595ce8f23f6c883",
+      "target": "components/reui/filters/filters-chip.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "22c4e96532e4f2bf260cf79fb2991ed373e1876451d83c1bc7139a15e520853d"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-context.tsx",
+      "sourceSha256": "ec4a4460d1c032e97f67cf06681f964925cad8130576ed0955095317f86081e7",
+      "target": "components/reui/filters/filters-context.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "2ee681023b278951dd3c97b4f6af8a9f7787c43b7fbc3c029a741b0cc79cce73"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-date.tsx",
+      "sourceSha256": "c5cae804e803654cb2b4acc4ef05448ee2c3ad98734bc5ffcc6f2b9d85bd664e",
+      "target": "components/reui/filters/filters-date.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "151de13916f7fffc1fdc9ef57230608d87e3a4e0447d6008063414900638360e"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-dnd.tsx",
+      "sourceSha256": "4ee6cecb83d982e0ba2eabe93d6cb6f379af9303a9307d1564dd1f06c0160370",
+      "target": "components/reui/filters/filters-dnd.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "4bfcbde21d893b9b02c053818540b9c62c348573ae4a2a62723c027dee936c4e"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-draft.tsx",
+      "sourceSha256": "f2982284831f33362a13ff6f96d873c128fb9f7175a7432f0f17ca3136ce3b3a",
+      "target": "components/reui/filters/filters-draft.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "1ea9dbfe13405294552c4f6fcc1ffb7bccb4d2ca262f711b242a3f17e6ea72b6"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-editors.tsx",
+      "sourceSha256": "bcedf4887e399e764dc24dfe163dda3f3a3ef234ba99a1754dd0997b1461d606",
+      "target": "components/reui/filters/filters-editors.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "4372fe3db05476c69185f6c540ff1c00ceb1c87bf1f03057a8a6f63e7665c5f0"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-i18n.tsx",
+      "sourceSha256": "e86af524dd5b7bd31d231ea3c1a8f34062e94e52fd7f58f533a4606b8e75c48b",
+      "target": "components/reui/filters/filters-i18n.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "6de40eaeb0d4934e3e25ebfc150d9d97b2a8a232e92aa9fe7965fdd215b0c82c"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-lib.tsx",
+      "sourceSha256": "bf0ae14de9eebf39d62e215d6c453252f46232f3347d8b4541bf36decf52c52e",
+      "target": "components/reui/filters/filters-lib.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "18d999f807574ad7376ca768a23346de69e61d304cd25986afbf18d28f6c59fb"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-operators.tsx",
+      "sourceSha256": "39a4812e75beee860b6275318b4c2e5dc840b29c0fe99d09a1fd1d24c469ce3f",
+      "target": "components/reui/filters/filters-operators.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "0806b739434bdbca3da2e97afc558dc009f0a10395bc36ccf9fac61395cdddd6"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-query.tsx",
+      "sourceSha256": "729d83e3904e229ad884afc12b75e8e8fc84358a8adc47a0c179bbf2bc803cac",
+      "target": "components/reui/filters/filters-query.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "15293c1a7e3433966081a5e63ffd4cebfcca644403974bc595530fe2975d1f23"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters-types.tsx",
+      "sourceSha256": "274c440f75f89f8cb317e64cdd4acf8c95666ad0e06c18d1c8dddf63ea3c11cd",
+      "target": "components/reui/filters/filters-types.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "1ec904aed6da6db6f5e3ed88c45d6266c6e791f18860780f525e9314b2bad274"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/filters/filters.tsx",
+      "sourceSha256": "e658434411be24ce7ef98faf8f45c0eb8963f5f88b866e4f9793a8606409c8eb",
+      "target": "components/reui/filters/filters.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "12b7f70c181198fa2d878f8afe90a01a206a4ea8c50ec3f32e1efb3785cefad4"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/frame.tsx",
+      "sourceSha256": "a3dfa1188eadfea05acf19ab223a302fdb5b4d2577e7f696600f755769d2cdfc",
+      "target": "components/reui/frame.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "82c26dcd38cdce049aa713b69347296169a78d2a2d82dd36899d98870799e72e"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-bar.tsx",
+      "sourceSha256": "b36e0a4ad445d0f9b691be1dd50186e033f2536b408642c201dc8120e3790102",
+      "target": "components/reui/gantt/gantt-bar.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "8b694e6d7d99fcc1aaf0c0178f7c21f78069f156940acbc55a1f4c0364b541e5"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-dnd.tsx",
+      "sourceSha256": "cd6a6d44788c42fe8c47c1a3d594a70026442728916d29546582932dbb6a8661",
+      "target": "components/reui/gantt/gantt-dnd.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "8e5edcfb9af195e29e3e59882a6f93184996bbd6bf4e875457174b3e0b6b3046"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-i18n.tsx",
+      "sourceSha256": "666dc423beb3e2bd8807b53e9e2ef150d32f1057933b96647cd883d3da146d71",
+      "target": "components/reui/gantt/gantt-i18n.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "818deeddf567de9a6ceac9b64c7293bb0dd3b87c6da5e6c4541965135c60a497"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-lib.tsx",
+      "sourceSha256": "2f651a7e933be66a3c03dfa87b7b99a0ce9caf49666b193776f7ee9f252557e0",
+      "target": "components/reui/gantt/gantt-lib.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "5ddebdca4ebba12356d8c299cf51a723159f89a759cac22c7050854dcd81a30d"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-nav.tsx",
+      "sourceSha256": "a89ff022380fac622f635569acb65ff43fc3276233db2bec3998850e47090021",
+      "target": "components/reui/gantt/gantt-nav.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "fb6c816f7cc3e97491a87cd5c66bac475cd120141bd7905d571cc2535cbdf18f"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-recurrence.tsx",
+      "sourceSha256": "820485857430322fff6bdc9c0d3e42ff6eb515b15be9f68260aff21592f9fd58",
+      "target": "components/reui/gantt/gantt-recurrence.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "0f93b6492d5e978398ed6788068fee897a3f8a459ecd665655b59895d3c8d3d4"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-types.tsx",
+      "sourceSha256": "e1f3420a2d12bca111b392a19649437ef98a8ce82d9119a278e5f0e5643cfd32",
+      "target": "components/reui/gantt/gantt-types.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "e908beead3836a8d8cdca7e8d2ab2b165daef7bfe99108751734482ad53808b8"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt-view.tsx",
+      "sourceSha256": "e138fb0fcd19db72a4431317459dd33b851ab9f4fbbbb4cfb43d3559f6f14550",
+      "target": "components/reui/gantt/gantt-view.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "471c5b330900200a3ea8c911f9193b48572216fe13445865b9a3788d0234690f"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/gantt/gantt.tsx",
+      "sourceSha256": "9dd93839cf3f3af82e30fc4b7bbbf89c61c4ea6cff84cc9af352e92fb8ea39f5",
+      "target": "components/reui/gantt/gantt.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "c47bd01f56e64f55a914fbf215716853cd5391472e547e02daed85b6d94903fd"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/icon-stack.tsx",
+      "sourceSha256": "99c25bf55457a3eca2f98e7784968418165fdaa6ceb9cb26cfe9c770e361323c",
+      "target": "components/reui/icon-stack.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "46abc77cbfe61f073b60f2630819561e45290a3c007c3f41cbec84b64fbe826b"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/icon-tile.tsx",
+      "sourceSha256": "fa43d960cb1212bf8337f0b80b6becfe9c1b505a2b40822433914126b19e51aa",
+      "target": "components/reui/icon-tile.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "972fb79d184e5181a14e17980e06886927673a44be9f549e0a3ee74bff1a0c0d"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/kanban.tsx",
+      "sourceSha256": "470304bd61e2a5b5093dc3599b21259339b1d6f268c08ca9fe686312db8971fe",
+      "target": "components/reui/kanban.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "7bba4c01366580d8e292c1412ca6b74f5d9da08d97d834418ad11a5e6716bc6f"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/number-field.tsx",
+      "sourceSha256": "1aed1ef75d8218180505beb16fae3286381fd7cde7428c18871a21e690bf2d09",
+      "target": "components/reui/number-field.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "95a20414a907ff6ef5819bc93178ac5ac4d4ae944f1cfc94d8964b887c647266"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/phone-input.tsx",
+      "sourceSha256": "fe6287c6c1b6ac25467fb6354bafcb29b5c6b09970d735cd96f0016fa424bd00",
+      "target": "components/reui/phone-input.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "09de64568a654911fa0373937e99da92840bf374edf894e1474e5e5d4e1049dd"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/rating.tsx",
+      "sourceSha256": "e3ce91e952deacba1c81989291033d010793a732de6556ebdce557cbe137f126",
+      "target": "components/reui/rating.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "58b768748f5b807e5411bc62b4b90a9dc95c287972832f433896f3165136c76c"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/scrollspy.tsx",
+      "sourceSha256": "798efce66fdb7eddc321fd839e5a43e545eec7eee259a15781554c5e9d0bce86",
+      "target": "components/reui/scrollspy.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "4bdbbfa134f4504c7c0b3ca5260ba5fb07ea1e03eb9f4859cda6b94037d00df3"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/signature-pad.tsx",
+      "sourceSha256": "9539228a7516086488182b820abf49160e0463095a12b591a054c25f2faa5665",
+      "target": "components/reui/signature-pad.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "b9659d7af170a70b2057527f17290fd2c94cd8f29c917cc9b5b77f4ee6a20b07"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/sortable.tsx",
+      "sourceSha256": "7690ac9b07b4cf17673e70b6e9c17c735edb877b4957eeadfbe7969a2db10cd5",
+      "target": "components/reui/sortable.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "7ef40861b758b4d5638391ab043051ec79e75a6d8749f5337efc4d979f47d638"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/stepper.tsx",
+      "sourceSha256": "ad522e2da9077eecbfcaf9580377ce6c81b5752fcda2acb6ed3449a9bf80cffd",
+      "target": "components/reui/stepper.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "c8281da0168235eb92aaaae9a2a2ee870098e669a17c6bcaf90140c50587e12c"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/time-picker.tsx",
+      "sourceSha256": "d34a9c3bce56ef0aaaaa583d13ee10ebd4ad69e0f68953ca077f3023aa43d6af",
+      "target": "components/reui/time-picker.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "a7ab91eba1387071d6b831a0da143767732f036e98cfcaa9f47cfbb1d2283f92"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/timeline.tsx",
+      "sourceSha256": "5141d99fbff0da1e2bd62a99038910060efe0098e069e05e28821653460cb264",
+      "target": "components/reui/timeline.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "fedca2ec2ff00c6069bc20782de887e5b47ea5a49364afbfe1ef96d9e206d33a"
+    },
+    {
+      "source": "registry-reui/bases/radix/reui/tree.tsx",
+      "sourceSha256": "981b4a659e817ea96b6d78597b4b9243e5018b8cee7fa0bea8c51bfa8013394b",
+      "target": "components/reui/tree.tsx",
+      "adaptation": "registry-json-luma",
+      "adaptedSha256": "3354b7a7f37b115d056754a9b3ea2fe6ddf0242e07d81e32125f0d25a4c00cc0"
+    },
+    {
+      "source": "registry/bases/radix/ui/accordion.tsx",
+      "sourceSha256": "cdd4ad1df94e3c1ae85c77e916e3a6b7dc459efe454ccee35933b0160d2b386e",
+      "target": "components/ui/accordion.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "1c7b5f759ea334d22014a0adac3185c773e08368539ed31be0957bd2adf09a0a"
+    },
+    {
+      "source": "registry/bases/radix/ui/alert.tsx",
+      "sourceSha256": "639c846b57885d8af4dbdf7ddab7b15fd4d392c051f7496c67e811154e7861d9",
+      "target": "components/ui/alert.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "0eebaf11637a2032cd64337ab0ca9d670ce83c99ba14417f9bae1bb597f597c8"
+    },
+    {
+      "source": "registry/bases/radix/ui/alert-dialog.tsx",
+      "sourceSha256": "62ad5292954092897bfe1f1707d41f7d1e30bf46dbb8b4cd85736d06cf4a8cfd",
+      "target": "components/ui/alert-dialog.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "ba0f36e0b8236a79e1796692dac4d7e148350693df87d836c4aead7e7452bac8"
+    },
+    {
+      "source": "registry/bases/radix/ui/aspect-ratio.tsx",
+      "sourceSha256": "b1c157886236782cb92d8fbcd4749532aaf6d8aabefd6e157ca40358f902f407",
+      "target": "components/ui/aspect-ratio.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "b1c157886236782cb92d8fbcd4749532aaf6d8aabefd6e157ca40358f902f407"
+    },
+    {
+      "source": "registry/bases/radix/ui/avatar.tsx",
+      "sourceSha256": "a85a03da4dba7e7efc440f28fe93408f776fd6fc6390cf68a16faafa790ff724",
+      "target": "components/ui/avatar.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "232a6ac077e0f98bf8fe283529a42bf4a26ca9517b34304beaa7af38000dad56"
+    },
+    {
+      "source": "registry/bases/radix/ui/badge.tsx",
+      "sourceSha256": "7e3d99527690ba61aaa540c8305d5e148285907690c6c8e6caec589ad11bb3c8",
+      "target": "components/ui/badge.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "4d7e6cbd6a873f99ca434a46338448d5dce71b1d39996f4f3c85fcf273370877"
+    },
+    {
+      "source": "registry/bases/radix/ui/breadcrumb.tsx",
+      "sourceSha256": "680902831bb5f875fc75b40a5245430dab620ccfab398c3ce37f09111fe8924c",
+      "target": "components/ui/breadcrumb.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "2b47430223f5097256d2ff5c8471a053cb67afba5af905c97fa3a8d5f160f1fb"
+    },
+    {
+      "source": "registry/bases/radix/ui/button.tsx",
+      "sourceSha256": "76c6abdf94fae4085fd6c50c97c7a99ec21240af187c63ea4b2e71551d33495f",
+      "target": "components/ui/button.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "30afa9685953a7206ddf729aae056001c39c8732f933b835798a133467139cbc"
+    },
+    {
+      "source": "registry/bases/radix/ui/button-group.tsx",
+      "sourceSha256": "d956eb461686e7492743af73c469d31417bb58251ec6aeb72b073ff7b787b247",
+      "target": "components/ui/button-group.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "c38f8b04c31dd0e6a4cdfe5fd277642e6368cf0e97e82722c12a131f6301e2a1"
+    },
+    {
+      "source": "registry/bases/radix/ui/calendar.tsx",
+      "sourceSha256": "510cd66ea92cfa85832b2106c4fe9ce850b609110925fddb67470cfffe2dac19",
+      "target": "components/ui/calendar.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "e43d81a2eec851a38356282d8f3dfa91f6007279e97c52afdb4653c654d4f019"
+    },
+    {
+      "source": "registry/bases/radix/ui/card.tsx",
+      "sourceSha256": "0d525c03e086b0047f7c0700850281023359cfc020eb233fdb0d74ec870ebea0",
+      "target": "components/ui/card.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "6dd6bd84d64cc062a38709fc825090bd4a19ca3baa3213ce03053f16f5a423e2"
+    },
+    {
+      "source": "registry/bases/radix/ui/carousel.tsx",
+      "sourceSha256": "f0cede4c907cec71dfb232e0afa79b1aac14e993d21bf3cbe0cdd60a2386a78f",
+      "target": "components/ui/carousel.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "603eeef732fd59e84e87332d784716bd6d53ba3c114bccaa2b232daa07e33003"
+    },
+    {
+      "source": "registry/bases/radix/ui/chart.tsx",
+      "sourceSha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877",
+      "target": "components/ui/chart.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "046b52e908ab89eb4c828f9735f1b1e750f7100ecc24c147e81e525afb59a73f"
+    },
+    {
+      "source": "registry/bases/radix/ui/checkbox.tsx",
+      "sourceSha256": "4dd2b8d1181fe7851a45e6f786413cf16565fcde9dc4e7caea5818d63f2fc415",
+      "target": "components/ui/checkbox.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "0247da0410a3e62f450e772b328177916130392180cf67a306b72d0926e1b5e0"
+    },
+    {
+      "source": "registry/bases/radix/ui/collapsible.tsx",
+      "sourceSha256": "c6598e5584f4258b5d9fefadbc5ad6a66888ad58729f4b634a0bb2d9c513188b",
+      "target": "components/ui/collapsible.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "c6598e5584f4258b5d9fefadbc5ad6a66888ad58729f4b634a0bb2d9c513188b"
+    },
+    {
+      "source": "registry/bases/radix/ui/combobox.tsx",
+      "sourceSha256": "28b9e0955f82acbc4009093b011122b0eb20480405e7be6238a368bffc6f7abb",
+      "target": "components/ui/combobox.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "b90f77b3510cdcc85ef267f58aaf8f59ba13ba1b235667f1aaa56635c15cc38e"
+    },
+    {
+      "source": "registry/bases/radix/ui/command.tsx",
+      "sourceSha256": "63feaaeb6af977e0cb95348b9c405aa09d216d8368cf84710d26cab8610ef25b",
+      "target": "components/ui/command.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "51203cf8cd2719a4984cc94beb20ed0e6f9d8c9a97f1385682b790b02f791307"
+    },
+    {
+      "source": "registry/bases/radix/ui/context-menu.tsx",
+      "sourceSha256": "4e8fdb4bd33132b7e61d45c318933552993c2360d52164338551159381ccf61f",
+      "target": "components/ui/context-menu.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "8d610eb777f3f7fda8ed5319b0b590f11308d3911f42144aa2808e89be73c4e3"
+    },
+    {
+      "source": "registry/bases/radix/ui/dialog.tsx",
+      "sourceSha256": "71fb4e64866fa41cd770866c433342b3c469a1576d6cc7afe0b3b6cb3b06ae04",
+      "target": "components/ui/dialog.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "81e2725b86df438e51e2a24ceecb4c871be764fbddc9674ec51a7e9574a9057f"
+    },
+    {
+      "source": "registry/bases/radix/ui/drawer.tsx",
+      "sourceSha256": "780cfbe88f29a24f7e12a6966f6c8857d42dffbe5c98623f82979c7f7b1d1fcf",
+      "target": "components/ui/drawer.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "d9f69fe0a5b71c5e3a1679129f3b928e66c2416544639a5616d0f201c518bf89"
+    },
+    {
+      "source": "registry/bases/radix/ui/dropdown-menu.tsx",
+      "sourceSha256": "f29f9046532435ec183482ad990ac282e5ecfc76af80a6352eaa500a5689c447",
+      "target": "components/ui/dropdown-menu.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "57d8b00e7059666f9eff1c658427b516aaa093d59c10b531798be648e716fe9b"
+    },
+    {
+      "source": "registry/bases/radix/ui/empty.tsx",
+      "sourceSha256": "05c419160ac0226973f6f00d7d8865dc46645a75ea0697138992cdbc736efec4",
+      "target": "components/ui/empty.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "b384e26da328c26f0f8e3396a5c80291a98431dd185664dd2d704d14973784ec"
+    },
+    {
+      "source": "registry/bases/radix/ui/field.tsx",
+      "sourceSha256": "afcc19444bd161b637a9a0bbc42199c4af281ca12babc34e49e5923fc0539f1b",
+      "target": "components/ui/field.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "2a88a5288905e98dd3c633e6b469ff99f880736783f4704872e1d4654dff3252"
+    },
+    {
+      "source": "registry/bases/radix/ui/hover-card.tsx",
+      "sourceSha256": "f0aacc7c3dd82ba251e6d624e700b8875032ac86c8fd6ec2ec6fa12916fb82b2",
+      "target": "components/ui/hover-card.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "2a61b05ea345b6320eb245923f3918b220a493aa9be372b6ff6bedc188bb5c2e"
+    },
+    {
+      "source": "registry/bases/radix/ui/input.tsx",
+      "sourceSha256": "df7e02c82048862d719d69c7b101de130e47f2448d3933f76317c3c853b8a01e",
+      "target": "components/ui/input.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "444407bdc7fded6ed3a2e5e8eb0cfa32baa59d3058b2bdccff7aea21b5a7b211"
+    },
+    {
+      "source": "registry/bases/radix/ui/input-group.tsx",
+      "sourceSha256": "1dc8da17e81c94abc4d7b84a48ecd519f6b24e3007c0f2cdb3d70bcf5a657e19",
+      "target": "components/ui/input-group.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "7d03afd2ddce078496012dd62cba049f7d42669e7065d171127364bde053048a"
+    },
+    {
+      "source": "registry/bases/radix/ui/input-otp.tsx",
+      "sourceSha256": "8f540b9de861859602b3fbfffa5af76045877498aad5401aa4d1e8d94e1f8922",
+      "target": "components/ui/input-otp.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "77163aaf9a9dd04ab6d52b647b8c4d64036aaef55002aa9c89bf3bbdebc4b715"
+    },
+    {
+      "source": "registry/bases/radix/ui/item.tsx",
+      "sourceSha256": "4c2372a166d80652aff3d201ab8f997acf1bd174a5be613d42cf9e93faa5f849",
+      "target": "components/ui/item.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "2eb18b0e40539bb4630a434c60afef5980669fb5db30f275ecd8de58e00dd03e"
+    },
+    {
+      "source": "registry/bases/radix/ui/label.tsx",
+      "sourceSha256": "075c3ea03aec0f887b9b00c407e1de3b2969371059b9ba84ecd84908f24bdde2",
+      "target": "components/ui/label.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "a9e5ce00e4809f1f6804d0e48de09bf364bddc424947c25d2a276c2fc6514c50"
+    },
+    {
+      "source": "registry/bases/radix/ui/menubar.tsx",
+      "sourceSha256": "d803d245db3a8864f7712f87c5db89018f1cc556c760a8910f2e8d54a067ae90",
+      "target": "components/ui/menubar.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "74d3c17e1e7fb9b52646528f8dcf5b12391e47b26df628202ae681f2e12f0657"
+    },
+    {
+      "source": "registry/bases/radix/ui/navigation-menu.tsx",
+      "sourceSha256": "5a2b654ec0da927bc19df76e60a845a733ba4011ca394606a59f6c338b1e9657",
+      "target": "components/ui/navigation-menu.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "db7ee74c848adaf4bc43e60e2de2f938dcb9bf1791838efe9fead903f3d9a975"
+    },
+    {
+      "source": "registry/bases/radix/ui/pagination.tsx",
+      "sourceSha256": "3bfc525c64ff38edef32c6d856661778e4bec9ef379e377a0ebf417383889da4",
+      "target": "components/ui/pagination.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "603b8128610cc5f03bbc599b30ba4044ed05c97c69136fb8aefe7e99da6f10b7"
+    },
+    {
+      "source": "registry/bases/radix/ui/popover.tsx",
+      "sourceSha256": "6cc31619ff458ec3d9685eb4ad127aa422841e1ec6758bddb0679db090aadf16",
+      "target": "components/ui/popover.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "50f305686a507ffc3a71125e1125e064480732d581d1e7d875ca08f725917cfb"
+    },
+    {
+      "source": "registry/bases/radix/ui/progress.tsx",
+      "sourceSha256": "507bab79d74484391049814b1459476eb1e4c061e99e20a7270f46e510609920",
+      "target": "components/ui/progress.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "eeeb539ae26cc51de32ab093f0464fbb81ff63fe3a8cc3e8450614a92e64d6a4"
+    },
+    {
+      "source": "registry/bases/radix/ui/radio-group.tsx",
+      "sourceSha256": "9e685ae7218c69ec80c7b5a34d2aa3f2470b8f552d9afbd7f51d98d18ada4803",
+      "target": "components/ui/radio-group.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "57ce09b67e4606e28dca646ab3a7dc4ac076c331f2980e2403c169a06661f2d3"
+    },
+    {
+      "source": "registry/bases/radix/ui/resizable.tsx",
+      "sourceSha256": "7971b48619d5e322ca95e29b2a2ff72eacb95b730d1fcbdead94511dae056e83",
+      "target": "components/ui/resizable.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "f8d66b1a07145b132971cae83182944b25697bfb786ff2defc25099112832356"
+    },
+    {
+      "source": "registry/bases/radix/ui/scroll-area.tsx",
+      "sourceSha256": "088a0379c48cf5c856b7e182ebabd7ecc41b0dd298fc9cf794b34f718c765f74",
+      "target": "components/ui/scroll-area.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "6a7ac4bc259deb3c3a309bde168e53dc532633efab7927acff0c7676695e7fc9"
+    },
+    {
+      "source": "registry/bases/radix/ui/select.tsx",
+      "sourceSha256": "6e6ba85872b1b0f7286ee934adaadb8a18130d7ffb535e1f04f3505fa041428a",
+      "target": "components/ui/select.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "51e92e249ba65ed1976e1cf871c95a30febcc397f2696f11e432590ec24d277f"
+    },
+    {
+      "source": "registry/bases/radix/ui/separator.tsx",
+      "sourceSha256": "b5b5460e5337c2d5f361c1512001615b2e5eacb38c7449a4418bb9ddb47c4bba",
+      "target": "components/ui/separator.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "28e6fd5832396247a84bd8a27e57e1c9aa967efca0ec27055b08b1cb3de744bf"
+    },
+    {
+      "source": "registry/bases/radix/ui/sheet.tsx",
+      "sourceSha256": "0b90787b36db17aa84acc5c30d9df896eae06581955ed4f1d7ab28986e659aed",
+      "target": "components/ui/sheet.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "182317cc66945974226e892435b77851c5f11d0014a4ad622f615c1e86a7a5eb"
+    },
+    {
+      "source": "registry/bases/radix/ui/sidebar.tsx",
+      "sourceSha256": "5a1f82f0165377a9149c85f41dea5893d4e15431f47f822e6c365b4291b105ed",
+      "target": "components/ui/sidebar.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "6fbaedab59b0c13f1c8218ab2d94e74755ccdeaf1ef9958300743d3b1af025aa"
+    },
+    {
+      "source": "registry/bases/radix/ui/skeleton.tsx",
+      "sourceSha256": "8fcbad84e494a75484a0975221fb40f54c4a7d68f79cfc305cb158d1feb1badf",
+      "target": "components/ui/skeleton.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "72aaddb005a7889d54e810701d8f4fc0d89b5729c59bf385ea72c4364bed90ee"
+    },
+    {
+      "source": "registry/bases/radix/ui/slider.tsx",
+      "sourceSha256": "2d11a86268cf55a555c6e0ba490c9161159527e35a3966cf9d0d459fbfbb3b68",
+      "target": "components/ui/slider.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "d9e42a73ab10316f68aa8afc7358d2dd91198bc9ffe6fd21a68093f00fb00281"
+    },
+    {
+      "source": "registry/bases/radix/ui/sonner.tsx",
+      "sourceSha256": "d5178ce4c7834d3f46d261698395b498b8f45fef29975585df7e26cb43aa3cc7",
+      "target": "components/ui/sonner.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "c15a801498803012839241952ad1dbcd41e1aef7886f0d24427df54642e07645"
+    },
+    {
+      "source": "registry/bases/radix/ui/spinner.tsx",
+      "sourceSha256": "494f71fd2733709d0e43be44e3353d9df215b370137af0195251cbdfdcc9e17b",
+      "target": "components/ui/spinner.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "900f722c961fa6e1c28104809d56831c9056dc69599e49d364cc13a6f33966a3"
+    },
+    {
+      "source": "registry/bases/radix/ui/switch.tsx",
+      "sourceSha256": "b664dba8da5024488799fb472e964d98c3b03be40b0224b33697caa34d09b198",
+      "target": "components/ui/switch.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "55da17d59888e90bf801d88b278381e914881f00150473081818292edcf59289"
+    },
+    {
+      "source": "registry/bases/radix/ui/table.tsx",
+      "sourceSha256": "77d15e11fcf1fb2f5e1b814aa64868e7644bb59c5e1498ecb93bcbdca1c7a070",
+      "target": "components/ui/table.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "50364a1aa6de2206e36326cdd02120a39346c1d7f3d30b6e7bf6d9603808516d"
+    },
+    {
+      "source": "registry/bases/radix/ui/tabs.tsx",
+      "sourceSha256": "96ad5bec050c42dc755c8254c9d7408a04969df29ce5230d29196d1c64bff497",
+      "target": "components/ui/tabs.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "e7cd58d42bd8511b0dd79026743db70a50764dd7fab1dfcff336a51ee0c0d19e"
+    },
+    {
+      "source": "registry/bases/radix/ui/textarea.tsx",
+      "sourceSha256": "8f527c89dec40a9b372376dc93d2ebb149bfd82f209856d110ead1aabec19c6a",
+      "target": "components/ui/textarea.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "f62264d348b17ff5a2dc5bfee3991797a10ccccb23deaf2a1fa9c27146eed8ac"
+    },
+    {
+      "source": "registry/bases/radix/ui/toggle.tsx",
+      "sourceSha256": "e2badd54fdb8c16f7967b6ddfce782d7e44beda5b2d2468045564bc690fbea8d",
+      "target": "components/ui/toggle.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "775e8a374cf999a9dd30bbac607bed4df3a4de9cfee6fd4a1d80c6208a625f3a"
+    },
+    {
+      "source": "registry/bases/radix/ui/toggle-group.tsx",
+      "sourceSha256": "bb574f981de9e581604af13725ff0218e6afbbdda651bdc5e02fc2752e27219a",
+      "target": "components/ui/toggle-group.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "3f28e2114a974334d88661bb76067b91ece32733972aada3c3f7c11dcbc06480"
+    },
+    {
+      "source": "registry/bases/radix/ui/tooltip.tsx",
+      "sourceSha256": "25b33cd3bfd6046067259e476c3b5137b9f018c394d6ea51926accb8d6d5134a",
+      "target": "components/ui/tooltip.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "c4da9884b1b20329927a086ac65eda77be3b35395563b8c8bd778f613bf8f6af"
+    },
+    {
+      "source": "registry/bases/radix/ui/kbd.tsx",
+      "sourceSha256": "f04fe8ce9c10023fa4d9907030ec5e26a4c714e5377e6b3864cb03548bd0a56f",
+      "target": "components/ui/kbd.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "46086977e50354542d3ea6dd217e240f63ca82e0e3766a88836d9b284618e429"
+    },
+    {
+      "source": "registry/bases/radix/ui/native-select.tsx",
+      "sourceSha256": "a96068a0bf403eac169f8b1e605f314dd268dde7ee2841ed72ff2b41cd944875",
+      "target": "components/ui/native-select.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "34a92c4a8f4d688a23b351ff04b07bf8e6007bef61fa39e3a9fc660117b710df"
+    },
+    {
+      "source": "registry/bases/radix/ui/direction.tsx",
+      "sourceSha256": "84ae2ad658207f0e0f367978e5508cd8027cd00c29c41d3d13db21a708c3d1e6",
+      "target": "components/ui/direction.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "84ae2ad658207f0e0f367978e5508cd8027cd00c29c41d3d13db21a708c3d1e6"
+    },
+    {
+      "source": "registry/bases/radix/ui/attachment.tsx",
+      "sourceSha256": "742984b038e9f2fd87919684453bc6d30cdf03a31ee05ceed464a91b7de052e5",
+      "target": "components/ui/attachment.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "8aa0382f4306e6d09ad9e91389cb2df3d70975dae4eefaecc2058a3fffd1b332"
+    },
+    {
+      "source": "registry/bases/radix/ui/bubble.tsx",
+      "sourceSha256": "f3b952658607bdc73ccf1ee45af54c6189c77b6431cdc7c02b8bff0a7f11f7d9",
+      "target": "components/ui/bubble.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "4afefad1576d35ba42a2b610c0c09968dc57c11ab06fd60b32a9525cacb5bc27"
+    },
+    {
+      "source": "registry/bases/radix/ui/message-scroller.tsx",
+      "sourceSha256": "80328938060d2c7dd782f0a8ffa501b391cb4af77564cd682c574de2e5564ac2",
+      "target": "components/ui/message-scroller.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "b8529509803204fcbf00f426dd6bf7312549a96db58a7fd46e15e51c50823427"
+    },
+    {
+      "source": "registry/bases/radix/ui/questionnaire.tsx",
+      "sourceSha256": "133ef45f190c8e2ec4595fa5e88a95149bd89cd2db0cf836deaeccef798dfbf3",
+      "target": "components/ui/questionnaire.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "8fd78dfbbb33300561d623fd07e8f0afe78e19a5f13d5449c1b1baa6ef67c503"
+    },
+    {
+      "source": "registry/bases/radix/ui/marker.tsx",
+      "sourceSha256": "c5dce439a6148458f59226685c7db33587c957543724838c3d6fc5b6f1e59db8",
+      "target": "components/ui/marker.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "3d798763f094b2bb5e7ade2d5cd1b9bab498bc8ca7fd4cfaf4e5835bdedc34a0"
+    },
+    {
+      "source": "registry/bases/radix/ui/message.tsx",
+      "sourceSha256": "b57f3c9921ceb0695cb8164c7be8ce229519f2b485b95923bb980a5e39e11c72",
+      "target": "components/ui/message.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "c03e4a9daa8a1b7733aa2c8c143236d8699677d2ef6a1afda8bc07082a9ffe6b"
+    },
+    {
+      "source": "registry/bases/radix/ui/trace.tsx",
+      "sourceSha256": "e0bdf9c08f78fc785b15ff76826009c48ddbfcb3414ad4cd3db5169e0bba086d",
+      "target": "components/ui/trace.tsx",
+      "adaptation": "exui-foundation-adapter",
+      "adaptedSha256": "ba8fbab9907a0fb5552c1b4f689479bf297be8c36ed52fb01dcfe23ae388966f"
+    },
+    {
+      "source": "registry-reui/bases/radix/hooks/use-copy-to-clipboard.ts",
+      "sourceSha256": "7c5ae8a776c551e026b8d9454aef71286d8320b15b2f9fdff345f2ee90c2a40c",
+      "target": "hooks/use-copy-to-clipboard.ts",
+      "adaptation": "source-hook",
+      "adaptedSha256": "7c5ae8a776c551e026b8d9454aef71286d8320b15b2f9fdff345f2ee90c2a40c"
+    },
+    {
+      "source": "registry-reui/bases/radix/hooks/use-file-upload.ts",
+      "sourceSha256": "6f7d41bcf7df314a7f1b6ec4e87774d35e70180f892052c048e4b578d8cdd767",
+      "target": "hooks/use-file-upload.ts",
+      "adaptation": "source-hook",
+      "adaptedSha256": "6f7d41bcf7df314a7f1b6ec4e87774d35e70180f892052c048e4b578d8cdd767"
+    },
+    {
+      "source": "registry-reui/bases/radix/hooks/use-scroll-position.ts",
+      "sourceSha256": "1a7bc47c35a8fa0b2ee0cfb563debf104704714695663efd6f43a7a9c0e314cd",
+      "target": "hooks/use-scroll-position.ts",
+      "adaptation": "source-hook",
+      "adaptedSha256": "beca781ce0c51c27849eca8b71e9505a66d82520085b0c1ade706e55cd3bdadd"
+    },
+    {
+      "source": "registry-reui/bases/radix/hooks/use-slider-input.ts",
+      "sourceSha256": "7e23ccb00445c6be04c7f56c25189a8faeb5689ea998388548830b9a853f0dfb",
+      "target": "hooks/use-slider-input.ts",
+      "adaptation": "source-hook",
+      "adaptedSha256": "7e23ccb00445c6be04c7f56c25189a8faeb5689ea998388548830b9a853f0dfb"
+    }
+  ],
+  "assets": [
+    {
+      "source": "LICENSE.md",
+      "target": "LICENSE.md",
+      "sha256": "09592ffefa6512b68dd7aa9031bc50d5d39cfcc9da08288f5eb1f9d236baca66"
+    },
+    {
+      "source": "registry/styles/style-luma.css",
+      "target": "style-luma.css",
+      "sha256": "35c0578be1623049da1f11729ae43a2a7884dcc17b948fc72dcdf4f1be3c0484"
+    }
+  ]
+}

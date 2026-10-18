@@ -1,0 +1,23 @@
+---
+id: getting-started/installation
+title: 安装
+description: 安装 ExUI 唯一公开包，按需使用 React 组件或框架无关的 Token。
+---
+
+安装 `@exre/exui`；React 应用另需 React 与 React DOM 19，TypeScript 宿主还需相应的 React 19 类型包。仅消费 Token 时无需安装可选的 React peer。受支持入口是包根、`style.css`、`tokens` 系列与 `docs/theme.css`，组件源码子路径不是公开入口。
+
+## 基本用法
+
+```bash
+pnpm add @exre/exui react@19 react-dom@19
+pnpm add -D @types/react@19 @types/react-dom@19
+```
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button } from "@exre/exui"
+
+export function InstalledButton() {
+  return <Button type="button">继续</Button>
+}
+```

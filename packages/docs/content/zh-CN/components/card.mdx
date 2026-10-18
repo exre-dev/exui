@@ -1,0 +1,66 @@
+---
+id: components/card
+title: Card
+description: 将相关内容组织在同一容器中。
+exampleFamily: card
+---
+
+Card：将相关内容组织在同一容器中。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### 紧凑组件内边距
+
+ExUI 将默认 Card 内边距、`AlertDialogContent` 四边、`SheetHeader` 与 `SheetFooter` 四边、`CommandEmpty` 及 DataGrid 空表和筛选空提示的上下、Gantt 无资源提示四边、纵向 `TimelineItem` 非末项的底部 padding 统一为 `1rem`（16px 根字号下为 16px）。空状态仅在对应提示渲染时生效；时间轴末项不额外增加底部 padding。调用方仍可用类名覆盖默认值。
+
+Card 的默认与 `sm` 尺寸均使用 `1rem` 内边距，`--card-spacing` 控制这些内边距；独立的 `--card-gap` 控制区块间距，默认仍为 `1.5rem`，`sm` 为 `1rem`。Header 下方与 Footer 上方的内边距在添加对应边框时生效；首个直接子元素为图片时，Card 顶部仍不加内边距。
+
+- [在线示例](../../../../examples/c-card-1/)
+- [在线示例](../../../../examples/c-card-2/)
+
+**ExUI 新增**
+
+### 共用 Glass 材质
+
+`glass` 属性与精确的 `ex-glass` 类名都可启用 ExUI 材质；每个表面分别选择，包括 Select 弹层。先导入 `@exre/exui/style.css`。如需可选折射，每个 document 挂载一个 `GlassSeed`。它渲染不可见的 SVG 滤镜定义，不占可见布局内容，并非 Provider，可在服务端渲染；没有它也有基础材质。浏览器支持检测只确认滤镜声明可被接受，不能证明折射被正确绘制；关键视觉效果需在目标浏览器检查。
+
+本家族支持 Glass 的公开组件: `Card`。
+
+请将此表面保留在常规的组件组合中；这个封装只为该表面启用 Glass。
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Card } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Card>) {
+  return <Card {...props} glass />
+}
+```
+
+请阅读[共用 Glass 材质](../exui/glass.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+内容需要标题容器时，组合卡片标题区与正文区。
+
+将 `CardAction` 直接放在 `CardHeader` 内，可在右上角展示操作或进度。标题与说明保持在左列上下排列；通过 `CardTitle` 与 `CardDescription` 渲染的 Questionnaire 内容也遵循此布局。
+
+### 当前示例源码摘录
+
+```tsx source="c-card-1"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@exre/exui"
+
+<Card>
+  <CardHeader>
+    <CardTitle />
+    <CardDescription />
+  </CardHeader>
+  <CardContent />
+</Card>
+```
+
+[查看完整源码](../../../../examples/c-card-1/)

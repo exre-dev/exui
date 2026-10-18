@@ -1,0 +1,32 @@
+---
+id: components/questionnaire
+title: Questionnaire
+description: Presents a sequence of structured questions.
+exampleFamily: questionnaire
+---
+
+Questionnaire: Presents a sequence of structured questions.
+
+## Basic usage
+
+Provide stable question identifiers and progress through one question or section at a time.
+
+Choices use radio indicators by default. Set `multiple` on `QuestionnaireItem` for checkboxes: selected choices show a checkmark, while selected radio choices show an inner dot. `QuestionnaireChoice` supplies both indicators automatically.
+
+The Previous, Skip, Next and Submit components accept Button's `size` and `variant`. On desktop and mobile, they follow the shared Button height and density without an additional minimum height.
+
+On desktop, `QuestionnaireInput` stays `2.25rem` high (36px at the default root font size). Choices have a `2.25rem` minimum height and `0.5rem` padding on each vertical side, growing naturally for wrapped text and descriptions. Below `sm`, both inputs and choices keep a `2.75rem` minimum touch height.
+
+### Current example source excerpt
+
+```tsx source="c-questionnaire-1"
+import { Card, CardFooter, Questionnaire } from "@exre/exui"
+
+<Questionnaire defaultItem="usage" items={ITEMS} shortcuts="letters">
+  <Card>
+    <CardFooter />
+  </Card>
+</Questionnaire>
+```
+
+[View complete source](../../../../examples/c-questionnaire-1/)

@@ -21,3 +21,24 @@
 @import "../tokens/style.css";
 @import "fumadocs-ui/css/shadcn.css";
 @import "fumadocs-ui/css/preset.css";
+
+/* Adapt the preset's named motion and scrollbar geometry at this theme entry.
+ * The consumer still owns its Fumadocs version and any other preset defaults. */
+@keyframes fd-enterFromRight {
+  from { opacity: 0; transform: translateX(12.5rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fd-enterFromLeft {
+  from { opacity: 0; transform: translateX(-12.5rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fd-exitToRight {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(12.5rem); }
+}
+@keyframes fd-exitToLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-12.5rem); }
+}
+.fd-scroll-container::-webkit-scrollbar { width: 0.3125rem; height: 0.3125rem; }
+.fd-scroll-container::-webkit-scrollbar-thumb { border-radius: 0.3125rem; }

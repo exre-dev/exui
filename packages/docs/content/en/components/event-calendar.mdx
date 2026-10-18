@@ -1,0 +1,44 @@
+---
+id: components/event-calendar
+title: Event Calendar
+description: Places events on calendar views.
+exampleFamily: event-calendar
+---
+
+Event Calendar: Places events on calendar views.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+**ExUI adaptation**
+
+### Root export collision aliases
+
+The public root resolves name collisions between component modules with `Reui`-prefixed names. Import those exact names from `@exre/exui`; do not assume the original module-local name is also exported.
+
+Read [Root export collision aliases](../getting-started/quick-start.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Provide dated events and choose the calendar view that fits the scheduling task.
+
+### Current example source excerpt
+
+```tsx source="c-event-calendar-1"
+import { EventCalendar, EventCalendarContent } from "@exre/exui"
+
+<EventCalendar defaultDate={new Date(EXAMPLE_EPOCH)} defaultEvents={events} defaultView="month">
+  <EventCalendarContent />
+</EventCalendar>
+```
+
+[View complete source](../../../../examples/c-event-calendar-1/)

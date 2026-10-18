@@ -1,6 +1,6 @@
 # 产物样式表把 foundation 引用生成为 CSS 变量引用
 
-最后更新：2026-09-18
+最后更新：2026-10-15
 
 状态：已接受
 模块：tokens
@@ -23,4 +23,6 @@
 
 重新审视条件：出现真正需要改 density 或改展平规则的定制需求（此时方案 2 重新进入评估）；或 shadcn 别名与 Token 的关系本身需要重构（此时方案 3 与本次的 `--radius` 处理要一起重看）。
 
-证据：`packages/tokens/scripts/generate-css.mjs` 的 `foundationVariableByReference`、`readFoundationValue`、`addFoundationVariables` 与 `resolveRecipeValue` 的 `foundation` 分支；`packages/tokens/scripts/foundation-reference-policy.mjs` 及其 `*.test.mjs`（含"配方变量内联 foundation 取值"的否定用例）；`packages/tokens/scripts/validate-tokens.mjs` 的 `validateFoundationReferences()`；`packages/tokens/src/style.css` 中新增的 15 个 foundation 变量、`--radius: var(--exui-radius-large)` 与 61 处 `var()` 配方取值；`packages/tokens/scripts/validate-tokens.mjs:151` 的 foundation 引用允许集合；`packages/components/README.md` 的 Customizing tokens 段与 `packages/tokens/README.md` 的 Overriding Tokens 段；`skills/exui-usage/references/generated/token-paths.md` 的 CSS custom properties 清单。
+后续状态（2026-10-15）：ReUI 接入已另外实现短语义别名对 `--exui-*` 的 `var()` 引用，并在 `.dark`、`.pitch-black` 作用域重发别名；默认控件几何也已使用 `--density-*`。上文备选方案 3 和重新审视条件记录的是当时决策时的状态，不再描述当前产物。当前机制见 [Token 生成与消费结构](../../architectures/tokens/token-pipeline.md)。
+
+证据：`packages/tokens/scripts/generate-css.mjs` 的 `foundationVariableByReference`、`readFoundationValue`、`addFoundationVariables` 与 `resolveRecipeValue` 的 `foundation` 分支；`packages/tokens/scripts/foundation-reference-policy.mjs` 及其 `*.test.mjs`（含"配方变量内联 foundation 取值"的否定用例）；`packages/tokens/scripts/validate-tokens.mjs` 的 `validateFoundationReferences()`；`packages/tokens/src/style.css` 中新增的 15 个 foundation 变量、`--radius: var(--exui-radius-large)` 与 61 处 `var()` 配方取值；`packages/tokens/scripts/validate-tokens.mjs:151` 的 foundation 引用允许集合；`packages/components/README.md` 的 Customizing tokens 段与 `packages/tokens/README.md` 的 Overriding Tokens 段；`skills/exui/references/generated/token-paths.md` 的 CSS custom properties 清单。

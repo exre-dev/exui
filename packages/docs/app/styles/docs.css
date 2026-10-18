@@ -1,0 +1,48 @@
+@layer theme, base, exui, components, utilities;
+@import "tailwindcss";
+@import "fumadocs-ui/css/generated/glass.css";
+@import "@exre/exui/docs/theme.css";
+/* The public sheet is already compiled. Keep its generic utilities below the
+   app utilities so .flex and .p-6 cannot override Glass responsive variants.
+   Component interaction rules belong to this sheet; duplicating solid state
+   backgrounds in the app layer would override Glass state materials. */
+@import "@exre/exui/style.css" layer(exui);
+@import "../../src/showcase/example-utilities.css";
+@import "../../src/showcase/Showcase.css";
+@import "../../src/showcase/ShowcasePages.css";
+@source "../";
+@source "../../content/";
+
+.docs-app { margin: 0; font-family: var(--font-sans); background: var(--background); color: var(--foreground); }
+.docs-brand { display: inline-flex; align-items: center; gap: .6rem; font-weight: 650; }
+/* Root links sit in Radix's table wrapper rather than a folder's flex column. */
+.docs-app #nd-sidebar [data-radix-scroll-area-viewport] > div > a { display: flex; }
+/* Keep keyboard focus rings inside the collapsible groups' clipping bounds. */
+.docs-app :is(#nd-sidebar, #nd-sidebar-mobile) :is(a, button):focus-visible { --tw-ring-shadow: inset 0 0 0 2px var(--tw-ring-color); }
+.docs-icon { display: inline-grid; place-items: center; flex-shrink: 0; border-radius: 28%; --tw-shadow: var(--exui-shadow-medium); }
+.docs-icon-mark { width: 85%; height: 85%; background-color: currentColor; mask-position: center; mask-size: contain; mask-repeat: no-repeat; }
+.docs-overview-total { display: inline-block; margin-inline-start: .75rem; vertical-align: middle; padding: .125rem .5rem; border: 1px solid var(--border); border-radius: 9999px; color: var(--muted-foreground); font-size: .75rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+@layer components {
+  .docs-settings { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; max-width: 100%; }
+}
+.docs-settings [data-slot="select-trigger"] { background: transparent; border: 0; height: var(--exui-component-button-small-height); gap: var(--exui-component-button-small-gap); padding-inline: .5rem; font-size: var(--exui-font-size-small); min-width: 0; }
+/* Reserve the page's 3rem inline padding in addition to the 75rem gallery. */
+.docs-app #fd-glass-layout:has(.docs-examples) { --fd-main-width: 78rem; }
+.docs-examples { min-width: 0; max-width: 100%; }
+.docs-examples > h2 { font-size: 1.4rem; font-weight: 600; margin-block: 0 1rem; scroll-margin-top: 5rem; }
+.docs-family-description { width: 100%; max-width: 80ch; min-width: 0; margin-block: 2rem; }
+.docs-examples .showcase-preview { overflow-x: auto; }
+.docs-examples .showcase-preview-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.docs-examples .showcase-example { min-width: 0; }
+.docs-examples .showcase-example-header { flex-wrap: wrap; }
+/* Filter menus use portals, so their cards need only reserve the closed content. */
+.docs-examples-scope[data-page-loaded="filters"] .showcase-preview { min-height: 0; padding: 1.5rem; }
+.docs-entry { max-width: 48rem; margin: 12vh auto; padding: 2rem; }
+.docs-entry-logo { margin-bottom: 2rem; }
+.docs-entry h1 { font-size: 3rem; font-weight: 650; letter-spacing: -.04em; }
+.docs-entry p { margin-block: 1.5rem; color: var(--muted-foreground); line-height: 1.8; }
+.docs-entry nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.docs-entry a { display: inline-block; border: 1px solid var(--border); border-radius: .6rem; padding: .6rem 1rem; }
+.docs-search-error { display: flex; gap: 1rem; padding: 1rem; }
+.docs-search-error button { text-decoration: underline; }
+.dark .shiki, .dark .shiki span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important; }

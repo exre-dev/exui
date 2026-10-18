@@ -1,0 +1,50 @@
+---
+id: exui/ex-message
+title: ExMessage
+description: Manages application-wide notifications and loading results.
+exampleFamily: ex-message
+---
+
+ExMessage: Manages application-wide notifications and loading results.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Managed messages and Sonner
+
+Mount one `ExMessageContext` host before calling `ExMessage`. It renders the package's shared `Toaster`; do not add another for managed messages. `loading` returns a handle with `onSuccess`, `onError` and `dismiss`, all acting on the same notice. Direct root `toast` shares that bundled Sonner instance, while an independently installed Sonner copy has separate state. `maxCount` evicts only managed ExMessage entries, but the host also passes it to `Toaster.visibleToasts`, so direct toasts share the visible display cap.
+
+```tsx verify
+import { Button, ExMessage, ExMessageContext } from "@exre/exui"
+
+export function MessageExample() {
+  return <><ExMessageContext placement="top-right" maxCount={3} />
+    <Button type="button" onClick={() => {
+      const pending = ExMessage.loading("Saving")
+      pending.onSuccess("Saved")
+    }}>Save</Button></>
+}
+```
+
+- [Live example](../../../../examples/exui-ex-message-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Mount the message host once, then use ExMessage methods for success, error, or loading feedback.
+
+### Current example source excerpt
+
+```tsx source="exui-ex-message-1"
+import { Button, ExMessage } from "@exre/exui"
+
+<Button variant="outline" disabled={loading} onClick={() => ExMessage.info(c("Your workspace is up to date", "工作区已是最新状态"))}><Info />{c("Info", "提示")}</Button>
+```
+
+[View complete source](../../../../examples/exui-ex-message-1/)
+
+## Related guide
+
+See [Sonner](../components/sonner.mdx) for the separate toast pattern. ExMessage uses its own public methods and host.

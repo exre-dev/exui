@@ -1,0 +1,44 @@
+---
+id: components/event-calendar
+title: Event Calendar
+description: 在日历视图中安排事件。
+exampleFamily: event-calendar
+---
+
+Event Calendar：在日历视图中安排事件。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+
+**ExUI 适配**
+
+### 根入口导出冲突别名
+
+公共根入口使用带 `Reui` 前缀的名称解决组件模块间的名称冲突。应从 `@exre/exui` 导入这些准确名称，不能假设原始模块局部名称也被导出。别名包括排程辅助函数 `ReuigetDayKey`、`ReuiexpandRecurrence`、`ReuiMAX_OCCURRENCES`，以及 `ReuiBuildIndexOptions` 等类型。完整名单以维护中的导出清单为准。
+
+请阅读[根入口导出冲突别名](../getting-started/quick-start.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+提供带日期的事件，选择适合排期任务的日历视图。
+
+### 当前示例源码摘录
+
+```tsx source="c-event-calendar-1"
+import { EventCalendar, EventCalendarContent } from "@exre/exui"
+
+<EventCalendar defaultDate={new Date(EXAMPLE_EPOCH)} defaultEvents={events} defaultView="month">
+  <EventCalendarContent />
+</EventCalendar>
+```
+
+[查看完整源码](../../../../examples/c-event-calendar-1/)

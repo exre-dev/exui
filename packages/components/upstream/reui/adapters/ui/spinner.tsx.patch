@@ -1,0 +1,29 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/spinner.tsx b/packages/components/src/components/ui/spinner.tsx
+index 2a91bf9..8dca22b 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/spinner.tsx
++++ b/packages/components/src/components/ui/spinner.tsx
+@@ -1,21 +1,9 @@
+-import { cn } from "cn"
+-
+-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
++import { cn } from "@/lib/utils"
++import { Loader2Icon } from "lucide-react"
+ 
+ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+   return (
+-    <IconPlaceholder
+-      lucide="Loader2Icon"
+-      tabler="IconLoader"
+-      hugeicons="Loading03Icon"
+-      phosphor="SpinnerIcon"
+-      remixicon="RiLoaderLine"
+-      data-slot="spinner"
+-      role="status"
+-      aria-label="Loading"
+-      className={cn("size-4 animate-spin", className)}
+-      {...props}
+-    />
++    <Loader2Icon data-slot="spinner" role="status" aria-label="Loading" className={cn("size-4 animate-spin", className)} {...props} />
+   )
+ }
+ 

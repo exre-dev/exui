@@ -1,0 +1,51 @@
+{
+  "name": "@exre/exui-docs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm docs:prepare && react-router dev",
+    "build": "pnpm docs:prepare && node ../../scripts/docs-examples.mjs check && node ../../scripts/docs-example-assets.mjs && react-router typegen && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit && react-router build && node ../../scripts/docs-static.mjs",
+    "lint": "oxlint src app lib *.ts",
+    "test:visual": "vitest run --project visual",
+    "typecheck": "pnpm docs:prepare && react-router typegen && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "preview": "vite preview --outDir build/client",
+    "docs:prepare": "node ../../scripts/docs-content.mjs generate && fumadocs-mdx"
+  },
+  "dependencies": {
+    "@exre/exui": "workspace:*",
+    "@headless-tree/core": "^1.7.0",
+    "@headless-tree/react": "^1.7.0",
+    "date-fns": "^4.4.0",
+    "little-date": "1.2.1",
+    "lucide-react": "^1.23.0",
+    "motion": "12.38.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "fumadocs-core": "16.17.4",
+    "fumadocs-ui": "16.17.4",
+    "fumadocs-mdx": "15.4.7",
+    "react-router": "7.18.4",
+    "@react-router/node": "7.18.4",
+    "zod": "4.6.5",
+    "isbot": "^5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.2",
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/browser-playwright": "4.1.10",
+    "oxlint": "^1.71.0",
+    "playwright": "1.62.1",
+    "tailwindcss": "4.3.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1",
+    "vitest": "4.1.10",
+    "@react-router/dev": "7.18.4",
+    "@types/mdx": "^2.0.13",
+    "yaml": "2.9.1",
+    "shiki": "4.5.0"
+  }
+}

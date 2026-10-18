@@ -1,0 +1,33 @@
+---
+id: components/stepper
+title: Stepper
+description: Guides users through ordered steps.
+exampleFamily: stepper
+---
+
+Stepper: Guides users through ordered steps.
+
+## Basic usage
+
+Pair each numbered step with its content and reflect the active step in application state.
+
+### Current example source excerpt
+
+```tsx source="c-stepper-1"
+import { StepperIndicator, StepperItem, StepperNav, StepperSeparator } from "@exre/exui"
+
+<StepperNav>
+        {<ExampleText>{steps.map((step) => (
+          <StepperItem key={step} step={step}>
+            <StepperTrigger>
+              <StepperIndicator>{<ExampleText>{step}</ExampleText>}</StepperIndicator>
+            </StepperTrigger>
+            {<ExampleText>{steps.length > step && (
+              <StepperSeparator className="group-data-[state=completed]/step:bg-primary" />
+            )}</ExampleText>}
+          </StepperItem>
+        ))}</ExampleText>}
+      </StepperNav>
+```
+
+[View complete source](../../../../examples/c-stepper-1/)

@@ -1,0 +1,35 @@
+---
+id: components/checkbox
+title: Checkbox
+description: Collects an independent yes-or-no choice.
+exampleFamily: checkbox
+---
+
+Checkbox: Collects an independent yes-or-no choice.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Checkbox inside FieldLabel
+
+Selecting a `Checkbox` inside `FieldLabel` changes the checkbox fill and checkmark while keeping the label background unchanged. This applies to both checkbox cards and settings rows. Clicking the label still toggles its checkbox.
+
+- [Live example](../../../../examples/c-checkbox-9/)
+- [Live example](../../../../examples/c-checkbox-10/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Associate a label with each independent choice and store its checked state separately.
+
+### Current example source excerpt
+
+```tsx source="c-checkbox-1"
+import { Checkbox } from "@exre/exui"
+
+<Checkbox id={exampleId("terms")} />
+```
+
+[View complete source](../../../../examples/c-checkbox-1/)

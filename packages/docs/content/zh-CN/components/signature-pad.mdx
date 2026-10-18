@@ -1,0 +1,33 @@
+---
+id: components/signature-pad
+title: Signature Pad
+description: 采集手绘签名。
+exampleFamily: signature-pad
+---
+
+Signature Pad：采集手绘签名。
+
+## 基本用法
+
+提供明确的签名区域以及清除或确认操作。
+
+### 当前示例源码摘录
+
+```tsx source="c-signature-pad-1"
+import { SignaturePad, SignaturePadArea, SignaturePadClear, SignaturePadControls, SignaturePadPlaceholder, SignaturePadSave } from "@exre/exui"
+
+<SignaturePad>
+        <SignaturePadArea variant="muted" className="h-60">
+          <SignaturePadPlaceholder />
+          <SignaturePadControls position="bottom-end">
+            <SignaturePadClear />
+            <SignaturePadSave
+              format="json"
+              onSave={(_, strokes) => setSaved(strokes)}
+            />
+          </SignaturePadControls>
+        </SignaturePadArea>
+      </SignaturePad>
+```
+
+[查看完整源码](../../../../examples/c-signature-pad-1/)

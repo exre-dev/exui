@@ -1,0 +1,22 @@
+---
+id: components/sortable
+title: Sortable
+description: Reorders items through drag interactions.
+exampleFamily: sortable
+---
+
+Sortable: Reorders items through drag interactions.
+
+## Basic usage
+
+Give each item a stable id and update the backing order when dragging completes.
+
+### Current example source excerpt
+
+```tsx source="c-sortable-1"
+import { Sortable } from "@exre/exui"
+
+<Sortable value={items} onValueChange={handleValueChange} getItemValue={getItemValue} />
+```
+
+[View complete source](../../../../examples/c-sortable-1/)

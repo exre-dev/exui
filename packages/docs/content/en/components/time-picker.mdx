@@ -1,0 +1,28 @@
+---
+id: components/time-picker
+title: Time Picker
+description: Chooses a time with dedicated time controls.
+exampleFamily: time-picker
+---
+
+Time Picker: Chooses a time with dedicated time controls.
+
+## Basic usage
+
+Choose the time granularity needed by the task and keep the displayed time tied to one value.
+
+### Current example source excerpt
+
+```tsx source="c-time-picker-1"
+import { TimePicker, TimePickerPanel } from "@exre/exui"
+
+<TimePicker i18n={exampleLocales.timePicker}
+          value={value}
+          onValueChange={setValue}
+          aria-label={copyExample("Meeting time")}
+        >
+          <TimePickerPanel />
+        </TimePicker>
+```
+
+[View complete source](../../../../examples/c-time-picker-1/)

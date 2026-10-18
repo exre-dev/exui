@@ -1,0 +1,33 @@
+---
+id: components/stepper
+title: Stepper
+description: 引导用户依次完成步骤。
+exampleFamily: stepper
+---
+
+Stepper：引导用户依次完成步骤。
+
+## 基本用法
+
+将编号步骤与内容配对，并在应用状态中记录当前步骤。
+
+### 当前示例源码摘录
+
+```tsx source="c-stepper-1"
+import { StepperIndicator, StepperItem, StepperNav, StepperSeparator } from "@exre/exui"
+
+<StepperNav>
+        {<ExampleText>{steps.map((step) => (
+          <StepperItem key={step} step={step}>
+            <StepperTrigger>
+              <StepperIndicator>{<ExampleText>{step}</ExampleText>}</StepperIndicator>
+            </StepperTrigger>
+            {<ExampleText>{steps.length > step && (
+              <StepperSeparator className="group-data-[state=completed]/step:bg-primary" />
+            )}</ExampleText>}
+          </StepperItem>
+        ))}</ExampleText>}
+      </StepperNav>
+```
+
+[查看完整源码](../../../../examples/c-stepper-1/)

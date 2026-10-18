@@ -1,0 +1,27 @@
+---
+id: components/table
+title: Table
+description: 以统一样式展示表格行列。
+exampleFamily: table
+---
+
+Table：以统一样式展示表格行列。
+
+## 基本用法
+
+用表头行标记列，再在正文行呈现对应记录。
+
+### 当前示例源码摘录
+
+```tsx source="c-table-1"
+import { Table, TableCaption, TableHead, TableHeader, TableRow } from "@exre/exui"
+
+<Table>
+  <TableCaption />
+  <TableHeader>
+    <TableRow />
+  </TableHeader>
+</Table>
+```
+
+[查看完整源码](../../../../examples/c-table-1/)

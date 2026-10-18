@@ -1,0 +1,17 @@
+---
+id: tokens/usage
+title: 使用 Token
+description: 从公开子路径读取框架无关的 JavaScript Token 与 CSS 变量。
+---
+
+`exuiTokens` 提供类型化视觉值，`componentRecipes` 提供非 React 渲染所需的几何与状态配方。导入 `tokens/style.css` 使用 CSS 变量；需要字体时再添加 `tokens/font.css`。产品 CSS 优先使用 `--primary`、`--foreground` 等语义变量。仅使用 Token 不会初始化 React。
+
+## 基本用法
+
+```ts verify
+import "@exre/exui/tokens/style.css"
+import { exuiTokens, componentRecipes } from "@exre/exui/tokens"
+
+export const standardControlHeight = exuiTokens.density.standard.controlHeight
+export const buttonRecipe = componentRecipes.button
+```

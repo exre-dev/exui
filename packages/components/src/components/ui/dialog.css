@@ -1,0 +1,69 @@
+/* An explicit Body opts into bounded scrolling; legacy compositions keep
+   their own layout. Slots must be direct children of the content surface. */
+@layer components {
+  [data-slot="dialog-content"] {
+    display: grid;
+  }
+}
+
+[data-slot="dialog-content"]:has(> [data-slot="dialog-body"]) {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 2rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+[data-slot="dialog-content"] > [data-slot="dialog-header"],
+[data-slot="dialog-content"] > [data-slot="dialog-footer"] {
+  flex-shrink: 0;
+}
+
+[data-slot="dialog-content"] > [data-slot="dialog-body"] {
+  flex: 1 1 auto;
+  /* Leave at least one scrollable line if the fixed regions exceed the
+     viewport; the surface then supplies an outer scrolling fallback. */
+  min-height: var(--exui-component-dialog-title-line-height);
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+/* Reserve the close button's column even for long, wrapping headings. */
+[data-slot="dialog-content"]:has(> [data-slot="dialog-close"]) > [data-slot="dialog-header"] {
+  padding-inline-end: calc(var(--exui-component-button-small-height) + var(--exui-component-dialog-body-gap));
+}
+
+[data-slot="dialog-header"][data-exui-action] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0.125rem;
+}
+
+[data-slot="dialog-header-text"] {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--exui-component-dialog-body-gap);
+  overflow-wrap: anywhere;
+}
+
+[data-slot="dialog-header"][data-exui-action] [data-slot="dialog-action"] {
+  margin-inline-start: -0.25rem;
+  /* Align the icon center to the first title line, not the whole text column. */
+  margin-top: calc((var(--exui-component-dialog-title-line-height) - var(--exui-component-button-small-height)) / 2);
+}
+
+/* Geometry is toggled on the existing node. No replacement portal or body
+   means drafts, focus and nested component state survive the breakpoint. */
+[data-slot="dialog-content"][data-exui-fullscreen] {
+  --tw-enter-scale: 1;
+  --tw-exit-scale: 1;
+  --_exui-glass-host-shadow: none;
+}
+
+[data-slot="dialog-content"][data-exui-fullscreen] > [data-slot="dialog-close"] {
+  top: max(var(--exui-component-dialog-close-button-placement-top), env(safe-area-inset-top, 0px));
+  right: max(var(--exui-component-dialog-close-button-placement-right), env(safe-area-inset-right, 0px));
+}

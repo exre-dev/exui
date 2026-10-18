@@ -1,0 +1,28 @@
+---
+id: components/frame
+title: Frame
+description: 为内容提供结构化边界。
+exampleFamily: frame
+---
+
+Frame：为内容提供结构化边界。
+
+## 基本用法
+
+当媒体或内容需要独立内嵌边界时，用 Frame 包裹该区域。
+
+### 当前示例源码摘录
+
+```tsx source="c-frame-1"
+import { Frame, FrameDescription, FrameHeader, FramePanel, FrameTitle } from "@exre/exui"
+
+<Frame>
+  <FrameHeader>
+    <FrameTitle />
+    <FrameDescription />
+  </FrameHeader>
+  <FramePanel />
+</Frame>
+```
+
+[查看完整源码](../../../../examples/c-frame-1/)

@@ -1,10 +1,10 @@
 import { mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { basename, dirname, join, resolve } from "node:path"
-import { spawnSync } from "node:child_process"
 import { fileURLToPath } from "node:url"
 import { assertPublishableManifest, COMPONENT_PACKAGE_NAME } from "./package-contract.mjs"
 import { createFormConsumerFiles } from "./form-consumer-fixture.mjs"
+import { runCommand } from "./run-command.mjs"
 
 const repositoryRoot = fileURLToPath(new URL("..", import.meta.url))
 const temporaryRoot = await mkdtemp(join(tmpdir(), "exui-pack-check-"))
@@ -20,18 +20,7 @@ const tailwindcssViteVersion = "^4.3.2"
 const fumadocsUiVersion = "^16.15.0"
 
 function run(command, args, cwd) {
-  const result = spawnSync(command, args, {
-    cwd,
-    encoding: "utf8",
-    shell: process.platform === "win32" && [pnpmCommand, npmCommand].includes(command),
-    stdio: ["ignore", "pipe", "pipe"],
-  })
-
-  if (result.status !== 0) {
-    throw new Error(`${command} ${args.join(" ")} failed:\n${result.error ?? ""}\n${result.stdout ?? ""}\n${result.stderr ?? ""}`)
-  }
-
-  return result.stdout.trim()
+  return runCommand(command, args, cwd).stdout.trim()
 }
 
 function toDependencyPath(value) {
@@ -72,7 +61,7 @@ function requirePackedPaths(packResult, requiredPaths) {
 async function verifyRootBoundary() {
   const rootManifest = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"))
   const showcaseManifest = JSON.parse(
-    await readFile(join(repositoryRoot, "packages", "showcase", "package.json"), "utf8")
+    await readFile(join(repositoryRoot, "packages", "docs", "package.json"), "utf8")
   )
 
   requireCondition(rootManifest.private === true, "root package must remain private")
@@ -345,7 +334,7 @@ async function verifyTokensOnlyConsumer(tarballPath, { packageManager }) {
   return consumerRoot
 }
 
-async function verifyTokensTypecheck(tarballPath, consumerRoot) {
+async function verifyTokensTypecheck(consumerRoot) {
   const tokensConsumer = `
 import { exuiTokens, componentRecipes } from "@exre/exui/tokens"
 import type { ComponentRecipes, RecipeLength } from "@exre/exui/tokens"
@@ -447,7 +436,7 @@ console.log(themes, size, remLength, pxLength, zeroLength, emLength)
   )
 }
 
-async function verifyTokensStylesheet(tarballPath, consumerRoot) {
+async function verifyTokensStylesheet(consumerRoot) {
   await writeFile(
     join(consumerRoot, "style-entry.ts"),
     'import "@exre/exui/tokens/style.css"\nimport "@exre/exui/tokens/font.css"\n'
@@ -589,6 +578,7 @@ async function verifyReactConsumer(tarballPath) {
           "@types/node": "^24",
           "@types/react": "^19",
           "@types/react-dom": "^19",
+          "@vitejs/plugin-react": "^6",
           typescript: typescriptVersion,
           vite: viteVersion,
         },
@@ -600,8 +590,8 @@ async function verifyReactConsumer(tarballPath) {
 
   const application = `
 import "@exre/exui/style.css"
-import { useState } from "react"
-import { Button, Card, CardContent, ExMessage, ExMessageContext, GlassSeed, ThemeProvider, Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, Field, Input, Label, Modal, Recharts, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartConfig, useIsMobile } from "@exre/exui"
+import { useEffect, useState } from "react"
+import { Button, Badge, Card, CardContent, ExMessage, ExMessageContext, GlassSeed, ThemeProvider, Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter, Field, Input, InputGroup, InputGroupInput, Textarea, Select, NativeSelect, Rating, Label, Recharts, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartConfig, useIsMobile, CodeBlock, DataGrid, DataGridContainer, DataGridTable, dataGridFeatures, TanStackTable } from "@exre/exui"
 
 const { BarChart, Bar, XAxis } = Recharts
 const chartData = [
@@ -613,13 +603,31 @@ const chartConfig = {
   visitors: { label: "Visitors", color: "var(--chart-1)" },
 } satisfies ChartConfig
 
+function EarlyMessage() {
+  useEffect(() => {
+    const loading = ExMessage.loading("Booting")
+    loading.onSuccess("Boot complete", { duration: 60_000 })
+  }, [])
+  return null
+}
+
 export function App() {
   const [submittedEmail, setSubmittedEmail] = useState("")
   const [modalDraft, setModalDraft] = useState("")
+  const [hostMounted, setHostMounted] = useState(true)
+  const [selectedRating, setSelectedRating] = useState(2)
+  const grid = TanStackTable.useTable({
+    data: [{ id: 1, name: "Ada" }],
+    columns: [{ accessorKey: "name", header: "Name" }],
+    features: dataGridFeatures,
+  })
   return (
     <ThemeProvider>
-      <ExMessageContext />
+      <EarlyMessage />
+      {hostMounted && <ExMessageContext />}
       <Button onClick={() => ExMessage.success("Packed message ready")}>Notify</Button>
+      <Button onClick={() => setHostMounted(false)}>Host off</Button>
+      <Button onClick={() => setHostMounted(true)}>Host on</Button>
       <GlassSeed />
       <Dialog>
         <DialogTrigger asChild>
@@ -641,30 +649,63 @@ export function App() {
           </form>
         </DialogContent>
       </Dialog>
-      <Modal
-        title="Project profile"
-        description="A modal from the packed public entry."
-        trigger={<Button variant="secondary">Open modal</Button>}
-        footer={<Button type="submit" form="packed-modal-form">Save modal</Button>}
-      >
-        <form id="packed-modal-form" onSubmit={(event) => {
+      <Dialog>
+        <DialogTrigger asChild><Button variant="secondary">Open profile</Button></DialogTrigger>
+        <DialogContent glass>
+          <DialogTitle>Project profile</DialogTitle>
+          <DialogDescription>A composed dialog from the packed public entry.</DialogDescription>
+          <form id="packed-dialog-form" onSubmit={(event) => {
           event.preventDefault()
           setModalDraft(String(new FormData(event.currentTarget).get("draft")))
         }}>
           <Field>
-            <Label htmlFor="modal-draft">Draft</Label>
-            <Input id="modal-draft" name="draft" defaultValue="" />
+            <Label htmlFor="dialog-draft">Draft</Label>
+            <Input id="dialog-draft" name="draft" defaultValue="" />
           </Field>
-          <input id="modal-file" type="file" />
-          <output data-testid="modal-draft-output" role="status">{modalDraft}</output>
+          <input id="dialog-file" type="file" />
+          <output data-testid="dialog-draft-output" role="status">{modalDraft}</output>
         </form>
-      </Modal>
+          <DialogFooter><Button type="submit" form="packed-dialog-form">Save profile</Button></DialogFooter>
+        </DialogContent>
+      </Dialog>
       <Card glass>
         <CardContent>
           <Button glass variant="danger">Delete</Button>
           <span data-testid="glass-class-surface" className="ex-glass rounded-xl p-4">Class entry point</span>
         </CardContent>
       </Card>
+      <Badge data-testid="reui-brand-badge">Brand</Badge>
+      <div data-testid="root-background" style={{ backgroundColor: "var(--background)" }}>Light surface</div>
+      <div className="dark" data-testid="nested-dark">
+        <div data-testid="nested-dark-background" style={{ backgroundColor: "var(--background)" }}>Dark surface</div>
+        <Badge data-testid="nested-dark-badge">Dark brand</Badge>
+      </div>
+      <div className="pitch-black" data-testid="nested-pitch-black">
+        <div data-testid="nested-pitch-background" style={{ backgroundColor: "var(--background)" }}>Pitch surface</div>
+        <Badge data-testid="nested-pitch-badge">Pitch brand</Badge>
+      </div>
+      <div data-testid="density-standard">
+        <Button data-testid="density-standard-button" glass>Density button</Button>
+        <Input aria-label="Standard density input" data-testid="density-standard-input" glass />
+        <Textarea aria-label="Standard density textarea" data-testid="density-standard-textarea" />
+        <Select options={[{ value: "one", label: "One" }]} placeholder="Standard density select" />
+        <NativeSelect aria-label="Standard density native select"><option value="one">One</option></NativeSelect>
+        <InputGroup><InputGroupInput aria-label="Standard density grouped input" /></InputGroup>
+      </div>
+      <div className="density-compact" data-testid="density-compact">
+        <Button data-testid="density-compact-button" glass>Density button</Button>
+        <Input aria-label="Compact density input" data-testid="density-compact-input" glass />
+        <Textarea aria-label="Compact density textarea" data-testid="density-compact-textarea" />
+        <Select options={[{ value: "one", label: "One" }]} placeholder="Compact density select" />
+        <NativeSelect aria-label="Compact density native select"><option value="one">One</option></NativeSelect>
+        <InputGroup><InputGroupInput aria-label="Compact density grouped input" /></InputGroup>
+      </div>
+      <Rating rating={selectedRating} editable onRatingChange={setSelectedRating} data-testid="editable-rating" />
+      <Rating rating={2.5} data-testid="readonly-rating" aria-label="Read-only rating" />
+      <CodeBlock code="const count: number = 1" language="typescript" glass />
+      <DataGrid table={grid} recordCount={1}>
+        <DataGridContainer glass><DataGridTable /></DataGridContainer>
+      </DataGrid>
       <ChartContainer config={chartConfig} style={{ width: 480, height: 320 }}>
         <BarChart data={chartData}>
           <XAxis dataKey="month" />
@@ -695,27 +736,30 @@ export const onDomElement = <div glass>Nope</div>
 // @ts-expect-error GlassSeed takes no children and renders no content of its own.
 export const withChildren = <GlassSeed>Nope</GlassSeed>
 `
-  // The modal is a configured pattern, not a primitive: the title is required,
-  // the two switch modes are mutually exclusive, and the size is a closed set.
-  // A failing case here becomes a compiler error, so the surface cannot widen.
-  const modalTypes = `
+  const removedModalTypes = `
+// @ts-expect-error Modal was removed in favor of ReUI Dialog.
 import { Modal } from "@exre/exui"
+`
+  const dialogTypes = `
+import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle, type DialogAction, type DialogProps } from "@exre/exui"
 
-// @ts-expect-error a modal always needs a visible title.
-export const withoutTitle = <Modal>body</Modal>
+const back: DialogAction = event => { event.currentTarget.focus() }
+const props: DialogProps = { title: <strong>Editor</strong>, description: <span>Details</span>, action: back }
+export const quick = <Dialog {...props} defaultOpen responsiveFullscreen contentProps={{ glass: true, closeLabel: "Close" }} footer={<button>Save</button>}><input /></Dialog>
+export const composed = <Dialog><DialogContent responsiveFullscreen><DialogHeader action={{ tooltip: "Back", onClick: back }}><DialogTitle>Editor</DialogTitle></DialogHeader><DialogBody>Content</DialogBody></DialogContent></Dialog>
 
-// @ts-expect-error open and defaultOpen cannot both be passed.
-export const bothModes = <Modal title="T" open defaultOpen>body</Modal>
-
-// @ts-expect-error a controlled modal needs its change handler.
-export const controlledWithoutHandler = <Modal title="T" open>body</Modal>
-
-// @ts-expect-error "huge" is not one of the four size presets.
-export const unknownSize = <Modal title="T" size="huge">body</Modal>
-
-export const uncontrolled = <Modal title="T" defaultOpen onOpenChange={() => {}}>body</Modal>
-export const controlled = <Modal title="T" open onOpenChange={() => {}}>body</Modal>
-export const everyOption = <Modal title="T" description="d" size="lg" width={480} height="30rem" padding={0} mobileFullscreen={false} dismissible={false} closeOnEscape={false} closeOnOutsideClick={false} closeLabel="Close" glass footer={<span>f</span>} bodyClassName="custom" onOpenAutoFocus={(event) => event.preventDefault()} onCloseAutoFocus={(event) => event.preventDefault()}>body</Modal>
+// @ts-expect-error object actions require a click handler.
+export const missingHandler = <Dialog title="Editor" action={{ tooltip: "Back" }} />
+// @ts-expect-error icons are Lucide components, not names.
+export const stringIcon = <Dialog title="Editor" action={{ onClick: back, icon: "ArrowLeft" }} />
+// @ts-expect-error fullscreen is an optional boolean.
+export const invalidFullscreen = <DialogContent responsiveFullscreen="yes" />
+// @ts-expect-error quick composition owns its host and cannot use asChild.
+export const replacedHost = <Dialog title="Editor" contentProps={{ asChild: true }} />
+// @ts-expect-error quick composition children belong on Dialog.
+export const replacedBody = <Dialog title="Editor" contentProps={{ children: "Other content" }} />
+// @ts-expect-error the public prop is spelled footer.
+export const misspelledFooter = <Dialog title="Editor" fotter={<button>Save</button>} />
 `
   const entry = `
 import { createRoot } from "react-dom/client"
@@ -728,7 +772,28 @@ if (container) {
 `
   await writeFile(join(consumerRoot, "app.tsx"), application)
   await writeFile(join(consumerRoot, "glass-types.tsx"), glassTypes)
-  await writeFile(join(consumerRoot, "modal-types.tsx"), modalTypes)
+  await writeFile(join(consumerRoot, "removed-modal-types.tsx"), removedModalTypes)
+  await writeFile(join(consumerRoot, "dialog-types.tsx"), dialogTypes)
+  await writeFile(join(consumerRoot, "minimal-es2023.tsx"), `
+import { Badge, CodeBlock, type CodeBlockTransformer } from "@exre/exui"
+
+const transformer: CodeBlockTransformer = { name: "consumer" }
+export const sample = <><Badge>Ready</Badge><CodeBlock code="const ready = true" language="typescript" transformers={[transformer]} /></>
+`)
+  await writeFile(join(consumerRoot, "tsconfig.es2023.json"), `${JSON.stringify({
+    compilerOptions: {
+      strict: true,
+      skipLibCheck: false,
+      noEmit: true,
+      module: "ESNext",
+      moduleResolution: "Bundler",
+      jsx: "react-jsx",
+      target: "ES2023",
+      lib: ["ES2023", "DOM", "DOM.Iterable"],
+      types: ["react", "react-dom"],
+    },
+    include: ["minimal-es2023.tsx"],
+  }, null, 2)}\n`)
   await writeFile(join(consumerRoot, "main.tsx"), entry)
   await writeFile(
     join(consumerRoot, "index.html"),
@@ -749,7 +814,7 @@ if (container) {
           lib: ["ES2023", "DOM", "DOM.Iterable"],
           types: ["node", "vite/client"],
         },
-        include: ["app.tsx", "main.tsx", "glass-types.tsx", "modal-types.tsx"],
+        include: ["app.tsx", "main.tsx", "glass-types.tsx", "removed-modal-types.tsx", "dialog-types.tsx"],
       },
       null,
       2
@@ -769,7 +834,7 @@ export default defineConfig({
   const serverSmoke = `
 import { renderToString } from "react-dom/server"
 import { createElement } from "react"
-import { Button, Card, GlassSeed, Field, Input, Label, Modal, ChartContainer, ChartTooltip } from "@exre/exui"
+import { Button, Card, GlassSeed, Field, Input, Label, Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, ChartContainer, ChartTooltip } from "@exre/exui"
 import { createRequire } from "node:module"
 import { fileURLToPath } from "node:url"
 import path from "node:path"
@@ -793,10 +858,11 @@ const html = renderToString(
     createElement(Field, null, createElement(Label, { htmlFor: "email" }, "Email"), createElement(Input, { id: "email", type: "email" })),
     createElement(ChartContainer, { config }, createElement("span", null, "chart")),
     createElement(ChartTooltip, null),
-    // The modal must server-render without a document: the portal stays empty
-    // on the server, so only the trigger reaches the markup.
-    createElement(Modal, { title: "Server modal", description: "Packed.", trigger: createElement("button", null, "Open modal") }, createElement("p", null, "body")),
-    createElement(Modal, { title: "Server modal without a description", defaultOpen: true }, createElement("p", null, "body"))
+    createElement(Dialog, null,
+      createElement(DialogTrigger, null, "Open profile"),
+      createElement(DialogContent, null,
+        createElement(DialogTitle, null, "Server profile"),
+        createElement(DialogDescription, null, "Packed.")))
   )
 )
 
@@ -806,8 +872,8 @@ assert.match(html, /exui-glass-distortion-v1/, "SSR output must contain the stat
 assert.match(html, /aria-hidden="true"/, "the seed must stay out of the accessibility tree on the server")
 assert.match(html, /ex-glass/, "SSR output must contain the material marker")
 assert.doesNotMatch(html, /glass="/, "the glass prop must never reach the server markup as an attribute")
-assert.match(html, /Open modal/, "SSR output must contain the modal trigger")
-assert.doesNotMatch(html, /ex-modal-body/, "the portal must not emit content that needs a document")
+assert.match(html, /Open profile/, "SSR output must contain the Dialog trigger")
+assert.doesNotMatch(html, /Server profile/, "the Dialog portal must not emit content that needs a document")
 assert.doesNotMatch(html, /aria-describedby/, "no description target may be promised on the server")
 
 const require = createRequire(import.meta.url)
@@ -823,11 +889,9 @@ console.log("react consumer SSR smoke ok:", html.length, "chars, single React in
   await writeFile(join(consumerRoot, "smoke.mjs"), serverSmoke)
 
   run(npmCommand, ["install", "--no-fund", "--no-audit"], consumerRoot)
+  run("node", [join(consumerRoot, "node_modules", "typescript", "bin", "tsc"), "-p", "tsconfig.es2023.json"], consumerRoot)
   run("node", [join(consumerRoot, "node_modules", "typescript", "bin", "tsc"), "-p", "tsconfig.json"], consumerRoot)
 
-  // @vitejs/plugin-react is a development requirement of the fixture only;
-  // install it after the package tree assertions would have run.
-  run(npmCommand, ["install", "--no-fund", "--no-audit", "--save-dev", "@vitejs/plugin-react@^6"], consumerRoot)
   run("node", [join(consumerRoot, "node_modules", "vite", "bin", "vite.js"), "build"], consumerRoot)
   run("node", ["smoke.mjs"], consumerRoot)
   // Run Vite's preview in a child process so Windows releases its native
@@ -926,9 +990,16 @@ try {
     "types/vendor/vendor-packages.json",
     "src/index.ts",
     "src/index.css",
+    "upstream/reui/LICENSE.md",
     "src/docs/theme.css",
     "components.json",
   ])
+
+  const notices = readPackedText(componentPackage.filename, "package/dist/third-party-notices.md")
+  requireCondition(
+    notices.includes("ReUI") && notices.includes("067aa0dc7f8bbfec1cd76fc5ad31f842be5f569a") && notices.includes("MIT License"),
+    "packed notices must identify the vendored ReUI revision and carry its MIT license"
+  )
 
   const packedTokenCss = readPackedText(componentPackage.filename, "package/dist/tokens/style.css")
   const componentVariableCount = (packedTokenCss.match(/--exui-component-/g) ?? []).length
@@ -984,8 +1055,8 @@ try {
   }
 
   const npmTokensConsumer = await verifyTokensOnlyConsumer(componentPackage.filename, { packageManager: "npm" })
-  await verifyTokensTypecheck(componentPackage.filename, npmTokensConsumer)
-  await verifyTokensStylesheet(componentPackage.filename, npmTokensConsumer)
+  await verifyTokensTypecheck(npmTokensConsumer)
+  await verifyTokensStylesheet(npmTokensConsumer)
   await verifyDocsThemeConsumer(componentPackage.filename)
   await verifyTokensOnlyConsumer(componentPackage.filename, { packageManager: "pnpm" })
   await verifyReactConsumer(componentPackage.filename)

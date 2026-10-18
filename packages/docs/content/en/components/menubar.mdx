@@ -1,0 +1,64 @@
+---
+id: components/menubar
+title: Menubar
+description: Organizes persistent application commands.
+exampleFamily: menubar
+---
+
+Menubar: Organizes persistent application commands.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Menubar`, `MenubarContent`, `MenubarSubContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Menubar } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Menubar>) {
+  return <Menubar {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Arrange stable top-level command groups before adding nested items.
+
+### Current example source excerpt
+
+```tsx source="c-menubar-1"
+import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "@exre/exui"
+
+<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger />
+    <MenubarContent />
+  </MenubarMenu>
+  <MenubarMenu>
+    <MenubarTrigger />
+    <MenubarContent />
+  </MenubarMenu>
+</Menubar>
+```
+
+[View complete source](../../../../examples/c-menubar-1/)

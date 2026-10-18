@@ -1,0 +1,29 @@
+---
+id: components/message
+title: Message
+description: 组合对话内容与元数据。
+exampleFamily: message
+---
+
+Message：组合对话内容与元数据。
+
+## 基本用法
+
+区分作者、时间、正文与操作，使对话易于浏览。
+
+### 当前示例源码摘录
+
+```tsx source="c-message-1"
+import { Bubble, BubbleContent, Message, MessageContent } from "@exre/exui"
+
+<Message>
+        <MessageContent>
+          <Bubble variant="muted">
+            <BubbleContent>
+              {<ExampleText>Staging is green on 4.2. Want me to promote it? </ExampleText>}</BubbleContent>
+          </Bubble>
+        </MessageContent>
+      </Message>
+```
+
+[查看完整源码](../../../../examples/c-message-1/)

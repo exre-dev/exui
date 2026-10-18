@@ -1,0 +1,30 @@
+---
+id: components/color-picker
+title: Color Picker
+description: 选择并编辑颜色值。
+exampleFamily: color-picker
+---
+
+Color Picker：选择并编辑颜色值。
+
+## 基本用法
+
+把选定颜色写入表单值，并为控件提供可读标签。
+
+### 当前示例源码摘录
+
+```tsx source="c-color-picker-1"
+import { ColorPicker, ColorPickerPanel } from "@exre/exui"
+
+<ColorPicker i18n={exampleLocales.colorPicker}
+          value={value}
+          onValueChange={setValue}
+          alpha
+          swatches={SWATCHES}
+          aria-label={copyExample("Fill color")}
+        >
+          <ColorPickerPanel />
+        </ColorPicker>
+```
+
+[查看完整源码](../../../../examples/c-color-picker-1/)

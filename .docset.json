@@ -7,13 +7,15 @@
     "**/README*.md",
     "CONTRIBUTING.md",
     "TESTING.md",
+    "packages/docs/content/**/*.mdx",
     "skills"
   ],
   "additionalPaths": [
     ".ai",
     "CONTRIBUTING.md",
     "TESTING.md",
-    "skills/exui-usage"
+    "packages/docs/content",
+    "skills/exui"
   ],
   "exclusions": [],
   "baselineRepairs": [

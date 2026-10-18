@@ -1,0 +1,60 @@
+---
+id: components/trace
+title: Trace
+description: 按步骤展示进度、结果和可展开的嵌套详情。
+exampleFamily: trace
+---
+
+Trace 按顺序展示操作过程。每一行用 `TraceLine` 表示步骤，用 `TraceTitle` 写出操作与状态；图标对辅助技术隐藏。仅在步骤确实处于运行、失败或等待状态时设置 `running`、`error` 或 `pending`。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### Trace 状态与详情展开
+
+ExUI 从 `@exre/exui` 导出 `Trace`、`TraceLine`、`TraceIcon`、`TraceTitle`、`TraceDescription`、`TraceCollapsible`、`TraceCollapsibleTrigger` 和 `TraceCollapsibleContent`。每行或触发器内组合 `TraceLine`；它本身是普通的 span，需要由外层链接或按钮承载操作。`TraceIcon` 仅作装饰，因此应在 `TraceTitle` 中用文字写明运行、失败或等待状态，不能只依赖 `TraceLine` 的颜色。
+
+独立展开使用 `defaultOpen`；受控展开同时传入 `open` 和 `onOpenChange`。嵌套行各自维护状态。ExUI 的 Radix Luma 配方提供间距与焦点样式；运行中的闪烁、内容展开动画及箭头旋转过渡仅在允许动态效果时启用。
+
+- [在线示例](../../../../examples/c-trace-1/)
+- [在线示例](../../../../examples/c-trace-2/)
+- [在线示例](../../../../examples/c-trace-6/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+```tsx
+import { Trace, TraceIcon, TraceLine, TraceTitle } from "@exre/exui"
+
+<Trace>
+  <TraceLine status="running">
+    <TraceIcon aria-hidden="true" />
+    <TraceTitle>正在检查更改</TraceTitle>
+  </TraceLine>
+</Trace>
+```
+
+需要展开详情时组合 `TraceCollapsible`、`TraceCollapsibleTrigger` 与 `TraceCollapsibleContent`。触发器支持键盘操作；根组件用 `open` 与 `onOpenChange` 管理受控状态。
+
+[查看全部 22 个官方示例](../../../../examples/c-trace-1/)
+
+### 当前示例源码摘录
+
+```tsx source="c-trace-1"
+import { Trace, TraceCollapsible, TraceCollapsibleContent, TraceCollapsibleTrigger, TraceIcon, TraceLine, TraceTitle } from "@exre/exui"
+
+<Trace>
+  <TraceLine>
+    <TraceIcon />
+    <TraceTitle />
+  </TraceLine>
+  <TraceCollapsible defaultOpen>
+    <TraceCollapsibleTrigger />
+    <TraceCollapsibleContent />
+  </TraceCollapsible>
+</Trace>
+```
+
+[查看完整源码](../../../../examples/c-trace-1/)

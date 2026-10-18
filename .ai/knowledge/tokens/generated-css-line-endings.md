@@ -1,6 +1,6 @@
 # 生成的样式表与换行符约束
 
-最后更新：2026-09-18
+最后更新：2026-10-15
 
 `packages/tokens/src/style.css` 是**已提交的生成物**，同时又被 `tokens:check` 逐字节比对。这两件事同时成立，产生了一个只会在 CI 上暴露的失效模式。
 
@@ -21,7 +21,7 @@ CI 运行在 `windows-latest` 上，Windows 上的 Git 默认会把文本文件�
 /packages/tokens/src/style.css text eol=lf
 ```
 
-同一份清单还钉住了 `scripts/release-bootstrap/*.mjs`、两个发布工作流、`.release-bootstrap.yaml`、`/packages/components/src/docs/theme.css` 与 `skills/exui-usage/references/generated/*.md`——都是会被逐字节或结构化比对的文本。
+同一份清单还钉住了 `scripts/release-bootstrap/*.mjs`、两个发布工作流、`.release-bootstrap.yaml`、`/packages/components/src/docs/theme.css` 与 `skills/exui/references/generated/*.md`。ReUI 接入又增加了 `/packages/components/upstream/reui/**`、`/packages/components/src/components/reui/**` 与 `/.notes/reui-integration/rfcs/upstream-inventory.json` 的 LF 约束；来源哈希以固定提交的 Git blob 规范化 LF 字节为准，`reui-sync --check` 跨 LF/CRLF checkout 比对相同内容。
 
 ## 操作约束
 

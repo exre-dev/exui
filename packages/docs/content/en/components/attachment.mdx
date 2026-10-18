@@ -1,0 +1,61 @@
+---
+id: components/attachment
+title: Attachment
+description: Displays file metadata and attachment actions.
+exampleFamily: attachment
+---
+
+Attachment: Displays file metadata and attachment actions.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Attachment`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Attachment } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Attachment>) {
+  return <Attachment {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI adaptation**
+
+### Attachment media corners
+
+`AttachmentMedia` follows the outer `Attachment` radius with an inset, concentric corner shape. This applies to image previews and icon or file media inside the attachment. Keep the media within `Attachment` so the shared geometry remains aligned when density and the outer radius change.
+
+- [Live example](../../../../examples/c-attachment-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Present a file name and type before adding preview, download, or removal actions.
+
+### Current example source excerpt
+
+```tsx source="c-attachment-1"
+import { Attachment, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from "@exre/exui"
+
+<Attachment>
+  <AttachmentMedia />
+  <AttachmentContent>
+    <AttachmentTitle />
+    <AttachmentDescription />
+  </AttachmentContent>
+</Attachment>
+```
+
+[View complete source](../../../../examples/c-attachment-1/)

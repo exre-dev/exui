@@ -1,0 +1,37 @@
+---
+id: components/resizable
+title: Resizable
+description: Lets users resize adjacent content regions.
+exampleFamily: resizable
+---
+
+Resizable: Lets users resize adjacent content regions.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Place adjacent panels in a group with a handle between them.
+
+### Current example source excerpt
+
+```tsx source="c-resizable-1"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@exre/exui"
+
+<ResizablePanelGroup orientation="vertical">
+  <ResizablePanel defaultSize={25} />
+  <ResizableHandle />
+</ResizablePanelGroup>
+```
+
+[View complete source](../../../../examples/c-resizable-1/)

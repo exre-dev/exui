@@ -1,0 +1,65 @@
+---
+id: components/alert-dialog
+title: Alert Dialog
+description: Requests a deliberate decision before a consequential action.
+exampleFamily: alert-dialog
+---
+
+Alert Dialog: Requests a deliberate decision before a consequential action.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Compact component padding
+
+ExUI uses `1rem` padding (16px at a 16px root) for default Card insets, all sides of `AlertDialogContent`, `SheetHeader` and `SheetFooter`, vertical padding in `CommandEmpty` and DataGrid empty-table/filter messages, all sides of Gantt's no-resource message, and bottom padding between vertical `TimelineItem` entries. Empty-state padding appears only when that state is rendered; Timeline's last item has no added bottom padding.
+
+Read [Compact component padding](./card.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-alert-dialog-1/)
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `AlertDialogContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { AlertDialogContent } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof AlertDialogContent>) {
+  return <AlertDialogContent {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Write a clear title and consequence before the confirm and cancel actions.
+
+### Current example source excerpt
+
+```tsx source="c-alert-dialog-1"
+import { AlertDialog, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger, Button } from "@exre/exui"
+
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline" />
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader />
+    <AlertDialogFooter />
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+[View complete source](../../../../examples/c-alert-dialog-1/)

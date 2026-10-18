@@ -1,0 +1,49 @@
+---
+id: components/bubble
+title: Bubble
+description: Presents message content and reactions.
+exampleFamily: bubble
+---
+
+Bubble: Presents message content and reactions.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Bubble`, `BubbleContent`, `BubbleReactions`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Bubble } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Bubble>) {
+  return <Bubble {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Keep message text and optional reactions together while preserving speaker context.
+
+### Current example source excerpt
+
+```tsx source="c-bubble-1"
+import { Bubble, BubbleContent } from "@exre/exui"
+
+<Bubble key={turn.id} align={turn.from === "you" ? "end" : "start"} variant={turn.from === "you" ? "default" : "muted"}>
+  <BubbleContent />
+</Bubble>
+```
+
+[View complete source](../../../../examples/c-bubble-1/)

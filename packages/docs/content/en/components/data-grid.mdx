@@ -1,0 +1,86 @@
+---
+id: components/data-grid
+title: Data Grid
+description: Combines tabular display with editing and selection.
+exampleFamily: data-grid
+---
+
+Data Grid: Combines tabular display with editing and selection.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Compact component padding
+
+ExUI uses `1rem` padding (16px at a 16px root) for default Card insets, all sides of `AlertDialogContent`, `SheetHeader` and `SheetFooter`, vertical padding in `CommandEmpty` and DataGrid empty-table/filter messages, all sides of Gantt's no-resource message, and bottom padding between vertical `TimelineItem` entries. Empty-state padding appears only when that state is rendered; Timeline's last item has no added bottom padding.
+
+Read [Compact component padding](./card.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-data-grid-22/)
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `DataGridContainer`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { DataGridContainer } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof DataGridContainer>) {
+  return <DataGridContainer {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-data-grid-1/)
+
+**ExUI addition**
+
+### Bundled chart and table runtimes
+
+Import `Recharts` and `TanStackTable` from the root package when composing ExUI charts or DataGrid. These namespaces use the same bundled instances as ExUI's components.
+
+Read [Bundled chart and table runtimes](./chart.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-data-grid-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Define stable row ids and column definitions before enabling selection or editing.
+
+### Current example source excerpt
+
+```tsx source="c-data-grid-1"
+import { DataGrid, DataGridContainer, DataGridPagination, DataGridScrollArea, DataGridTable } from "@exre/exui"
+
+<DataGrid table={table} recordCount={demoData.length} i18n={exampleLocales[language].dataGrid}>
+      <div className="w-full space-y-2.5">
+        <DataGridContainer>
+          <DataGridScrollArea>
+            <DataGridTable />
+          </DataGridScrollArea>
+        </DataGridContainer>
+        <DataGridPagination />
+      </div>
+    </DataGrid>
+```
+
+[View complete source](../../../../examples/c-data-grid-1/)

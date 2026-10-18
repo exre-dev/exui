@@ -1,0 +1,29 @@
+---
+id: components/number-field
+title: Number Field
+description: 通过键盘与步进控件编辑数值。
+exampleFamily: number-field
+---
+
+Number Field：通过键盘与步进控件编辑数值。
+
+## 基本用法
+
+定义数值边界与步长，使键盘输入与步进按钮保持一致。
+
+### 当前示例源码摘录
+
+```tsx source="c-number-field-1"
+import { NumberField, NumberFieldDecrement, NumberFieldGroup, NumberFieldIncrement, NumberFieldInput, NumberFieldScrubArea } from "@exre/exui"
+
+<NumberField defaultValue={5} min={0} max={100}>
+        <NumberFieldScrubArea label={copyExample("Amount")} />
+        <NumberFieldGroup>
+          <NumberFieldDecrement />
+          <NumberFieldInput />
+          <NumberFieldIncrement />
+        </NumberFieldGroup>
+      </NumberField>
+```
+
+[查看完整源码](../../../../examples/c-number-field-1/)

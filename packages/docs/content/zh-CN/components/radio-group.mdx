@@ -1,0 +1,45 @@
+---
+id: components/radio-group
+title: Radio Group
+description: 从一组选项中选择一项。
+exampleFamily: radio-group
+---
+
+Radio Group：从一组选项中选择一项。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### Radio 字段选中态
+
+`FieldLabel` 包裹 `RadioGroupItem` 时，选中选项不会自动改变标签背景，卡片与设置行组合也遵循此规则。选中状态由单选圆点与指示器表达，点击标签和方向键选择仍可使用。需要带底色的选中行或卡片时，请显式设置背景类名。
+
+请阅读[Radio 字段选中态](./field.mdx)，了解完整用法。
+
+- [在线示例](../../../../examples/c-radio-group-9/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+为整组选项提供组标签，为每项提供稳定值。
+
+### 当前示例源码摘录
+
+```tsx source="c-radio-group-1"
+import { Field, FieldLabel, RadioGroup, RadioGroupItem } from "@exre/exui"
+
+<RadioGroup defaultValue="comfortable">
+  <Field orientation="horizontal">
+    <RadioGroupItem value="default" id={exampleId("r1")} />
+    <FieldLabel htmlFor={exampleId("r1")} />
+  </Field>
+  <Field orientation="horizontal">
+    <RadioGroupItem value="comfortable" id={exampleId("r2")} />
+    <FieldLabel htmlFor={exampleId("r2")} />
+  </Field>
+</RadioGroup>
+```
+
+[查看完整源码](../../../../examples/c-radio-group-1/)

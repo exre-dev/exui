@@ -1,0 +1,18 @@
+---
+id: tokens/customization
+title: Customizing Tokens
+description: Override ExUI variables at the intended theme or subtree scope.
+---
+
+Override the semantic aliases after the ExUI stylesheet so the cascade selects your values. Place global brand values on the document theme class, or scope a local variation to an application subtree. Inspect the generated Token inventory before changing a recipe; do not copy a resolved colour into each component. The module below uses a semantic variable and leaves component states to ExUI.
+
+## Basic usage
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Card, CardContent } from "@exre/exui"
+
+export function SemanticSurface() {
+  return <Card style={{ borderColor: "var(--border)" }}><CardContent>Follows the active theme</CardContent></Card>
+}
+```

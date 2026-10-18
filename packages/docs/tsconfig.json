@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["vite/client", "node"],
+    "rootDirs": [".", "./.react-router/types"],
+    "resolveJsonModule": true,
+    "allowArbitraryExtensions": true,
+    "jsx": "react-jsx",
+    "noEmit": true
+  },
+  "include": ["src", "app", "lib", "source.config.ts", ".source", ".react-router/types/**/*"]
+}

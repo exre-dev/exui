@@ -1,0 +1,22 @@
+---
+id: components/label
+title: Label
+description: Associates readable text with a form control.
+exampleFamily: label
+---
+
+Label: Associates readable text with a form control.
+
+## Basic usage
+
+Point the label at the control's id, or use the control's documented composition pattern.
+
+### Current example source excerpt
+
+```tsx source="c-label-1"
+import { Label } from "@exre/exui"
+
+<Label htmlFor={exampleId("label-demo-username")}>{<ExampleText>Username</ExampleText>}</Label>
+```
+
+[View complete source](../../../../examples/c-label-1/)

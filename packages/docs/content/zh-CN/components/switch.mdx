@@ -1,0 +1,36 @@
+---
+id: components/switch
+title: Switch
+description: 改变即时生效的开关设置。
+exampleFamily: switch
+---
+
+Switch：改变即时生效的开关设置。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### FieldLabel 内的 Switch
+
+`FieldLabel` 包含 `Switch` 时，切换开关只改变轨道状态，不会给整行标签填充选中色。卡片和设置行都遵循这一规则。可用标签组合构建整行可点的开关设置，无需另加整行选中背景。
+
+请阅读[FieldLabel 内的 Switch](./field.mdx)，了解完整用法。
+
+- [在线示例](../../../../examples/c-switch-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+开关适用于立即生效的设置，应配有说明性标签。
+
+### 当前示例源码摘录
+
+```tsx source="c-switch-1"
+import { Switch } from "@exre/exui"
+
+<Switch id={exampleId("switch-basic")} />
+```
+
+[查看完整源码](../../../../examples/c-switch-1/)

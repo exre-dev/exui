@@ -1,0 +1,58 @@
+---
+id: components/toggle
+title: Toggle
+description: Turns a pressed state on or off.
+exampleFamily: toggle
+---
+
+Toggle: Turns a pressed state on or off.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Toggle`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Toggle } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Toggle>) {
+  return <Toggle {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI adaptation**
+
+### Toggle selection appearance
+
+`Toggle` and `ToggleGroupItem` keep a visible selected background after the pointer leaves, including when application utilities load above the public stylesheet. Default and outline variants support mouse and keyboard toggling. With `glass`, controls use the shared Glass state materials; disabled controls keep the default Glass material.
+
+- [Live example](../../../../examples/c-toggle-1/)
+- [Live example](../../../../examples/c-toggle-2/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Bind the pressed state when the application owns it; use the label to describe the enabled mode.
+
+### Current example source excerpt
+
+```tsx source="c-toggle-1"
+import { Toggle } from "@exre/exui"
+
+<Toggle aria-label={copyExample("Toggle bold")} defaultPressed>
+        <BoldIcon  />
+      </Toggle>
+```
+
+[View complete source](../../../../examples/c-toggle-1/)

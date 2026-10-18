@@ -1,0 +1,445 @@
+[
+  {
+    "file": "alert/c-alert-18.tsx",
+    "labels": [
+      "{copyExample(\"Dismiss alert\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "badge/c-badge-21.tsx",
+    "labels": [
+      "{copyExample(\"Remove badge\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "badge/c-badge-24.tsx",
+    "labels": [
+      "{copyExample(\"Remove badge\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-11.tsx",
+    "labels": [
+      "{copyExample(\"Previous page\")}",
+      "{copyExample(\"Next page\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-16.tsx",
+    "labels": [
+      "{copyExample(\"Filter\")}",
+      "{copyExample(\"Clear filter\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-17.tsx",
+    "labels": [
+      "{copyExample(\"More conversation options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-18.tsx",
+    "labels": [
+      "{copyExample(\"More execute options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-3.tsx",
+    "labels": [
+      "{copyExample(\"Upload\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-34.tsx",
+    "labels": [
+      "{copyExample(\"More options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-35.tsx",
+    "labels": [
+      "{copyExample(\"Previous\")}",
+      "{copyExample(\"Next\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-4.tsx",
+    "labels": [
+      "{copyExample(\"More options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-5.tsx",
+    "labels": [
+      "{copyExample(\"Add\")}",
+      "{copyExample(\"Schedule\")}",
+      "{copyExample(\"More options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-6.tsx",
+    "labels": [
+      "{copyExample(\"Flip horizontal\")}",
+      "{copyExample(\"Flip vertical\")}",
+      "{copyExample(\"Rotate clockwise\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-7.tsx",
+    "labels": [
+      "{copyExample(\"Refresh\")}",
+      "{copyExample(\"Open external link\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button-group/c-button-group-9.tsx",
+    "labels": [
+      "{copyExample(\"Send message\")}",
+      "{copyExample(\"Voice Mode\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "button/c-button-36.tsx",
+    "labels": [
+      "{copyExample(\"Google\")}",
+      "{copyExample(\"Facebook\")}",
+      "{copyExample(\"X\")}",
+      "{copyExample(\"GitHub\")}",
+      "{copyExample(\"LinkedIn\")}",
+      "{copyExample(\"Instagram\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "card/c-card-6.tsx",
+    "labels": [
+      "{copyExample(\"More options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "checkbox/c-checkbox-18.tsx",
+    "labels": [
+      "{copyExample(\"Help\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "checkbox/c-checkbox-20.tsx",
+    "labels": [
+      "{copyExample(\"Help\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "collapsible/c-collapsible-10.tsx",
+    "labels": [
+      "{formatExample(\"Download {name}\", { name: item.name })}",
+      "{formatExample(\"Delete {name}\", { name: item.name })}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "collapsible/c-collapsible-5.tsx",
+    "labels": [
+      "{copyExample(\"Settings\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "collapsible/c-collapsible-7.tsx",
+    "labels": [
+      "{language === \"zh-CN\" ? \"添加 API 密钥\" : \"Add API key\"}",
+      "{copyExample(\"More options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "collapsible/c-collapsible-9.tsx",
+    "labels": [],
+    "evidence": "Native focus-trigger remediation uses existing visible text as its accessible name; no new ARIA copy expression."
+  },
+  {
+    "file": "data-grid/c-data-grid-22.tsx",
+    "labels": [
+      "{copyExample(\"Row actions\")}",
+      "{copyExample(\"Copy\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "data-grid/c-data-grid-23.tsx",
+    "labels": [
+      "{copyExample(\"Row actions\")}",
+      "{copyExample(\"Clear search\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "data-grid/c-data-grid-24.tsx",
+    "labels": [
+      "{copyExample(\"Row actions\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "data-grid/c-data-grid-29.tsx",
+    "labels": [
+      "{copyExample(\"Row actions\")}",
+      "{copyExample(\"Refresh\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "data-grid/c-data-grid-8.tsx",
+    "labels": [
+      "{row.getIsExpanded() ? copyExample(\"Collapse row\") : copyExample(\"Expand row\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "dropdown-menu/c-dropdown-menu-12.tsx",
+    "labels": [
+      "{copyExample(\"More options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "hover-card/c-hover-card-3.tsx",
+    "labels": [
+      "{copyExample(\"Elena Soroka\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-11.tsx",
+    "labels": [
+      "{copyExample(\"Copy\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-14.tsx",
+    "labels": [
+      "{copyExample(\"Monthly request limit\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-18.tsx",
+    "labels": [
+      "{copyExample(\"Add\")}",
+      "{copyExample(\"Voice input\")}",
+      "{copyExample(\"Send\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-19.tsx",
+    "labels": [
+      "{copyExample(\"Mention\")}",
+      "{copyExample(\"Add image\")}",
+      "{copyExample(\"Send\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-21.tsx",
+    "labels": [
+      "{copyExample(\"Copy\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-22.tsx",
+    "labels": [
+      "{copyExample(\"Security information\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-28.tsx",
+    "labels": [
+      "{copyExample(\"More options\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-34.tsx",
+    "labels": [
+      "{copyExample(\"Add\")}",
+      "{copyExample(\"Voice input\")}",
+      "{copyExample(\"Voice mode\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input-group/c-input-group-35.tsx",
+    "labels": [
+      "{showPassword ? copyExample(\"Hide password\") : copyExample(\"Show password\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "input/c-input-16.tsx",
+    "labels": [
+      "{copyExample(\"Username help\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "kanban/c-kanban-1.tsx",
+    "labels": [
+      "{copyExample(\"Drag column\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "kanban/c-kanban-2.tsx",
+    "labels": [
+      "{copyExample(\"Drag column\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "kanban/c-kanban-6.tsx",
+    "labels": [
+      "{copyExample(\"Drag column\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "kbd/c-kbd-5.tsx",
+    "labels": [
+      "{copyExample(\"Save\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "label/c-label-7.tsx",
+    "labels": [
+      "{copyExample(\"API key help\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "pagination/c-pagination-1.tsx",
+    "labels": [
+      "{copyExample(\"Go to previous page\")}",
+      "{copyExample(\"Go to next page\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "pagination/c-pagination-10.tsx",
+    "labels": [
+      "{copyExample(\"Go to previous page\")}",
+      "{copyExample(\"Go to next page\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "pagination/c-pagination-15.tsx",
+    "labels": [
+      "{copyExample(\"Go to previous page\")}",
+      "{copyExample(\"Go to next page\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "pagination/c-pagination-3.tsx",
+    "labels": [
+      "{copyExample(\"Go to previous page\")}",
+      "{copyExample(\"Go to next page\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "pagination/c-pagination-4.tsx",
+    "labels": [
+      "{copyExample(\"Go to previous page\")}",
+      "{copyExample(\"Go to next page\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "pagination/c-pagination-9.tsx",
+    "labels": [
+      "{copyExample(\"Go to previous page\")}",
+      "{copyExample(\"Go to next page\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "popover/c-popover-10.tsx",
+    "labels": [
+      "{copyExample(\"Quick Settings\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "radio-group/c-radio-group-14.tsx",
+    "labels": [
+      "{copyExample(\"About public visibility\")}",
+      "{copyExample(\"About private visibility\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "rating/c-rating-8.tsx",
+    "labels": [
+      "{copyExample(item.label)}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "switch/c-switch-9.tsx",
+    "labels": [
+      "{copyExample(\"About two-factor authentication\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "toggle/c-toggle-4.tsx",
+    "labels": [
+      "{copyExample(\"Small toggle\")}",
+      "{copyExample(\"Bold\")}",
+      "{copyExample(\"Toggle bold icon\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "tooltip/c-tooltip-12.tsx",
+    "labels": [
+      "{copyExample(\"Delete Project\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "tooltip/c-tooltip-7.tsx",
+    "labels": [
+      "{copyExample(\"Verified domain\")}"
+    ],
+    "evidence": "Confirmed icon-only/focus-trigger remediation; exact consumer ARIA expressions and dictionary/template contract."
+  },
+  {
+    "file": "dropdown-menu/c-dropdown-menu-15.tsx",
+    "labels": ["{copyExample(\"Open account menu\")}"],
+    "evidence": "Confirmed Avatar span trigger remediation to a native button; translated account-menu action name."
+  }
+]

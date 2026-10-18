@@ -1,0 +1,23 @@
+.docs-examples-scope { min-width: 0; }
+.docs-example-card { min-width: 0; }
+.docs-examples-scope[data-page-loaded="calendar"] .docs-example-card { container-type: inline-size; }
+.docs-examples-scope[data-page-loaded="calendar"] .showcase-preview { padding: clamp(.25rem, calc((100cqi - 18rem) / 2), 2rem); }
+.docs-example-card .docs-example-preview-panel > div { min-width: 0; height: 100%; }
+.docs-example-card .showcase-preview { height: 100%; border: 0; }
+/* NavigationMenu renders its popup inline, outside the preview's fixed height. */
+.docs-examples-scope[data-page-loaded="navigation-menu"] .showcase-preview { overflow: visible; }
+.docs-example-source button:focus-visible, .docs-example-source select:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.docs-example-card [hidden], [data-docs-example-portal][hidden] { display: none !important; }
+.docs-example-source { min-width: 0; }
+.docs-example-source-toolbar { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; padding: .75rem .875rem; }
+.docs-example-source-toolbar label { display: flex; min-width: 0; align-items: center; gap: .5rem; font-size: .75rem; }
+.docs-example-source-toolbar select { max-width: min(100%, 32rem); min-width: 0; padding: .375rem .5rem; border: 1px solid var(--border); border-radius: var(--density-control-radius); background: var(--background); color: var(--foreground); }
+.docs-example-source-toolbar button, .docs-example-card-error button, .docs-examples-state button, .docs-example-source-state button { padding: .375rem .625rem; border: 1px solid var(--border); border-radius: var(--density-control-radius); background: var(--background); color: var(--foreground); cursor: pointer; }
+.docs-example-source-code { min-width: 0; max-height: 32rem; overflow: auto; border-top: 1px solid var(--border); font-size: .75rem; }
+.docs-example-source-code pre { margin: 0; padding: 1rem; overflow: visible; background: transparent; color: var(--foreground); }
+.docs-example-source-code .shiki span { color: var(--shiki-light); }
+:is(.dark, .pitch-black) .docs-example-source-code .shiki span { color: var(--shiki-dark); }
+.docs-example-source-feedback { display: block; min-height: 1.25rem; padding: 0 .875rem .25rem; color: var(--muted-foreground); font-size: .75rem; }
+.docs-example-card-error, .docs-example-source-state, .docs-examples-state { padding: 1.5rem; color: var(--muted-foreground); }
+.docs-example-card-error { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+@media (max-width: 48rem) { .docs-examples-scope .showcase-preview-grid { grid-template-columns: minmax(0, 1fr); } }

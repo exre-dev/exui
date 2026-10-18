@@ -1,0 +1,30 @@
+---
+id: components/color-picker
+title: Color Picker
+description: Selects and edits a color value.
+exampleFamily: color-picker
+---
+
+Color Picker: Selects and edits a color value.
+
+## Basic usage
+
+Expose the selected color in the form's value and provide a readable label for the control.
+
+### Current example source excerpt
+
+```tsx source="c-color-picker-1"
+import { ColorPicker, ColorPickerPanel } from "@exre/exui"
+
+<ColorPicker i18n={exampleLocales.colorPicker}
+          value={value}
+          onValueChange={setValue}
+          alpha
+          swatches={SWATCHES}
+          aria-label={copyExample("Fill color")}
+        >
+          <ColorPickerPanel />
+        </ColorPicker>
+```
+
+[View complete source](../../../../examples/c-color-picker-1/)

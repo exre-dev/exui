@@ -1,0 +1,27 @@
+---
+id: components/breadcrumb
+title: Breadcrumb
+description: Shows the current page's location in a hierarchy.
+exampleFamily: breadcrumb
+---
+
+Breadcrumb: Shows the current page's location in a hierarchy.
+
+## Basic usage
+
+Build ordered links from parent locations and mark the current page as the end.
+
+### Current example source excerpt
+
+```tsx source="c-breadcrumb-1"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@exre/exui"
+
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem />
+    <BreadcrumbSeparator />
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+[View complete source](../../../../examples/c-breadcrumb-1/)

@@ -1,0 +1,54 @@
+---
+id: components/gantt
+title: Gantt
+description: Places tasks and dependencies on a timeline.
+exampleFamily: gantt
+---
+
+Gantt: Places tasks and dependencies on a timeline.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Compact component padding
+
+ExUI uses `1rem` padding (16px at a 16px root) for default Card insets, all sides of `AlertDialogContent`, `SheetHeader` and `SheetFooter`, vertical padding in `CommandEmpty` and DataGrid empty-table/filter messages, all sides of Gantt's no-resource message, and bottom padding between vertical `TimelineItem` entries. Empty-state padding appears only when that state is rendered; Timeline's last item has no added bottom padding.
+
+Read [Compact component padding](./card.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-gantt-1/)
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+**ExUI adaptation**
+
+### Root export collision aliases
+
+The public root resolves name collisions between component modules with `Reui`-prefixed names. Import those exact names from `@exre/exui`; do not assume the original module-local name is also exported.
+
+Read [Root export collision aliases](../getting-started/quick-start.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Provide task dates and dependencies before rendering the timeline and drag interactions.
+
+### Current example source excerpt
+
+```tsx source="c-gantt-1"
+import { Gantt, GanttView } from "@exre/exui"
+
+<Gantt defaultDate={new Date(EXAMPLE_EPOCH)} defaultEvents={bars} resources={RESOURCES}>
+  <GanttView />
+</Gantt>
+```
+
+[View complete source](../../../../examples/c-gantt-1/)

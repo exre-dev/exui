@@ -1,0 +1,57 @@
+---
+id: components/emoji-picker
+title: Emoji Picker
+description: 搜索并选择表情符号。
+exampleFamily: emoji-picker
+---
+
+Emoji Picker：搜索并选择表情符号。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增与适配**
+
+### 搜索栏显示与默认布局
+
+`EmojiPicker` 支持 `hideSearch?: boolean`，默认值为 `false`。设为 `true` 后，内嵌面板和弹层都不显示搜索栏；显式组合的 `EmojiPickerSearch` 也遵循这个参数。分类浏览和键盘选择仍可使用；没有搜索栏的弹层会将焦点放在表情网格上。
+
+默认面板包含搜索、分类和表情网格，不再显示底部信息栏、预览或肤色选择入口。`EmojiPickerFooter`、`EmojiPickerPreview` 和 `EmojiPickerSkinTone` 仍可用于显式自定义组合。`hideSearch` 只控制搜索界面，不清空已有的 `query`。
+
+```tsx verify
+import { EmojiPicker, EmojiPickerPanel } from "@exre/exui"
+
+export function BrowseEmoji() {
+  return <EmojiPicker hideSearch>
+    <EmojiPickerPanel />
+  </EmojiPicker>
+}
+```
+
+- [在线示例](../../../../examples/c-emoji-picker-1/)
+- [在线示例](../../../../examples/exui-emoji-picker-search/)
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+允许搜索或浏览表情，再将选中的字符写入应用状态。
+
+### 当前示例源码摘录
+
+```tsx source="c-emoji-picker-1"
+import { EmojiPicker, EmojiPickerPanel } from "@exre/exui"
+
+<EmojiPicker i18n={exampleLocales.emojiPicker} locale={exampleLanguage === "zh-CN" ? "zh" : "en"} dataUrl="/examples/reui/emoji/emojibase-data-17.0.0" value={value} onValueChange={setValue}>
+        <EmojiPickerPanel />
+      </EmojiPicker>
+```
+
+[查看完整源码](../../../../examples/c-emoji-picker-1/)

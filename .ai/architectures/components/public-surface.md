@@ -1,12 +1,13 @@
 # 公共包的入口与构建边界
 
-最后更新：2026-09-28
+最后更新：2026-10-16
 
 ## 源码布局
 
 ```text
 packages/components/
 ├── components.json           shadcn/ui 生成配置（style: radix-luma，baseColor: olive，别名 @/*）
+├── upstream/reui/            已提交的 manifest、许可、导出清单与适配补丁；忽略的原始源/样式缓存
 ├── index.ts 等价物 → src/index.ts
 └── src/
     ├── index.ts              唯一公共导出汇总
@@ -14,12 +15,17 @@ packages/components/
     ├── docs/theme.css        Fumadocs UI 主题契约源，最终产出 dist/docs/theme.css
     ├── components/
     │   ├── theme-provider.tsx
-    │   └── ui/*.tsx          shadcn/ui 源组件（约 60 个文件）
-    ├── hooks/use-mobile.ts
+    │   ├── ui/*.tsx          ReUI 基础组件的 ExUI 适配
+    │   ├── reui/            ReUI 复用组件适配
+    │   └── patterns/         保留的 ExUI Form 等模式组件
+    ├── hooks/               基础与表单 hooks
+    ├── lib/forms/           表单状态与校验
     └── lib/utils.ts
 ```
 
-基础可复用组件位于 `src/components/ui`。表单模式组件位于 `src/components/patterns`，同源 hooks 位于 `src/hooks`，状态与校验边界位于 `src/lib/forms`；详见 [表单结构](forms.md)。`controls`、`layouts` 目录尚未建立。
+基础可复用组件位于 `src/components/ui`，复杂 ReUI 组件位于 `src/components/reui`。表单模式组件位于 `src/components/patterns`，同源 hooks 位于 `src/hooks`，状态与校验边界位于 `src/lib/forms`；详见 [表单结构](forms.md)。固定的 ReUI revision 为 `067aa0dc7f8bbfec1cd76fc5ad31f842be5f569a`，样式为 `radix-luma`，图标为 Lucide。库存覆盖 148 份原始源、82 个 ReUI 模块、4 个 hooks、62 份基础组件源；公开根入口新增导出 1102 个符号。上游 `form` 条目没有文件，以 ExUI Form 补足。`c-*` 示例和 Pro 组件不在当前公开面。`controls`、`layouts` 目录尚未建立。
+
+构建与维护使用受版本控制的 `upstream/reui/inventory.json` 读取库存，不依赖本地开发笔记；可选参考归档也不是构建输入。
 
 ## 公开入口
 
@@ -43,15 +49,21 @@ React 与 React DOM 是**可选 peer**，范围 `>=19.0.0 <20`，`peerDependenci
 `src/index.ts` 汇总三层：
 
 - `src/components/theme-provider.tsx` 以**显式命名导出**给出 `ThemeProvider` 与 `useTheme`，不使用 `export *`。
-- `src/components/ui/*` 与 `src/hooks/use-mobile`、`src/lib/utils` 以 `export *` 逐文件转发。
+- 既有基础组件与 `src/hooks/use-mobile`、`src/lib/utils` 维持逐文件公开；`Questionnaire` 在 `src/index.ts` 手写基础组件转发，其基础文件覆盖由 `scripts/reui-exports.test.mjs` 检查。ReUI 组件、4 个共享 hooks 与公开类型的显式根导出由 `scripts/reui-exports.mjs` 和 `upstream/reui/public-exports.json` 校验。与既有名称冲突的导出使用清单中的 `Reui` 前缀，私有 Context 值不公开。
 - 表单组件、同源 hooks 和公开类型采用显式命名导出；私有 Context、协调器、绑定适配器与导航入口不从根公开。
 - 全局消息宿主、静态调用入口和公开类型采用显式命名导出；状态归属见 [`ex-message`](ex-message.md)。
 
-新增 shadcn/ui 组件时必须同时在这里补一行转发，否则组件不会被发布，而 Oxlint 的 `react/only-export-components` 规则会提示同时导出组件与非组件的文件。
+新增或升级 ReUI 组件时必须同步库存、适配源、公开导出清单和 `src/index.ts`。`scripts/reui-sync.mjs --check` 比对原始源与适配哈希，`scripts/reui-foundation-diff.mjs --check` 校验基础文件的补丁，`scripts/reui-exports.mjs --check` 校验公开面。`--update` 是显式维护模式：先验证再写入，默认保留已有 ReUI 与基础 UI 适配、重写共享 source hooks，并重记当前适配哈希；它产生待审差异，不代表人工批准。`--accept-adapters` 可单独重记适配哈希，`--rebase-upstream` 会替换 `registry-json-luma` 类 ReUI 适配，需审查替换结果。
+
+`upstream/reui/source/` 与 `style-luma.css` 是可重建的本地缓存，不进入 Git；manifest、许可证、公开清单与适配补丁仍受版本控制。`scripts/reui-restore.mjs` 按 manifest 的固定 GitHub revision 下载缺失项，并以源码哈希和 `assets` 中的许可/样式哈希校验；已有内容不匹配时失败，不自动覆盖。完整缓存不访问网络；显式 `EXUI_REUI_CHECKOUT` 可从本地 Git 对象读取相同 revision，恢复与更新均不再依赖个人临时目录。所有下载完成并通过锁定哈希后才写入，恢复操作不改写已审适配及清单。维护入口为 `pnpm upstream:restore` / `pnpm upstream:check`；组件 `build`、源码对照和样式校验入口会先补齐缓存。
 
 ## 样式表源
 
-`src/index.css` 按顺序 `@import` 七条内容：`tailwindcss`、`tw-animate-css`、`shadcn/tailwind.css`、内部工作区的 `font.css` 与 `style.css`（后两者在构建期被解析并内联），以及 `./glass.css` 与 `./form.css`。随后用 `@custom-variant dark (&:is(.dark *))` 定义暗色变体，用 `@theme inline` 把 shadcn/ui 的短变量名（`--primary`、`--border`、`--chart-*`、`--sidebar-*`、`--radius` 等）映射为 Tailwind 的 `--color-*`，使工具类能读到 Token。
+`src/index.css` 导入 `tailwindcss`、`tw-animate-css`、`shadcn/tailwind.css`、内部工作区的 `font.css` 与 `style.css`（构建期内联），以及 `./glass.css`、`./form.css` 和生成的 `./reui-luma.css`。随后用 `@custom-variant dark (&:is(.dark *))` 定义暗色变体，用 `@theme inline` 把短变量名映射为 Tailwind 的 `--color-*`，使工具类能读到 Token。`scripts/generate-reui-luma.mjs --check` 保证选用的 Luma 规则与组件 class 标记闭合。
+
+manifest 中的 `radix-luma` 标识固定上游快照，基础 UI 仍允许独立的 ExUI 视觉适配。`Accordion` 的 Nova 视觉规则直接放在该组件的局部工具类中，不额外引入 Nova 全局样式；其上游身份与检查流程继续使用同一快照和适配补丁。消费约定见 [`Accordion appearance`](../../../skills/exui/references/exui/setup.md#accordion-appearance)。
+
+`Input` 保留 Luma 在默认、悬停和禁用状态下的透明描边，但保留 1px 边框占位，避免尺寸变化；聚焦和无效状态仍使用 ExUI 的表单控件边框与阴影 Token。透明色与状态颜色均使用同一组任意属性工具类：`[border-color:transparent]` 避免消费应用更高样式层中的通用 `border-transparent` 覆盖公共包的聚焦和无效状态。此适配只作用于 `Input`，不改变供其他控件共享的表单 Token。消费说明由 `input-appearance` 能力片段同步至双语文档与消费 skill。
 
 `package.json` 的 `sideEffects` 把 `*.css` 与 `src/index.css` 标为有副作用，避免打包器在树摇时丢掉样式导入。
 
@@ -85,3 +97,11 @@ React 与 React DOM 是**可选 peer**，范围 `>=19.0.0 <20`，`peerDependenci
 ## 构建后检查
 
 `check-dist.mjs` 在构建末尾扫描 `dist/` 与 `types/`：检查期望产物是否存在，并用 `module-specifiers.mjs` 抽取裸模块说明符，确保产物中没有解析不了的第三方导入。`generate-notices.mjs` 依据 `bundled-modules.json` 生成 `dist/third-party-notices.md`。
+
+## 根字号尺寸边界
+
+`lib/rem.ts` 与 `hooks/use-root-rem.ts` 是私有数字长度边界：按 document 共享1rem探针、ResizeObserver 与根元素属性观察，最后一个订阅者离开时移除。服务端及 hydration 首帧使用16px，挂载后按 owner ref 的 document 更新；无 ref 时使用执行环境的 document。CSS 可表达的尺寸直接用 rem，不为它们添加测量状态。规则及理由见 [[../../decisions/tokens/01-rem-scalable-lengths]]。
+
+`lib/recharts.tsx` 在同一内置 Recharts 实例上适配 XAxis/YAxis/CartesianAxis 默认 UI 几何、Tooltip 和 Legend；`lib/tanstack-table.ts` 保留完整命名空间并包装 `useTable` 与 `createTableHook/useAppTable` 的默认列尺寸。TanStack v9 按 columns 身份缓存列定义，更新默认尺寸时需同步使此缓存失效。非 React 的 `constructTable` 保持上游像素默认值；表模型 hook 本身没有 DOM owner 参数，不能把任意跨 document portal 的归属当作已支持。
+
+`third-party.css` 只覆盖 ExUI Toaster 和默认图例的尺寸。Sonner 的数字 gap 在封装层换算，调用方 style/toastOptions 合并；Resizable 缓存首次命中区对象，封装层更新自有对象以保持已有面板状态。InputOTP 私有密码管理器兼容分支的40px预留、18px探测没有可维护参数，仍是明确边界。`docs/theme.css` 在该入口适配 Fumadocs 已命名的位移动画与滚动条，其余预设与版本由消费者持有。

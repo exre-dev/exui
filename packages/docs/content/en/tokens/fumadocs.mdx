@@ -1,0 +1,15 @@
+---
+id: tokens/fumadocs
+title: Fumadocs colours
+description: Apply ExUI's published colour contract to a Fumadocs UI site.
+---
+
+Install Fumadocs UI in the consuming site, then import `@exre/exui/docs/theme.css` once. That CSS imports ExUI Tokens first, followed by Fumadocs' shadcn colour sheet and preset in a fixed order. It provides colours only: Fumadocs owns its layout, radii, and motion. It does not add a JavaScript `@exre/exui/docs` entry or wrap Fumadocs components. Use one root theme controller per page.
+
+## Basic usage
+
+```ts verify
+import "@exre/exui/docs/theme.css"
+
+export const docsThemeEntry = "@exre/exui/docs/theme.css"
+```

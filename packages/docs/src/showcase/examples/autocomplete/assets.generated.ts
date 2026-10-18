@@ -1,0 +1,30 @@
+// Private stable image lookup for this family only.
+const assets: Readonly<Record<string,string>> = {
+  "https://randomuser.me/api/portraits/men/1.jpg": "/examples/reui/photos/4342c8343f38562388.jpg",
+  "https://randomuser.me/api/portraits/men/11.jpg": "/examples/reui/photos/1312ce123c18a93b29.jpg",
+  "https://randomuser.me/api/portraits/men/13.jpg": "/examples/reui/photos/56505d15eb15a8386f.jpg",
+  "https://randomuser.me/api/portraits/men/15.jpg": "/examples/reui/photos/a36f6e5451cbbf0917.jpg",
+  "https://randomuser.me/api/portraits/men/17.jpg": "/examples/reui/photos/22ab94dabe1a5382cd.jpg",
+  "https://randomuser.me/api/portraits/men/19.jpg": "/examples/reui/photos/74e83c28d9f60165b7.jpg",
+  "https://randomuser.me/api/portraits/men/21.jpg": "/examples/reui/photos/32ef49fd928350fdcd.jpg",
+  "https://randomuser.me/api/portraits/men/23.jpg": "/examples/reui/photos/d24e3b963979d19d16.jpg",
+  "https://randomuser.me/api/portraits/men/25.jpg": "/examples/reui/photos/d3f84cfec347aa987c.jpg",
+  "https://randomuser.me/api/portraits/men/3.jpg": "/examples/reui/photos/d28200d97f109ef7bd.jpg",
+  "https://randomuser.me/api/portraits/men/5.jpg": "/examples/reui/photos/b52fd343cddf0caa04.jpg",
+  "https://randomuser.me/api/portraits/men/7.jpg": "/examples/reui/photos/c21a444cce1a796d39.jpg",
+  "https://randomuser.me/api/portraits/men/9.jpg": "/examples/reui/photos/b07d4d0875fa8ba405.jpg",
+  "https://randomuser.me/api/portraits/women/10.jpg": "/examples/reui/photos/15b65855433f942355.jpg",
+  "https://randomuser.me/api/portraits/women/12.jpg": "/examples/reui/photos/1f13cfba5372a5a343.jpg",
+  "https://randomuser.me/api/portraits/women/14.jpg": "/examples/reui/photos/fa633a17792c16d3d0.jpg",
+  "https://randomuser.me/api/portraits/women/16.jpg": "/examples/reui/photos/4a39d3ea9365eb0cac.jpg",
+  "https://randomuser.me/api/portraits/women/18.jpg": "/examples/reui/photos/fea73a77a1afde4456.jpg",
+  "https://randomuser.me/api/portraits/women/2.jpg": "/examples/reui/photos/f0fb6d9fa4dd3c2a9e.jpg",
+  "https://randomuser.me/api/portraits/women/20.jpg": "/examples/reui/photos/680905eed473f03053.jpg",
+  "https://randomuser.me/api/portraits/women/22.jpg": "/examples/reui/photos/6a23a44cfa1f6513bb.jpg",
+  "https://randomuser.me/api/portraits/women/24.jpg": "/examples/reui/photos/9b0f719279d1af83b9.jpg",
+  "https://randomuser.me/api/portraits/women/26.jpg": "/examples/reui/photos/74a61d09ef0b503c55.jpg",
+  "https://randomuser.me/api/portraits/women/4.jpg": "/examples/reui/photos/26b2d8e69e31afd55b.jpg",
+  "https://randomuser.me/api/portraits/women/6.jpg": "/examples/reui/photos/2bbeb95380bb9d2d09.jpg",
+  "https://randomuser.me/api/portraits/women/8.jpg": "/examples/reui/photos/061a1e14d562d22b1a.jpg"
+}
+export default function exampleAsset(source:string):string { const local = assets[source]; if (!local) throw new Error(`Missing archived demo image: ${source}`); return local }

@@ -1,0 +1,40 @@
+---
+id: getting-started/quick-start
+title: Quick start
+description: Render a styled ExUI card and action through the public package entry.
+---
+
+Load the component stylesheet once at the application entry. It already includes ExUI Tokens and fonts. Import named React components from `@exre/exui`, then mount your application with the host's React root. The example is a complete reusable module.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Root export collision aliases
+
+The public root resolves name collisions between component modules with `Reui`-prefixed names. Import those exact names from `@exre/exui`; do not assume the original module-local name is also exported. The alias inventory includes scheduling helpers such as `ReuigetDayKey`, `ReuiexpandRecurrence`, `ReuiMAX_OCCURRENCES`, and type aliases such as `ReuiBuildIndexOptions`. The maintained export inventory is authoritative for the full set.
+
+```tsx verify
+import { ReuigetDayKey } from "@exre/exui"
+
+export const getScheduleDayKey = ReuigetDayKey
+```
+{/* exui-capabilities:end:docs */}
+
+## Components and Blocks
+
+**Components are basic UI elements**, such as buttons, inputs, and dialogs.
+
+**Blocks assemble basic components** into reusable interface sections. The welcome card below combines basic components such as Card and Button.
+
+## Basic usage
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@exre/exui"
+
+export function WelcomeCard() {
+  return <Card><CardHeader><CardTitle>Welcome</CardTitle></CardHeader><CardContent><Button type="button">Get started</Button></CardContent></Card>
+}
+```

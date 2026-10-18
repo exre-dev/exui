@@ -1,0 +1,54 @@
+---
+id: exui/ex-form
+title: ExForm
+description: 根据 Schema 与字段配置构建类型安全表单。
+exampleFamily: ex-form
+---
+
+ExForm：根据 Schema 与字段配置构建类型安全表单。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 配置式 ExForm
+
+`ExForm` 根据配置渲染字段和可选步骤。传 `schema` 与 `defaultValues`，或传 `useForm` 创建的 `form`；两种入口互斥。每个编辑步骤单独校验，确认步骤渲染当前快照。schema 对象应跨重渲染保持稳定；引用 `File` 的 schema 要在浏览器环境创建。
+
+使用此示例时，消费应用需自行安装 `zod`。
+
+```tsx verify
+import { ExForm } from "@exre/exui"
+import { z } from "zod"
+
+const schema = z.object({ name: z.string().min(1) })
+export function ProjectSetup() {
+  return <ExForm schema={schema} defaultValues={{ name: "" }}
+    fields={[{ name: "name", label: "项目名称", control: "text" }]}
+    onSubmit={(value) => console.log(value.name)} />
+}
+```
+
+- [在线示例](../../../../examples/exui-ex-form-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+先定义稳定的 Schema 与字段配置，再处理类型化提交结果。
+
+### 当前示例源码摘录
+
+```tsx source="exui-ex-form-1"
+import { ExForm, Form, FormErrorSummary } from "@exre/exui"
+
+<ExForm form={form} columns={{ base: 1, md: 2 }} formatIssue={(message) => c(message, issueTranslations[message] ?? message)}>
+  <FormErrorSummary title={c("Check these fields", "请检查以下字段")} />
+</ExForm>
+```
+
+[查看完整源码](../../../../examples/exui-ex-form-1/)
+
+## 相关指南
+
+ExForm 使用的共享草稿与校验模型见 [Form](./form.mdx)。

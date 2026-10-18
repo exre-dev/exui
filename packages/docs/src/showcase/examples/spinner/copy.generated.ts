@@ -1,0 +1,31 @@
+// Generated private display copy; business values are unchanged.
+const dictionary: Readonly<Record<string, string>> = {
+  "Cancel": "取消",
+  "Checking availability...": "正在检查可用性...",
+  "Connected": "已连接",
+  "Dashboard Overview": "仪表盘概览",
+  "Growth": "增长",
+  "Loading": "正在加载",
+  "Loading projects": "正在加载项目",
+  "Loading…": "正在加载…",
+  "Monthly Report": "月度报告",
+  "Monthly revenue and user statistics for the current period.": "当前周期的月收入与用户统计。",
+  "Please wait while we fetch your project data. This should only take a moment.": "正在获取项目数据，请稍候。这只需片刻。",
+  "Processing": "处理中",
+  "Processing…": "正在处理…",
+  "Reconnecting": "正在重新连接",
+  "Refreshing data...": "正在刷新数据...",
+  "Revenue": "收入",
+  "Revenue and growth metrics.": "收入和增长指标。",
+  "Saving...": "正在保存...",
+  "Search records…": "搜索记录…",
+  "Searching": "正在搜索",
+  "Setting up your workspace": "正在设置工作区",
+  "Syncing": "正在同步",
+  "This may take a few seconds...": "这可能需要几秒钟...",
+  "Updating": "正在更新",
+  "Users": "用户",
+  "— attempt 3 of 5": "— 第 3 次尝试，共 5 次",
+  "— syncing data": "— 正在同步数据"
+}
+export default dictionary

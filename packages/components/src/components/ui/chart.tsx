@@ -1,10 +1,11 @@
 "use client"
 
 import * as React from "react"
-import * as RechartsPrimitive from "recharts"
+import * as RechartsPrimitive from "@/lib/recharts"
 import type { TooltipValueType } from "recharts"
 
 import { cn } from "@/lib/utils"
+import { useRootRem } from "@/hooks/use-root-rem"
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
@@ -43,7 +44,7 @@ function safeChartColor(value: unknown): string | undefined {
   return depth === 0 ? value.trim() : undefined
 }
 
-const INITIAL_DIMENSION = { width: 320, height: 200 } as const
+const INITIAL_DIMENSION_REM = { width: 20, height: 12.5 } as const
 type TooltipNameType = number | string
 
 export type ChartConfig = Record<
@@ -75,10 +76,11 @@ function useChart() {
 
 function ChartContainer({
   id,
+  ref,
   className,
   children,
   config,
-  initialDimension = INITIAL_DIMENSION,
+  initialDimension,
   ...props
 }: React.ComponentProps<"div"> & {
   config: ChartConfig
@@ -91,11 +93,15 @@ function ChartContainer({
   }
 }) {
   const uniqueId = React.useId()
+  const ownerRef = React.useRef<HTMLDivElement | null>(null)
+  React.useImperativeHandle(ref, () => ownerRef.current!, [])
+  const rem = useRootRem(ownerRef)
   const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`
 
   return (
     <ChartContext.Provider value={{ config }}>
       <div
+        ref={ownerRef}
         data-slot="chart"
         data-chart={chartId}
         className={cn(
@@ -106,7 +112,7 @@ function ChartContainer({
       >
         <ChartStyle id={chartId} config={config} />
         <RechartsPrimitive.ResponsiveContainer
-          initialDimension={initialDimension}
+          initialDimension={initialDimension ?? { width: INITIAL_DIMENSION_REM.width * rem, height: INITIAL_DIMENSION_REM.height * rem }}
         >
           {children}
         </RechartsPrimitive.ResponsiveContainer>

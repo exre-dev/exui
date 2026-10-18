@@ -1,6 +1,6 @@
 # 跨模块总览
 
-最后更新：2026-09-18
+最后更新：2026-10-16
 
 ## 仓库形态
 
@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | `packages/tokens` | `@exre/exui-tokens` | 私有 | Token 源、生成器与校验的构建位置 |
 | `packages/components` | `@exre/exui` | 公开 | 唯一的发布包，拥有组件根、`style.css` 与 tokens 子路径 |
-| `packages/showcase` | `@exre/exui-showcase` | 私有 | 只通过公开入口消费组件库的 Vite 应用 |
+| `packages/docs` | `@exre/exui-docs` | 私有 | React Router/Fumadocs 静态文档站；示例经公开入口消费组件库 |
 
 私有成员永不参与 Changesets 版本计算与发布；发布契约在 `scripts/release-bootstrap/plan.mjs` 与 `scripts/package-contract.mjs` 中双重拒绝私有包与内部包名泄漏。理由见 [[release/01-single-public-package]]。
 
@@ -25,12 +25,12 @@ packages/tokens  (私有)
 packages/components  (@exre/exui，唯一公开包)
       │  仅公开入口
       ▼
-packages/showcase  (私有；只 import @exre/exui 的公开入口)
+packages/docs  (私有；示例只 import @exre/exui 的公开入口)
 ```
 
 - `tokens` 不依赖任何人，其 JavaScript 入口无 React、DOM、存储、网络或全局 CSS 副作用。
 - `components` 对 tokens 只有**开发期工作区依赖**（`workspace:*`，位于 `devDependencies`）。打包后的产物不得引用内部包名，由 `assertPublishableManifest` 的 production 依赖字段检查保证。
-- `showcase` 依赖 `@exre/exui` 的 `workspace:*` 链接，但源码中只出现公开入口。
+- `docs` 依赖 `@exre/exui` 的 `workspace:*` 链接；示例只消费公开入口。原 Showcase 源码保留在 `packages/docs/src/showcase/` 作为夹具。
 
 ## 构建链
 
@@ -41,7 +41,7 @@ tokens: build:js + build:cjs → generate-css → copy-css → validate
    └─► components: tsc 双层类型检查 → vite build → copy-tokens-dist
            → build:types（tsc + tsc-alias + CSS 声明修复 + docs 主题放置 + 声明整合）
            → generate-notices → check-dist
-           └─► showcase: tsc 类型检查 → vite build
+           └─► docs: tsc 类型检查 → React Router/Vite 静态预渲染 (`build/client`)
 ```
 
 两个跨成员的产物移动点：
@@ -55,7 +55,8 @@ tokens: build:js + build:cjs → generate-css → copy-css → validate
 
 - Token 生成与消费结构：`architectures/tokens/token-pipeline.md`
 - 公共包的入口与构建边界：`architectures/components/public-surface.md`
-- Showcase 的消费模型与视觉测试：`architectures/showcase/consumption.md`
+- 当前静态文档站与示例边界：`architectures/docs/site.md`
+- 原 Showcase 示例与测试夹具：`architectures/showcase/consumption.md`
 - CI、发布与打包消费者门禁：`architectures/release/delivery-pipelines.md`
 
 ## 交付如何约束整条链

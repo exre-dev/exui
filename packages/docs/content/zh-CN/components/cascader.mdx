@@ -1,0 +1,49 @@
+---
+id: components/cascader
+title: Cascader
+description: 从嵌套层级中选择值。
+exampleFamily: cascader
+---
+
+Cascader：从嵌套层级中选择值。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+
+**ExUI 适配**
+
+### Cascader 多选指示
+
+`multiple` 模式下，即使设置 `indicator={false}`，选项仍显示复选框：它是选择控件，并非可关闭的装饰。选中时显示勾号，取消或清空后勾号消失。应用的 Tailwind 工具类在 ExUI CSS 之后加载时，标记也应保持可见。
+
+- [在线示例](../../../../examples/c-cascader-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+提供层级选项数据，按任务需要选择单选或多选。
+
+### 当前示例源码摘录
+
+```tsx source="c-cascader-1"
+import { Cascader, CascaderContent, CascaderPanel, CascaderTrigger, CascaderValue } from "@exre/exui"
+
+<Cascader labels={exampleLocales.cascader} items={attributes} value={value}>
+  <CascaderTrigger aria-label={copyExample("Attribute")}>
+    <CascaderValue placeholder={copyExample("Select an attribute")} maxSegments={3} />
+  </CascaderTrigger>
+  <CascaderContent>
+    <CascaderPanel />
+  </CascaderContent>
+</Cascader>
+```
+
+[查看完整源码](../../../../examples/c-cascader-1/)

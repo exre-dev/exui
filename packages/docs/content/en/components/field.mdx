@@ -1,0 +1,59 @@
+---
+id: components/field
+title: Field
+description: Composes a control, label, help text, and error state.
+exampleFamily: field
+---
+
+Field: Composes a control, label, help text, and error state.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Checkbox inside FieldLabel
+
+Selecting a `Checkbox` inside `FieldLabel` changes the checkbox fill and checkmark while keeping the label background unchanged. This applies to both checkbox cards and settings rows.
+
+Read [Checkbox inside FieldLabel](./checkbox.mdx) for complete usage guidance.
+
+**ExUI adaptation**
+
+### Switch inside FieldLabel
+
+When a `FieldLabel` contains a `Switch`, toggling the switch changes its track without filling the entire label background. This applies to card and settings-row labels. Use the label composition for a clickable switch row; avoid adding a selected fill solely to represent the switch state.
+
+- [Live example](../../../../examples/c-field-1/)
+
+**ExUI adaptation**
+
+### Radio field selection
+
+`FieldLabel` keeps its background unchanged when a nested `RadioGroupItem` is selected, including card and settings-row compositions. The radio circle and indicator show the selected state. Label clicks and arrow-key selection remain available; add an explicit background class if the composition needs a tinted row or card.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Group the label, control, description, and error so validation stays associated with the field.
+
+### Current example source excerpt
+
+```tsx source="c-field-1"
+import { Field, FieldDescription, FieldLabel, Input } from "@exre/exui"
+
+<Field>
+          <FieldLabel htmlFor={exampleId("profile-name")}>
+            {<ExampleText>Full Name </ExampleText>}<span className="text-destructive">*</span>
+          </FieldLabel>
+          <Input
+            id={exampleId("profile-name")}
+            placeholder={copyExample("Enter your full name")}
+            required
+          />
+          <FieldDescription>
+            {<ExampleText>This name will be displayed on your public profile. </ExampleText>}</FieldDescription>
+        </Field>
+```
+
+[View complete source](../../../../examples/c-field-1/)

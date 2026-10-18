@@ -1,0 +1,55 @@
+---
+id: components/tooltip
+title: Tooltip
+description: 为控件提供简短标签或说明。
+exampleFamily: tooltip
+---
+
+Tooltip：为控件提供简短标签或说明。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 共用 Glass 材质
+
+`glass` 属性与精确的 `ex-glass` 类名都可启用 ExUI 材质；每个表面分别选择，包括 Select 弹层。先导入 `@exre/exui/style.css`。如需可选折射，每个 document 挂载一个 `GlassSeed`。它渲染不可见的 SVG 滤镜定义，不占可见布局内容，并非 Provider，可在服务端渲染；没有它也有基础材质。浏览器支持检测只确认滤镜声明可被接受，不能证明折射被正确绘制；关键视觉效果需在目标浏览器检查。
+
+本家族支持 Glass 的公开组件: `TooltipContent`。
+
+请将此表面保留在常规的组件组合中；这个封装只为该表面启用 Glass。
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { TooltipContent } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof TooltipContent>) {
+  return <TooltipContent {...props} glass />
+}
+```
+
+请阅读[共用 Glass 材质](../exui/glass.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+提示文案保持简短，纯图标触发器自身也要有无障碍名称。
+
+### 当前示例源码摘录
+
+```tsx source="c-tooltip-1"
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@exre/exui"
+
+<Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" className="w-fit">
+              {<ExampleText>Show Tooltip </ExampleText>}</Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-sm">{<ExampleText>Add to library</ExampleText>}</p>
+          </TooltipContent>
+        </Tooltip>
+```
+
+[查看完整源码](../../../../examples/c-tooltip-1/)

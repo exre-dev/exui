@@ -1,0 +1,56 @@
+---
+id: components/chart
+title: Chart
+description: 为使用随包 Recharts 构建的数据图表提供样式。
+exampleFamily: chart
+---
+
+Chart：为使用随包 Recharts 构建的数据图表提供样式。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+
+- [在线示例](../../../../examples/c-chart-1/)
+
+**ExUI 新增**
+
+### 内置图表与表格运行时
+
+组合 ExUI 图表或 DataGrid 时，从根入口导入 `Recharts` 和 `TanStackTable`。这两个命名空间与 ExUI 组件使用同一份打包实例。封装后的 Recharts 坐标轴、提示和图例，会按 document 根字号缩放未传入的数字默认值；`TanStackTable.useTable` 及其应用 hook 也会缩放未传入的列尺寸。显式数字仍按像素解释；非 React 的 `constructTable` 保留上游像素默认值。
+
+```tsx verify
+import { Recharts, TanStackTable } from "@exre/exui"
+
+export const ExuiXAxis = Recharts.XAxis
+export const ExuiTableHook = TanStackTable.useTable
+```
+
+- [在线示例](../../../../examples/c-chart-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+将随包 Recharts 命名空间与 ExUI 图表辅助组件配合，保持单一图表运行时。
+
+### 当前示例源码摘录
+
+```tsx source="c-chart-1"
+import { Recharts, ChartContainer } from "@exre/exui"
+
+<ChartContainer config={copyExampleData(chartConfig)}>
+  <Recharts.BarChart accessibilityLayer data={chartData}>
+    <Recharts.CartesianGrid vertical={false} />
+    <Recharts.XAxis dataKey="month" tickLine={false} axisLine={false} />
+  </Recharts.BarChart>
+</ChartContainer>
+```
+
+[查看完整源码](../../../../examples/c-chart-1/)

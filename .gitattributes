@@ -4,4 +4,14 @@
 /.release-bootstrap.yaml text eol=lf
 /packages/tokens/src/style.css text eol=lf
 /packages/components/src/docs/theme.css text eol=lf
-/skills/exui-usage/references/generated/*.md text eol=lf
+/packages/components/upstream/reui/** text eol=lf
+/packages/components/src/components/reui/** text eol=lf
+/packages/components/src/hooks/** text eol=lf
+/packages/components/src/components/ui/questionnaire.tsx text eol=lf
+/skills/exui/references/generated/*.md text eol=lf
+
+# Public example assets retain the exact bytes recorded in provenance hashes.
+/packages/docs/public/examples/reui/** -text whitespace=cr-at-eol
+
+# Generated adapters contain the same required one-space context marker.
+/packages/components/upstream/reui/adapters/**/*.patch whitespace=-blank-at-eol,-blank-at-eof

@@ -1,0 +1,35 @@
+---
+id: components/checkbox
+title: Checkbox
+description: 收集独立的是非选项。
+exampleFamily: checkbox
+---
+
+Checkbox：收集独立的是非选项。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### FieldLabel 内的 Checkbox
+
+`FieldLabel` 包含 `Checkbox` 时，选中状态通过复选框自身的底色和勾号呈现，标签背景保持不变。复选卡片和设置行都遵循这一规则，点击标签仍可切换复选框。
+
+- [在线示例](../../../../examples/c-checkbox-9/)
+- [在线示例](../../../../examples/c-checkbox-10/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+每个独立选项都关联标签，并分别保存勾选状态。
+
+### 当前示例源码摘录
+
+```tsx source="c-checkbox-1"
+import { Checkbox } from "@exre/exui"
+
+<Checkbox id={exampleId("terms")} />
+```
+
+[查看完整源码](../../../../examples/c-checkbox-1/)

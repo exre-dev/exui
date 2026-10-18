@@ -1,0 +1,33 @@
+// Generated private display copy; business values are unchanged.
+const dictionary: Readonly<Record<string, string>> = {
+  "@shadcn": "@shadcn",
+  "Breadcrumb": "面包屑",
+  "CN": "CN",
+  "Checkout": "结账",
+  "Components": "组件",
+  "Dashboard": "仪表盘",
+  "Document": "文档",
+  "Documentation": "文档",
+  "Getting Started": "开始使用",
+  "GitHub": "GitHub",
+  "Help Center": "帮助中心",
+  "Home": "首页",
+  "Important": "重要",
+  "Inbox": "收件箱",
+  "Labels": "标签",
+  "MP": "MP",
+  "Products": "产品",
+  "Projects": "项目",
+  "ReUI": "ReUI",
+  "Resources": "资源",
+  "Settings": "设置",
+  "Themes": "主题",
+  "Toggle menu": "切换菜单",
+  "VC": "VC",
+  "Vercel": "Vercel",
+  "Workspace": "工作区",
+  "agents.md": "agents.md",
+  "shadcn": "shadcn",
+  "ui@shadcn.com": "ui@shadcn.com"
+}
+export default dictionary

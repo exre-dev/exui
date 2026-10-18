@@ -17,7 +17,7 @@
 
 代价：这是一个**语法接受度**检查，不是渲染检查。一个"能解析 url 链、绘制时丢弃整条链"的引擎仍然会通过检查，而此时 `--_exui-glass-reference` 已被写入，滤镜引用与 `blur()`/`saturate()` 共用同一条 `backdrop-filter` 声明，所以丢弃会连基础模糊一起带走。CSS 层面没有"只保留 blur"的回退手段：同属性的两条声明里，一旦含 URL 的那条在级联中胜出，就不存在让浏览器退回上一条的机制（这与"解析即失败"不同，后者才会自然回退）。这条残留风险不能靠加 `@supports` 消除。另外，增强的渲染本身没有任何像素级验证覆盖（明确不做玻璃视觉验证），因此"折射在目标引擎上可用"这一结论目前只有一次性的实测记录，没有进入任何门禁。
 
-影响：`glass-capabilities.ts` 是唯一判定点，`glass-seed.tsx` 只在它返回 `true` 时才登记根变量，`glass.css` 通过 `var(--_exui-glass-reference, brightness(1))` 消费它，三者不各自再判断一次。文档层面把限制写进了 `packages/components/README.md`、`skills/exui-usage/references/glass.md`、`TESTING.md` 与发布说明：不得声称"增强已验证"，也不得声称"增强失败不会影响基础模糊"。`.ai` 侧的具体约束见 [玻璃材质的层叠与运行约束](../../knowledge/components/glass-material-constraints.md) 与 [玻璃材质的结构与落点](../../architectures/components/glass-material.md)。
+影响：`glass-capabilities.ts` 是唯一判定点，`glass-seed.tsx` 只在它返回 `true` 时才登记根变量，`glass.css` 通过 `var(--_exui-glass-reference, brightness(1))` 消费它，三者不各自再判断一次。文档层面把限制写进了 `packages/components/README.md`、`skills/exui/references/exui/glass.md`、`TESTING.md` 与发布说明：不得声称"增强已验证"，也不得声称"增强失败不会影响基础模糊"。`.ai` 侧的具体约束见 [玻璃材质的层叠与运行约束](../../knowledge/components/glass-material-constraints.md) 与 [玻璃材质的结构与落点](../../architectures/components/glass-material.md)。
 
 重新审视条件：需要在 Chromium 之外的引擎上承诺增强一致性时；目标 Chromium 出现"接受但丢弃 URL 链"的回归时；或要求把"折射渲染可用"纳入发布门禁的真实像素证据时——那时应恢复能力表或改为引擎实测清单，而不是继续放宽语法检查。
 

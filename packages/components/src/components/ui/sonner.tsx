@@ -1,69 +1,85 @@
+"use client"
+
+import * as React from "react"
 import { Toaster as Sonner, toast, type ToasterProps } from "sonner"
-import { Ban, CircleAlert, CircleCheck, Info, LoaderCircle } from "lucide-react"
+import { CircleCheckIcon, InfoIcon, TriangleAlertIcon, CircleXIcon, Loader2Icon } from "lucide-react"
 import { useOptionalTheme } from "../theme-provider"
+import { useRootRem } from "@/hooks/use-root-rem"
+import { cn } from "@/lib/utils"
 
 // Theme resolution: an explicit `theme` prop wins, then the surrounding
 // ExUI ThemeProvider (read via the optional helper so this component
 // stays mountable without a provider), then a `system` fallback. The
-// public `useTheme` hook still throws outside <ThemeProvider /> — this
+// public `useTheme` hook still throws outside <ThemeProvider />; this
 // component deliberately does not.
-const Toaster = ({ theme: explicitTheme, ...props }: ToasterProps) => {
+const Toaster = ({ theme: explicitTheme, style, toastOptions, className, gap, offset, mobileOffset, icons, ...props }: ToasterProps) => {
+  const rem = useRootRem()
+  const [viewportWidth, setViewportWidth] = React.useState<number | null>(null)
+  React.useEffect(() => {
+    const update = () => setViewportWidth(window.innerWidth)
+    update()
+    window.addEventListener("resize", update)
+    return () => window.removeEventListener("resize", update)
+  }, [])
   const providerTheme = useOptionalTheme()
   const resolvedTheme = explicitTheme ?? providerTheme ?? "system"
 
   return (
     <Sonner
       theme={resolvedTheme}
-      className="toaster group"
+      className={cn("toaster group exui-toaster", viewportWidth !== null && viewportWidth <= 37.5 * rem && "exui-toaster-mobile", className)}
+      gap={gap ?? 0.875 * rem}
+      offset={offset ?? "1.5rem"}
+      mobileOffset={mobileOffset ?? "1rem"}
       icons={{
+        close: <svg xmlns="http://www.w3.org/2000/svg" width="0.75rem" height="0.75rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>,
         success: (
-          <CircleCheck
+          <CircleCheckIcon
             aria-hidden="true"
-            className="size-4 fill-current [&>circle]:stroke-none"
-            style={{ color: "var(--exui-feedback-success)", stroke: "var(--exui-feedback-success-foreground)" }}
+            className="size-4"
           />
         ),
         info: (
-          <Info
+          <InfoIcon
             aria-hidden="true"
-            className="size-4 fill-current [&>circle]:stroke-none"
-            style={{ color: "var(--primary)", stroke: "var(--primary-foreground)" }}
+            className="size-4"
           />
         ),
         warning: (
-          <CircleAlert
+          <TriangleAlertIcon
             aria-hidden="true"
-            className="size-4 fill-current [&>circle]:stroke-none"
-            style={{ color: "var(--exui-feedback-warning)", stroke: "var(--exui-feedback-warning-foreground)" }}
+            className="size-4"
           />
         ),
         error: (
-          <Ban
+          <CircleXIcon
             aria-hidden="true"
-            className="size-4 fill-current [&>circle]:stroke-none"
-            style={{ color: "var(--exui-feedback-danger)", stroke: "var(--exui-feedback-danger-foreground)" }}
+            className="size-4"
           />
         ),
         loading: (
-          <LoaderCircle
+          <Loader2Icon
             aria-hidden="true"
             className="size-4 animate-spin"
-            strokeWidth={4}
-            style={{ color: "var(--primary)" }}
           />
         ),
+        ...icons,
       }}
       style={
         {
           "--normal-bg": "var(--popover)",
           "--normal-text": "var(--popover-foreground)",
           "--normal-border": "var(--border)",
-          "--border-radius": "var(--radius)",
+          "--border-radius": "var(--radius-2xl)",
+          "--width": "22.25rem",
+          ...style,
         } as React.CSSProperties
       }
       toastOptions={{
+        ...toastOptions,
         classNames: {
           toast: "cn-toast",
+          ...toastOptions?.classNames,
         },
       }}
       {...props}

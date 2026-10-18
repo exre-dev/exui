@@ -21,7 +21,7 @@ if: >-
 
 ## 无法在本地发布
 
-`scripts/release-bootstrap/npm.mjs` 在入口处就要求运行上下文必须是 GitHub Actions 且仓库为 `caep-dev/exui`，否则直接报 `PUBLICATION_CONTEXT_REQUIRED`。这是刻意的：发布只能经由标签推送触发的工作流发生，绕过它的尝试会立即失败而不是悄悄发布。
+`scripts/release-bootstrap/npm.mjs` 在入口处就要求运行上下文必须是 GitHub Actions 且仓库为 `exre-dev/exui`，否则直接报 `PUBLICATION_CONTEXT_REQUIRED`。这是刻意的：发布只能经由标签推送触发的工作流发生，绕过它的尝试会立即失败而不是悄悄发布。
 
 另外 `tag-npm.yml` 会全局安装 `npm@11.9.0` 再发布，因为 OIDC 与 provenance 需要该版本以上；固定版本而不是用 runner 自带 npm。
 

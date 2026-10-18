@@ -1,0 +1,39 @@
+---
+id: tokens/density
+title: Density
+description: Apply standard or compact geometry to the controls that consume ExUI density variables.
+---
+
+Standard density is the default. Add `.density-compact` to the control subtree for compact values; it combines with any theme. Default Button, Input, Textarea, Select, NativeSelect, and InputGroup use the density variables. Explicit sizes and complex widget layouts may stay fixed, so check the specific control. A popup mounted outside this subtree needs the same density scope.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope. CSS dimensions expressed in `rem` follow the root font size. Some third-party numeric geometry cannot use CSS lengths; ExUI converts its defaults at the DOM boundary and updates them when the root font changes. Explicit numeric sizes remain the caller's pixels. Do not scale a supplied number a second time.
+
+```tsx verify
+import { Button, Select } from "@exre/exui"
+
+export function CompactControls() {
+  return <div className="density-compact">
+    <Button type="button">Save</Button>
+    <Select options={[{ value: "a", label: "Alpha" }]} defaultValue="a" />
+  </div>
+}
+```
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button, Input } from "@exre/exui"
+
+export function CompactControls() {
+  return <div className="density-compact"><Input aria-label="Name" /><Button type="button">Save</Button></div>
+}
+```

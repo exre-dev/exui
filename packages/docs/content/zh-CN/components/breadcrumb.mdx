@@ -1,0 +1,27 @@
+---
+id: components/breadcrumb
+title: Breadcrumb
+description: 展示当前页面在层级中的位置。
+exampleFamily: breadcrumb
+---
+
+Breadcrumb：展示当前页面在层级中的位置。
+
+## 基本用法
+
+按父级到当前页的顺序排列链接，末项标识当前页面。
+
+### 当前示例源码摘录
+
+```tsx source="c-breadcrumb-1"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@exre/exui"
+
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem />
+    <BreadcrumbSeparator />
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+[查看完整源码](../../../../examples/c-breadcrumb-1/)

@@ -1,0 +1,42 @@
+---
+id: components/tree
+title: Tree
+description: 展示并浏览嵌套节点。
+exampleFamily: tree
+---
+
+Tree：展示并浏览嵌套节点。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+提供稳定节点 id 与子节点，使展开和选择始终对应同一节点。
+
+### 当前示例源码摘录
+
+```tsx source="c-tree-1"
+import { Tree, TreeItem, TreeItemLabel } from "@exre/exui"
+
+<Tree id={treeInstanceId + "-tree"} indent={indent} tree={tree}>
+        {<ExampleText>{tree.getItems().map((item) => {
+          return (
+            <TreeItem id={treeInstanceId + "-item-" + item.getId()} key={item.getId()} item={item}>
+              <TreeItemLabel />
+            </TreeItem>
+          )
+        })}</ExampleText>}
+      </Tree>
+```
+
+[查看完整源码](../../../../examples/c-tree-1/)

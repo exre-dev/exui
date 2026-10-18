@@ -1,6 +1,6 @@
 # Token 生成与消费结构
 
-最后更新：2026-09-21
+最后更新：2026-10-15
 
 ## 源与产物
 
@@ -35,7 +35,7 @@ validate-tokens scripts/validate-tokens.mjs → 结构与取值校验
 | 块 | 内容 |
 | --- | --- |
 | `:root` | 主题 `light` 的全部 `--exui-*` 变量、shadcn/ui 语义别名（`--background`、`--primary`、`--border`、`--chart-1`、`--sidebar-*` 等）、density `standard` 的 `--density-*` 变量、`--exui-font-*`、`--radius`，以及全部 `--exui-component-*` 配方变量 |
-| `.dark` | 与 `:root` 相比取值不同的变量（`changedVariables` 差集） |
+| `.dark` | 与 `:root` 相比取值不同的 Token 和配方，以及显式重发的短语义别名引用 |
 | `.pitch-black` | 同上，第三套主题 |
 | `.density-compact` | 只包含五个 `--density-*` 变量 |
 
@@ -50,9 +50,9 @@ validate-tokens scripts/validate-tokens.mjs → 结构与取值校验
 | `glass.danger.foreground` / `.border` / `.fallbackBackground` | `var(--exui-control-danger-foreground)` / `var(--exui-control-danger)` | 危险语义跟随语义色 |
 | `glass.danger.<default\|hover\|active\|selected>Background` | `color-mix(in srgb, var(--exui-control-danger) <90\|94\|98\|98>%, transparent)` | 危险状态只差不透明度，基色保持引用 |
 
-其余叶子（含 `blur` 与 `saturation`）按常规展平。因此 `.dark` 与 `.pitch-black` 块里只会出现**取值确实不同**的玻璃叶子：危险状态引用的是同一串 `color-mix()` 文本，三主题下字符串相同，故不进差集块，危险材质靠 `--exui-control-danger` 自身的主题差异跟随主题。材质本身的结构与落点见 [玻璃材质的结构与落点](../components/glass-material.md)。
+其余玻璃叶子（含 `blur` 与 `saturation`）按常规展平；危险状态引用的是同一串 `color-mix()` 文本，靠 `--exui-control-danger` 的主题差异变色。短语义别名另行在各主题块显式重发，避免嵌套主题继承根元素已经解析的别名。材质本身的结构与落点见 [玻璃材质的结构与落点](../components/glass-material.md)。
 
-变量命名前缀区分用途：`--exui-*` 为 Token，`--density-*` 为密度，`--exui-component-*` 为配方，`--exui-shadow-*` 为阴影，其余无前缀的短名是 shadcn/ui 语义别名。
+变量命名前缀区分用途：`--exui-*` 为 Token，`--density-*` 为密度，`--exui-component-*` 为配方，`--exui-shadow-*` 为阴影，其余无前缀的短名是 shadcn/ReUI 语义别名。短别名通过 `var(--exui-*)` 引用对应 Token，`reuiSemanticAliases` 补足 ReUI 的 feedback 等语义名。普通子元素上的局部 Token 重声明仍受 CSS 继承和声明位置约束，必要时须在同一作用域重声明别名或配方。
 
 ## 校验入口
 
@@ -77,4 +77,4 @@ typecheck → build:js → build:cjs → verify-cjs → generate-css --check
 
 包内消费者通过 `@exre/exui-tokens` 及其 `style.css`、`font.css` 子路径解析；仓库外消费者只能使用公共包上的等价子路径。两者共享同一份产物，公开侧只是构建期复制的结果，结构见 `architectures/components/public-surface.md`。
 
-样式表同时是消费者的定制面：Token 都是 `:root`（以及 `.dark`、`.pitch-black`，二者只含与 light 不同的取值）上的自定义属性，且产物里这些声明**不在任何 `@layer` 内**，因此消费者只需在样式表之后、不放进任何 layer 地重声明同名属性即可覆盖，foundation 覆盖会经 `var()` 传导到组件。`--density-*` 与 `.density-compact` 目前没有任何消费者，覆盖它们不产生视觉效果。
+样式表同时是消费者的定制面：Token 声明位于 `:root` 及主题作用域，且**不在任何 `@layer` 内**。消费者在样式表之后、不放进任何 layer 地重声明同名属性即可覆盖；foundation 与短语义别名通过 `var()` 接续 Token。`--density-*` 的标准值与 `.density-compact` 的紧凑值已被公开组件样式中的默认 Button、Input、Textarea、Select、NativeSelect、InputGroup 控件消费；显式尺寸及复杂组件内部几何不受这一统一切换保证。Token-only 样式表只提供变量，不提供这些控件样式。

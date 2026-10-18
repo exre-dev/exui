@@ -46,6 +46,14 @@ function addThemeVariables(variables, theme) {
     "--chart-5": theme.chart.series5,
     "--destructive": theme.control.danger,
     "--destructive-foreground": theme.control.dangerForeground,
+    "--success": "var(--exui-feedback-success)",
+    "--success-foreground": "var(--exui-feedback-success-foreground)",
+    "--warning": "var(--exui-feedback-warning)",
+    "--warning-foreground": "var(--exui-feedback-warning-foreground)",
+    "--info": "var(--exui-feedback-info)",
+    "--info-foreground": "var(--exui-feedback-info-foreground)",
+    "--invert": "var(--exui-text-primary)",
+    "--invert-foreground": "var(--exui-text-inverse)",
     "--foreground": theme.text.primary,
     "--input": theme.border.input,
     "--muted": theme.surface.tertiary,
@@ -83,6 +91,57 @@ function addThemeVariables(variables, theme) {
   for (const [name, value] of Object.entries(theme.shadow)) {
     variables[`--exui-shadow-${toKebabCase(name)}`] = value
   }
+
+  // ReUI uses the conventional short semantic names. Keep those names linked
+  // to the ExUI source Tokens so downstream overrides repaint every surface.
+  for (const [alias, token] of Object.entries(reuiSemanticAliases)) {
+    variables[`--${alias}`] = `var(--exui-${token})`
+  }
+}
+
+const reuiSemanticAliases = {
+  accent: "surface-accent",
+  "accent-foreground": "surface-accent-foreground",
+  background: "surface-background",
+  border: "border-default",
+  card: "surface-card",
+  "card-foreground": "surface-card-foreground",
+  "chart-1": "chart-series1",
+  "chart-2": "chart-series2",
+  "chart-3": "chart-series3",
+  "chart-4": "chart-series4",
+  "chart-5": "chart-series5",
+  destructive: "control-danger",
+  "destructive-foreground": "control-danger-foreground",
+  foreground: "text-primary",
+  focus: "control-focus-ring",
+  "focus-foreground": "control-primary-foreground",
+  input: "border-input",
+  muted: "surface-tertiary",
+  "muted-foreground": "text-secondary",
+  popover: "surface-popover",
+  "popover-foreground": "surface-popover-foreground",
+  primary: "control-primary",
+  "primary-foreground": "control-primary-foreground",
+  ring: "control-focus-ring",
+  secondary: "surface-secondary",
+  "secondary-foreground": "control-neutral-foreground",
+  sidebar: "sidebar-background",
+  "sidebar-accent": "sidebar-accent",
+  "sidebar-accent-foreground": "sidebar-accent-foreground",
+  "sidebar-border": "sidebar-border",
+  "sidebar-foreground": "sidebar-foreground",
+  "sidebar-primary": "sidebar-primary",
+  "sidebar-primary-foreground": "sidebar-primary-foreground",
+  "sidebar-ring": "sidebar-ring",
+  success: "feedback-success",
+  "success-foreground": "feedback-success-foreground",
+  warning: "feedback-warning",
+  "warning-foreground": "feedback-warning-foreground",
+  info: "feedback-info",
+  "info-foreground": "feedback-info-foreground",
+  invert: "text-primary",
+  "invert-foreground": "text-inverse",
 }
 
 function flattenVariables(variables, prefix, value) {
@@ -328,6 +387,16 @@ function changedVariables(current, baseline) {
   )
 }
 
+function scopedThemeVariables(current, baseline) {
+  const changed = changedVariables(current, baseline)
+  // Custom properties with var() are resolved at the element where they are
+  // declared. A subtree theme cannot inherit :root's already-resolved alias.
+  for (const alias of Object.keys(reuiSemanticAliases)) {
+    changed[`--${alias}`] = current[`--${alias}`]
+  }
+  return changed
+}
+
 export function createCssVariables(contract, recipes) {
   const light = {}
   const dark = {}
@@ -357,8 +426,8 @@ export function createCssVariables(contract, recipes) {
 
   return {
     light,
-    dark: changedVariables(dark, light),
-    pitchBlack: changedVariables(pitchBlack, light),
+    dark: scopedThemeVariables(dark, light),
+    pitchBlack: scopedThemeVariables(pitchBlack, light),
     compact,
   }
 }

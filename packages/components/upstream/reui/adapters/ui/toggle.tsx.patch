@@ -1,0 +1,59 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/toggle.tsx b/packages/components/src/components/ui/toggle.tsx
+index 37c743f..0f94443 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/toggle.tsx
++++ b/packages/components/src/components/ui/toggle.tsx
+@@ -1,22 +1,23 @@
+-"use client"
+-
+ import * as React from "react"
+ import { cva, type VariantProps } from "class-variance-authority"
+-import { cn } from "cn"
+ import { Toggle as TogglePrimitive } from "radix-ui"
+ 
++import { cn } from "@/lib/utils"
++import { glassClassName, type GlassSurfaceProps } from "@/lib/glass"
++
+ const toggleVariants = cva(
+-  "cn-toggle group/toggle inline-flex items-center justify-center whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
++  "group/toggle inline-flex items-center justify-center gap-1 rounded-3xl text-sm font-medium whitespace-nowrap transition-colors outline-none hover:not-[.ex-glass]:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 aria-pressed:bg-muted dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+   {
+     variants: {
+       variant: {
+-        default: "cn-toggle-variant-default",
+-        outline: "cn-toggle-variant-outline",
++        default: "",
++        outline: "border border-input",
+       },
+       size: {
+-        default: "cn-toggle-size-default",
+-        sm: "cn-toggle-size-sm",
+-        lg: "cn-toggle-size-lg",
++        default:
++          "h-9 min-w-9 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",
++        sm: "h-8 min-w-8 px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
++        lg: "h-10 min-w-10 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
+       },
+     },
+     defaultVariants: {
+@@ -30,13 +31,19 @@ function Toggle({
+   className,
+   variant = "default",
+   size = "default",
++  glass,
+   ...props
+ }: React.ComponentProps<typeof TogglePrimitive.Root> &
+-  VariantProps<typeof toggleVariants>) {
++  VariantProps<typeof toggleVariants> &
++  GlassSurfaceProps) {
+   return (
+     <TogglePrimitive.Root
+       data-slot="toggle"
+-      className={cn(toggleVariants({ variant, size, className }))}
++      data-exui-glass-interactive=""
++      className={cn(
++        toggleVariants({ variant, size, className }),
++        glassClassName(glass)
++      )}
+       {...props}
+     />
+   )

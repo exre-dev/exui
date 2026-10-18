@@ -8,4 +8,4 @@
 - 颜色支持命名色、颜色函数、`var()` 和 `color-mix()`，但具有 HTML/CSS 结构分隔符、注释、转义、引号或不平衡括号的值会被忽略。调用方不应依赖这些值生成声明。
 - 安全回归必须经过公开 `ChartContainer` 的 SSR 输出，再由真实浏览器解析，同时验证脚本未执行、外部元素未获得注入的规则、正常主题配色仍生效。只断言字符串不包含脚本，无法覆盖 CSS 越界和合法配置兼容性。
 
-证据：`packages/components/src/components/ui/chart.tsx`、`scripts/chart-style.test.mjs`。公开消费用法继续由组件 README 与 `skills/exui-usage/references/components/Chart.md` 维护。
+证据：`packages/components/src/components/ui/chart.tsx`、`scripts/chart-style.test.mjs`。公开消费用法继续由组件 README 与 `skills/exui/references/components/chart.md` 维护。

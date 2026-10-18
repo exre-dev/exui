@@ -1,0 +1,64 @@
+---
+id: components/menubar
+title: Menubar
+description: 组织常驻的应用命令。
+exampleFamily: menubar
+---
+
+Menubar：组织常驻的应用命令。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 共用 Glass 材质
+
+`glass` 属性与精确的 `ex-glass` 类名都可启用 ExUI 材质；每个表面分别选择，包括 Select 弹层。先导入 `@exre/exui/style.css`。如需可选折射，每个 document 挂载一个 `GlassSeed`。它渲染不可见的 SVG 滤镜定义，不占可见布局内容，并非 Provider，可在服务端渲染；没有它也有基础材质。浏览器支持检测只确认滤镜声明可被接受，不能证明折射被正确绘制；关键视觉效果需在目标浏览器检查。
+
+本家族支持 Glass 的公开组件: `Menubar`, `MenubarContent`, `MenubarSubContent`。
+
+请将此表面保留在常规的组件组合中；这个封装只为该表面启用 Glass。
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Menubar } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Menubar>) {
+  return <Menubar {...props} glass />
+}
+```
+
+请阅读[共用 Glass 材质](../exui/glass.mdx)，了解完整用法。
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+先组织稳定的顶层命令组，再加入下级菜单项。
+
+### 当前示例源码摘录
+
+```tsx source="c-menubar-1"
+import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "@exre/exui"
+
+<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger />
+    <MenubarContent />
+  </MenubarMenu>
+  <MenubarMenu>
+    <MenubarTrigger />
+    <MenubarContent />
+  </MenubarMenu>
+</Menubar>
+```
+
+[查看完整源码](../../../../examples/c-menubar-1/)

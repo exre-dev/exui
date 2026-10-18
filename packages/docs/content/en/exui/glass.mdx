@@ -1,0 +1,90 @@
+---
+id: exui/glass
+title: Glass
+description: Applies ExUI's translucent material to supported surfaces.
+exampleFamily: glass
+---
+
+Glass: Applies ExUI's translucent material to supported surfaces.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`. Mount one `GlassSeed` per document if optional refraction is desired. It renders invisible SVG filter definitions without visible layout content, is not a provider, and can render on the server. The material works without a seed. Browser support checks accept the filter declaration; they do not prove the engine paints refraction, so verify that visual effect in the target browser.
+
+```tsx verify
+import { Button, GlassSeed, SelectContent, SelectField, SelectItem, SelectTrigger, SelectValue } from "@exre/exui"
+
+export function GlassChoices() {
+  return <><GlassSeed /><Button type="button" glass>Continue</Button>
+    <SelectField defaultValue="one"><SelectTrigger glass><SelectValue /></SelectTrigger>
+      <SelectContent glass><SelectItem value="one">One</SelectItem></SelectContent>
+    </SelectField></>
+}
+```
+
+#### Glass surfaces by component family
+
+| Family | Glass surfaces |
+| --- | --- |
+| button | `Button`, `ActionButton` |
+| select | `Select`, `SelectTrigger`, `SelectContent` |
+| card | `Card` |
+| dialog | `DialogContent` |
+| popover | `PopoverContent` |
+| drawer | `DrawerContent` |
+| sheet | `SheetContent` |
+| hover-card | `HoverCardContent` |
+| dropdown-menu | `DropdownMenuContent`, `DropdownMenuSubContent` |
+| menubar | `Menubar`, `MenubarContent`, `MenubarSubContent` |
+| input-group | `InputGroup`, `InputGroupButton` |
+| toggle | `Toggle` |
+| toggle-group | `ToggleGroupItem` |
+| badge | `Badge` |
+| alert | `Alert` |
+| item | `Item` |
+| attachment | `Attachment` |
+| bubble | `Bubble`, `BubbleContent`, `BubbleReactions` |
+| input | `Input` |
+| textarea | `Textarea` |
+| native-select | `NativeSelect` |
+| combobox | `ComboboxInput`, `ComboboxContent`, `ComboboxChips`, `ComboboxChip` |
+| alert-dialog | `AlertDialogContent` |
+| tooltip | `TooltipContent` |
+| context-menu | `ContextMenuContent`, `ContextMenuSubContent` |
+| command | `Command`, `CommandDialog` |
+| sidebar | `Sidebar`, `SidebarInset` |
+| tabs | `TabsList`, `TabsTrigger` |
+| autocomplete | `AutocompleteContent` |
+| code-block | `CodeBlock` |
+| data-grid | `DataGridContainer` |
+
+- [Live example](../../../../examples/exui-glass-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Add glass to a supported surface or use the ex-glass class; mount one GlassSeed for optional refraction.
+
+### Current example source excerpt
+
+```tsx source="exui-glass-1"
+import { Card, CardContent, CardHeader, Separator } from "@exre/exui"
+
+<Card glass={glass}>
+  <CardHeader />
+  <CardContent>
+    <Separator />
+  </CardContent>
+</Card>
+```
+
+[View complete source](../../../../examples/exui-glass-1/)
+
+## Related guides
+
+Read [Token usage](../tokens/usage.mdx) for the material variables and [themes](../tokens/themes.mdx) for the three palette layers.

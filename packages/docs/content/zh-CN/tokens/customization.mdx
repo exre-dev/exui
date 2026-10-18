@@ -1,0 +1,18 @@
+---
+id: tokens/customization
+title: 自定义 Token
+description: 在合适的主题或子树作用域覆盖 ExUI 变量。
+---
+
+在 ExUI 样式表之后覆盖语义别名，使级联采用你的值。全局品牌值放在文档主题类下，局部变化限制在应用子树内。修改配方前核对生成的 Token 索引，不要把解析后的颜色逐个复制到组件里。下方模块使用语义变量，组件状态仍交给 ExUI。
+
+## 基本用法
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Card, CardContent } from "@exre/exui"
+
+export function SemanticSurface() {
+  return <Card style={{ borderColor: "var(--border)" }}><CardContent>跟随当前主题</CardContent></Card>
+}
+```

@@ -1,0 +1,49 @@
+---
+id: components/cascader
+title: Cascader
+description: Selects values from a nested hierarchy.
+exampleFamily: cascader
+---
+
+Cascader: Selects values from a nested hierarchy.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+**ExUI adaptation**
+
+### Cascader selection indicator
+
+In `multiple` mode, each option keeps a visible checkbox even with `indicator={false}`: the box is the selection control, not optional decoration. Selected boxes show a check, and deselecting or clearing hides it. The marker also remains visible when application Tailwind utilities load after ExUI CSS.
+
+- [Live example](../../../../examples/c-cascader-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Supply hierarchical option data and choose single or multiple selection to match the task.
+
+### Current example source excerpt
+
+```tsx source="c-cascader-1"
+import { Cascader, CascaderContent, CascaderPanel, CascaderTrigger, CascaderValue } from "@exre/exui"
+
+<Cascader labels={exampleLocales.cascader} items={attributes} value={value}>
+  <CascaderTrigger aria-label={copyExample("Attribute")}>
+    <CascaderValue placeholder={copyExample("Select an attribute")} maxSegments={3} />
+  </CascaderTrigger>
+  <CascaderContent>
+    <CascaderPanel />
+  </CascaderContent>
+</Cascader>
+```
+
+[View complete source](../../../../examples/c-cascader-1/)

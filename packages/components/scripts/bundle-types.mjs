@@ -154,6 +154,12 @@ function resolveTypesCondition(exportsNode) {
 // "./d3-*". Exact keys win; longer patterns take precedence, matching
 // Node's subpath pattern semantics for the single-star case.
 function matchExportsEntry(exportsMap, requested) {
+  if (typeof exportsMap === "string" || Array.isArray(exportsMap)) {
+    return requested === "." ? { node: exportsMap, captured: null } : null
+  }
+  if (requested === "." && !Object.keys(exportsMap).some((key) => key.startsWith("."))) {
+    return { node: exportsMap, captured: null }
+  }
   if (requested in exportsMap) {
     return { node: exportsMap[requested], captured: null }
   }
@@ -241,8 +247,10 @@ async function resolvePackageRoot(name, specifier, resolutionBase) {
       const entry = requireFromContext.resolve(candidate)
       let directory = path.dirname(entry)
       while (true) {
-        if (await pathExists(path.join(directory, "package.json"))) {
-          return directory
+        const manifestFile = path.join(directory, "package.json")
+        if (await pathExists(manifestFile)) {
+          const manifest = await readJson(manifestFile)
+          if (manifest.name === name) return directory
         }
         const parent = path.dirname(directory)
         if (parent === directory) {
@@ -297,6 +305,10 @@ async function resolvePackageTypesEntry(packageDirectory, manifest, subpath, res
     }
   } catch {
     // no runtime entry either
+  }
+  if (subpath && !subpath.split('/').includes('..')) {
+    const declaration = await firstExistingDeclaration(typesCandidatesFor(path.join(packageDirectory, subpath)))
+    if (declaration?.startsWith(packageDirectory + path.sep)) return declaration
   }
   throw new Error(`Cannot resolve types entry for ${manifest.name}${subpath ? `/${subpath}` : ""}`)
 }
@@ -370,8 +382,23 @@ async function run() {
       return vendoredEntries.get(specifier)
     }
     const { name, subpath } = splitPackageSpecifier(specifier)
-    let entry = await loadPackage(name, specifier, resolutionBase)
+    let entry
     let typesEntry
+    try {
+      entry = await loadPackage(name, specifier, resolutionBase)
+    } catch (error) {
+      // Some type-only imports (for example Shiki's `hast`) have no runtime
+      // package at all. TypeScript resolves them through DefinitelyTyped.
+      if (subpath) throw error
+      const mangled = name.startsWith("@")
+        ? name.replace(/^@([^/]+)\//, "@types/$1__")
+        : `@types/${name}`
+      try {
+        entry = await loadPackage(mangled, mangled, resolutionBase)
+      } catch {
+        throw error
+      }
+    }
     try {
       typesEntry = await resolvePackageTypesEntry(entry.directory, entry.manifest, subpath, resolutionBase)
     } catch (error) {
@@ -442,6 +469,17 @@ async function run() {
       ? path.join(vendorRoot, item.record.name, path.relative(item.record.packageDirectory, item.source))
       : item.source
     let text = await readFile(item.source, "utf8")
+    if (item.source === path.join(typesRoot, "index.d.ts")) {
+      // Shiki's public transformer type references Symbol.dispose. Make the
+      // required standard-library declaration explicit for ES2023 consumers
+      // instead of relying on @types/node or their application lib setting.
+      text = `/// <reference lib="esnext.disposable" />\n${text}`
+    }
+    // @dnd-kit 6/10 still emits the removed global JSX namespace. Its public
+    // types are sound with React 19 once the namespace is scoped to React.
+    if (item.record?.name.startsWith("@dnd-kit/")) {
+      text = text.replace(/\bJSX\./g, 'import("react").JSX.')
+    }
     const referenceTypes = findReferenceTypesDirectives(text)
 
     for (const specifier of extractSpecifiers(text)) {

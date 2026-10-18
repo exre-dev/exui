@@ -1,0 +1,125 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/questionnaire.tsx b/packages/components/src/components/ui/questionnaire.tsx
+index 0781676..8e73bc7 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/questionnaire.tsx
++++ b/packages/components/src/components/ui/questionnaire.tsx
+@@ -1,12 +1,11 @@
+ "use client"
+ 
++import { CheckIcon } from "lucide-react"
+ import * as React from "react"
+ import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionnaire"
+-import { cn } from "cn"
+-
+-import { buttonVariants, type Button } from "@/registry/bases/radix/ui/button"
+-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
++import { cn } from "@/lib/utils"
+ 
++import { buttonVariants, type Button } from "@/components/ui/button"
+ function Questionnaire({
+   className,
+   ...props
+@@ -60,7 +59,7 @@ function QuestionnaireTitle({
+     <QuestionnairePrimitive.Title
+       data-slot="questionnaire-title"
+       className={cn(
+-        "cn-questionnaire-title cn-font-heading text-pretty",
++        "cn-questionnaire-title font-heading text-pretty",
+         className
+       )}
+       {...props}
+@@ -109,7 +108,7 @@ function QuestionnaireChoice({
+     <QuestionnairePrimitive.Choice
+       data-slot="questionnaire-choice"
+       className={cn(
+-        "cn-questionnaire-choice group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start text-start transition-colors outline-none select-none",
++        "cn-questionnaire-choice group/questionnaire-choice relative flex cursor-pointer items-start py-2 text-start transition-colors outline-none select-none max-sm:min-h-11 sm:min-h-9",
+         "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
+         className
+       )}
+@@ -117,7 +116,7 @@ function QuestionnaireChoice({
+     >
+       <QuestionnairePrimitive.ChoiceInput
+         data-slot="questionnaire-choice-input"
+-        className="cn-questionnaire-choice-input absolute inset-0 z-10 size-full cursor-pointer opacity-0"
++        className="absolute inset-0 z-10 size-full cursor-pointer opacity-0"
+       />
+       <span
+         aria-hidden="true"
+@@ -126,27 +125,22 @@ function QuestionnaireChoice({
+       >
+         <span
+           data-slot="questionnaire-choice-indicator-dot"
+-          className="cn-questionnaire-choice-indicator-dot hidden rounded-full group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
++          className="cn-questionnaire-choice-indicator-dot rounded-full group-data-unchecked/questionnaire-choice:hidden group-data-[type=checkbox]/questionnaire-choice:hidden"
+         />
+-        <IconPlaceholder
++        <CheckIcon aria-hidden="true"
+           data-slot="questionnaire-choice-indicator-check"
+-          className="cn-questionnaire-choice-indicator-check hidden group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
+-          lucide="CheckIcon"
+-          tabler="IconCheck"
+-          hugeicons="Tick02Icon"
+-          phosphor="CheckIcon"
+-          remixicon="RiCheckLine"
++          className="cn-questionnaire-choice-indicator-check group-data-unchecked/questionnaire-choice:hidden group-data-[type=radio]/questionnaire-choice:hidden"
+         />
+       </span>
+       <QuestionnairePrimitive.ChoiceLabel
+         data-slot="questionnaire-choice-label"
+-        className="cn-questionnaire-choice-label cn-questionnaire-choice-content flex min-w-0 flex-1 flex-col leading-snug"
++        className="cn-questionnaire-choice-content flex min-w-0 flex-1 flex-col leading-snug"
+       >
+         {children}
+       </QuestionnairePrimitive.ChoiceLabel>
+       <QuestionnairePrimitive.ChoiceShortcut
+         data-slot="questionnaire-choice-shortcut"
+-        className="cn-questionnaire-choice-shortcut cn-questionnaire-shortcut pointer-events-none ms-auto hidden shrink-0 group-data-[shortcut]/questionnaire-choice:inline-flex"
++        className="cn-questionnaire-shortcut pointer-events-none ms-auto hidden shrink-0 group-data-[shortcut]/questionnaire-choice:inline-flex"
+       />
+     </QuestionnairePrimitive.Choice>
+   )
+@@ -177,7 +171,7 @@ function QuestionnaireInput({
+       <QuestionnairePrimitive.Input
+         data-slot="questionnaire-input"
+         className={cn(
+-          "cn-questionnaire-input min-h-11 w-full min-w-0 transition-[color,box-shadow,background-color] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-0",
++          "cn-questionnaire-input w-full min-w-0 transition-[color,box-shadow,background-color] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 max-sm:min-h-11",
+           "selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground",
+           className
+         )}
+@@ -231,7 +225,7 @@ function QuestionnairePrevious({
+       data-variant={variant}
+       className={cn(
+         buttonVariants({ size, variant }),
+-        "cn-questionnaire-previous col-start-1 row-start-1 min-h-11 justify-self-start sm:min-h-0",
++        "col-start-1 row-start-1 justify-self-start",
+         className
+       )}
+       {...props}
+@@ -256,7 +250,7 @@ function QuestionnaireSkip({
+       data-variant={variant}
+       className={cn(
+         buttonVariants({ size, variant }),
+-        "cn-questionnaire-skip col-start-2 row-start-1 min-h-11 justify-self-end sm:min-h-0",
++        "col-start-2 row-start-1 justify-self-end",
+         className
+       )}
+       {...props}
+@@ -281,7 +275,7 @@ function QuestionnaireNext({
+       data-variant={variant}
+       className={cn(
+         buttonVariants({ size, variant }),
+-        "cn-questionnaire-next col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
++        "col-start-3 row-start-1 justify-self-end",
+         className
+       )}
+       {...props}
+@@ -306,7 +300,7 @@ function QuestionnaireSubmit({
+       data-variant={variant}
+       className={cn(
+         buttonVariants({ size, variant }),
+-        "cn-questionnaire-submit col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
++        "col-start-3 row-start-1 justify-self-end",
+         className
+       )}
+       {...props}

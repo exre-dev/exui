@@ -1,0 +1,57 @@
+---
+id: exui/form
+title: Form
+description: 将共享草稿与校验、提交连接起来。
+exampleFamily: form
+---
+
+Form：将共享草稿与校验、提交连接起来。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### ExUI Form 生命周期
+
+`useForm` 持有稳定的草稿和校验 schema；`Form` 接入提交与字段状态。schema 转换后的输入、输出类型可能不同，校验与提交也可能异步。`FormItem` 绑定字段路径，`FormErrorSummary` 展示校验问题。跨重渲染保持同一表单实例；即使同时显示通知，字段错误仍应留在表单内。
+
+使用下方 Zod schema 时，消费应用需自行安装 `zod`。
+
+```tsx verify
+import { Button, Form, FormItem, useForm } from "@exre/exui"
+import { z } from "zod"
+
+const schema = z.object({ name: z.string().min(1) })
+export function ProjectForm() {
+  const form = useForm({ schema, defaultValues: { name: "" } })
+  return <Form form={form} onSubmit={(value) => console.log(value.name)}>
+    <FormItem form={form} name="name" label="项目名称" control="text" />
+    <Button type="submit">保存</Button>
+  </Form>
+}
+```
+
+- [在线示例](../../../../examples/exui-form-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+建立一份表单草稿，绑定字段，并将校验错误送到对应控件。
+
+### 当前示例源码摘录
+
+```tsx source="exui-form-1"
+import { Form, FormErrorSummary, FormItem } from "@exre/exui"
+
+<Form form={form} onSubmit={(data) => setSaved(data.name)} formatIssue={(message) => c(message, issueTranslations[message] ?? message)}>
+  <FormErrorSummary title={c("Check these fields", "请检查以下字段")} />
+  <FormItem form={form} name="name" label={c("Project name", "项目名称")} />
+</Form>
+```
+
+[查看完整源码](../../../../examples/exui-form-1/)
+
+## 相关指南
+
+按 Schema 配置字段见 [ExForm](./ex-form.mdx)，独立的带标签控件见 [ExItem](./ex-item.mdx)。

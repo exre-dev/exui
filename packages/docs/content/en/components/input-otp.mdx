@@ -1,0 +1,40 @@
+---
+id: components/input-otp
+title: Input OTP
+description: Splits a one-time code into individual slots.
+exampleFamily: input-otp
+---
+
+Input OTP: Splits a one-time code into individual slots.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Set the expected code length and label the complete code entry, not isolated cells only.
+
+### Current example source excerpt
+
+```tsx source="c-input-otp-1"
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@exre/exui"
+
+<InputOTP id={exampleId("simple-otp")} maxLength={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+</InputOTP>
+```
+
+[View complete source](../../../../examples/c-input-otp-1/)

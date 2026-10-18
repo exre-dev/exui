@@ -3,7 +3,7 @@ import { createRequire } from "node:module"
 import { test } from "node:test"
 
 const requireFromComponents = createRequire(new URL("../packages/components/package.json", import.meta.url))
-const requireFromShowcase = createRequire(new URL("../packages/showcase/package.json", import.meta.url))
+const requireFromShowcase = createRequire(new URL("../packages/docs/package.json", import.meta.url))
 const React = requireFromComponents("react")
 const { renderToStaticMarkup } = requireFromComponents("react-dom/server")
 const { ChartContainer } = await import("../packages/components/dist/exui.js")
