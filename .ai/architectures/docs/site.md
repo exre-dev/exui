@@ -4,6 +4,8 @@
 
 ## 内容与路由
 
+MDX 中的文档链接以源文件为基准编写，例如 `../tokens/density.mdx`。`lib/content-links.mjs` 在编译 Markdown 链接及引用定义时，将它们转换为当前语言和部署前缀下的静态路由，保留锚点；不能直接让浏览器按带尾斜杠的页面 URL 解析源文件路径。转换也覆盖绝对语言路由和独立示例链接。源码校验之外，静态验证器逐页检查渲染后的文档链接必须落在已预渲染的路径集合中，防止配置未接线或部署前缀错误漏过内容门禁。
+
 维护者编辑 `content/en/` 与 `content/zh-CN/` 的 MDX。`scripts/docs-content.mjs` 根据页面源校验两种语言各 91 个组件家族页和十个指南、ID 与内部链接，并生成 `.generated/pages.json`；这个 manifest 是生成物。站点的文档 URL 是 `/<locale>/docs/<group>/<id>/`，搜索索引是 `/search/<locale>/index.json`，分享 URL 是 `/examples/<id>/`。这些路径由 `lib/site-contract.mjs` 和 React Router 路由表共同约束。
 
 分类含义见 [领域语言](../../CONTEXT.md)。导航与总览将原 ExUI 分类显示为 Blocks，保留 `exui/` URL。`/<locale>/docs/components/` 与 `/<locale>/docs/exui/` 复用总览路由并按分类筛选；切换语言时保留分类，两类路径都纳入静态预渲染。
