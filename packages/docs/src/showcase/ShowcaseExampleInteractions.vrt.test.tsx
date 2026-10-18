@@ -6,6 +6,9 @@ import { toast, TooltipProvider } from "@exre/exui"
 import Showcase from "./Showcase"
 import { ShowcaseLanguageProvider } from "./ShowcaseLanguageProvider"
 import SidebarExample from "./examples/sidebar/c-sidebar-1"
+import BasicDataGridExample from "./examples/data-grid/c-data-grid-1"
+
+vi.mock("./examples/data-grid/c-data-grid-1", { spy: true })
 
 const keys = ["exui-showcase-language", "exui-showcase-theme", "exui-showcase-density"] as const
 type ActiveToast = Exclude<ReturnType<typeof toast.getToasts>[number], { dismiss: boolean }>
@@ -243,6 +246,22 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     await within(code, "button").click()
     await expect.poll(() => written.length).toBe(1)
     expect(written[0]).toContain("useTotals")
+  })
+
+  it("skips Data Grid renders for theme and density while still updating language", async () => {
+    const grid = await scene("data-grid", "c-data-grid-1")
+    await expect.poll(() => grid.querySelectorAll("tbody tr[data-row-id]").length).toBe(5)
+    const example = vi.mocked(BasicDataGridExample)
+    const initialRenders = example.mock.calls.length
+    expect(initialRenders).toBeGreaterThan(0)
+    await setting("Theme", "dark")
+    expect(example.mock.calls.length, "theme is applied through CSS").toBe(initialRenders)
+    await setting("Density", "compact")
+    expect(example.mock.calls.length, "density is applied through CSS").toBe(initialRenders)
+    await setting("Language", "zh-CN")
+    await expect.poll(() => grid.querySelector("thead th")?.textContent?.trim()).toBe("姓名")
+    expect(example.mock.calls.length).toBeGreaterThan(initialRenders)
+    expect(grid.isConnected).toBe(true)
   })
 
   it("pages Data Grid and retains its page through settings", async () => {

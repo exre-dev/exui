@@ -1,4 +1,4 @@
-import type { ComponentType } from "react"
+import { memo, type ComponentType } from "react"
 import { Preview, PreviewGrid } from "./Preview"
 import { useShowcaseLanguage, type ShowcaseLanguage } from "./language"
 
@@ -10,7 +10,7 @@ export interface ExampleEntry {
   readonly title?: Readonly<Record<ShowcaseLanguage, string>>
 }
 
-export function ExampleGallery({ examples, extensions = [] }: {
+export const ExampleGallery = memo(function ExampleGallery({ examples, extensions = [] }: {
   examples: readonly ExampleEntry[]
   extensions?: readonly ExampleEntry[]
 }) {
@@ -19,4 +19,4 @@ export function ExampleGallery({ examples, extensions = [] }: {
     {examples.map(({ id, layout, Component }) => <Preview key={id} exampleId={id} wide={layout === "full"}><Component /></Preview>)}
     {extensions.map(({ id, layout, Component, title }) => <Preview key={id} shareId={id} kind="exui-extension" title={title?.[language]} wide={layout === "full"}><Component /></Preview>)}
   </PreviewGrid>
-}
+})

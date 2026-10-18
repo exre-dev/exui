@@ -302,6 +302,8 @@ The docs workspace visual suite uses Vitest Browser Mode with Playwright Chromiu
 
 Mounted preview wrappers do not establish readiness for effect-driven content. The full coverage suite polls for real content before checking its references; Tree interaction cases wait for their target rows before querying or clicking them. Tree expansion, permission retention, and Stepper navigation remain independent cases with their original assertions and default time budgets.
 
+The interaction suite spies on the real basic DataGrid example to reject unnecessary renders when only CSS theme or density changes. Language still updates its translated headers on the same connected preview. The gallery's memo boundary must keep context updates, example state, and navigation working; the original pagination and settings case retains its 15-second budget.
+
 Build the workspaces before running visual tests: docs examples and the retained Showcase fixture consume the public component package's generated JavaScript and CSS entries.
 
 ```bash
