@@ -672,8 +672,9 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     }
   }, 15000)
 
-  it("expands a tree branch, retains a permission checkbox, and changes Stepper content", async () => {
+  it("expands a tree branch and focuses a leaf after its rows initialize", async () => {
     const tree = await scene("tree", "c-tree-1")
+    await expect.poll(() => tree.querySelector('[data-slot="tree-item"][aria-expanded]')).not.toBeNull()
     const branch = tree.querySelector<HTMLElement>('[data-slot="tree-item"][aria-expanded]')
     expect(branch).not.toBeNull()
     const before = branch!.getAttribute("aria-expanded")
@@ -683,9 +684,14 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     expect(leaf).not.toBeNull()
     await page.elementLocator(leaf!).click()
     await expect.poll(() => document.activeElement).toBe(leaf)
+  })
+
+  it("retains a tree permission checkbox through settings changes", async () => {
     const permissions = await scene("tree", "c-tree-7")
-    const usersView = Array.from(permissions.querySelectorAll<HTMLElement>('[data-slot="tree-item"]'))
+    const findUsersView = () => Array.from(permissions.querySelectorAll<HTMLElement>('[data-slot="tree-item"]'))
       .find(item => item.textContent?.includes("View users"))
+    await expect.poll(findUsersView).toBeDefined()
+    const usersView = findUsersView()
     expect(usersView, "c-tree-7 View users permission").toBeDefined()
     const checkbox = usersView!.querySelector<HTMLElement>('[role="checkbox"]')
     expect(checkbox, "permission checkbox").not.toBeNull()
@@ -700,7 +706,13 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     expect(checkbox!.getAttribute("data-state")).toBe("unchecked")
     await page.elementLocator(checkbox!).click()
     await expect.poll(() => checkbox!.getAttribute("data-state")).toBe("checked")
+  })
+
+  it("changes Stepper content with linked tabs and panels", async () => {
     const stepper = await scene("stepper", "c-stepper-1")
+    await setting("Theme", "dark")
+    await setting("Density", "compact")
+    await setting("Language", "zh-CN")
     const tabs = stepper.querySelectorAll<HTMLElement>('[data-slot="stepper-trigger"]')
     expect(tabs).toHaveLength(4)
     await page.elementLocator(tabs[3]).click()

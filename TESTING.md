@@ -300,6 +300,8 @@ pnpm test:regressions
 
 The docs workspace visual suite uses Vitest Browser Mode with Playwright Chromium. It includes the production docs UI and retained Showcase fixture; baselines are platform-specific and CI runs them on Windows.
 
+Mounted preview wrappers do not establish readiness for effect-driven content. The full coverage suite polls for real content before checking its references; Tree interaction cases wait for their target rows before querying or clicking them. Tree expansion, permission retention, and Stepper navigation remain independent cases with their original assertions and default time budgets.
+
 Build the workspaces before running visual tests: docs examples and the retained Showcase fixture consume the public component package's generated JavaScript and CSS entries.
 
 ```bash
