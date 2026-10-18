@@ -14,14 +14,22 @@ let root: Root
 let container: HTMLDivElement
 let previousClasses: string
 let previousUrl: string
+let previousScroll: { x: number; y: number }
 
-beforeEach(() => {
+beforeEach(async () => {
   previousClasses = document.documentElement.className
   previousUrl = location.href
+  previousScroll = { x: scrollX, y: scrollY }
+  scrollTo(0, 0)
   container = document.createElement("div")
   container.className = "docs-examples"
   container.style.width = "min(100%, 44rem)"
-  document.body.replaceChildren(container)
+  // Keep a previous case's physical pointer away from newly mounted hover menus.
+  const pointerPark = document.createElement("span")
+  pointerPark.setAttribute("aria-hidden", "true")
+  pointerPark.style.cssText = "position:fixed;left:0;top:0;width:16px;height:16px;z-index:2147483647"
+  document.body.replaceChildren(pointerPark, container)
+  await page.elementLocator(pointerPark).hover()
   root = createRoot(container)
 })
 
@@ -29,18 +37,21 @@ afterEach(() => {
   root.unmount()
   document.documentElement.className = previousClasses
   history.replaceState(null, "", previousUrl)
+  scrollTo(previousScroll.x, previousScroll.y)
 })
 
 async function openMenu(triggerName: string, linkName: RegExp) {
   await document.fonts.ready
   const trigger = page.getByRole("button", { name: triggerName, exact: true })
+  await expect.element(trigger).toHaveAttribute("aria-expanded", "false")
   await trigger.click()
   await expect.element(trigger).toHaveAttribute("aria-expanded", "true")
-  await expect.poll(() => container.querySelector('[data-slot="navigation-menu-viewport"]')).not.toBeNull()
-  const viewport = container.querySelector('[data-slot="navigation-menu-viewport"]')!
+  const menu = trigger.element().closest('[data-slot="navigation-menu"]')!
+  await expect.poll(() => menu.querySelector('[data-slot="navigation-menu-viewport"]')).not.toBeNull()
+  const viewport = menu.querySelector('[data-slot="navigation-menu-viewport"]')!
   await expect.poll(() => viewport.getBoundingClientRect().width).toBeGreaterThan(0)
   await expect.poll(() => viewport.getBoundingClientRect().height).toBeGreaterThan(0)
-  const link = page.getByRole("link", { name: linkName })
+  const link = page.elementLocator(menu).getByRole("link", { name: linkName })
   await expect.element(link).toBeVisible()
   await expect.poll(() => {
     const popup = viewport.getBoundingClientRect()
