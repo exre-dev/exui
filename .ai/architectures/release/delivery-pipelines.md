@@ -78,6 +78,8 @@ checkout EXPECTED_MAIN（= 被验证的 head_sha，fetch-depth: 0）
 
 标签阶段只对"被提交的版本差异所声明的"发布创建标签：`tags.mjs` 要求目标提交是受信任的 `chore(release): version packages` 提交、是 `origin/main` 的祖先，并且远端已存在的同名标签必须是注解标签且指向同一提交。已存在的注解标签被视为可恢复状态而非冲突。`plan.mjs` 在 HEAD 提交主题已是 `chore(release): version packages` 时直接返回 `recover` 模式，使中断的发布无需再次升版本即可续跑。设计取舍见 [[release/02-tag-driven-oidc-release]]。
 
+`release-diff.mjs` 对版本提交只允许公开包版本、关联依赖、锁文件、对应 changelog 和 Changeset 删除。Changeset 文件名的主体必须匹配 `[A-Za-z0-9_-]+`；Changesets 本身接受的点号名称仍会被这里拒绝。准备发布说明时就应采用兼容名称，避免直到版本应用后才触发差异守卫。
+
 ## npm 发布钩子
 
 `.github/workflows/tag-npm.yml` 只在推送匹配 `@exre/exui@*` 的标签时运行，使用 `npm-release` environment 并申请 `id-token: write` 以走 OIDC，不依赖长期 npm 写令牌。步骤顺序：
