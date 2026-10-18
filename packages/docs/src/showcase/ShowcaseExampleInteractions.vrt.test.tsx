@@ -281,21 +281,25 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     expect(firstRow!.getAttribute("data-state")).toBe("selected")
   })
 
-  it("translates table headers and empty state while retaining the search query", async () => {
+  it("translates basic Data Grid headers without replacing the preview", async () => {
     const basic = await scene("data-grid", "c-data-grid-1")
     const headers = () => Array.from(basic.querySelectorAll("thead th"), item => item.textContent?.trim())
     expect(headers()).toEqual(["Name", "Email", "Location", "Balance ($)"])
     await setting("Language", "zh-CN")
     await expect.poll(headers).toEqual(["姓名", "邮箱", "所在地", "余额（美元）"])
+    expect(basic.isConnected).toBe(true)
+  })
 
-    await setting("语言", "en")
+  it("translates a sortable Data Grid header without replacing its column", async () => {
     const sortable = await scene("data-grid", "c-data-grid-11")
     const staff = sortable.querySelector<HTMLElement>('th[data-col-id="name"]')!
     expect(staff.textContent).toContain("Staff")
     await setting("Language", "zh-CN")
     await expect.poll(() => staff.textContent).not.toContain("Staff")
+    expect(staff.isConnected).toBe(true)
+  })
 
-    await setting("语言", "en")
+  it("translates Data Grid empty state while retaining the search input and query", async () => {
     const filterable = await scene("data-grid", "c-data-grid-22")
     const search = within(filterable, 'input[placeholder="Search..."]')
     await search.fill("no-record-can-match-this-query")
