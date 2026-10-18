@@ -67,6 +67,8 @@ pnpm changeset
 
 Select the affected package, choose `patch`, `minor`, or `major`, and write a concise release note from the user's point of view.
 
+Use only letters, digits, hyphens, or underscores in the Changeset filename stem, for example `.changeset/exui-stable-release.md`. The release diff guard rejects other filename characters when Changesets consumes the note.
+
 When preparing a release, consume pending changesets with:
 
 ```bash

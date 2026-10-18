@@ -4,7 +4,18 @@ import os from 'node:os'
 import path from 'node:path'
 import { test } from 'node:test'
 import { buildStaticMapping, normalizeBase, normalizeDocsStatic } from './docs-static.mjs'
-import { assertExampleInventory } from './verify-docs-static.mjs'
+import { assertDocumentLinks, assertExampleInventory } from './verify-docs-static.mjs'
+
+test('rendered document links must resolve to static routes within the deployment base', () => {
+  const routes = new Set(['/en/docs/components/button/', '/en/docs/tokens/density/'])
+  for (const base of ['/', '/exui/']) {
+    const page = `https://docs.example${base}en/docs/components/button/`
+    assert.doesNotThrow(() => assertDocumentLinks(`<a href="${base}en/docs/tokens/density/#root">Guide</a><a href="#local">Local</a><a href="https://other.example/docs/file.mdx">External</a>`, page, base, routes))
+    assert.throws(() => assertDocumentLinks('<a href="../tokens/density.mdx">Broken</a>', page, base, routes), /no static route/)
+    assert.throws(() => assertDocumentLinks(`<a href="${base}en/docs/tokens/missing/">Broken</a>`, page, base, routes), /no static route/)
+  }
+  assert.throws(() => assertDocumentLinks('<a href="/en/docs/tokens/density/">Missing prefix</a>', 'https://docs.example/exui/en/docs/components/button/', '/exui/', routes), /outside deployment base/)
+})
 
 const baselineExamples = [
   { id: 'c-button-1', family: 'button', extension: false, native: false },

@@ -7,8 +7,40 @@ import { fileURLToPath } from "node:url"
 import { docPath, examplePath, normalizeBase, overviewPath, preferenceKeys, resolveLegacyHash, searchPath } from "../packages/docs/lib/site-contract.mjs"
 import { loadPages, writeContentManifest } from "./docs-content.mjs"
 import { createFamilySnippet, extractVerifiedModules, validateFamilySnippet } from "./docs-snippets.mjs"
+import { remarkContentLinks, rewriteContentLink } from "../packages/docs/lib/content-links.mjs"
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..")
+
+test("authored content links resolve from source files to public locale routes", () => {
+  for (const base of ["/", "/exui/"]) {
+    for (const locale of ["en", "zh-CN"]) {
+      const source = `${locale}/components/button.mdx`
+      assert.equal(rewriteContentLink("../tokens/density.mdx", source, base), `${base}${locale}/docs/tokens/density/`)
+      assert.equal(rewriteContentLink("../tokens/colors.mdx#palette", source, base), `${base}${locale}/docs/tokens/colors/#palette`)
+      assert.equal(rewriteContentLink("./badge.mdx", source, base), `${base}${locale}/docs/components/badge/`)
+      assert.equal(rewriteContentLink("../tokens/density", source, base), `${base}${locale}/docs/tokens/density/`)
+      assert.equal(rewriteContentLink("/en/docs/tokens/colors/", source, base), `${base}en/docs/tokens/colors/`)
+      assert.equal(rewriteContentLink("../../../../examples/c-button-1/", source, base), `${base}examples/c-button-1/`)
+      for (const href of ["#local", "https://example.com/guide.mdx", "mailto:docs@example.com", `${base}${locale}/docs/tokens/colors/`]) {
+        assert.equal(rewriteContentLink(href, source, base), href)
+      }
+    }
+  }
+})
+
+test("the MDX link transform covers nested and reference links without changing code or images", () => {
+  const tree = { type: "root", children: [
+    { type: "paragraph", children: [{ type: "link", url: "../tokens/density.mdx" }] },
+    { type: "definition", url: "./badge.mdx#variants" },
+    { type: "code", value: "[Density](../tokens/density.mdx)" },
+    { type: "image", url: "./badge.mdx" },
+  ] }
+  remarkContentLinks({ base: "/exui/" })(tree, { path: "D:\\repo\\packages\\docs\\content\\zh-CN\\components\\button.mdx" })
+  assert.equal(tree.children[0].children[0].url, "/exui/zh-CN/docs/tokens/density/")
+  assert.equal(tree.children[1].url, "/exui/zh-CN/docs/components/badge/#variants")
+  assert.equal(tree.children[2].value, "[Density](../tokens/density.mdx)")
+  assert.equal(tree.children[3].url, "./badge.mdx")
+})
 
 test("category overviews preserve existing URLs and validate their group", async () => {
   const { overviewPath } = await import("../packages/docs/lib/site-contract.mjs")

@@ -38,6 +38,18 @@ export function startStaticServer(output, base) {
   return new Promise(resolve => server.listen(0, '127.0.0.1', () => resolve({ server, origin: `http://127.0.0.1:${server.address().port}` })))
 }
 
+export function assertDocumentLinks(html, pageUrl, base, routes) {
+  const prefix = normalizeBase(base)
+  const page = new URL(pageUrl)
+  for (const match of html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)) {
+    const target = new URL(match[1].replaceAll('&amp;', '&'), page)
+    if (target.origin !== page.origin || !target.pathname.includes('/docs/')) continue
+    assert.ok(target.pathname.startsWith(prefix), `${page.pathname}: document link is outside deployment base: ${target.pathname}`)
+    const route = `/${target.pathname.slice(prefix.length)}`
+    assert.ok(routes.has(route), `${page.pathname}: document link has no static route: ${target.pathname}`)
+  }
+}
+
 function dataPath(route, base) {
   const relative = route.endsWith('/') ? `${route.slice(1)}_.data` : `${route.slice(1)}.data`
   return `${base}${relative}`
@@ -168,6 +180,7 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
   const manifest = JSON.parse(readFileSync(path.join(docsRoot, '.generated/prerender-paths.json'), 'utf8'))
   assert.equal(manifest.schemaVersion, 1)
   const paths = manifest.paths
+  const staticRoutes = new Set(paths)
   const pageManifest = JSON.parse(readFileSync(path.join(docsRoot, '.generated/pages.json'), 'utf8'))
   assert.equal(pageManifest.schemaVersion, 1)
   const pageByRoute = new Map(pageManifest.pages.map(page => [`/${page.locale}/docs/${page.id}/`, page]))
@@ -199,6 +212,7 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
       }
       const html = await checkHttp(origin, url, 'text/html', route.startsWith('/examples/') ? route.split('/')[2] : undefined)
       assert.ok(html.includes('<html'), `Missing document markup ${url}`)
+      assertDocumentLinks(html, origin + url, normalizedBase, staticRoutes)
       const page = pageByRoute.get(route)
       if (page) assert.ok(html.includes(page.title), `Prerendered document missing title: ${route}`)
       if (overviewRoutes.includes(route)) {
