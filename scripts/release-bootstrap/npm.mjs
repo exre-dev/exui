@@ -33,7 +33,7 @@ export async function publishIfMissing(name, version, { query = registryStatus, 
 }
 
 async function main() {
-  if (process.env.GITHUB_ACTIONS !== "true" || process.env.GITHUB_REPOSITORY !== "caep-dev/exui") throw new Error("PUBLICATION_CONTEXT_REQUIRED: use the tag-npm workflow")
+  if (process.env.GITHUB_ACTIONS !== "true" || process.env.GITHUB_REPOSITORY !== "exre-dev/exui") throw new Error("PUBLICATION_CONTEXT_REQUIRED: use the tag-npm workflow")
   const options = args(process.argv.slice(2)), root = resolveRoot(options.root)
   const context = json(options.context)
   const { RELEASE_PACKAGE: name, RELEASE_VERSION: version } = context

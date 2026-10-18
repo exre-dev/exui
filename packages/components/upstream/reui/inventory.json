@@ -1,0 +1,2766 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/keenthemes/reui",
+  "commit": "067aa0dc7f8bbfec1cd76fc5ad31f842be5f569a",
+  "style": "radix-luma",
+  "license": "MIT",
+  "items": [
+    {
+      "name": "alert",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/alert.tsx",
+          "sha256": "feebd86218ef90c8a6d98056ba52db7529859a20fe79ff3e9c179c1794f9148c"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "autocomplete",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "scroll-area"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/autocomplete.tsx",
+          "sha256": "2c37af7d16b19339dd713b1d6022a1d140d1f6b7fc90371505beb0805138ce4b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "badge",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/badge.tsx",
+          "sha256": "0426324c5fc92f6885988e32796395747b1baad955ae09f8f1e7ca8bc2e86237"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-async",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-async.tsx",
+          "sha256": "65e57295405798479e7a4f5679afdbc8459cd0263f48dc89b0a49b2f4ea39bf1"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-columns",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "scroll-area"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-columns.tsx",
+          "sha256": "97a58bf5d8d0e86b0f394bf0cd42baf4a97e07a712b3cb5b5c97fa6c027ade4c"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-context",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-context.tsx",
+          "sha256": "a92be21714ac75f35b6a992486fd498bb642c05b520717acb0c85eda23502af9"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-footer",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-footer.tsx",
+          "sha256": "d295448a9f46b57aa0016dac53ead6975af10e1d9eb32a75ebe4277f988dcb6a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-i18n",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-i18n.tsx",
+          "sha256": "75723509d2e15feddee777c157ea7bb56ec8633558ccad4a85a5ac05ee3f108a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-item",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "spinner"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-item.tsx",
+          "sha256": "a4a0b31fb725c92ab46d0043c64b4ccc66aeb74d1f830587cd139bd83d55270d"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-lib",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-lib.tsx",
+          "sha256": "28c7df99cff3f2ee13bf9a63d1321dbfeb0bfca694aecf7d7486807c82ef8250"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-nav",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-nav.tsx",
+          "sha256": "b67ed439a3c16fc0d15562b74d36849c125f7cbeb96311b0c6170b87449347fb"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-types",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-types.tsx",
+          "sha256": "3dd58dad5881cf540b279732d030ef025d3a29d605bc5486da988b8aca773dac"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader-virtual",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@tanstack/react-virtual"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-virtual.tsx",
+          "sha256": "9b54b58dbc24be0dbae970be4747b1016c97f6d3edf25710b417b9469838a669"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "cascader",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "scroll-area",
+        "spinner"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@tanstack/react-virtual",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-async.tsx",
+          "sha256": "65e57295405798479e7a4f5679afdbc8459cd0263f48dc89b0a49b2f4ea39bf1"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-columns.tsx",
+          "sha256": "97a58bf5d8d0e86b0f394bf0cd42baf4a97e07a712b3cb5b5c97fa6c027ade4c"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-context.tsx",
+          "sha256": "a92be21714ac75f35b6a992486fd498bb642c05b520717acb0c85eda23502af9"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-footer.tsx",
+          "sha256": "d295448a9f46b57aa0016dac53ead6975af10e1d9eb32a75ebe4277f988dcb6a"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-i18n.tsx",
+          "sha256": "75723509d2e15feddee777c157ea7bb56ec8633558ccad4a85a5ac05ee3f108a"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-item.tsx",
+          "sha256": "a4a0b31fb725c92ab46d0043c64b4ccc66aeb74d1f830587cd139bd83d55270d"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-lib.tsx",
+          "sha256": "28c7df99cff3f2ee13bf9a63d1321dbfeb0bfca694aecf7d7486807c82ef8250"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-nav.tsx",
+          "sha256": "b67ed439a3c16fc0d15562b74d36849c125f7cbeb96311b0c6170b87449347fb"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-types.tsx",
+          "sha256": "3dd58dad5881cf540b279732d030ef025d3a29d605bc5486da988b8aca773dac"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader-virtual.tsx",
+          "sha256": "9b54b58dbc24be0dbae970be4747b1016c97f6d3edf25710b417b9469838a669"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/cascader/cascader.tsx",
+          "sha256": "f15dbe83c3923e3e72c13d9d501379db35ffecb4e8725cc8fc1ca5a47e559dae"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "code-block-highlight",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "shiki"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/code-block/code-block-highlight.tsx",
+          "sha256": "329dc2f35c0ce39b2c4372c5596609aa7fb64a19e4159722d6d5beaf1138791e"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "code-block",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "cn",
+        "shiki"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/code-block/code-block-highlight.tsx",
+          "sha256": "329dc2f35c0ce39b2c4372c5596609aa7fb64a19e4159722d6d5beaf1138791e"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/code-block/code-block.tsx",
+          "sha256": "a6c71d3bff15f62910134d516dddc5879b88737c15d3e4d3ead156b13ca855b1"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "color-picker",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "dropdown-menu",
+        "input-group",
+        "popover",
+        "separator"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/color-picker.tsx",
+          "sha256": "f6914aed4b97c796bd80744a472c7f2cd07600c1a959e1292d2986abd993f4b0"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-cell-selection",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "@tanstack/react-table",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-cell-selection.tsx",
+          "sha256": "a4916eb6da28a8700ae56d5ba3ba86f7021753427436c9be678e75c230f5befe"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-column-filter",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "badge",
+        "button",
+        "input",
+        "popover",
+        "separator"
+      ],
+      "dependencies": [
+        "@tanstack/react-table",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-filter.tsx",
+          "sha256": "f132e85641bbbaa1fcaff6a8689661f750960a7721480b5435f301a637f2e40f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-column-header",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "dropdown-menu"
+      ],
+      "dependencies": [
+        "@tanstack/react-table",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-header.tsx",
+          "sha256": "129ec008673847926edbb05a6fe0ff667e720d22c67b4240c021c74648661852"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-column-visibility",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "dropdown-menu"
+      ],
+      "dependencies": [
+        "@tanstack/react-table"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-visibility.tsx",
+          "sha256": "90a220de4462e8666533fe36a7b5dc23baf5456fce5062714aeecd5b21879867"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-i18n",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-i18n.tsx",
+          "sha256": "bc314f648968ae86a4a2f11a8c2107a1f83f0baea6ed2d6200a58f63e3c1d7b5"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-pagination",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "select",
+        "skeleton"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-pagination.tsx",
+          "sha256": "6654f1d3438f7bc7fbe7e41d1ecc8007e0738906231f8a5725c6d51d522293d2"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-scroll-area",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-scroll-area.tsx",
+          "sha256": "7264d60f1135e49d6c9d296eae74f7e220b7aa99d499134ad7ebf9d2b13db552"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-table-dnd-rows",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "@dnd-kit/core",
+        "@dnd-kit/modifiers",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "@tanstack/react-table",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-dnd-rows.tsx",
+          "sha256": "ead8a89d119a68599bca58d66706a8f3eb5b3aff1bd0827dc3e728e419ffb777"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-table-dnd",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "@tanstack/react-table"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-dnd.tsx",
+          "sha256": "970c3a198d904a720824db7d8e7051df51986a246a71018d8aa2942d4a6849cb"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-table-virtual",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "spinner"
+      ],
+      "dependencies": [
+        "@tanstack/react-table",
+        "@tanstack/react-virtual",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-virtual.tsx",
+          "sha256": "560d0af6dddd3674153a0c24c1e83b5b15d8be1bc3db86fb53d760f44c249d5a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid-table",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "spinner"
+      ],
+      "dependencies": [
+        "@tanstack/react-table",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table.tsx",
+          "sha256": "46ac575b6f0b28b4631f2e27c2cf2b5b4f95e7fcf934362b16a4341e8e88e589"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "data-grid",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "badge",
+        "button",
+        "checkbox",
+        "dropdown-menu",
+        "input",
+        "popover",
+        "select",
+        "separator",
+        "skeleton",
+        "spinner"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@dnd-kit/core",
+        "@dnd-kit/modifiers",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "@tanstack/react-table",
+        "@tanstack/react-virtual",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-cell-selection.tsx",
+          "sha256": "a4916eb6da28a8700ae56d5ba3ba86f7021753427436c9be678e75c230f5befe"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-filter.tsx",
+          "sha256": "f132e85641bbbaa1fcaff6a8689661f750960a7721480b5435f301a637f2e40f"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-header.tsx",
+          "sha256": "129ec008673847926edbb05a6fe0ff667e720d22c67b4240c021c74648661852"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-column-visibility.tsx",
+          "sha256": "90a220de4462e8666533fe36a7b5dc23baf5456fce5062714aeecd5b21879867"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-i18n.tsx",
+          "sha256": "bc314f648968ae86a4a2f11a8c2107a1f83f0baea6ed2d6200a58f63e3c1d7b5"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-pagination.tsx",
+          "sha256": "6654f1d3438f7bc7fbe7e41d1ecc8007e0738906231f8a5725c6d51d522293d2"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-scroll-area.tsx",
+          "sha256": "7264d60f1135e49d6c9d296eae74f7e220b7aa99d499134ad7ebf9d2b13db552"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-dnd-rows.tsx",
+          "sha256": "ead8a89d119a68599bca58d66706a8f3eb5b3aff1bd0827dc3e728e419ffb777"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-dnd.tsx",
+          "sha256": "970c3a198d904a720824db7d8e7051df51986a246a71018d8aa2942d4a6849cb"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table-virtual.tsx",
+          "sha256": "560d0af6dddd3674153a0c24c1e83b5b15d8be1bc3db86fb53d760f44c249d5a"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid-table.tsx",
+          "sha256": "46ac575b6f0b28b4631f2e27c2cf2b5b4f95e7fcf934362b16a4341e8e88e589"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/data-grid/data-grid.tsx",
+          "sha256": "718d349e005537ee45a65826d6768deedc4479f9f5b9b9afa7e8052509de9be4"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "date-selector",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "calendar",
+        "input",
+        "scroll-area",
+        "tabs",
+        "use-mobile"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "react-day-picker"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/date-selector.tsx",
+          "sha256": "03f0ba8867c154f08c99872ace3da302d042914c8341b8622b6a2580fbf2072b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "emoji-picker",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "dropdown-menu",
+        "empty",
+        "input-group",
+        "popover",
+        "skeleton",
+        "tabs"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/emoji-picker.tsx",
+          "sha256": "c47ec6d73081b047491a99ccbe21c1fdd7b4cb6fded8a46e4c4a518442be72da"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-agenda-view",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "icon-stack",
+        "scroll-area"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-agenda-view.tsx",
+          "sha256": "37f676689d7cfe951405c1e6fb22b34c3ee0c7055c1d83ca7f9b55c97fae09c1"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-content",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-content.tsx",
+          "sha256": "c0160bf7b5bd642be67d97378c042f37b8958931f026af72eaa41845ecdd58fd"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-dnd",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-dnd.tsx",
+          "sha256": "afc1c2194551f74145015e2f158b5057269ac642ef5ea300b1ea34e5c40cf32f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-event",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "tooltip"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-event.tsx",
+          "sha256": "dfd6ed54d20aa829c333a7e4ba20f1b2eb7f0403298e80ef55bab42dfad77077"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-i18n",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-i18n.tsx",
+          "sha256": "7168af30e6200eec2b9b6e4b95b2de078bc5773cf280fa0b760b751fd1c7c66c"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-lib",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@date-fns/tz",
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-lib.tsx",
+          "sha256": "a19c5df16bc27543c8d629b5ed50078e568f0e6679fb7610d17eca3819e0ed6d"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-month-view",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "popover",
+        "scroll-area"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-month-view.tsx",
+          "sha256": "6a29cea2c7b128511dcdf70c86490eb9f86271c49d5109b1c93282d9279ecd1f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-nav",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "calendar",
+        "dropdown-menu",
+        "popover",
+        "tooltip"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-nav.tsx",
+          "sha256": "8fa6ee3bb07c0c579c85fd83868243beb78a755d2efb322f2866c56e3eb4575e"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-recurrence",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@date-fns/tz",
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-recurrence.tsx",
+          "sha256": "b3b7a3d417183fd8233ad6557543cb81270c3709edfe8d4da965cfdead4927ce"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-resource-view",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "scroll-area"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-resource-view.tsx",
+          "sha256": "14b1d14a7f335ae04f2d39c0f5ae3efe959ce92d92d9a7b92f8c89e8bcde9513"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-time-grid",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "scroll-area"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-time-grid.tsx",
+          "sha256": "4c99f2a0c33cf4339a776b7c3707c746762b5b1ee1cb6f3f39cad58320a9e810"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar-types",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-types.tsx",
+          "sha256": "7fbb243e5a6f68a6b526ee1aa5e9773edc98bbf8c3705b80542beb27bab5a268"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "event-calendar",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "calendar",
+        "dropdown-menu",
+        "icon-stack",
+        "popover",
+        "scroll-area",
+        "tooltip"
+      ],
+      "dependencies": [
+        "@date-fns/tz",
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-agenda-view.tsx",
+          "sha256": "37f676689d7cfe951405c1e6fb22b34c3ee0c7055c1d83ca7f9b55c97fae09c1"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-content.tsx",
+          "sha256": "c0160bf7b5bd642be67d97378c042f37b8958931f026af72eaa41845ecdd58fd"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-dnd.tsx",
+          "sha256": "afc1c2194551f74145015e2f158b5057269ac642ef5ea300b1ea34e5c40cf32f"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-event.tsx",
+          "sha256": "dfd6ed54d20aa829c333a7e4ba20f1b2eb7f0403298e80ef55bab42dfad77077"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-i18n.tsx",
+          "sha256": "7168af30e6200eec2b9b6e4b95b2de078bc5773cf280fa0b760b751fd1c7c66c"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-lib.tsx",
+          "sha256": "a19c5df16bc27543c8d629b5ed50078e568f0e6679fb7610d17eca3819e0ed6d"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-month-view.tsx",
+          "sha256": "6a29cea2c7b128511dcdf70c86490eb9f86271c49d5109b1c93282d9279ecd1f"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-nav.tsx",
+          "sha256": "8fa6ee3bb07c0c579c85fd83868243beb78a755d2efb322f2866c56e3eb4575e"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-recurrence.tsx",
+          "sha256": "b3b7a3d417183fd8233ad6557543cb81270c3709edfe8d4da965cfdead4927ce"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-resource-view.tsx",
+          "sha256": "14b1d14a7f335ae04f2d39c0f5ae3efe959ce92d92d9a7b92f8c89e8bcde9513"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-time-grid.tsx",
+          "sha256": "4c99f2a0c33cf4339a776b7c3707c746762b5b1ee1cb6f3f39cad58320a9e810"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-types.tsx",
+          "sha256": "7fbb243e5a6f68a6b526ee1aa5e9773edc98bbf8c3705b80542beb27bab5a268"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar.tsx",
+          "sha256": "0effbb235a2782bc39c252d3404e35426e2b36b5fc7cdbebf2b9a1580e32e075"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "file-type",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/file-type.tsx",
+          "sha256": "3a38a62de629e4e633ffff6be73ebfba2b70f338bd666d3d3f862aa87282931b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-advanced",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "dropdown-menu",
+        "input",
+        "popover",
+        "tooltip"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-advanced.tsx",
+          "sha256": "5ac3fa1efb212314fbe34ee32c0d338c1758b436ec8220d87d303ca0c1454fd5"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-builder",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "cascader",
+        "popover"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-builder.tsx",
+          "sha256": "e7f3cf845e58a86b7ff57d8c7cff4c9ec0e1b94b357762b8ed5b6dbf4d6c7993"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-chip",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "button-group",
+        "dropdown-menu",
+        "popover",
+        "tooltip"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-chip.tsx",
+          "sha256": "7b5c33dcf58044d220cfe1d26265da9088b27d4670bc14e3a595ce8f23f6c883"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-context",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-context.tsx",
+          "sha256": "ec4a4460d1c032e97f67cf06681f964925cad8130576ed0955095317f86081e7"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-date",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-date.tsx",
+          "sha256": "c5cae804e803654cb2b4acc4ef05448ee2c3ad98734bc5ffcc6f2b9d85bd664e"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-dnd",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-dnd.tsx",
+          "sha256": "4ee6cecb83d982e0ba2eabe93d6cb6f379af9303a9307d1564dd1f06c0160370"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-draft",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-draft.tsx",
+          "sha256": "f2982284831f33362a13ff6f96d873c128fb9f7175a7432f0f17ca3136ce3b3a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-editors",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "button-group",
+        "cascader",
+        "input"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-editors.tsx",
+          "sha256": "bcedf4887e399e764dc24dfe163dda3f3a3ef234ba99a1754dd0997b1461d606"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-i18n",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-i18n.tsx",
+          "sha256": "e86af524dd5b7bd31d231ea3c1a8f34062e94e52fd7f58f533a4606b8e75c48b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-lib",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "cascader"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-lib.tsx",
+          "sha256": "bf0ae14de9eebf39d62e215d6c453252f46232f3347d8b4541bf36decf52c52e"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-operators",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-operators.tsx",
+          "sha256": "39a4812e75beee860b6275318b4c2e5dc840b29c0fe99d09a1fd1d24c469ce3f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-query",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-query.tsx",
+          "sha256": "729d83e3904e229ad884afc12b75e8e8fc84358a8adc47a0c179bbf2bc803cac"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters-types",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-types.tsx",
+          "sha256": "274c440f75f89f8cb317e64cdd4acf8c95666ad0e06c18d1c8dddf63ea3c11cd"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "filters",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "button-group",
+        "cascader",
+        "dropdown-menu",
+        "input",
+        "popover",
+        "tooltip"
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-advanced.tsx",
+          "sha256": "5ac3fa1efb212314fbe34ee32c0d338c1758b436ec8220d87d303ca0c1454fd5"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-builder.tsx",
+          "sha256": "e7f3cf845e58a86b7ff57d8c7cff4c9ec0e1b94b357762b8ed5b6dbf4d6c7993"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-chip.tsx",
+          "sha256": "7b5c33dcf58044d220cfe1d26265da9088b27d4670bc14e3a595ce8f23f6c883"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-context.tsx",
+          "sha256": "ec4a4460d1c032e97f67cf06681f964925cad8130576ed0955095317f86081e7"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-date.tsx",
+          "sha256": "c5cae804e803654cb2b4acc4ef05448ee2c3ad98734bc5ffcc6f2b9d85bd664e"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-dnd.tsx",
+          "sha256": "4ee6cecb83d982e0ba2eabe93d6cb6f379af9303a9307d1564dd1f06c0160370"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-draft.tsx",
+          "sha256": "f2982284831f33362a13ff6f96d873c128fb9f7175a7432f0f17ca3136ce3b3a"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-editors.tsx",
+          "sha256": "bcedf4887e399e764dc24dfe163dda3f3a3ef234ba99a1754dd0997b1461d606"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-i18n.tsx",
+          "sha256": "e86af524dd5b7bd31d231ea3c1a8f34062e94e52fd7f58f533a4606b8e75c48b"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-lib.tsx",
+          "sha256": "bf0ae14de9eebf39d62e215d6c453252f46232f3347d8b4541bf36decf52c52e"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-operators.tsx",
+          "sha256": "39a4812e75beee860b6275318b4c2e5dc840b29c0fe99d09a1fd1d24c469ce3f"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-query.tsx",
+          "sha256": "729d83e3904e229ad884afc12b75e8e8fc84358a8adc47a0c179bbf2bc803cac"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters-types.tsx",
+          "sha256": "274c440f75f89f8cb317e64cdd4acf8c95666ad0e06c18d1c8dddf63ea3c11cd"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/filters/filters.tsx",
+          "sha256": "e658434411be24ce7ef98faf8f45c0eb8963f5f88b866e4f9793a8606409c8eb"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "frame",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/frame.tsx",
+          "sha256": "a3dfa1188eadfea05acf19ab223a302fdb5b4d2577e7f696600f755769d2cdfc"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-bar",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "context-menu",
+        "tooltip"
+      ],
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-bar.tsx",
+          "sha256": "b36e0a4ad445d0f9b691be1dd50186e033f2536b408642c201dc8120e3790102"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-dnd",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-dnd.tsx",
+          "sha256": "cd6a6d44788c42fe8c47c1a3d594a70026442728916d29546582932dbb6a8661"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-i18n",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-i18n.tsx",
+          "sha256": "666dc423beb3e2bd8807b53e9e2ef150d32f1057933b96647cd883d3da146d71"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-lib",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@date-fns/tz",
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-lib.tsx",
+          "sha256": "2f651a7e933be66a3c03dfa87b7b99a0ce9caf49666b193776f7ee9f252557e0"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-nav",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "calendar",
+        "dropdown-menu",
+        "popover",
+        "tooltip"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-nav.tsx",
+          "sha256": "a89ff022380fac622f635569acb65ff43fc3276233db2bec3998850e47090021"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-recurrence",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@date-fns/tz",
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-recurrence.tsx",
+          "sha256": "820485857430322fff6bdc9c0d3e42ff6eb515b15be9f68260aff21592f9fd58"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-types",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-types.tsx",
+          "sha256": "e1f3420a2d12bca111b392a19649437ef98a8ce82d9119a278e5f0e5643cfd32"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt-view",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "context-menu",
+        "scroll-area",
+        "tooltip"
+      ],
+      "dependencies": [
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-view.tsx",
+          "sha256": "e138fb0fcd19db72a4431317459dd33b851ab9f4fbbbb4cfb43d3559f6f14550"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "gantt",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "calendar",
+        "checkbox",
+        "context-menu",
+        "dropdown-menu",
+        "popover",
+        "scroll-area",
+        "tooltip"
+      ],
+      "dependencies": [
+        "@date-fns/tz",
+        "cn",
+        "date-fns",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-bar.tsx",
+          "sha256": "b36e0a4ad445d0f9b691be1dd50186e033f2536b408642c201dc8120e3790102"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-dnd.tsx",
+          "sha256": "cd6a6d44788c42fe8c47c1a3d594a70026442728916d29546582932dbb6a8661"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-i18n.tsx",
+          "sha256": "666dc423beb3e2bd8807b53e9e2ef150d32f1057933b96647cd883d3da146d71"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-lib.tsx",
+          "sha256": "2f651a7e933be66a3c03dfa87b7b99a0ce9caf49666b193776f7ee9f252557e0"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-nav.tsx",
+          "sha256": "a89ff022380fac622f635569acb65ff43fc3276233db2bec3998850e47090021"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-recurrence.tsx",
+          "sha256": "820485857430322fff6bdc9c0d3e42ff6eb515b15be9f68260aff21592f9fd58"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-types.tsx",
+          "sha256": "e1f3420a2d12bca111b392a19649437ef98a8ce82d9119a278e5f0e5643cfd32"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt-view.tsx",
+          "sha256": "e138fb0fcd19db72a4431317459dd33b851ab9f4fbbbb4cfb43d3559f6f14550"
+        },
+        {
+          "source": "registry-reui/bases/radix/reui/gantt/gantt.tsx",
+          "sha256": "9dd93839cf3f3af82e30fc4b7bbbf89c61c4ea6cff84cc9af352e92fb8ea39f5"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "icon-stack",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/icon-stack.tsx",
+          "sha256": "99c25bf55457a3eca2f98e7784968418165fdaa6ceb9cb26cfe9c770e361323c"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "icon-tile",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/icon-tile.tsx",
+          "sha256": "fa43d960cb1212bf8337f0b80b6becfe9c1b505a2b40822433914126b19e51aa"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "kanban",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/kanban.tsx",
+          "sha256": "470304bd61e2a5b5093dc3599b21259339b1d6f268c08ca9fe686312db8971fe"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "number-field",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "label"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/number-field.tsx",
+          "sha256": "1aed1ef75d8218180505beb16fae3286381fd7cde7428c18871a21e690bf2d09"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "phone-input",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "combobox",
+        "input",
+        "scroll-area"
+      ],
+      "dependencies": [
+        "cn",
+        "react-phone-number-input"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/phone-input.tsx",
+          "sha256": "fe6287c6c1b6ac25467fb6354bafcb29b5c6b09970d735cd96f0016fa424bd00"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "rating",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/rating.tsx",
+          "sha256": "e3ce91e952deacba1c81989291033d010793a732de6556ebdce557cbe137f126"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "scrollspy",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/scrollspy.tsx",
+          "sha256": "798efce66fdb7eddc321fd839e5a43e545eec7eee259a15781554c5e9d0bce86"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "signature-pad",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/signature-pad.tsx",
+          "sha256": "9539228a7516086488182b820abf49160e0463095a12b591a054c25f2faa5665"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "sortable",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/sortable.tsx",
+          "sha256": "7690ac9b07b4cf17673e70b6e9c17c735edb877b4957eeadfbe7969a2db10cd5"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "stepper",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/stepper.tsx",
+          "sha256": "ad522e2da9077eecbfcaf9580377ce6c81b5752fcda2acb6ed3449a9bf80cffd"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "time-picker",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "input-group",
+        "popover"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/time-picker.tsx",
+          "sha256": "d34a9c3bce56ef0aaaaa583d13ee10ebd4ad69e0f68953ca077f3023aa43d6af"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "timeline",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/timeline.tsx",
+          "sha256": "5141d99fbff0da1e2bd62a99038910060efe0098e069e05e28821653460cb264"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "tree",
+      "group": "reui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "@headless-tree/core",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/reui/tree.tsx",
+          "sha256": "981b4a659e817ea96b6d78597b4b9243e5018b8cee7fa0bea8c51bfa8013394b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "accordion",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/accordion.tsx",
+          "sha256": "cdd4ad1df94e3c1ae85c77e916e3a6b7dc459efe454ccee35933b0160d2b386e"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "alert",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/alert.tsx",
+          "sha256": "639c846b57885d8af4dbdf7ddab7b15fd4d392c051f7496c67e811154e7861d9"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "alert-dialog",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/alert-dialog.tsx",
+          "sha256": "62ad5292954092897bfe1f1707d41f7d1e30bf46dbb8b4cd85736d06cf4a8cfd"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "aspect-ratio",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/aspect-ratio.tsx",
+          "sha256": "b1c157886236782cb92d8fbcd4749532aaf6d8aabefd6e157ca40358f902f407"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "avatar",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/avatar.tsx",
+          "sha256": "a85a03da4dba7e7efc440f28fe93408f776fd6fc6390cf68a16faafa790ff724"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "badge",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/badge.tsx",
+          "sha256": "7e3d99527690ba61aaa540c8305d5e148285907690c6c8e6caec589ad11bb3c8"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "breadcrumb",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/breadcrumb.tsx",
+          "sha256": "680902831bb5f875fc75b40a5245430dab620ccfab398c3ce37f09111fe8924c"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "button",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/button.tsx",
+          "sha256": "76c6abdf94fae4085fd6c50c97c7a99ec21240af187c63ea4b2e71551d33495f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "button-group",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "separator"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/button-group.tsx",
+          "sha256": "d956eb461686e7492743af73c469d31417bb58251ec6aeb72b073ff7b787b247"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "calendar",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "react-day-picker@latest",
+        "date-fns"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/calendar.tsx",
+          "sha256": "510cd66ea92cfa85832b2106c4fe9ce850b609110925fddb67470cfffe2dac19"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "card",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/card.tsx",
+          "sha256": "0d525c03e086b0047f7c0700850281023359cfc020eb233fdb0d74ec870ebea0"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "carousel",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "embla-carousel-react"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/carousel.tsx",
+          "sha256": "f0cede4c907cec71dfb232e0afa79b1aac14e993d21bf3cbe0cdd60a2386a78f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "chart",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "recharts@3.8.0"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/chart.tsx",
+          "sha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "checkbox",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/checkbox.tsx",
+          "sha256": "4dd2b8d1181fe7851a45e6f786413cf16565fcde9dc4e7caea5818d63f2fc415"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "collapsible",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/collapsible.tsx",
+          "sha256": "c6598e5584f4258b5d9fefadbc5ad6a66888ad58729f4b634a0bb2d9c513188b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "combobox",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "input-group"
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/combobox.tsx",
+          "sha256": "28b9e0955f82acbc4009093b011122b0eb20480405e7be6238a368bffc6f7abb"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "command",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "dialog",
+        "input-group"
+      ],
+      "dependencies": [
+        "cmdk"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/command.tsx",
+          "sha256": "63feaaeb6af977e0cb95348b9c405aa09d216d8368cf84710d26cab8610ef25b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "context-menu",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/context-menu.tsx",
+          "sha256": "4e8fdb4bd33132b7e61d45c318933552993c2360d52164338551159381ccf61f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "dialog",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/dialog.tsx",
+          "sha256": "71fb4e64866fa41cd770866c433342b3c469a1576d6cc7afe0b3b6cb3b06ae04"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "drawer",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "vaul"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/drawer.tsx",
+          "sha256": "780cfbe88f29a24f7e12a6966f6c8857d42dffbe5c98623f82979c7f7b1d1fcf"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "dropdown-menu",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/dropdown-menu.tsx",
+          "sha256": "f29f9046532435ec183482ad990ac282e5ecfc76af80a6352eaa500a5689c447"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "empty",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/empty.tsx",
+          "sha256": "05c419160ac0226973f6f00d7d8865dc46645a75ea0697138992cdbc736efec4"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "field",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "label",
+        "separator"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/field.tsx",
+          "sha256": "afcc19444bd161b637a9a0bbc42199c4af281ca12babc34e49e5923fc0539f1b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "form",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [],
+      "disposition": "retained-exui-form"
+    },
+    {
+      "name": "hover-card",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/hover-card.tsx",
+          "sha256": "f0aacc7c3dd82ba251e6d624e700b8875032ac86c8fd6ec2ec6fa12916fb82b2"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "input",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/input.tsx",
+          "sha256": "df7e02c82048862d719d69c7b101de130e47f2448d3933f76317c3c853b8a01e"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "input-group",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "input",
+        "textarea"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/input-group.tsx",
+          "sha256": "1dc8da17e81c94abc4d7b84a48ecd519f6b24e3007c0f2cdb3d70bcf5a657e19"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "input-otp",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "input-otp"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/input-otp.tsx",
+          "sha256": "8f540b9de861859602b3fbfffa5af76045877498aad5401aa4d1e8d94e1f8922"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "item",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "separator"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/item.tsx",
+          "sha256": "4c2372a166d80652aff3d201ab8f997acf1bd174a5be613d42cf9e93faa5f849"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "label",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/label.tsx",
+          "sha256": "075c3ea03aec0f887b9b00c407e1de3b2969371059b9ba84ecd84908f24bdde2"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "menubar",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/menubar.tsx",
+          "sha256": "d803d245db3a8864f7712f87c5db89018f1cc556c760a8910f2e8d54a067ae90"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "navigation-menu",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/navigation-menu.tsx",
+          "sha256": "5a2b654ec0da927bc19df76e60a845a733ba4011ca394606a59f6c338b1e9657"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "pagination",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/pagination.tsx",
+          "sha256": "3bfc525c64ff38edef32c6d856661778e4bec9ef379e377a0ebf417383889da4"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "popover",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/popover.tsx",
+          "sha256": "6cc31619ff458ec3d9685eb4ad127aa422841e1ec6758bddb0679db090aadf16"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "progress",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/progress.tsx",
+          "sha256": "507bab79d74484391049814b1459476eb1e4c061e99e20a7270f46e510609920"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "radio-group",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/radio-group.tsx",
+          "sha256": "9e685ae7218c69ec80c7b5a34d2aa3f2470b8f552d9afbd7f51d98d18ada4803"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "resizable",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "react-resizable-panels"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/resizable.tsx",
+          "sha256": "7971b48619d5e322ca95e29b2a2ff72eacb95b730d1fcbdead94511dae056e83"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "scroll-area",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/scroll-area.tsx",
+          "sha256": "088a0379c48cf5c856b7e182ebabd7ecc41b0dd298fc9cf794b34f718c765f74"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "select",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/select.tsx",
+          "sha256": "6e6ba85872b1b0f7286ee934adaadb8a18130d7ffb535e1f04f3505fa041428a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "separator",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/separator.tsx",
+          "sha256": "b5b5460e5337c2d5f361c1512001615b2e5eacb38c7449a4418bb9ddb47c4bba"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "sheet",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/sheet.tsx",
+          "sha256": "0b90787b36db17aa84acc5c30d9df896eae06581955ed4f1d7ab28986e659aed"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "sidebar",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button",
+        "separator",
+        "sheet",
+        "tooltip",
+        "input",
+        "use-mobile",
+        "skeleton"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/sidebar.tsx",
+          "sha256": "5a1f82f0165377a9149c85f41dea5893d4e15431f47f822e6c365b4291b105ed"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "skeleton",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/skeleton.tsx",
+          "sha256": "8fcbad84e494a75484a0975221fb40f54c4a7d68f79cfc305cb158d1feb1badf"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "slider",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/slider.tsx",
+          "sha256": "2d11a86268cf55a555c6e0ba490c9161159527e35a3966cf9d0d459fbfbb3b68"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "sonner",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [
+        "sonner",
+        "next-themes"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/sonner.tsx",
+          "sha256": "d5178ce4c7834d3f46d261698395b498b8f45fef29975585df7e26cb43aa3cc7"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "spinner",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/spinner.tsx",
+          "sha256": "494f71fd2733709d0e43be44e3353d9df215b370137af0195251cbdfdcc9e17b"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "switch",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/switch.tsx",
+          "sha256": "b664dba8da5024488799fb472e964d98c3b03be40b0224b33697caa34d09b198"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "table",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/table.tsx",
+          "sha256": "77d15e11fcf1fb2f5e1b814aa64868e7644bb59c5e1498ecb93bcbdca1c7a070"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "tabs",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/tabs.tsx",
+          "sha256": "96ad5bec050c42dc755c8254c9d7408a04969df29ce5230d29196d1c64bff497"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "textarea",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/textarea.tsx",
+          "sha256": "8f527c89dec40a9b372376dc93d2ebb149bfd82f209856d110ead1aabec19c6a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "toggle",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/toggle.tsx",
+          "sha256": "e2badd54fdb8c16f7967b6ddfce782d7e44beda5b2d2468045564bc690fbea8d"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "toggle-group",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "toggle"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/toggle-group.tsx",
+          "sha256": "bb574f981de9e581604af13725ff0218e6afbbdda651bdc5e02fc2752e27219a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "tooltip",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/tooltip.tsx",
+          "sha256": "25b33cd3bfd6046067259e476c3b5137b9f018c394d6ea51926accb8d6d5134a"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "kbd",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/kbd.tsx",
+          "sha256": "f04fe8ce9c10023fa4d9907030ec5e26a4c714e5377e6b3864cb03548bd0a56f"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "native-select",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/native-select.tsx",
+          "sha256": "a96068a0bf403eac169f8b1e605f314dd268dde7ee2841ed72ff2b41cd944875"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "direction",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/direction.tsx",
+          "sha256": "84ae2ad658207f0e0f367978e5508cd8027cd00c29c41d3d13db21a708c3d1e6"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "attachment",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/attachment.tsx",
+          "sha256": "742984b038e9f2fd87919684453bc6d30cdf03a31ee05ceed464a91b7de052e5"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "bubble",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/bubble.tsx",
+          "sha256": "f3b952658607bdc73ccf1ee45af54c6189c77b6431cdc7c02b8bff0a7f11f7d9"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "message-scroller",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "@shadcn/react"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/message-scroller.tsx",
+          "sha256": "80328938060d2c7dd782f0a8ffa501b391cb4af77564cd682c574de2e5564ac2"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "questionnaire",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "@shadcn/react"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/questionnaire.tsx",
+          "sha256": "133ef45f190c8e2ec4595fa5e88a95149bd89cd2db0cf836deaeccef798dfbf3"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "marker",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/marker.tsx",
+          "sha256": "c5dce439a6148458f59226685c7db33587c957543724838c3d6fc5b6f1e59db8"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "message",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/message.tsx",
+          "sha256": "b57f3c9921ceb0695cb8164c7be8ce229519f2b485b95923bb980a5e39e11c72"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "trace",
+      "group": "ui",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "collapsible"
+      ],
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "source": "registry/bases/radix/ui/trace.tsx",
+          "sha256": "e0bdf9c08f78fc785b15ff76826009c48ddbfcb3414ad4cd3db5169e0bba086d"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "use-copy-to-clipboard",
+      "group": "hooks",
+      "type": "registry:hook",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/hooks/use-copy-to-clipboard.ts",
+          "sha256": "7c5ae8a776c551e026b8d9454aef71286d8320b15b2f9fdff345f2ee90c2a40c"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "use-file-upload",
+      "group": "hooks",
+      "type": "registry:hook",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/hooks/use-file-upload.ts",
+          "sha256": "6f7d41bcf7df314a7f1b6ec4e87774d35e70180f892052c048e4b578d8cdd767"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "use-scroll-position",
+      "group": "hooks",
+      "type": "registry:hook",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/hooks/use-scroll-position.ts",
+          "sha256": "1a7bc47c35a8fa0b2ee0cfb563debf104704714695663efd6f43a7a9c0e314cd"
+        }
+      ],
+      "disposition": "include"
+    },
+    {
+      "name": "use-slider-input",
+      "group": "hooks",
+      "type": "registry:hook",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "source": "registry-reui/bases/radix/hooks/use-slider-input.ts",
+          "sha256": "7e23ccb00445c6be04c7f56c25189a8faeb5689ea998388548830b9a853f0dfb"
+        }
+      ],
+      "disposition": "include"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+---
+id: components/message-scroller
+title: Message Scroller
+description: Keeps a long conversation anchored and scrollable.
+exampleFamily: message-scroller
+---
+
+Message Scroller: Keeps a long conversation anchored and scrollable.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Place the message list inside the scroller and let new messages follow its scroll policy.
+
+### Current example source excerpt
+
+```tsx source="c-message-scroller-1"
+import { Message, MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerViewport } from "@exre/exui"
+
+<MessageScroller>
+  <MessageScrollerViewport aria-label={copyExample("Webhook incident transcript")}>
+    <MessageScrollerContent />
+  </MessageScrollerViewport>
+  <MessageScrollerButton variant="outline" />
+</MessageScroller>
+```
+
+[View complete source](../../../../examples/c-message-scroller-1/)

@@ -1,6 +1,6 @@
 # Exre UI
 
-最后更新：2026-09-27
+最后更新：2026-10-16
 
 Exre UI 是 Exre 品牌界面的共享 React 组件库，由本仓库发布。它存在的意义是让其他 UI 应用依赖一个品牌自有的组件包，而不是各自复制组件代码。
 
@@ -30,9 +30,13 @@ _Avoid_: downstream project、external app
 以可编辑源码形式保存在本仓库中的组件，尤其是 `packages/components/src/components/ui` 下的文件。
 _Avoid_: vendored widget、generated blob
 
-**UI 组件（UI Component）**:
-位于 `packages/components/src/components/ui` 下的单个基础控件或 shadcn/ui 源组件。
-_Avoid_: 复杂组件、业务组件
+**基础组件（Components / UI Component）**:
+构建界面的基础单元，提供按钮、输入框、对话框等独立界面能力；UI 源组件位于 `packages/components/src/components/ui`。
+_Avoid_: Blocks、组合区块、业务组件
+
+**组合区块（Blocks）**:
+由基础组件组装而成的可复用界面区块。
+_Avoid_: 基础组件、以 ExUI 代指分类
 
 **控件组件（Control Component）**:
 位于 `packages/components/src/components/patterns` 下的组合式输入控件，由 `form-controls.tsx` 及其 `form-controls/` 子目录组合，例如日期选择器（`form-controls/date.tsx`）或文件上传（`form-controls/files.tsx`）。该目录当前不叫 `controls`。

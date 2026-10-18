@@ -1,0 +1,7 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme) theme(inline reference);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "./example-theme.css";
+@source "./examples";
+@source "./pages/components";
+@custom-variant dark (&:is(.dark *));

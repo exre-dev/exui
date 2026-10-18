@@ -1,0 +1,27 @@
+---
+id: components/date-selector
+title: Date Selector
+description: Chooses a date through a text field and calendar.
+exampleFamily: date-selector
+---
+
+Date Selector: Chooses a date through a text field and calendar.
+
+## Basic usage
+
+Use the field for direct entry and the popup calendar for visual choice of the same value.
+
+### Current example source excerpt
+
+```tsx source="c-date-selector-1"
+import { DateSelector } from "@exre/exui"
+
+<DateSelector i18n={exampleLocales.dateSelector}
+            value={value}
+            onChange={setValue}
+            label={copyExample("Due date")}
+            inputHint={copyExample("Try: 2025, Q4, 05/10/2025")}
+          />
+```
+
+[View complete source](../../../../examples/c-date-selector-1/)

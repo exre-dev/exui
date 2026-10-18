@@ -1,0 +1,60 @@
+---
+id: components/trace
+title: Trace
+description: Shows progress, results, and nested details in a sequence of steps.
+exampleFamily: trace
+---
+
+Trace presents a sequence of actions with readable status and optional detail. Put a `TraceLine` inside each row, and give it a title that describes the action; icons are hidden from assistive technology. Use `running`, `error`, and `pending` only when a row has that status.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Trace status and disclosure
+
+ExUI exports `Trace`, `TraceLine`, `TraceIcon`, `TraceTitle`, `TraceDescription`, `TraceCollapsible`, `TraceCollapsibleTrigger`, and `TraceCollapsibleContent` from `@exre/exui`. Compose a `TraceLine` inside each row or trigger; it is a plain span until a surrounding link or button gives it an action. `TraceIcon` is decorative, so put running, failed, or pending status in the `TraceTitle` words as well as the `TraceLine` status color.
+
+Use `defaultOpen` for independent disclosure, or pass `open` with `onOpenChange` for controlled disclosure. Nested rows keep their own state. ExUI's Radix Luma recipe supplies row spacing and focus treatment; running shimmer, content expansion, and the disclosure arrow transition are limited to motion-safe environments.
+
+- [Live example](../../../../examples/c-trace-1/)
+- [Live example](../../../../examples/c-trace-2/)
+- [Live example](../../../../examples/c-trace-6/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+```tsx
+import { Trace, TraceIcon, TraceLine, TraceTitle } from "@exre/exui"
+
+<Trace>
+  <TraceLine status="running">
+    <TraceIcon aria-hidden="true" />
+    <TraceTitle>Checking changes</TraceTitle>
+  </TraceLine>
+</Trace>
+```
+
+For expandable detail, compose `TraceCollapsible`, `TraceCollapsibleTrigger`, and `TraceCollapsibleContent`. The trigger supports keyboard activation and accepts the controlled `open` and `onOpenChange` pair through its root.
+
+[View all 22 official examples](../../../../examples/c-trace-1/)
+
+### Current example source excerpt
+
+```tsx source="c-trace-1"
+import { Trace, TraceCollapsible, TraceCollapsibleContent, TraceCollapsibleTrigger, TraceIcon, TraceLine, TraceTitle } from "@exre/exui"
+
+<Trace>
+  <TraceLine>
+    <TraceIcon />
+    <TraceTitle />
+  </TraceLine>
+  <TraceCollapsible defaultOpen>
+    <TraceCollapsibleTrigger />
+    <TraceCollapsibleContent />
+  </TraceCollapsible>
+</Trace>
+```
+
+[View complete source](../../../../examples/c-trace-1/)

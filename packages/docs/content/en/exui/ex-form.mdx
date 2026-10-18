@@ -1,0 +1,54 @@
+---
+id: exui/ex-form
+title: ExForm
+description: Builds typed forms from a schema and field configuration.
+exampleFamily: ex-form
+---
+
+ExForm: Builds typed forms from a schema and field configuration.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Configured ExForm
+
+`ExForm` renders configured fields and optional steps. Choose either `schema` with `defaultValues`, or an existing `form` from `useForm`; passing both is an error. Step validation belongs to each edit step, and review steps render a snapshot. Keep a schema object stable across rerenders, and create browser-only schemas that reference `File` in browser code.
+
+Install `zod` in the consuming application when using this example.
+
+```tsx verify
+import { ExForm } from "@exre/exui"
+import { z } from "zod"
+
+const schema = z.object({ name: z.string().min(1) })
+export function ProjectSetup() {
+  return <ExForm schema={schema} defaultValues={{ name: "" }}
+    fields={[{ name: "name", label: "Project name", control: "text" }]}
+    onSubmit={(value) => console.log(value.name)} />
+}
+```
+
+- [Live example](../../../../examples/exui-ex-form-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Define a stable schema and field configuration, then handle the typed submit result.
+
+### Current example source excerpt
+
+```tsx source="exui-ex-form-1"
+import { ExForm, Form, FormErrorSummary } from "@exre/exui"
+
+<ExForm form={form} columns={{ base: 1, md: 2 }} formatIssue={(message) => c(message, issueTranslations[message] ?? message)}>
+  <FormErrorSummary title={c("Check these fields", "请检查以下字段")} />
+</ExForm>
+```
+
+[View complete source](../../../../examples/exui-ex-form-1/)
+
+## Related guide
+
+Read [Form](./form.mdx) for the shared draft and validation model used by ExForm.

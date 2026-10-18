@@ -1,0 +1,70 @@
+---
+id: getting-started/skills
+title: Skills
+description: Install the ExUI Skill with npx skills so your coding agent follows real APIs and design conventions.
+---
+
+The ExUI Skill gives your coding agent component documentation, composition examples, and design rules. Once installed, the agent can read the references it needs to choose components, check public APIs, and follow ExUI conventions for colors, themes, Glass, and forms.
+
+## Installation
+
+Run this command from your application's project root. Install Node.js first and make sure `npx` is available in your terminal.
+
+```bash
+npx skills add exre-dev/exui --skill exui
+```
+
+Follow the prompts to select your agents and installation method. The default scope is the current project, so you can share the skill with your team. Select only `exui`.
+
+To install for a specific agent, add `--agent`, for example Codex or Claude Code:
+
+```bash
+npx skills add exre-dev/exui --skill exui --agent codex
+npx skills add exre-dev/exui --skill exui --agent claude-code
+```
+
+To use the skill across projects, add `--global` to install it in your user directory:
+
+```bash
+npx skills add exre-dev/exui --skill exui --global
+```
+
+This installs instructions and reference files for your agent. Configure your application's `@exre/exui` dependency and stylesheet separately, following [Installation](installation.mdx) and [Quick start](quick-start.mdx).
+
+## What the skill provides
+
+| Content | Purpose |
+| --- | --- |
+| Component catalog and public export inventory | Choose components and check import names and APIs |
+| Component documentation and composition examples | Reuse existing structures and connect application data and interactions |
+| Color, icon, layout, and motion rules | Keep visuals and interactions consistent |
+| Tokens, theme, and Glass guides | Configure themes, density, scaling, and materials |
+| Form and global notification guides | Use ExUI's form and messaging capabilities |
+
+## Usage
+
+After installation, start a UI task in your agent and explicitly ask it to use the ExUI Skill. For example:
+
+```text
+Use the exui skill to add a profile form to the settings page.
+Use public @exre/exui components and include submitting, success, and error states.
+```
+
+The agent follows a choose → read → adapt → check workflow. Your project's installed `@exre/exui` version, public exports, and type declarations take priority, followed by the skill's composition guidance and design rules.
+
+## Manage the installation
+
+List skills installed in the current project:
+
+```bash
+npx skills list
+```
+
+Update or remove the ExUI Skill:
+
+```bash
+npx skills update exui
+npx skills remove exui
+```
+
+Use `npx skills list --global` to inspect global installations. See the [Skills CLI documentation](https://github.com/vercel-labs/skills) for more installation options.

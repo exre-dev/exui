@@ -1,0 +1,51 @@
+---
+id: components/sidebar
+title: Sidebar
+description: Keeps application navigation and actions in a side panel.
+exampleFamily: sidebar
+---
+
+Sidebar: Keeps application navigation and actions in a side panel.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Sidebar`, `SidebarInset`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Sidebar } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Sidebar>) {
+  return <Sidebar {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Keep navigation groups inside the sidebar provider and expose a trigger at narrow widths.
+
+### Current example source excerpt
+
+```tsx source="c-sidebar-1"
+import { DropdownMenu, SidebarMenu, SidebarMenuItem } from "@exre/exui"
+
+<SidebarMenu>
+  <SidebarMenuItem>
+    <DropdownMenu />
+  </SidebarMenuItem>
+</SidebarMenu>
+```
+
+[View complete source](../../../../examples/c-sidebar-1/)

@@ -1,6 +1,6 @@
 # @exre/exui
 
-Exre brand React component library built with Vite, Tailwind CSS v4, shadcn/ui, and Radix UI.
+Exre React 19 component library with shared design tokens, accessible controls, schema-driven forms, Glass surfaces, and application notifications.
 
 ## Usage
 
@@ -27,6 +27,16 @@ export function App() {
 `@exre/exui/style.css` is the complete component stylesheet, including token variables and fonts.
 
 The React root is ESM-only and supports React 19 (`>=19.0.0 <20`). General-purpose layout utilities are not part of the stylesheet contract; use your own CSS or utility setup for application layout.
+
+### Components and 1.0 migration
+
+Import components, subcomponents, hooks, and public types from `@exre/exui`. The catalog includes data grids, scheduling, date and time pickers, navigation, media, and interactive workflows alongside the basic controls. `ExForm`, composed `Form`, and `ExMessage` retain their APIs.
+
+`Modal` and its public types have been removed. Migrate overlays to `Dialog`, `DialogContent`, `DialogHeader`, `DialogBody`, and `DialogFooter`, or use the quick Dialog composition. Dialog supports header actions and opt-in mobile fullscreen.
+
+Badge no longer accepts `variant="ghost"` or `variant="link"`. Choose a supported variant such as `outline`, or use custom classes for a text-only treatment. `destructive` now has a solid fill; use `destructive-light` for a pale background.
+
+`DataGrid` uses the bundled TanStack Table v9 instance. Import its primitives through the root `TanStackTable` namespace; a separately installed table package does not share that instance. Chart primitives similarly use the root `Recharts` namespace. Components use ExUI token colors, Lucide icons, and opt-in Glass where supported.
 
 ### Schema-driven forms
 
@@ -61,7 +71,7 @@ Controls and form methods follow schema Input (`age` is a string); submission re
 
 `ExItem` is a standalone presentation container for a title, description, and control. It also works directly inside `Form` or `ExForm` without registering a field. A single direct ExUI `Input` receives a stable ID and description association automatically; wrapped, custom, or multiple controls use `controlId` plus the same ID on the focusable control. `FormItem` and configured fields keep `label`, `description`, and `colSpan`, and can set `layout="vertical"` or `layout="horizontal"` to override the form default. Horizontal items wrap by their own available width. `Form` and `ExForm` can set `contentMaxWidth` (CSS width or pixels as a number) and `contentAlign="left" | "right"` defaults; `ExItem`, `FormItem`, and configured fields can override each independently. The limit includes validation errors. Use `contentMaxWidth="none"` to remove an inherited limit. Vertical and narrow wrapped items fill the available width.
 
-See the [Form reference](../../skills/exui-usage/references/components/Form.md), [item layout example](../../skills/exui-usage/examples/form-item-layout.tsx), [complete configured example](../../skills/exui-usage/examples/form-configured.tsx) and [complete composed example](../../skills/exui-usage/examples/form-composed.tsx). The consumer gates install Zod 3.25.28 and 4.6.5 independently, compile with `skipLibCheck` disabled, server-render without `document`/`File` access, and test parsed ExForm submission in Chromium.
+See the [Form reference](../../skills/exui/references/exui/form.md), [item layout example](../../skills/exui/examples/form-item-layout.tsx), [complete configured example](../../skills/exui/examples/form-configured.tsx) and [complete composed example](../../skills/exui/examples/form-composed.tsx). The consumer gates install Zod 3.25.28 and 4.6.5 independently, compile with `skipLibCheck` disabled, server-render without `document`/`File` access, and test parsed ExForm submission in Chromium.
 
 ### Themes
 
@@ -92,7 +102,7 @@ function SaveButton() {
 
 Loading stays visible until completion or `dismiss()`; pass `{ duration }` to `loading` for an automatic deadline. A deadline closes the message without reporting an error. New managed messages evict the oldest managed message when `maxCount` is reached. Direct `toast` calls remain supported and share the host's visual limit, but do not participate in managed eviction. `ExMessage` requires a mounted host and throws if called before mount or after unmount. `<ExMessageContext />` is a self-contained host, not a provider wrapping children.
 
-The shared `Toaster` uses Lucide status icons for success, info, warning, error, and loading. Their colors follow the theme's feedback and primary CSS variables, so token overrides also change the icons. A direct `<Toaster />` accepts Sonner's `icons` prop when an application needs different icons.
+The shared `Toaster` uses Sonner with Lucide status icons for success, info, warning, error, and loading. `ExMessage` retains its call and lifecycle API and uses this same bundled Sonner instance. The icon colors follow the theme's feedback and primary CSS variables. A direct `<Toaster />` accepts Sonner's `icons` prop when an application needs different icons.
 
 `ThemeProvider` reads localStorage during rendering and cannot render on a server. Mount it only in the browser after hydration when using an SSR framework; `"use client"` alone does not prevent prerendering. The `.pitch-black` token class is managed separately and is not a provider theme value.
 
@@ -122,11 +132,11 @@ export function App() {
 - Mount one `GlassSeed` per document. It renders no children, is not a provider, and adds no layout box; the material works without it and simply loses the refraction. It is safe to server-render: the enhancement is applied after hydration once the browser has confirmed it accepts the shared filter, and withdrawn when the seed unmounts.
 - The `glass` prop and the `ex-glass` class produce the same material. `glass` defaults to `false` and is never forwarded to the DOM; `glass={false}` does not remove a class you wrote yourself. `ex-glass-foo` is a different class and does not enable the material.
 - The material never changes layout: no `display`, `position`, `z-index`, size, padding, gap, radius, or `overflow` change, no wrapper element, and no new border width. The visible edge is an inset shadow, never a border: it paints an inner hairline on every glass surface while the surface's own border colour — including its hover, focus, invalid, disabled, error, and checked transitions — is left completely untouched. A bordered surface shows both its border and the material's hairline, and a surface that shipped `border-transparent` gains a visible inner edge. Existing outer shadows and focus rings are composed with the material rather than replaced.
-- Every surface opts in on its own; the marker does not spread to descendants. The [Glass reference](../../skills/exui-usage/references/glass.md) lists supported surfaces and composition rules. For example, `Select glass` affects its trigger; a glass popup requires the composed `SelectField` and `SelectContent glass` path. `DrawerContent` paints its rounded panel through `::before`, and a glass tooltip retints its arrow without adding a second refraction filter.
+- Every surface opts in on its own; the marker does not spread to descendants. The [Glass reference](../../skills/exui/references/exui/glass.md) lists supported surfaces and composition rules. For example, `Select glass` affects its trigger; a glass popup requires the composed `SelectField` and `SelectContent glass` path. `DrawerContent` paints its rounded panel through `::before`, and a glass tooltip retints its arrow without adding a second refraction filter.
 - Restyle it with `--exui-glass-background`, `--exui-glass-foreground`, `--exui-glass-border`, `--exui-glass-shadow`, `--exui-glass-blur`, and `--exui-glass-saturation`, declared on the surface or any ancestor.
 - Where `backdrop-filter` is unavailable the surface falls back to an opaque themed background. A non-`none` `backdrop-filter` also makes the element a containing block for absolutely and fixed positioned descendants, so keep viewport-anchored content in a portal rather than inside a glass surface.
 
-The built-in blur stays `4px` at every root font size; the inset edge uses `0.0625rem` and scales. The stylesheet also adds a fixed-pixel white inset highlight. `CSS.supports` checks syntax acceptance only: the automated checks cover computed styles and lifecycle, not the rendered refraction effect.
+The built-in blur is `0.25rem` and the inset edge is `0.0625rem`; both scale with the root font size. The stylesheet also adds a fixed-pixel white inset highlight. `CSS.supports` checks syntax acceptance only: the automated checks cover computed styles and lifecycle, not the rendered refraction effect.
 
 ### Customizing tokens
 
@@ -138,32 +148,30 @@ Every Token is a CSS custom property declared on `:root`, and the component styl
 :root {
   --exui-control-primary: #0f62fe;
   --exui-control-primary-foreground: #ffffff;
-  --primary: #0f62fe;                    /* the shadcn alias holds its own copy */
   --exui-font-family: "Inter", sans-serif;
   --exui-radius-extra-large: 0.75rem;
 }
 
 .dark {
   --exui-control-primary: #6ea8ff;
-  --primary: #6ea8ff;
 }
 ```
 
 An override is a declaration that wins the cascade, so two rules matter more than the list of names:
 
 - **Keep it unlayered.** ExUI emits its Token declarations outside any `@layer`, and unlayered declarations beat layered ones. An override written inside `@layer base` or a Tailwind `@theme` block resolves back to the library value and fails with no error; a plain `:root` rule placed after the stylesheet import is enough, and its position in the cascade is what makes it win.
-- **`.dark` and `.pitch-black` carry only the values that differ from `:root`.** An unlayered `:root` override placed after the stylesheet therefore applies to all three themes. Add a `.dark` block when the brand value has a dark counterpart; the foundation Tokens and `--density-*` are declared once and are theme-independent.
+- **`.dark` and `.pitch-black` carry theme differences and explicit short alias references.** An unlayered `:root` override placed after the stylesheet applies to all three themes unless a theme rule supplies that variable. Add a `.dark` or `.pitch-black` block when the brand value has a theme-specific counterpart. Foundation Tokens and `--density-*` are theme-independent.
 
 What the layers cover:
 
 - **Semantic Tokens** — `--exui-control-*`, `--exui-surface-*`, `--exui-text-*`, `--exui-border-*`, `--exui-feedback-*`, `--exui-sidebar-*`, `--exui-chart-*`, `--exui-editor-*`. Recolouring an application is normally these alone.
 - **Foundation Tokens** — `--exui-font-family`, `--exui-font-family-mono`, `--exui-font-family-emoji`, `--exui-font-weight-*`, `--exui-font-size-*`, `--exui-line-height-*`, `--exui-radius-*` and `--exui-shadow-*`. They are theme-independent, and every recipe field that references one resolves through its variable, so changing `--exui-font-family` or `--exui-radius-extra-large` moves the components as well. Three recipe radii are deliberately standalone values — the button action radius, and the dialog and menu surface radii — and follow only their own `--exui-component-…-radius`.
 - **`--radius`** is derived: it resolves to `--exui-radius-large`, so the Tailwind radius scale (`rounded-sm` … `rounded-4xl`) and the components that use that radius move together.
-- **The shadcn aliases** — `--background`, `--primary`, `--ring`, `--chart-1`, `--sidebar-*` and the rest — are separate declarations carrying their own copies of the same colours for shadcn-styled markup. Overriding `--exui-control-primary` does not move `--primary`; set both when both are in use.
-- **`--density-*`** (with the `.density-compact` block) is published but unused: no component styling references it today, so overriding it changes nothing. Treat it as data for Token consumers, not as a density switch.
+- **The short semantic aliases** — `--background`, `--primary`, `--ring`, `--chart-1`, `--sidebar-*`, feedback colors, and the rest — reference their `--exui-*` tokens with `var()`. Root and themed-scope overrides of those tokens therefore reach the aliases. For a local override inside an element without its own theme class, inherited alias or recipe declarations can resolve at an ancestor; redeclare the corresponding alias or recipe at that scope if needed.
+- **`--density-*`** provides `standard` and `.density-compact` values. Default Button, Input, Textarea, Select, NativeSelect, and InputGroup geometry consumes them; explicit component sizes keep their own sizing. Density does not compact every internal part of complex components.
 - **Recipe variables** (`--exui-component-…`) are the component-internal layer. Overriding one is supported and precise — a few hundred of them cover the default, hover, focus, active and disabled state of every variant — but they are not the theming surface.
 
-These examples assume the theme class is on the document root. A subtree's own declarations override inherited values, and inherited recipe variables may already have resolved their references at the root. For local overrides and portal theming, follow the [Token customization guide](../../skills/exui-usage/references/token-customization.md).
+These examples assume the theme class is on the document root. A nested `.dark` or `.pitch-black` scope also re-emits its semantic aliases. For local overrides and portal theming, account for CSS inheritance of alias and recipe variables. See the [Token customization guide](../../skills/exui/references/exui/token-customization.md).
 
 The library keeps no override layer of its own, so nothing has to be re-applied after an upgrade; an override that stops matching a Token name simply stops applying.
 
@@ -217,7 +225,9 @@ html {
 
 ExUI never sets a root font size itself and declares no scale variable, so this stays an application decision. Keep the root at `16px` for the previous rendering; applications that already set a different root font size will see differently sized components after upgrading.
 
-The following stay fixed pixels on purpose and do **not** scale: hairline borders and dividers, focus rings, foundation and theme drop shadows, the glass blur, and the capsule (`9999px`) radius. The glass inset edge is a separate rem-based effect. Third-party geometry is outside this contract too — the internals of Sonner and Recharts keep their own fixed sizes, so do not expect toasts or chart axes to scale in lockstep. ExUI's own legend, tooltip, and icon content does scale.
+Hairline borders and dividers, focus rings, drop shadows, capsule radii and border compensation stay fixed. Glass blur is `0.25rem`; its inset edge is `0.0625rem`. Omitted numeric defaults for positioning and virtual layouts resolve from rem at runtime, while explicit numeric props and resize state remain pixels. Measured DOM geometry, SVG drawing coordinates and user data keep their original units.
+
+The bundled `Recharts` and `TanStackTable` React boundaries adapt supported axis, tooltip, legend and column defaults. Toaster/ExMessage, Resizable and MessageScroller adapt their owned defaults too. The non-React `TanStackTable.constructTable` entry retains upstream pixel defaults. InputOTP's private password-manager badge reserve/probe remains 40px/18px. See the [scaling guide](../../skills/exui/references/exui/scaling.md) for these boundaries.
 
 Numeric positioning props such as `sideOffset` and `alignOffset` keep their upstream pixel contract and are never multiplied by the root font size.
 
@@ -277,6 +287,8 @@ written into the chart stylesheet.
 The namespace exposes the bundled Recharts public API and increases the shipped
 component bundle size. Tokens remain isolated behind `@exre/exui/tokens`.
 
+The root `TanStackTable` namespace follows the same bundled-instance rule for DataGrid and its table model.
+
 ### Source distribution
 
 The tarball also ships the package source under `src/` for reference and for existing tooling that copies source files. Source-copy consumers resolve the third-party source dependencies themselves; only the `exports` entries above are the supported consumption contract.
@@ -287,13 +299,12 @@ Run aggregate development and validation commands from the repository root:
 
 ```bash
 pnpm install
-pnpm dev
-pnpm typecheck
+pnpm tokens:check
 pnpm lint
-pnpm build
-pnpm --filter @exre/exui-showcase exec playwright install chromium
 pnpm verify:pack
 ```
+
+The documentation site, retained browser fixtures, and consumer skill use the public package entries. Run the workspace, browser, skill, and isolated packed-consumer gates in [Testing](../../TESTING.md); each verifies a different consumption boundary.
 
 ## Versioning
 
@@ -315,15 +326,6 @@ After release automation is enabled, successful CI on `main` versions pending Ch
 
 There is no local `pnpm release` command. Maintainers must configure the Release App, protected refs, and the npm Trusted Publisher before enabling automation.
 
-## shadcn/ui
+## Source maintenance
 
-This package keeps shadcn/ui components as source under `packages/components/src/components/ui`.
-
-The project was initialized with:
-
-```bash
-npx shadcn@latest init --template vite --base radix --preset b5Kc86Jl4 --force -y
-npx shadcn@latest add --all -y
-```
-
-Run shadcn from `packages/components` so generated files use `components.json` and the local `@/*` alias.
+Component source locks, licenses, public export metadata, and adapter patches are maintained with the package. See [Testing](../../TESTING.md#source-maintenance-gates) for cache restoration, integrity checks, and deliberate source updates. Raw source caches and maintenance tooling are excluded from the published package; required third-party notices remain included.

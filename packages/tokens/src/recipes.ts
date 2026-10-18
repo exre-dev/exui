@@ -168,7 +168,7 @@ export const componentRecipes: ComponentRecipes = {
   dialog: {
     overlay: { background: semantic("surface.overlay"), backdropBlur: "0.25rem", duration: "100ms" },
     surface: {
-      padding: "1.5rem", gap: "1.5rem", radius: "1.625rem", background: semantic("surface.modal"),
+      padding: "1rem", gap: "1.5rem", radius: "1.625rem", background: semantic("surface.modal"),
       foreground: semantic("text.primary"), border: semantic("border.default"), shadow: semantic("shadow.modal"),
     },
     title: {
@@ -186,15 +186,15 @@ export const componentRecipes: ComponentRecipes = {
   tabs: {
     defaultVariant: "default",
     list: {
-      height: "2.25rem", padding: "0.25rem", gap: "0.25rem", radius: foundation("radii.extraLarge"),
+      height: "2.25rem", padding: "0.25rem", gap: "0.25rem", radius: foundation("radii.full"),
       foreground: semantic("text.secondary"),
     },
     trigger: {
-      paddingInline: "0.75rem", paddingBlock: "0.25rem", gap: "0.5rem", radius: foundation("radii.extraLarge"),
+      paddingInline: "0.75rem", paddingBlock: "0.25rem", gap: "0.5rem", radius: foundation("radii.full"),
       fontSize: foundation("typography.bodyFontSize"), fontWeight: foundation("typography.fontWeightMedium"),
       default: state(transparent, semantic("text.secondary")),
       hover: state(transparent, semantic("text.primary")),
-      selected: state(semantic("surface.background"), semantic("text.link")),
+      selected: state(semantic("surface.background"), semantic("text.link"), transparent, semantic("shadow.card")),
       focus: state(transparent, semantic("text.primary"), transparent, foundation("shadows.focus")),
       disabled: state(transparent, semantic("text.secondary"), transparent, noShadow, 0.5),
     },
@@ -203,7 +203,7 @@ export const componentRecipes: ComponentRecipes = {
     line: { listBackground: transparent, triggerSelectedBackground: transparent, indicatorOpacity: 1 },
     primary: {
       listBackground: semantic("surface.tertiary"), indicatorOpacity: 0,
-      selected: state(semantic("control.primary"), semantic("control.primaryForeground")),
+      selected: state(semantic("control.primary"), semantic("control.primaryForeground"), transparent, semantic("shadow.card")),
     },
   },
 }

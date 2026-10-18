@@ -2,7 +2,7 @@
 
 最后更新：2026-09-29
 
-表单在唯一公开包根入口提供配置式 `ExForm`、组合式 `Form` / `FormItem` / `FormList` / `FormErrorSummary`、独立展示容器 `ExItem` 和同源 hooks。消费用法与属性说明见 [`Form` 参考](../../../skills/exui-usage/references/components/Form.md)。它们不创建新包或子入口；实现依赖的打包边界沿用 [[components/01-bundle-implementation-dependencies]]。
+表单在唯一公开包根入口提供配置式 `ExForm`、组合式 `Form` / `FormItem` / `FormList` / `FormErrorSummary`、独立展示容器 `ExItem` 和同源 hooks。消费用法与属性说明见 [`Form` 参考](../../../skills/exui/references/exui/form.md)。它们不创建新包或子入口；实现依赖的打包边界沿用 [[components/01-bundle-implementation-dependencies]]。
 
 ## 数据与请求流
 
@@ -22,7 +22,7 @@
 
 表单适配器的默认输入背景与描边以 `form-control` 配方为准：搜索式多选容器使用该配方的背景和普通态描边，保留自身聚焦及错误态；日期与文件控件只在表单范围内覆盖 `outline` 按钮的背景、描边变量，保留普通按钮的配方。`FormSurfaces.vrt.test.tsx` 比较控件计算背景色，`FormSurfaceOutline.vrt.test.tsx` 检查三主题下输入表面的 1px 描边及其与填色的区分。
 
-日期适配器在同一绑定边界组合公开的 `Button`、`Popover` 与 `Calendar`。表单草稿仍存 `YYYY-MM-DD` 字符串；弹层将当前值转换为本地日历日期，选择后写回字符串。`min` / `max` 控制可选日期和月份导航；默认值及重置仍由表单实例管理。消费用法见 [`Form` 参考](../../../skills/exui-usage/references/components/Form.md)。
+日期适配器在同一绑定边界组合公开的 `Button`、`Popover` 与 `Calendar`。表单草稿仍存 `YYYY-MM-DD` 字符串；弹层将当前值转换为本地日历日期，选择后写回字符串。`min` / `max` 控制可选日期和月份导航；默认值及重置仍由表单实例管理。消费用法见 [`Form` 参考](../../../skills/exui/references/exui/form.md)。
 
 `form-steps.ts` 只保存步骤配置和导航任务。scope 的字段及显式依赖决定验证投影，局部输出丢弃；最终提交仍验证完整 schema。受控切步由父组件确认，值与错误继续属于同一表单实例。焦点登记只包含标签、步骤与真实元素，不保存字段值。
 

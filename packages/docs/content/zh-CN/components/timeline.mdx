@@ -1,0 +1,45 @@
+---
+id: components/timeline
+title: Timeline
+description: 沿时间轴排列事件。
+exampleFamily: timeline
+---
+
+Timeline：沿时间轴排列事件。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### 紧凑组件内边距
+
+ExUI 将默认 Card 内边距、`AlertDialogContent` 四边、`SheetHeader` 与 `SheetFooter` 四边、`CommandEmpty` 及 DataGrid 空表和筛选空提示的上下、Gantt 无资源提示四边、纵向 `TimelineItem` 非末项的底部 padding 统一为 `1rem`（16px 根字号下为 16px）。空状态仅在对应提示渲染时生效；时间轴末项不额外增加底部 padding。调用方仍可用类名覆盖默认值。
+
+请阅读[紧凑组件内边距](./card.mdx)，了解完整用法。
+
+- [在线示例](../../../../examples/c-timeline-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+按时间排列事件，在相应节点放置标签与详情。
+
+### 当前示例源码摘录
+
+```tsx source="c-timeline-1"
+import { Timeline, TimelineHeader, TimelineIndicator, TimelineItem } from "@exre/exui"
+
+<Timeline defaultValue={2}>
+  <TimelineItem step={1}>
+    <TimelineHeader />
+    <TimelineIndicator />
+  </TimelineItem>
+  <TimelineItem step={2}>
+    <TimelineHeader />
+    <TimelineIndicator />
+  </TimelineItem>
+</Timeline>
+```
+
+[查看完整源码](../../../../examples/c-timeline-1/)

@@ -9,11 +9,15 @@ import {
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ArrowDownIcon } from "lucide-react"
+import { useRootRem } from "@/hooks/use-root-rem"
 
 function MessageScrollerProvider(
-  props: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>
+  { scrollEdgeThreshold, scrollPreviousItemPeek, ...props }: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>
 ) {
-  return <MessageScrollerPrimitive.Provider {...props} />
+  const rem = useRootRem()
+  return <MessageScrollerPrimitive.Provider {...props}
+    scrollEdgeThreshold={scrollEdgeThreshold ?? 0.5 * rem}
+    scrollPreviousItemPeek={scrollPreviousItemPeek ?? 4 * rem} />
 }
 
 function MessageScroller({

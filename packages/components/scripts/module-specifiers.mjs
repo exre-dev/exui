@@ -10,7 +10,9 @@ const MODULE_SPECIFIER_PATTERN =
   /((?<!["'])\bfrom\s*|(?<!["'])\bimport\s*\(\s*|(?<!["'])\bimport\s*|(?<!["'])\brequire\s*\(\s*)(["'])([^"'\n]+)\2/g
 
 export function maskComments(text) {
-  const characters = [...text]
+  // RegExp indices and String#slice use UTF-16 code units. Splitting by
+  // Unicode code point shifts every subsequent offset after an emoji.
+  const characters = text.split("")
   let state = "code"
   let index = 0
   while (index < characters.length) {

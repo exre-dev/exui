@@ -1,0 +1,22 @@
+---
+id: components/label
+title: Label
+description: 将可读文本与表单控件关联。
+exampleFamily: label
+---
+
+Label：将可读文本与表单控件关联。
+
+## 基本用法
+
+让标签指向控件 id，或采用该控件文档说明的组合方式。
+
+### 当前示例源码摘录
+
+```tsx source="c-label-1"
+import { Label } from "@exre/exui"
+
+<Label htmlFor={exampleId("label-demo-username")}>{<ExampleText>Username</ExampleText>}</Label>
+```
+
+[查看完整源码](../../../../examples/c-label-1/)

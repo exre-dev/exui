@@ -1,0 +1,40 @@
+---
+id: components/input-otp
+title: Input OTP
+description: 将一次性验证码分为独立输入格。
+exampleFamily: input-otp
+---
+
+Input OTP：将一次性验证码分为独立输入格。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+设置预期验证码长度，并为整组输入提供标签，而非只标记单格。
+
+### 当前示例源码摘录
+
+```tsx source="c-input-otp-1"
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@exre/exui"
+
+<InputOTP id={exampleId("simple-otp")} maxLength={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+</InputOTP>
+```
+
+[查看完整源码](../../../../examples/c-input-otp-1/)

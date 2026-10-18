@@ -1,0 +1,18 @@
+---
+id: getting-started/styles
+title: Styles and fonts
+description: Choose the full component stylesheet or the smaller Tokens-only stylesheets.
+---
+
+React consumers import `@exre/exui/style.css` once; it contains the Token variables, font, component styles, and glass class. Do not import the Tokens sheets again in that path. A non-React consumer can import `@exre/exui/tokens/style.css` and optionally `tokens/font.css`. Let the application's bundler resolve the published CSS imports.
+
+## Basic usage
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Badge } from "@exre/exui"
+
+export function StyledStatus() {
+  return <Badge>Ready</Badge>
+}
+```

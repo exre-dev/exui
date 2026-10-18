@@ -1,0 +1,33 @@
+---
+id: components/signature-pad
+title: Signature Pad
+description: Captures a drawn signature.
+exampleFamily: signature-pad
+---
+
+Signature Pad: Captures a drawn signature.
+
+## Basic usage
+
+Provide a clear drawing area and explicit clear or confirm actions.
+
+### Current example source excerpt
+
+```tsx source="c-signature-pad-1"
+import { SignaturePad, SignaturePadArea, SignaturePadClear, SignaturePadControls, SignaturePadPlaceholder, SignaturePadSave } from "@exre/exui"
+
+<SignaturePad>
+        <SignaturePadArea variant="muted" className="h-60">
+          <SignaturePadPlaceholder />
+          <SignaturePadControls position="bottom-end">
+            <SignaturePadClear />
+            <SignaturePadSave
+              format="json"
+              onSave={(_, strokes) => setSaved(strokes)}
+            />
+          </SignaturePadControls>
+        </SignaturePadArea>
+      </SignaturePad>
+```
+
+[View complete source](../../../../examples/c-signature-pad-1/)

@@ -1,0 +1,27 @@
+---
+id: components/pagination
+title: Pagination
+description: Moves through a numbered result set.
+exampleFamily: pagination
+---
+
+Pagination: Moves through a numbered result set.
+
+## Basic usage
+
+Connect the current page and total page count to the underlying result query.
+
+### Current example source excerpt
+
+```tsx source="c-pagination-1"
+import { Pagination, PaginationContent, PaginationItem } from "@exre/exui"
+
+<Pagination>
+  <PaginationContent>
+    <PaginationItem />
+    <PaginationItem />
+  </PaginationContent>
+</Pagination>
+```
+
+[View complete source](../../../../examples/c-pagination-1/)

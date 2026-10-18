@@ -1,0 +1,45 @@
+---
+id: components/timeline
+title: Timeline
+description: Orders events along a time axis.
+exampleFamily: timeline
+---
+
+Timeline: Orders events along a time axis.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Compact component padding
+
+ExUI uses `1rem` padding (16px at a 16px root) for default Card insets, all sides of `AlertDialogContent`, `SheetHeader` and `SheetFooter`, vertical padding in `CommandEmpty` and DataGrid empty-table/filter messages, all sides of Gantt's no-resource message, and bottom padding between vertical `TimelineItem` entries. Empty-state padding appears only when that state is rendered; Timeline's last item has no added bottom padding.
+
+Read [Compact component padding](./card.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-timeline-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Order events by time and put each event's label and details at the matching marker.
+
+### Current example source excerpt
+
+```tsx source="c-timeline-1"
+import { Timeline, TimelineHeader, TimelineIndicator, TimelineItem } from "@exre/exui"
+
+<Timeline defaultValue={2}>
+  <TimelineItem step={1}>
+    <TimelineHeader />
+    <TimelineIndicator />
+  </TimelineItem>
+  <TimelineItem step={2}>
+    <TimelineHeader />
+    <TimelineIndicator />
+  </TimelineItem>
+</Timeline>
+```
+
+[View complete source](../../../../examples/c-timeline-1/)

@@ -1,0 +1,44 @@
+---
+id: components/button-group
+title: Button Group
+description: 将相关操作排列为一个控件组。
+exampleFamily: button-group
+---
+
+Button Group：将相关操作排列为一个控件组。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### 连续拼接的控件
+
+`ButtonGroup` 将相邻控件连接成一个整体，内部接缝使用直角且只保留一条边框，适用于 `InputGroup`、Select 触发器和文字段。应用编译自己的工具类样式表后，接缝仍保持连续。纵向排列时使用 `orientation="vertical"`。
+
+非交互说明和计数使用 `ButtonGroupText`；`asChild` 可让自定义元素保留拼接行为。嵌套的 `ButtonGroup` 形成带间距的独立控件组。Select 隐藏的原生表单控件不算可见片段，也不会让末端触发器丢失外侧圆角。
+
+- [在线示例](../../../../examples/c-button-group-13/)
+- [在线示例](../../../../examples/c-button-group-19/)
+- [在线示例](../../../../examples/c-button-group-20/)
+- [在线示例](../../../../examples/c-button-group-21/)
+- [在线示例](../../../../examples/c-button-group-29/)
+- [在线示例](../../../../examples/c-button-group-33/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+将相邻操作放进同一组，每个按钮仍保留清晰的可访问文本。
+
+### 当前示例源码摘录
+
+```tsx source="c-button-group-1"
+import { Button, ButtonGroup } from "@exre/exui"
+
+<ButtonGroup>
+      <Button variant="outline">{<ExampleText>Button</ExampleText>}</Button>
+      <Button variant="outline">{<ExampleText>Another Button</ExampleText>}</Button>
+    </ButtonGroup>
+```
+
+[查看完整源码](../../../../examples/c-button-group-1/)

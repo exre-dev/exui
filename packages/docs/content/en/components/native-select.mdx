@@ -1,0 +1,58 @@
+---
+id: components/native-select
+title: Native Select
+description: Uses the browser's native option picker.
+exampleFamily: native-select
+---
+
+Native Select: Uses the browser's native option picker.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `NativeSelect`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { NativeSelect } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof NativeSelect>) {
+  return <NativeSelect {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Use native option elements when platform picker behavior is the desired interaction.
+
+### Current example source excerpt
+
+```tsx source="c-native-select-1"
+import { NativeSelect, NativeSelectOption } from "@exre/exui"
+
+<NativeSelect>
+  <NativeSelectOption value="" />
+  <NativeSelectOption value="apple" />
+</NativeSelect>
+```
+
+[View complete source](../../../../examples/c-native-select-1/)

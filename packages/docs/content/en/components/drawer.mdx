@@ -1,0 +1,55 @@
+---
+id: components/drawer
+title: Drawer
+description: Presents a task in a movable overlay panel.
+exampleFamily: drawer
+---
+
+Drawer: Presents a task in a movable overlay panel.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `DrawerContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { DrawerContent } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof DrawerContent>) {
+  return <DrawerContent {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Place the drawer trigger and task content together, with a clear way to dismiss it.
+
+### Current example source excerpt
+
+```tsx source="c-drawer-1"
+import { Button, Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTrigger } from "@exre/exui"
+
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button variant="outline" />
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader />
+    <DrawerFooter />
+  </DrawerContent>
+</Drawer>
+```
+
+[View complete source](../../../../examples/c-drawer-1/)

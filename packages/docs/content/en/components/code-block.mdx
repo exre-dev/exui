@@ -1,0 +1,53 @@
+---
+id: components/code-block
+title: Code Block
+description: Presents code with syntax and copy affordances.
+exampleFamily: code-block
+---
+
+Code Block: Presents code with syntax and copy affordances.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `CodeBlock`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { CodeBlock } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof CodeBlock>) {
+  return <CodeBlock {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Supply code and its language so syntax and copy behavior reflect the source.
+
+### Current example source excerpt
+
+```tsx source="c-code-block-1"
+import { CodeBlock, CodeBlockCopyButton, CodeBlockHeader, CodeBlockLanguage, CodeBlockTitle } from "@exre/exui"
+
+<CodeBlock code={code} language="typescript" showLineNumbers>
+        <CodeBlockHeader>
+          <CodeBlockTitle>{<ExampleText>use-totals.ts</ExampleText>}</CodeBlockTitle>
+          <CodeBlockLanguage />
+          <CodeBlockCopyButton className="ml-auto" />
+        </CodeBlockHeader>
+      </CodeBlock>
+```
+
+[View complete source](../../../../examples/c-code-block-1/)

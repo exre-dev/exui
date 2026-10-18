@@ -1,0 +1,24 @@
+---
+id: components/marker
+title: Marker
+description: 标记位置或重要项目。
+exampleFamily: marker
+---
+
+Marker：标记位置或重要项目。
+
+## 基本用法
+
+把标记附着于对应位置或项目，并在旁边提供说明文字。
+
+### 当前示例源码摘录
+
+```tsx source="c-marker-1"
+import { Marker, MarkerContent } from "@exre/exui"
+
+<Marker>
+        <MarkerContent>{<ExampleText>Read 14 files under src/billing</ExampleText>}</MarkerContent>
+      </Marker>
+```
+
+[查看完整源码](../../../../examples/c-marker-1/)

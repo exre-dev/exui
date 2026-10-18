@@ -1,0 +1,66 @@
+---
+id: components/card
+title: Card
+description: Groups related content in a surface.
+exampleFamily: card
+---
+
+Card: Groups related content in a surface.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Compact component padding
+
+ExUI uses `1rem` padding (16px at a 16px root) for default Card insets, all sides of `AlertDialogContent`, `SheetHeader` and `SheetFooter`, vertical padding in `CommandEmpty` and DataGrid empty-table/filter messages, all sides of Gantt's no-resource message, and bottom padding between vertical `TimelineItem` entries. Empty-state padding appears only when that state is rendered; Timeline's last item has no added bottom padding. Caller classes can override these defaults.
+
+Card's default and `sm` sizes both use `1rem` insets. `--card-spacing` controls those insets; `--card-gap` controls the separate section gap, which remains `1.5rem` by default and `1rem` for `sm`. Header bottom and Footer top insets appear when the corresponding border is added; a leading image still removes the Card's top inset.
+
+- [Live example](../../../../examples/c-card-1/)
+- [Live example](../../../../examples/c-card-2/)
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Card`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Card } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Card>) {
+  return <Card {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Compose a header and content region when the information needs a titled surface.
+
+Place `CardAction` directly inside `CardHeader` for an action or progress indicator in the top-right corner. The title and description remain stacked in the left column, including Questionnaire content rendered through `CardTitle` and `CardDescription`.
+
+### Current example source excerpt
+
+```tsx source="c-card-1"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@exre/exui"
+
+<Card>
+  <CardHeader>
+    <CardTitle />
+    <CardDescription />
+  </CardHeader>
+  <CardContent />
+</Card>
+```
+
+[View complete source](../../../../examples/c-card-1/)

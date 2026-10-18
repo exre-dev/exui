@@ -1,0 +1,13 @@
+
+import { ExampleRuntimeProvider, useExampleRuntime } from "../_shared/example-runtime"
+import dictionary from "./copy.generated"
+
+import { PhoneInput } from "@exre/exui"
+
+  function OriginalPattern() {
+  const { copy: copyExample, locales: exampleLocales } = useExampleRuntime()
+
+  return <PhoneInput labels={exampleLocales.phoneInput} defaultCountry="FR" placeholder={copyExample("Enter phone number")} />
+}
+
+export default function Pattern() { return <ExampleRuntimeProvider dictionary={dictionary}><OriginalPattern /></ExampleRuntimeProvider> }

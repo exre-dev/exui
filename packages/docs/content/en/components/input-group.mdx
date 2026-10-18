@@ -1,0 +1,57 @@
+---
+id: components/input-group
+title: Input Group
+description: Adds actions or context beside an input.
+exampleFamily: input-group
+---
+
+Input Group: Adds actions or context beside an input.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `InputGroup`, `InputGroupButton`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { InputGroup } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof InputGroup>) {
+  return <InputGroup {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Keep the text field and its prefix, suffix, or action inside one input group.
+
+### Current example source excerpt
+
+```tsx source="c-input-group-1"
+import { InputGroup, InputGroupInput } from "@exre/exui"
+
+<InputGroup>
+        <InputGroupInput placeholder={copyExample("Search...")} />
+      </InputGroup>
+```
+
+[View complete source](../../../../examples/c-input-group-1/)

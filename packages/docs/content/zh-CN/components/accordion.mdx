@@ -1,0 +1,52 @@
+---
+id: components/accordion
+title: Accordion
+description: 在紧凑列表中展开分组内容。
+exampleFamily: accordion
+---
+
+Accordion：在紧凑列表中展开分组内容。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### Nova 风格 Accordion
+
+ExUI 的 Accordion 沿用 Radix 单选/多选 API，但默认呈现 Nova 式平铺列表：没有外框，相邻项用分隔线区分，展开项保持透明。触发器有清晰的键盘焦点环。展开内容随当前内容高度变化，包括嵌套项及容器变窄后的换行；无需用固定高度补偿。
+
+```tsx verify
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@exre/exui"
+
+export function Details() {
+  return <Accordion type="single" collapsible defaultValue="delivery">
+    <AccordionItem value="delivery"><AccordionTrigger>配送</AccordionTrigger>
+      <AccordionContent>可在账户中查看订单状态。</AccordionContent></AccordionItem>
+  </Accordion>
+}
+```
+
+- [在线示例](../../../../examples/c-accordion-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+为每一项设置稳定值，让触发器与展开内容成对出现。
+
+### 当前示例源码摘录
+
+```tsx source="c-accordion-1"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@exre/exui"
+
+<Accordion type="single" collapsible defaultValue="item-1">
+        {items.map((item) => (
+          <AccordionItem key={item.value} value={item.value}>
+            <AccordionTrigger>{copy(item.trigger[0], item.trigger[1])}</AccordionTrigger>
+            <AccordionContent>{copy(item.content[0], item.content[1])}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+```
+
+[查看完整源码](../../../../examples/c-accordion-1/)

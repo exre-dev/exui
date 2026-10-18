@@ -1,0 +1,45 @@
+---
+id: components/radio-group
+title: Radio Group
+description: Chooses one option from a small group.
+exampleFamily: radio-group
+---
+
+Radio Group: Chooses one option from a small group.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Radio field selection
+
+`FieldLabel` keeps its background unchanged when a nested `RadioGroupItem` is selected, including card and settings-row compositions. The radio circle and indicator show the selected state.
+
+Read [Radio field selection](./field.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-radio-group-9/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Give all alternatives one group label and a stable value per option.
+
+### Current example source excerpt
+
+```tsx source="c-radio-group-1"
+import { Field, FieldLabel, RadioGroup, RadioGroupItem } from "@exre/exui"
+
+<RadioGroup defaultValue="comfortable">
+  <Field orientation="horizontal">
+    <RadioGroupItem value="default" id={exampleId("r1")} />
+    <FieldLabel htmlFor={exampleId("r1")} />
+  </Field>
+  <Field orientation="horizontal">
+    <RadioGroupItem value="comfortable" id={exampleId("r2")} />
+    <FieldLabel htmlFor={exampleId("r2")} />
+  </Field>
+</RadioGroup>
+```
+
+[View complete source](../../../../examples/c-radio-group-1/)

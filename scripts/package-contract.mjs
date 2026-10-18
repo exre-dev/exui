@@ -1,5 +1,5 @@
 export const OFFICIAL_NPM_REGISTRY = "https://registry.npmjs.org/"
-export const EXUI_REPOSITORY_URL = "https://github.com/caep-dev/exui.git"
+export const EXUI_REPOSITORY_URL = "https://github.com/exre-dev/exui.git"
 export const TOKEN_PACKAGE_NAME = "@exre/exui-tokens"
 export const COMPONENT_PACKAGE_NAME = "@exre/exui"
 export const PUBLIC_PACKAGE_NAMES = Object.freeze([COMPONENT_PACKAGE_NAME])
@@ -80,10 +80,6 @@ export function assertPublishableManifest(manifest, { expectedName, expectedVers
     workspaceDependencies.length === 0,
     `${manifest.name} contains workspace dependencies: ${workspaceDependencies.join(", ")}`
   )
-
-  if (manifest.name !== COMPONENT_PACKAGE_NAME) {
-    return manifest
-  }
 
   // The single public package owns the tokens subpaths and the optional
   // React host peers. The internal tokens workspace must never leak into a

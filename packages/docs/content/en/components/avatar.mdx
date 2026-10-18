@@ -1,0 +1,28 @@
+---
+id: components/avatar
+title: Avatar
+description: Represents a person or entity visually.
+exampleFamily: avatar
+---
+
+Avatar: Represents a person or entity visually.
+
+## Basic usage
+
+Provide an image and a fallback so identity remains visible when media fails.
+
+### Current example source excerpt
+
+```tsx source="c-avatar-1"
+import { Avatar, AvatarFallback, AvatarImage } from "@exre/exui"
+
+<Avatar>
+      <AvatarImage
+        src="/examples/reui/photos/4349381d8a8476edbc.jpg"
+        alt={copyExample("Michael Rodriguez")}
+      />
+      <AvatarFallback>{<ExampleText>MR</ExampleText>}</AvatarFallback>
+    </Avatar>
+```
+
+[View complete source](../../../../examples/c-avatar-1/)

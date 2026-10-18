@@ -1,19 +1,21 @@
 import * as React from "react"
+import { useRootRem } from "@/hooks/use-root-rem"
 
-const MOBILE_BREAKPOINT = 768
+const MOBILE_BREAKPOINT_REM = 48
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+  const rootRem = useRootRem()
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const mql = window.matchMedia(`(width < ${MOBILE_BREAKPOINT_REM * rootRem}px)`)
     const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+      setIsMobile(mql.matches)
     }
     mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    onChange()
     return () => mql.removeEventListener("change", onChange)
-  }, [])
+  }, [rootRem])
 
   return !!isMobile
 }

@@ -1,0 +1,30 @@
+// Generated private display copy; business values are unchanged.
+const dictionary: Readonly<Record<string, string>> = {
+  "(optional)": "（可选）",
+  "API Key": "API 密钥",
+  "Accept terms and conditions": "接受条款和条件",
+  "Active": "活跃",
+  "Bio": "个人简介",
+  "Disabled Field": "已禁用的字段",
+  "Disabled input…": "已禁用的输入框…",
+  "Edit": "编辑",
+  "Email": "电子邮箱",
+  "Email address": "电子邮箱",
+  "Enter your username…": "输入用户名…",
+  "Message": "消息",
+  "Phone number": "电话号码",
+  "Please enter a valid email address": "请输入有效的电子邮箱",
+  "Project Name": "项目名称",
+  "Save changes": "保存更改",
+  "Server Status": "服务器状态",
+  "Tell us about yourself…": "介绍一下你自己…",
+  "Type your message here…": "在此输入消息…",
+  "Username": "用户名",
+  "Webhook URL": "Webhook URL",
+  "Your API key can be found in the developer settings.": "你可以在开发者设置中找到 API 密钥。",
+  "Your secret key for API authentication": "用于 API 身份验证的私密密钥",
+  "sk_live_...": "sk_live_...",
+  "you@example.com": "you@example.com",
+  "API key help": "API 密钥帮助"
+}
+export default dictionary

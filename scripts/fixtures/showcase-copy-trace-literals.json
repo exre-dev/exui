@@ -1,0 +1,42 @@
+[
+  {
+    "file": "c-trace-5.tsx",
+    "text": "11s",
+    "reason": "Elapsed time is a compact numeric run metric, with no English words."
+  },
+  {
+    "file": "c-trace-8.tsx",
+    "text": "9.4s",
+    "reason": "Elapsed command time is a compact numeric run metric, with no English words."
+  },
+  {
+    "file": "c-trace-8.tsx",
+    "text": "6.1s",
+    "reason": "Elapsed package-install time is a compact numeric run metric, with no English words."
+  },
+  {
+    "file": "c-trace-11.tsx",
+    "text": "GET /api/plans?interval=year, 200",
+    "reason": "The HTTP method, request URL and status are the observed request identity and result."
+  },
+  {
+    "file": "c-trace-13.tsx",
+    "text": "1m 24s",
+    "reason": "Elapsed build time is a compact numeric run metric, with no English words."
+  },
+  {
+    "file": "c-trace-13.tsx",
+    "text": "order_id",
+    "reason": "The table column is the source database field identifier."
+  },
+  {
+    "file": "c-trace-16.tsx",
+    "text": "apps/web",
+    "reason": "The row is a dependency path segment, not prose."
+  },
+  {
+    "file": "c-trace-22.tsx",
+    "text": "1.8 GB",
+    "reason": "Uploaded file size is a locale-neutral numeric unit, not an English sentence."
+  }
+]

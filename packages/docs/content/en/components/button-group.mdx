@@ -1,0 +1,44 @@
+---
+id: components/button-group
+title: Button Group
+description: Keeps related actions together as one control cluster.
+exampleFamily: button-group
+---
+
+Button Group: Keeps related actions together as one control cluster.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Connected controls
+
+`ButtonGroup` keeps adjoining controls connected with square inner corners and one shared border, including `InputGroup`, Select triggers and captions. These seams remain connected when the application compiles its own utility stylesheet. Use `orientation="vertical"` for stacked controls.
+
+Use `ButtonGroupText` for a noninteractive caption or count; `asChild` keeps the joining behavior on your own element. Nested `ButtonGroup` elements form separate, spaced clusters. A Select's hidden native form control does not become a visible segment or remove the last trigger's outer corners.
+
+- [Live example](../../../../examples/c-button-group-13/)
+- [Live example](../../../../examples/c-button-group-19/)
+- [Live example](../../../../examples/c-button-group-20/)
+- [Live example](../../../../examples/c-button-group-21/)
+- [Live example](../../../../examples/c-button-group-29/)
+- [Live example](../../../../examples/c-button-group-33/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Place adjacent actions inside one group and keep each button's accessible text explicit.
+
+### Current example source excerpt
+
+```tsx source="c-button-group-1"
+import { Button, ButtonGroup } from "@exre/exui"
+
+<ButtonGroup>
+      <Button variant="outline">{<ExampleText>Button</ExampleText>}</Button>
+      <Button variant="outline">{<ExampleText>Another Button</ExampleText>}</Button>
+    </ButtonGroup>
+```
+
+[View complete source](../../../../examples/c-button-group-1/)

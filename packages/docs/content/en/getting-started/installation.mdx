@@ -1,0 +1,23 @@
+---
+id: getting-started/installation
+title: Installation
+description: Install the public ExUI package for React components or framework-neutral Tokens.
+---
+
+Install `@exre/exui` and, for a React application, React and React DOM 19. TypeScript hosts also need their React 19 type packages. The optional React peers are unnecessary for a Tokens-only consumer. The supported imports are the package root, `style.css`, the `tokens` entries, and `docs/theme.css`; there is no supported component source subpath.
+
+## Basic usage
+
+```bash
+pnpm add @exre/exui react@19 react-dom@19
+pnpm add -D @types/react@19 @types/react-dom@19
+```
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button } from "@exre/exui"
+
+export function InstalledButton() {
+  return <Button type="button">Continue</Button>
+}
+```

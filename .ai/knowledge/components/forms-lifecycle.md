@@ -14,4 +14,4 @@
 - `clearOnDestroy` 依赖 Form 真正卸载。只隐藏的 Dialog 必须由消费方关闭处理程序调用 reset/cancelPending。步骤暂时隐藏与条件字段 `preserve=false` 删除值是不同操作。
 - 横向 Item 的内容宽度限制作用于内部内容块，外层仍保留原有换行空间，因此缩小内容上限不会推迟窄容器的上下换行。标题、间距、控件区域合计需要 21.75rem；低于该宽度时内容限制和对齐不生效，避免窄屏中留下空白。布局证据见 `ExItem.vrt.test.tsx`。
 
-证据：协调器与路径快照源码；`FormAsync.vrt.test.tsx`、`FormSteps.vrt.test.tsx`、`FormControls.vrt.test.tsx` 的公共接口反例；消费契约见 [`Form` 参考](../../../skills/exui-usage/references/components/Form.md)。本地检查结果不代表远端 CI 或 npm 发布已通过。
+证据：协调器与路径快照源码；`FormAsync.vrt.test.tsx`、`FormSteps.vrt.test.tsx`、`FormControls.vrt.test.tsx` 的公共接口反例；消费契约见 [`Form` 参考](../../../skills/exui/references/exui/form.md)。本地检查结果不代表远端 CI 或 npm 发布已通过。

@@ -1,0 +1,38 @@
+---
+id: components/phone-input
+title: Phone Input
+description: 结合地区信息收集电话号码。
+exampleFamily: phone-input
+---
+
+Phone Input：结合地区信息收集电话号码。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### ExUI 电话号码输入外观
+
+`PhoneInput` 的国家按钮与号码输入框保持等高。通过 `variant="sm"`、`"default"` 或 `"lg"` 选择尺寸，`size` 仍是原生输入属性。根字号为 16px 时，小号为 32px、大号为 40px；默认尺寸随密度变化，标准密度为 36px、紧凑密度为 32px。高度随根字号缩放。
+
+左右两侧均使用表单控件背景 Token。国家搜索直接复用标准 `Input`，保留圆角边框、内侧间距和焦点外观，筛选、键盘导航与选择继续由 Combobox 负责。现有八个示例共享这一外观。
+
+- [在线示例](../../../../examples/c-phone-input-1/)
+- [在线示例](../../../../examples/c-phone-input-2/)
+- [在线示例](../../../../examples/c-phone-input-3/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+将号码输入与地区选择配对，在表单状态中保存规范化号码。
+
+### 当前示例源码摘录
+
+```tsx source="c-phone-input-1"
+import { PhoneInput } from "@exre/exui"
+
+<PhoneInput labels={exampleLocales.phoneInput} placeholder={copyExample("Enter phone number")} />
+```
+
+[查看完整源码](../../../../examples/c-phone-input-1/)

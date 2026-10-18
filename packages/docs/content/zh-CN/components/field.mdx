@@ -1,0 +1,59 @@
+---
+id: components/field
+title: Field
+description: 组合控件、标签、帮助文本与错误状态。
+exampleFamily: field
+---
+
+Field：组合控件、标签、帮助文本与错误状态。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### FieldLabel 内的 Checkbox
+
+`FieldLabel` 包含 `Checkbox` 时，选中状态通过复选框自身的底色和勾号呈现，标签背景保持不变。复选卡片和设置行都遵循这一规则，点击标签仍可切换复选框。
+
+请阅读[FieldLabel 内的 Checkbox](./checkbox.mdx)，了解完整用法。
+
+**ExUI 适配**
+
+### FieldLabel 内的 Switch
+
+`FieldLabel` 包含 `Switch` 时，切换开关只改变轨道状态，不会给整行标签填充选中色。卡片和设置行都遵循这一规则。可用标签组合构建整行可点的开关设置，无需另加整行选中背景。
+
+- [在线示例](../../../../examples/c-field-1/)
+
+**ExUI 适配**
+
+### Radio 字段选中态
+
+`FieldLabel` 包裹 `RadioGroupItem` 时，选中选项不会自动改变标签背景，卡片与设置行组合也遵循此规则。选中状态由单选圆点与指示器表达，点击标签和方向键选择仍可使用。需要带底色的选中行或卡片时，请显式设置背景类名。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+将标签、控件、说明与错误信息放在同一字段组中。
+
+### 当前示例源码摘录
+
+```tsx source="c-field-1"
+import { Field, FieldDescription, FieldLabel, Input } from "@exre/exui"
+
+<Field>
+          <FieldLabel htmlFor={exampleId("profile-name")}>
+            {<ExampleText>Full Name </ExampleText>}<span className="text-destructive">*</span>
+          </FieldLabel>
+          <Input
+            id={exampleId("profile-name")}
+            placeholder={copyExample("Enter your full name")}
+            required
+          />
+          <FieldDescription>
+            {<ExampleText>This name will be displayed on your public profile. </ExampleText>}</FieldDescription>
+        </Field>
+```
+
+[查看完整源码](../../../../examples/c-field-1/)

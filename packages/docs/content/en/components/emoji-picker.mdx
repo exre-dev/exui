@@ -1,0 +1,57 @@
+---
+id: components/emoji-picker
+title: Emoji Picker
+description: Searches and chooses emoji characters.
+exampleFamily: emoji-picker
+---
+
+Emoji Picker: Searches and chooses emoji characters.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI additions and adaptations**
+
+### Search visibility and default layout
+
+`EmojiPicker` accepts `hideSearch?: boolean`, defaulting to `false`. Set it to `true` to omit the search field from both inline panels and popovers. It also applies to an explicitly composed `EmojiPickerSearch`. Category browsing and keyboard selection remain available; a popup without search focuses its emoji grid.
+
+The default panel contains search, categories and the emoji grid. It has no information footer, preview or skin-tone selector. `EmojiPickerFooter`, `EmojiPickerPreview` and `EmojiPickerSkinTone` remain available for explicit custom compositions. `hideSearch` controls the search UI without clearing an existing `query`.
+
+```tsx verify
+import { EmojiPicker, EmojiPickerPanel } from "@exre/exui"
+
+export function BrowseEmoji() {
+  return <EmojiPicker hideSearch>
+    <EmojiPickerPanel />
+  </EmojiPicker>
+}
+```
+
+- [Live example](../../../../examples/c-emoji-picker-1/)
+- [Live example](../../../../examples/exui-emoji-picker-search/)
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Let users search or browse emoji, then insert the chosen character into application state.
+
+### Current example source excerpt
+
+```tsx source="c-emoji-picker-1"
+import { EmojiPicker, EmojiPickerPanel } from "@exre/exui"
+
+<EmojiPicker i18n={exampleLocales.emojiPicker} locale={exampleLanguage === "zh-CN" ? "zh" : "en"} dataUrl="/examples/reui/emoji/emojibase-data-17.0.0" value={value} onValueChange={setValue}>
+        <EmojiPickerPanel />
+      </EmojiPicker>
+```
+
+[View complete source](../../../../examples/c-emoji-picker-1/)

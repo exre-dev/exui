@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "exportExclusions": {
+    "focusCascaderHome": "Public root export used by Cascader to move focus from a Retry or search-retry button before it unmounts to the panel search input or panel content/container; it is not a standalone consumer capability.",
+    "getCascaderListedValues": "Public root export used by Cascader to traverse values reachable from index.roots through childrenOf for static items and async pages; it is not a standalone consumer capability.",
+    "withCascaderMoreRow": "Public root export used by Cascader to insert a load-more sentinel before pinned rows, or at the end when none are pinned; it is not a standalone consumer capability.",
+    "useDataGridAtom": "Public root export used by DataGrid viewport, header, virtual rows, and other parts to subscribe to column sizing and resizing atoms; it is not a standalone consumer capability."
+  },
+  "capabilities": [
+    {
+      "id": "compact-padding",
+      "origin": "adapted",
+      "pages": ["components/card", "components/alert-dialog", "components/sheet", "components/command", "components/data-grid", "components/gantt", "components/timeline"],
+      "families": ["card", "alert-dialog", "sheet", "command", "data-grid", "gantt", "timeline"],
+      "symbols": ["Card", "CardHeader", "CardContent", "CardFooter", "AlertDialogContent", "SheetHeader", "SheetFooter", "CommandEmpty", "DataGridColumnFilter", "DataGridTable", "GanttView", "TimelineItem"],
+      "examples": ["c-card-1", "c-card-2", "c-alert-dialog-1", "c-sheet-1", "c-command-1", "c-data-grid-22", "c-gantt-1", "c-timeline-1"],
+      "sources": ["packages/components/src/components/ui/card.tsx", "packages/components/src/components/ui/alert-dialog.tsx", "packages/components/src/components/ui/sheet.tsx", "packages/components/src/components/ui/command.tsx", "packages/components/src/components/reui/data-grid/data-grid-column-filter.tsx", "packages/components/src/components/reui/data-grid/data-grid-table.tsx", "packages/components/src/components/reui/gantt/gantt-view.tsx", "packages/components/src/components/reui/timeline.tsx"],
+      "guides": [{ "docs": "components/card", "skill": "card" }, { "docs": "components/alert-dialog", "skill": "alert-dialog" }, { "docs": "components/sheet", "skill": "sheet" }, { "docs": "components/command", "skill": "command" }, { "docs": "components/data-grid", "skill": "data-grid" }, { "docs": "components/gantt", "skill": "gantt" }, { "docs": "components/timeline", "skill": "timeline" }]
+    },
+    {
+      "id": "dialog-composition",
+      "origin": "native",
+      "pages": ["components/dialog"],
+      "families": ["dialog"],
+      "symbols": ["Dialog", "DialogBody", "DialogHeader", "DialogContent", "DialogAction", "DialogProps", "DialogContentProps", "DialogHeaderProps"],
+      "examples": ["exui-dialog-quick", "exui-dialog-actions", "exui-dialog-responsive"],
+      "sources": ["packages/components/src/components/ui/dialog.tsx", "packages/components/src/components/ui/dialog.css", "packages/tokens/src/recipes.ts"],
+      "guides": [{ "docs": "components/dialog", "skill": "dialog" }]
+    },
+    {
+      "id": "emoji-picker-layout",
+      "origin": "mixed",
+      "pages": ["components/emoji-picker"],
+      "families": ["emoji-picker"],
+      "symbols": ["EmojiPicker", "EmojiPickerProps", "EmojiPickerPanel", "EmojiPickerContent", "EmojiPickerSearch"],
+      "examples": ["c-emoji-picker-1", "exui-emoji-picker-search"],
+      "sources": ["packages/components/src/components/reui/emoji-picker.tsx"],
+      "guides": [{ "docs": "components/emoji-picker", "skill": "emoji-picker" }]
+    },
+    {
+      "id": "tabs-appearance",
+      "origin": "adapted",
+      "pages": ["components/tabs"],
+      "families": ["tabs"],
+      "symbols": ["Tabs", "TabsList", "TabsTrigger", "tabsListVariants"],
+      "examples": ["c-tabs-2", "c-tabs-3", "c-tabs-6"],
+      "sources": ["packages/components/src/components/ui/tabs.tsx", "packages/tokens/src/recipes.ts"],
+      "guides": [{ "docs": "components/tabs", "skill": "tabs" }]
+    },
+    {
+      "id": "phone-input-surfaces",
+      "origin": "adapted",
+      "pages": ["components/phone-input"],
+      "families": ["phone-input"],
+      "symbols": ["PhoneInput"],
+      "examples": ["c-phone-input-1", "c-phone-input-2", "c-phone-input-3"],
+      "sources": ["packages/components/src/components/reui/phone-input.tsx"],
+      "guides": [{ "docs": "components/phone-input", "skill": "phone-input" }]
+    },
+    {
+      "id": "badge-colors",
+      "origin": "adapted",
+      "pages": ["components/badge"],
+      "families": ["badge"],
+      "symbols": ["Badge"],
+      "examples": ["c-badge-1", "c-badge-9", "c-badge-14", "c-badge-15"],
+      "sources": ["packages/components/src/components/reui/badge.tsx"],
+      "guides": [{ "docs": "components/badge", "skill": "badge" }]
+    },
+    {
+      "id": "button-group-joining",
+      "origin": "adapted",
+      "pages": ["components/button-group"],
+      "families": ["button-group"],
+      "symbols": ["ButtonGroup", "ButtonGroupText", "ButtonGroupSeparator", "buttonGroupVariants"],
+      "examples": ["c-button-group-13", "c-button-group-19", "c-button-group-20", "c-button-group-21", "c-button-group-29", "c-button-group-33"],
+      "sources": ["packages/components/src/components/ui/button-group.tsx"],
+      "guides": [{ "docs": "components/button-group", "skill": "button-group" }]
+    },
+    {
+      "id": "button-actions",
+      "origin": "mixed",
+      "pages": ["components/button"],
+      "families": ["button"],
+      "symbols": ["Button", "ActionButton"],
+      "examples": ["exui-button-shapes", "exui-button-glass", "c-button-1"],
+      "sources": ["packages/components/src/components/ui/button.tsx"],
+      "guides": [{ "docs": "components/button", "skill": "button" }]
+    },
+    {
+      "id": "select-apis",
+      "origin": "mixed",
+      "pages": ["components/select"],
+      "families": ["select"],
+      "symbols": ["Select", "SelectField", "SelectTrigger", "SelectContent", "SelectGroup", "SelectItem", "SelectValue"],
+      "examples": ["exui-select-apis", "c-select-1"],
+      "sources": ["packages/components/src/components/ui/select.tsx"],
+      "guides": [{ "docs": "components/select", "skill": "select" }]
+    },
+    {
+      "id": "glass-surfaces",
+      "origin": "native",
+      "pages": ["exui/glass", "components/button", "components/select", "components/card", "components/dialog", "components/popover", "components/drawer", "components/sheet", "components/hover-card", "components/dropdown-menu", "components/menubar", "components/input-group", "components/toggle", "components/toggle-group", "components/badge", "components/alert", "components/item", "components/attachment", "components/bubble", "components/input", "components/textarea", "components/native-select", "components/combobox", "components/alert-dialog", "components/tooltip", "components/context-menu", "components/command", "components/sidebar", "components/tabs", "components/autocomplete", "components/code-block", "components/data-grid"],
+      "families": ["button", "select", "card", "dialog", "popover", "drawer", "sheet", "hover-card", "dropdown-menu", "menubar", "input-group", "toggle", "toggle-group", "badge", "alert", "item", "attachment", "bubble", "input", "textarea", "native-select", "combobox", "alert-dialog", "tooltip", "context-menu", "command", "sidebar", "tabs", "autocomplete", "code-block", "data-grid"],
+      "symbols": ["GlassSeed", "Button", "SelectTrigger", "SelectContent", "Card", "AutocompleteContent", "CodeBlock", "DataGridContainer"],
+      "surfaces": {
+        "button": ["Button", "ActionButton"],
+        "select": ["Select", "SelectTrigger", "SelectContent"],
+        "card": ["Card"],
+        "dialog": ["DialogContent"],
+        "popover": ["PopoverContent"],
+        "drawer": ["DrawerContent"],
+        "sheet": ["SheetContent"],
+        "hover-card": ["HoverCardContent"],
+        "dropdown-menu": ["DropdownMenuContent", "DropdownMenuSubContent"],
+        "menubar": ["Menubar", "MenubarContent", "MenubarSubContent"],
+        "input-group": ["InputGroup", "InputGroupButton"],
+        "toggle": ["Toggle"],
+        "toggle-group": ["ToggleGroupItem"],
+        "badge": ["Badge"],
+        "alert": ["Alert"],
+        "item": ["Item"],
+        "attachment": ["Attachment"],
+        "bubble": ["Bubble", "BubbleContent", "BubbleReactions"],
+        "input": ["Input"],
+        "textarea": ["Textarea"],
+        "native-select": ["NativeSelect"],
+        "combobox": ["ComboboxInput", "ComboboxContent", "ComboboxChips", "ComboboxChip"],
+        "alert-dialog": ["AlertDialogContent"],
+        "tooltip": ["TooltipContent"],
+        "context-menu": ["ContextMenuContent", "ContextMenuSubContent"],
+        "command": ["Command", "CommandDialog"],
+        "sidebar": ["Sidebar", "SidebarInset"],
+        "tabs": ["TabsList", "TabsTrigger"],
+        "autocomplete": ["AutocompleteContent"],
+        "code-block": ["CodeBlock"],
+        "data-grid": ["DataGridContainer"]
+      },
+      "examples": ["exui-glass-1", "exui-button-glass"],
+      "sources": ["packages/components/src/components/glass-seed.tsx", "packages/components/src/lib/glass.ts", "packages/components/src/glass.css", "packages/components/src/components/reui/autocomplete.tsx", "packages/components/src/components/reui/code-block/code-block.tsx", "packages/components/src/components/reui/data-grid/data-grid.tsx"],
+      "guides": [{ "docs": "exui/glass", "skill": "exui/glass.md" }, { "docs": "components/button", "skill": "button" }, { "docs": "components/select", "skill": "select" }, { "docs": "components/card", "skill": "card" }, { "docs": "components/dialog", "skill": "dialog" }, { "docs": "components/popover", "skill": "popover" }, { "docs": "components/drawer", "skill": "drawer" }, { "docs": "components/sheet", "skill": "sheet" }, { "docs": "components/hover-card", "skill": "hover-card" }, { "docs": "components/dropdown-menu", "skill": "dropdown-menu" }, { "docs": "components/menubar", "skill": "menubar" }, { "docs": "components/input-group", "skill": "input-group" }, { "docs": "components/toggle", "skill": "toggle" }, { "docs": "components/toggle-group", "skill": "toggle-group" }, { "docs": "components/badge", "skill": "badge" }, { "docs": "components/alert", "skill": "alert" }, { "docs": "components/item", "skill": "item" }, { "docs": "components/attachment", "skill": "attachment" }, { "docs": "components/bubble", "skill": "bubble" }, { "docs": "components/input", "skill": "input" }, { "docs": "components/textarea", "skill": "textarea" }, { "docs": "components/native-select", "skill": "native-select" }, { "docs": "components/combobox", "skill": "combobox" }, { "docs": "components/alert-dialog", "skill": "alert-dialog" }, { "docs": "components/tooltip", "skill": "tooltip" }, { "docs": "components/context-menu", "skill": "context-menu" }, { "docs": "components/command", "skill": "command" }, { "docs": "components/sidebar", "skill": "sidebar" }, { "docs": "components/tabs", "skill": "tabs" }, { "docs": "components/autocomplete", "skill": "autocomplete" }, { "docs": "components/code-block", "skill": "code-block" }, { "docs": "components/data-grid", "skill": "data-grid" }]
+    },
+    {
+      "id": "form-lifecycle",
+      "origin": "native",
+      "pages": ["exui/form"],
+      "families": [],
+      "symbols": ["useForm", "Form", "FormItem", "FormErrorSummary"],
+      "examples": ["exui-form-1"],
+      "sources": ["packages/components/src/hooks/use-form.ts", "packages/components/src/components/patterns/form.tsx", "packages/components/src/components/patterns/form-item.tsx"],
+      "guides": [{ "docs": "exui/form", "skill": "exui/form.md" }]
+    },
+    {
+      "id": "configured-forms",
+      "origin": "native",
+      "pages": ["exui/ex-form"],
+      "families": [],
+      "symbols": ["ExForm", "useForm"],
+      "examples": ["exui-ex-form-1"],
+      "sources": ["packages/components/src/components/patterns/ex-form.tsx", "packages/components/src/lib/forms/types.ts"],
+      "guides": [{ "docs": "exui/ex-form", "skill": "exui/form.md" }]
+    },
+    {
+      "id": "standalone-ex-item",
+      "origin": "native",
+      "pages": ["exui/ex-item"],
+      "families": [],
+      "symbols": ["ExItem", "Input"],
+      "examples": ["exui-ex-item-1"],
+      "sources": ["packages/components/src/components/patterns/ex-item.tsx"],
+      "guides": [{ "docs": "exui/ex-item", "skill": "exui/form.md" }]
+    },
+    {
+      "id": "message-host",
+      "origin": "native",
+      "pages": ["exui/ex-message", "components/sonner"],
+      "families": ["sonner"],
+      "symbols": ["ExMessage", "ExMessageContext", "Toaster", "toast"],
+      "examples": ["exui-ex-message-1", "c-sonner-1"],
+      "sources": ["packages/components/src/components/ex-message-context.tsx", "packages/components/src/lib/ex-message-controller.ts", "packages/components/src/components/ui/sonner.tsx"],
+      "guides": [{ "docs": "exui/ex-message", "skill": "exui/notifications.md" }, { "docs": "components/sonner", "skill": "sonner" }]
+    },
+    {
+      "id": "theme-host",
+      "origin": "native",
+      "pages": ["tokens/themes"],
+      "families": [],
+      "symbols": ["ThemeProvider", "useTheme"],
+      "examples": [],
+      "sources": ["packages/components/src/components/theme-provider.tsx", "packages/components/src/index.css"],
+      "guides": [{ "docs": "tokens/themes", "skill": "exui/theme-usage.md" }]
+    },
+    {
+      "id": "density-and-scaling",
+      "origin": "native",
+      "pages": ["tokens/density", "tokens/scaling", "components/button", "components/select", "components/input", "components/textarea", "components/native-select", "components/input-group", "components/chart", "components/data-grid", "components/resizable", "components/scroll-area", "components/input-otp", "components/autocomplete", "components/combobox", "components/emoji-picker", "components/dropdown-menu", "components/hover-card", "components/menubar", "components/popover", "components/message-scroller", "components/sonner", "components/cascader", "components/gantt", "components/event-calendar", "components/filters", "components/tree"],
+      "families": ["button", "select", "input", "textarea", "native-select", "input-group", "chart", "data-grid", "resizable", "scroll-area", "input-otp", "autocomplete", "combobox", "emoji-picker", "dropdown-menu", "hover-card", "menubar", "popover", "message-scroller", "sonner", "cascader", "gantt", "event-calendar", "filters", "tree"],
+      "symbols": ["Button", "Select", "ChartContainer", "DataGrid", "ResizablePanelGroup", "ScrollArea", "InputOTP"],
+      "examples": ["exui-button-shapes", "exui-select-apis", "c-chart-1", "c-data-grid-1"],
+      "sources": ["packages/components/src/index.css", "packages/tokens/src/style.css", "packages/components/src/hooks/use-root-rem.ts", "packages/components/src/lib/rem.ts", "packages/components/src/third-party.css", "packages/components/src/components/reui/autocomplete.tsx", "packages/components/src/components/ui/combobox.tsx", "packages/components/src/components/reui/emoji-picker.tsx", "packages/components/src/components/ui/dropdown-menu.tsx", "packages/components/src/components/ui/hover-card.tsx", "packages/components/src/components/ui/menubar.tsx", "packages/components/src/components/ui/popover.tsx", "packages/components/src/components/ui/message-scroller.tsx", "packages/components/src/components/ui/sonner.tsx", "packages/components/src/components/reui/cascader/cascader.tsx", "packages/components/src/components/reui/gantt/gantt-view.tsx", "packages/components/src/components/reui/event-calendar/event-calendar-dnd.tsx", "packages/components/src/components/reui/filters/filters-dnd.tsx", "packages/components/src/components/reui/tree.tsx"],
+      "guides": [{ "docs": "tokens/density", "skill": "exui/scaling.md" }, { "docs": "tokens/scaling", "skill": "exui/scaling.md" }, { "docs": "components/button", "skill": "button" }, { "docs": "components/select", "skill": "select" }, { "docs": "components/input", "skill": "input" }, { "docs": "components/textarea", "skill": "textarea" }, { "docs": "components/native-select", "skill": "native-select" }, { "docs": "components/input-group", "skill": "input-group" }, { "docs": "components/chart", "skill": "chart" }, { "docs": "components/data-grid", "skill": "data-grid" }, { "docs": "components/resizable", "skill": "resizable" }, { "docs": "components/scroll-area", "skill": "scroll-area" }, { "docs": "components/input-otp", "skill": "input-otp" }, { "docs": "components/autocomplete", "skill": "autocomplete" }, { "docs": "components/combobox", "skill": "combobox" }, { "docs": "components/emoji-picker", "skill": "emoji-picker" }, { "docs": "components/dropdown-menu", "skill": "dropdown-menu" }, { "docs": "components/hover-card", "skill": "hover-card" }, { "docs": "components/menubar", "skill": "menubar" }, { "docs": "components/popover", "skill": "popover" }, { "docs": "components/message-scroller", "skill": "message-scroller" }, { "docs": "components/sonner", "skill": "sonner" }, { "docs": "components/cascader", "skill": "cascader" }, { "docs": "components/gantt", "skill": "gantt" }, { "docs": "components/event-calendar", "skill": "event-calendar" }, { "docs": "components/filters", "skill": "filters" }, { "docs": "components/tree", "skill": "tree" }]
+    },
+    {
+      "id": "bundled-chart-table",
+      "origin": "native",
+      "pages": ["components/chart", "components/data-grid"],
+      "families": ["chart", "data-grid"],
+      "symbols": ["Recharts", "TanStackTable", "ChartContainer", "DataGrid"],
+      "examples": ["c-chart-1", "c-data-grid-1"],
+      "sources": ["packages/components/src/index.ts", "packages/components/src/lib/recharts.tsx", "packages/components/src/lib/tanstack-table.ts"],
+      "guides": [{ "docs": "components/chart", "skill": "chart" }, { "docs": "components/data-grid", "skill": "data-grid" }]
+    },
+    {
+      "id": "reui-export-aliases",
+      "origin": "adapted",
+      "pages": ["getting-started/quick-start", "components/event-calendar", "components/gantt"],
+      "families": ["event-calendar", "gantt"],
+      "symbols": ["ReuiwasRecentDrag", "ReuibuildEventIndex", "ReuidefaultEventOrder", "ReuieventsOverlap", "ReuiflattenResources", "ReuigetDayKey", "ReuigetDayTotalMinutes", "ReuigetRangeKey", "ReuiMIN_PACK_SLOT", "ReuipackTimedSegments", "ReuirangesIntersect", "ReuiresolveOffDay", "ReuisnapMinutes", "ReuispansMultipleDays", "ReuitoZoned", "ReuizonedStartOfDay", "ReuiBuildIndexOptions", "ReuiViewDateRanges", "ReuiViewRangeOptions", "ReuiWeekStartsOn", "ReuiexpandRecurrence", "ReuiformatRRuleString", "ReuiMAX_OCCURRENCES", "ReuiparseRRuleString", "ReuiDEFAULT_VIEW_CONFIG"],
+      "examples": [],
+      "sources": ["packages/components/src/index.ts", "packages/components/upstream/reui/public-exports.json"],
+      "guides": [{ "docs": "getting-started/quick-start", "skill": "exui/setup.md" }, { "docs": "components/event-calendar", "skill": "event-calendar" }, { "docs": "components/gantt", "skill": "gantt" }]
+    },
+    {
+      "id": "accordion-appearance",
+      "origin": "adapted",
+      "pages": ["components/accordion"],
+      "families": ["accordion"],
+      "symbols": ["Accordion", "AccordionItem", "AccordionTrigger", "AccordionContent"],
+      "examples": ["c-accordion-1"],
+      "sources": ["packages/components/src/components/ui/accordion.tsx", "packages/components/src/index.css"],
+      "guides": [{ "docs": "components/accordion", "skill": "accordion" }]
+    },
+    {
+      "id": "calendar-selection-shape",
+      "origin": "adapted",
+      "pages": ["components/calendar"],
+      "families": ["calendar"],
+      "symbols": ["Calendar", "CalendarDayButton"],
+      "examples": ["c-calendar-1"],
+      "sources": ["packages/components/src/components/ui/calendar.tsx"],
+      "guides": [{ "docs": "components/calendar", "skill": "calendar" }]
+    },
+    {
+      "id": "attachment-media-shape",
+      "origin": "adapted",
+      "pages": ["components/attachment"],
+      "families": ["attachment"],
+      "symbols": ["Attachment", "AttachmentMedia"],
+      "examples": ["c-attachment-1"],
+      "sources": ["packages/components/src/components/ui/attachment.tsx"],
+      "guides": [{ "docs": "components/attachment", "skill": "attachment" }]
+    },
+    {
+      "id": "toggle-selection-background",
+      "origin": "adapted",
+      "pages": ["components/toggle", "components/toggle-group"],
+      "families": ["toggle", "toggle-group"],
+      "symbols": ["Toggle", "ToggleGroup", "ToggleGroupItem"],
+      "examples": ["c-toggle-1", "c-toggle-2", "c-toggle-group-1", "c-toggle-group-2"],
+      "sources": ["packages/components/src/components/ui/toggle.tsx", "packages/components/src/components/ui/toggle-group.tsx"],
+      "guides": [{ "docs": "components/toggle", "skill": "toggle" }, { "docs": "components/toggle-group", "skill": "toggle-group" }]
+    },
+    {
+      "id": "sonner-status-icons",
+      "origin": "adapted",
+      "pages": ["components/sonner"],
+      "families": ["sonner"],
+      "symbols": ["Toaster", "toast"],
+      "examples": ["c-sonner-4"],
+      "sources": ["packages/components/src/components/ui/sonner.tsx"],
+      "guides": [{ "docs": "components/sonner", "skill": "sonner" }]
+    },
+    {
+      "id": "sonner-card-radius",
+      "origin": "adapted",
+      "pages": ["components/sonner"],
+      "families": ["sonner"],
+      "symbols": ["Toaster", "toast"],
+      "examples": ["c-sonner-1"],
+      "sources": ["packages/components/src/components/ui/sonner.tsx"],
+      "guides": [{ "docs": "components/sonner", "skill": "sonner" }]
+    },
+    {
+      "id": "checkbox-field-label",
+      "origin": "adapted",
+      "pages": ["components/checkbox", "components/field"],
+      "families": ["checkbox", "field"],
+      "symbols": ["FieldLabel", "Checkbox"],
+      "examples": ["c-checkbox-9", "c-checkbox-10"],
+      "sources": ["packages/components/src/components/ui/field.tsx", "packages/components/src/components/ui/checkbox.tsx"],
+      "guides": [{ "docs": "components/checkbox", "skill": "checkbox" }, { "docs": "components/field", "skill": "field" }]
+    },
+    {
+      "id": "switch-field-label",
+      "origin": "adapted",
+      "pages": ["components/field", "components/switch"],
+      "families": ["field", "switch"],
+      "symbols": ["FieldLabel", "Switch"],
+      "examples": ["c-field-1", "c-switch-1"],
+      "sources": ["packages/components/src/components/ui/field.tsx", "packages/components/src/components/ui/switch.tsx"],
+      "guides": [{ "docs": "components/field", "skill": "field" }, { "docs": "components/switch", "skill": "switch" }]
+    },
+    {
+      "id": "radio-field-label",
+      "origin": "adapted",
+      "pages": ["components/field", "components/radio-group"],
+      "families": ["field", "radio-group"],
+      "symbols": ["FieldLabel", "RadioGroupItem"],
+      "examples": ["c-radio-group-9"],
+      "sources": ["packages/components/src/components/ui/field.tsx", "packages/components/src/components/ui/radio-group.tsx"],
+      "guides": [{ "docs": "components/field", "skill": "field" }, { "docs": "components/radio-group", "skill": "radio-group" }]
+    },
+    {
+      "id": "cascader-selection-indicator",
+      "origin": "adapted",
+      "pages": ["components/cascader"],
+      "families": ["cascader"],
+      "symbols": ["Cascader", "CascaderItem"],
+      "examples": ["c-cascader-1"],
+      "sources": ["packages/components/src/components/reui/cascader/cascader-item.tsx", "packages/components/src/components/reui/cascader/cascader.tsx"],
+      "guides": [{ "docs": "components/cascader", "skill": "cascader" }]
+    },
+    {
+      "id": "input-appearance",
+      "origin": "adapted",
+      "pages": ["components/input"],
+      "families": ["input"],
+      "symbols": ["Input"],
+      "examples": ["c-input-1", "c-input-4", "c-input-5"],
+      "sources": ["packages/components/src/components/ui/input.tsx"],
+      "guides": [{ "docs": "components/input", "skill": "input" }]
+    },
+    {
+      "id": "trace-disclosure",
+      "origin": "adapted",
+      "pages": ["components/trace"],
+      "families": ["trace"],
+      "symbols": ["Trace", "TraceLine", "TraceIcon", "TraceTitle", "TraceDescription", "TraceCollapsible", "TraceCollapsibleTrigger", "TraceCollapsibleContent"],
+      "examples": ["c-trace-1", "c-trace-2", "c-trace-6"],
+      "sources": ["packages/components/src/components/ui/trace.tsx"],
+      "guides": [{ "docs": "components/trace", "skill": "trace" }]
+    },
+    {
+      "id": "navigation-menu-viewport",
+      "origin": "adapted",
+      "pages": ["components/navigation-menu"],
+      "families": ["navigation-menu"],
+      "symbols": ["NavigationMenu", "NavigationMenuViewport"],
+      "examples": ["c-navigation-menu-1"],
+      "sources": ["packages/components/src/components/ui/navigation-menu.tsx"],
+      "guides": [{ "docs": "components/navigation-menu", "skill": "navigation-menu" }]
+    }
+  ]
+}

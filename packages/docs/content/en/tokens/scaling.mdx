@@ -1,0 +1,34 @@
+---
+id: tokens/scaling
+title: Root font scaling
+description: Scale ExUI's rem-based dimensions through the host root font size.
+---
+
+ExUI's scalable defaults use `rem` against a 16px design base. A 20px root font scales controls, type, gaps, icons, ordinary radii and Glass blur by 20/16. Numeric-only positioning and virtual layout APIs receive live pixel equivalents of rem defaults. The library does not set the root font. Hairline borders, focus rings, shadows, capsule radii and border compensation remain fixed.
+
+Explicit numeric props retain pixel semantics: `sideOffset={8}`, `indent={20}`, column widths and controlled resize state stay pixels. Rem strings scale wherever a prop accepts CSS lengths. Measured DOM geometry, SVG content coordinates, chart data and signature strokes are unchanged.
+
+Use the bundled `Recharts` and `TanStackTable` namespaces for the adapted React defaults. Toaster/ExMessage, Resizable and MessageScroller also scale their owned defaults. Low-level non-React `TanStackTable.constructTable` keeps upstream pixel defaults; InputOTP's private password-manager badge reserve/probe remains 40px/18px. The docs theme adapts named Fumadocs slides and scrollbar sizes, while the app owns the installed preset version. Changing the root affects every other `rem` in the application; keep 16px if no scaling is wanted.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](./density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button } from "@exre/exui"
+
+export function ScalableAction() {
+  return <Button type="button">Scales with root type</Button>
+}
+```

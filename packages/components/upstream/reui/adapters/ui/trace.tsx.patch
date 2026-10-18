@@ -1,0 +1,64 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/trace.tsx b/packages/components/src/components/ui/trace.tsx
+index 7bdb64c..d99365e 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/trace.tsx
++++ b/packages/components/src/components/ui/trace.tsx
+@@ -1,12 +1,12 @@
+ import * as React from "react"
+-import { cn } from "cn"
++import { cn } from "@/lib/utils"
+ 
+ import {
+   Collapsible,
+   CollapsibleContent,
+   CollapsibleTrigger,
+-} from "@/registry/bases/radix/ui/collapsible"
+-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
++} from "@/components/ui/collapsible"
++import { ChevronRightIcon } from "lucide-react"
+ 
+ function Trace({ className, ...props }: React.ComponentProps<"div">) {
+   return (
+@@ -33,7 +33,7 @@ function TraceLine({
+       data-slot="trace-line"
+       data-status={status}
+       className={cn(
+-        "cn-trace-line flex w-fit max-w-full min-w-0 items-center text-muted-foreground transition-colors in-[a,button]:cursor-pointer in-[a:hover,button:hover]:text-foreground data-[status=error]:text-destructive data-[status=error]:in-[a:hover,button:hover]:text-destructive data-[status=pending]:opacity-60 data-[status=running]:*:data-[slot=trace-title]:shimmer",
++        "cn-trace-line flex w-fit max-w-full min-w-0 items-center text-muted-foreground transition-colors in-[a,button]:cursor-pointer in-[a:hover,button:hover]:text-foreground data-[status=error]:text-destructive data-[status=error]:in-[a:hover,button:hover]:text-destructive data-[status=pending]:opacity-60 motion-safe:data-[status=running]:*:data-[slot=trace-title]:shimmer",
+         className
+       )}
+       {...props}
+@@ -60,7 +60,7 @@ function TraceTitle({ className, ...props }: React.ComponentProps<"span">) {
+     <span
+       data-slot="trace-title"
+       className={cn(
+-        "cn-trace-title min-w-0 truncate motion-reduce:shimmer-none",
++        "cn-trace-title min-w-0 truncate",
+         className
+       )}
+       {...props}
+@@ -124,14 +124,8 @@ function TraceCollapsibleTrigger({
+       {...props}
+     >
+       {children}
+-      <TraceIcon className="transition-transform group-aria-expanded/trace-collapsible-trigger:rotate-90">
+-        <IconPlaceholder
+-          lucide="ChevronRightIcon"
+-          tabler="IconChevronRight"
+-          hugeicons="ArrowRight01Icon"
+-          phosphor="CaretRightIcon"
+-          remixicon="RiArrowRightSLine"
+-        />
++      <TraceIcon className="motion-safe:transition-transform group-aria-expanded/trace-collapsible-trigger:rotate-90">
++        <ChevronRightIcon aria-hidden="true" />
+       </TraceIcon>
+     </CollapsibleTrigger>
+   )
+@@ -145,7 +139,7 @@ function TraceCollapsibleContent({
+   return (
+     <CollapsibleContent
+       data-slot="trace-collapsible-content"
+-      className="cn-trace-collapsible-content min-w-0 overflow-hidden [--radix-accordion-content-height:var(--radix-collapsible-content-height)] data-open:animate-accordion-down data-closed:animate-accordion-up"
++      className="cn-trace-collapsible-content min-w-0 overflow-hidden [--radix-accordion-content-height:var(--radix-collapsible-content-height)] motion-safe:data-[state=open]:animate-accordion-down motion-safe:data-[state=closed]:animate-accordion-up"
+       {...props}
+     >
+       <div

@@ -1,0 +1,38 @@
+---
+id: components/phone-input
+title: Phone Input
+description: Collects a phone number with region context.
+exampleFamily: phone-input
+---
+
+Phone Input: Collects a phone number with region context.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### ExUI phone input appearance
+
+`PhoneInput` keeps its country button and number field at the same height. Use `variant="sm"`, `"default"` or `"lg"`; `size` remains the native input attribute. At a 16px root, small is 32px, large is 40px, and default follows density: 36px in standard density and 32px in compact density. Heights scale with the root font size.
+
+Both halves use the form-control background tokens. The country search renders the standard `Input`, retaining its rounded border, inset spacing and focus appearance while the combobox handles filtering, keyboard navigation and selection. All eight existing examples share this appearance.
+
+- [Live example](../../../../examples/c-phone-input-1/)
+- [Live example](../../../../examples/c-phone-input-2/)
+- [Live example](../../../../examples/c-phone-input-3/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Pair the number entry with its region selection and preserve the normalized number in form state.
+
+### Current example source excerpt
+
+```tsx source="c-phone-input-1"
+import { PhoneInput } from "@exre/exui"
+
+<PhoneInput labels={exampleLocales.phoneInput} placeholder={copyExample("Enter phone number")} />
+```
+
+[View complete source](../../../../examples/c-phone-input-1/)

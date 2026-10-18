@@ -1,0 +1,29 @@
+---
+id: components/number-field
+title: Number Field
+description: Edits a numeric value with keyboard and step controls.
+exampleFamily: number-field
+---
+
+Number Field: Edits a numeric value with keyboard and step controls.
+
+## Basic usage
+
+Define the numeric bounds and step so keyboard edits and step buttons agree.
+
+### Current example source excerpt
+
+```tsx source="c-number-field-1"
+import { NumberField, NumberFieldDecrement, NumberFieldGroup, NumberFieldIncrement, NumberFieldInput, NumberFieldScrubArea } from "@exre/exui"
+
+<NumberField defaultValue={5} min={0} max={100}>
+        <NumberFieldScrubArea label={copyExample("Amount")} />
+        <NumberFieldGroup>
+          <NumberFieldDecrement />
+          <NumberFieldInput />
+          <NumberFieldIncrement />
+        </NumberFieldGroup>
+      </NumberField>
+```
+
+[View complete source](../../../../examples/c-number-field-1/)

@@ -1,0 +1,70 @@
+---
+id: getting-started/skills
+title: Skills
+description: 使用 npx skills 安装 ExUI Skill，让 AI 编程助手按真实 API 和设计规范构建界面。
+---
+
+ExUI Skill 为 AI 编程助手提供组件文档、组合示例和设计规范。安装后，助手可以按需读取相关参考，选择组件、核对公开 API，并遵循 ExUI 的颜色、主题、Glass 与表单约定。
+
+## 安装
+
+在你的应用项目根目录运行以下命令。需要先安装 Node.js，并确保终端可以使用 `npx`。
+
+```bash
+npx skills add exre-dev/exui --skill exui
+```
+
+根据提示选择使用的 Agent 和安装方式。默认安装到当前项目，便于与团队共享；只选择 `exui` 即可。
+
+如果只为指定的 Agent 安装，可以添加 `--agent`，例如 Codex 或 Claude Code：
+
+```bash
+npx skills add exre-dev/exui --skill exui --agent codex
+npx skills add exre-dev/exui --skill exui --agent claude-code
+```
+
+需要在多个项目中使用时，添加 `--global` 安装到用户目录：
+
+```bash
+npx skills add exre-dev/exui --skill exui --global
+```
+
+安装的是助手使用的说明与参考文件。应用中的 `@exre/exui` 依赖和样式表仍按[安装](installation.mdx)与[快速开始](quick-start.mdx)配置。
+
+## Skill 提供什么
+
+| 内容 | 用途 |
+| --- | --- |
+| 组件目录与公开导出索引 | 选择合适的组件，核对导入名称与 API |
+| 组件文档与组合示例 | 复用已有结构，连接应用数据与交互 |
+| 颜色、图标、布局与动效规范 | 保持界面的视觉与交互一致性 |
+| Tokens、主题与 Glass 指南 | 配置主题、密度、缩放与材质 |
+| 表单与全局通知指南 | 使用 ExUI 的表单和消息能力 |
+
+## 使用方式
+
+安装完成后，在 Agent 中发起界面任务，并明确要求使用 ExUI Skill。例如：
+
+```text
+使用 exui skill，为设置页添加个人资料表单。
+使用 @exre/exui 的公开组件，并包含提交中、成功和错误状态。
+```
+
+助手会按“选择组件 → 阅读文档 → 接入数据与交互 → 检查”的流程工作。它以项目已安装的 `@exre/exui` 版本、公开导出和类型声明为准，再参考 Skill 中的组件组合与设计规范。
+
+## 管理安装
+
+查看当前项目已安装的 Skills：
+
+```bash
+npx skills list
+```
+
+更新或移除 ExUI Skill：
+
+```bash
+npx skills update exui
+npx skills remove exui
+```
+
+全局安装可通过 `npx skills list --global` 查看。更多安装选项见 [Skills CLI 文档](https://github.com/vercel-labs/skills)。

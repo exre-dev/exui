@@ -18,9 +18,9 @@
 代价与边界：
 
 - 有边框的表面会同时显示自己的边框和材质的内细线，两条边缘叠加而不是互相替换；`--exui-glass-border`（以及危险色调对它的覆盖）在无边框元素上是唯一的边缘，在有边框元素上是内侧那条细线。
-- 自带 `border-transparent` 的表面（Badge、Toggle 默认态、InputGroup、NativeSelect、TabsTrigger、Item、Bubble 等）会新增一条原本没有的可见内边。这是"inset shadow 提供边缘"的本意，不是回归，但属于外观变化，已写进 `packages/components/README.md` 与 `skills/exui-usage/references/glass.md`。
+- 自带 `border-transparent` 的表面（Badge、Toggle 默认态、InputGroup、NativeSelect、TabsTrigger、Item、Bubble 等）会新增一条原本没有的可见内边。这是"inset shadow 提供边缘"的本意，不是回归，但属于外观变化，已写进 `packages/components/README.md` 与 `skills/exui/references/exui/glass.md`。
 - 危险材质的外层边框仍来自 recipe（危险按钮的 `control.danger`），因此危险语义的可见边缘不依赖材质变量。
 
 重新审视条件：要求"材质边缘颜色必须能统一覆盖所有组件边框"时；或某个表面新增了以边框颜色为主要状态信号的交互（例如把选中态从背景改为边框）时——那时需要按状态补伴随变量，而不是恢复无条件覆盖。
 
-证据：`packages/components/src/glass.css` 中基础材质规则的声明集合（无 `border-color`）与其 `box-shadow` 组合；`packages/tokens/src/recipes.ts` 的 `button` 六个变体与 `formControl` 五状态；`packages/tokens/src/style.css` 中 `--exui-glass-shadow: inset 0 0 0 0.0625rem var(--exui-glass-border)`；`packages/components/README.md` 与 `skills/exui-usage/references/glass.md` 对边缘与边框叠加关系的表述。
+证据：`packages/components/src/glass.css` 中基础材质规则的声明集合（无 `border-color`）与其 `box-shadow` 组合；`packages/tokens/src/recipes.ts` 的 `button` 六个变体与 `formControl` 五状态；`packages/tokens/src/style.css` 中 `--exui-glass-shadow: inset 0 0 0 0.0625rem var(--exui-glass-border)`；`packages/components/README.md` 与 `skills/exui/references/exui/glass.md` 对边缘与边框叠加关系的表述。

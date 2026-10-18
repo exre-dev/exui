@@ -276,8 +276,10 @@ function validateRecipeContract() {
 
     const isFullRadius = value === exuiTokens.radii.full ||
       (value !== null && typeof value === "object" && value.kind === "foundation" && value.path === "radii.full")
-    if (valuePath.endsWith(".radius") && isFullRadius && !valuePath.startsWith("componentRecipes.button.")) {
-      failures.push(`${valuePath} uses the Button-only full radius`)
+    const isPillRadius = valuePath.startsWith("componentRecipes.button.") ||
+      valuePath === "componentRecipes.tabs.list.radius" || valuePath === "componentRecipes.tabs.trigger.radius"
+    if (valuePath.endsWith(".radius") && isFullRadius && !isPillRadius) {
+      failures.push(`${valuePath} uses a full radius outside Button or Tabs`)
     }
   })
 }

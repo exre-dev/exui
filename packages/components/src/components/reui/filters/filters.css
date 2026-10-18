@@ -1,0 +1,61 @@
+@layer utilities {
+  [data-slot="filters"] > [role="toolbar"] {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  [data-exui-filter-chip] {
+    max-width: 100%;
+  }
+
+  [data-exui-filter-chip] > * {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  [data-exui-filter-chip] > :first-child {
+    max-width: calc(100% - 8rem);
+    flex-shrink: 0;
+  }
+
+  [data-exui-filter-chip] > :first-child > svg {
+    flex-shrink: 0;
+  }
+
+  [data-exui-filter-chip] > :first-child > span {
+    display: block !important;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  [data-exui-filter-chip] > :not(:last-child) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Keep the joined outline when application utilities occupy a later layer. */
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  [data-exui-filter-chip] > :not(:first-child) {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-left-width: 0 !important;
+  }
+
+  [data-exui-filter-chip] > :nth-child(2):not(:last-child) {
+    display: block !important;
+    align-content: center;
+    flex-shrink: 3;
+  }
+
+  [data-exui-filter-chip] > :last-child {
+    flex-shrink: 0;
+  }
+
+  [data-exui-filter-chip][data-unknown] > :first-child {
+    display: block !important;
+    align-content: center;
+    max-width: calc(100% - 2.5rem);
+  }
+}

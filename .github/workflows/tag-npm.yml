@@ -53,7 +53,7 @@ jobs:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install Playwright Chromium
-        run: pnpm --filter @exre/exui-showcase exec playwright install --with-deps chromium
+        run: pnpm --filter @exre/exui-docs exec playwright install --with-deps chromium
       - name: Verify and build release packages
         run: |
           pnpm release:verify

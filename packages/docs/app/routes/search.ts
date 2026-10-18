@@ -1,0 +1,18 @@
+import { createFromSource } from "fumadocs-core/search/server"
+import { sources } from "../lib/source.server"
+import { listShareExamples } from "../../lib/source-export.server"
+import type { Route } from "./+types/search"
+
+const examples = await listShareExamples()
+const servers = Object.fromEntries(Object.entries(sources).map(([locale, source]) => [locale, createFromSource(source, {
+  buildIndex(page) {
+    const family = page.data.exampleFamily
+    const names = examples.filter(example => example.page.id === family).map(example => `${example.page.name} ${example.id}`)
+    return { id: page.url, title: page.data.title, description: page.data.description, url: `${page.url}/`, structuredData: { ...page.data.structuredData, contents: [...page.data.structuredData.contents, ...names.map(content => ({ content, heading: undefined }))] } }
+  },
+})]))
+
+export function loader({ params }: Route.LoaderArgs) {
+  if (params.locale !== "zh-CN" && params.locale !== "en") throw new Response("Not found", { status: 404 })
+  return servers[params.locale].staticGET()
+}

@@ -39,18 +39,18 @@ The stylesheet declares every Token as a CSS custom property on `:root`, and the
 Three rules decide whether an override takes effect:
 
 - **Keep it unlayered.** The Token declarations are emitted outside any `@layer`, and unlayered declarations beat layered ones. An override inside `@layer base` (or a Tailwind `@theme` block) loses to the library value and fails without an error; a plain `:root` rule after the stylesheet import wins.
-- **`.dark` and `.pitch-black` contain only the values that differ from `:root`.** An unlayered `:root` override placed after the stylesheet applies to all three themes; add a `.dark` block only when the brand value needs a dark counterpart.
-- **`.density-compact` and `--density-*` are published but unreferenced.** Nothing in the stylesheet consumes them, so overriding density changes nothing today; the values are there for Token consumers that read `exuiTokens.density` directly.
+- **`.dark` and `.pitch-black` contain theme differences and explicit short alias references.** An unlayered `:root` override placed after the stylesheet applies to all three themes unless a theme rule supplies that variable. Add a themed block when a brand value differs in that theme.
+- **`.density-compact` supplies the compact `--density-*` values.** The public component stylesheet uses them for default Button, Input, Textarea, Select, NativeSelect, and InputGroup geometry. Token-only consumers receive the variables but no component styles.
 
 Foundation Tokens are published under `--exui-font-family`, `--exui-font-family-mono`, `--exui-font-family-emoji`, `--exui-font-weight-*`, `--exui-font-size-*`, `--exui-line-height-*`, `--exui-radius-*` and `--exui-shadow-*`. They are theme-independent, and every recipe field that references one is emitted as a reference to it, so a foundation override reaches component recipes too. `--radius` is derived the same way: it resolves to `--exui-radius-large`.
 
-The shadcn/ui aliases (`--background`, `--primary`, `--ring`, `--chart-1`, `--sidebar-*`, …) are separate declarations holding their own copies of the same colours. Overriding `--exui-control-primary` does not move `--primary`; set both when both are in use.
+The short semantic aliases (`--background`, `--primary`, `--ring`, `--chart-1`, `--sidebar-*`, feedback colors, and others) refer to `--exui-*` values through `var()`. Theme scopes re-declare aliases so nested `.dark` and `.pitch-black` elements resolve their own colors. A local override on an element without a theme class can still inherit an alias or recipe resolved at an ancestor; redeclare the needed alias or recipe at that scope.
 
 ## Length units
 
 Scalable lengths are authored in `rem` against a 16px base: density geometry, the four body/small font-size and line-height Tokens, ordinary radii, and the length fields of every component recipe. Setting the application root font size rescales all of them together, and a 16px root font size reproduces the original pixel design exactly. Nothing in this workspace sets a root font size, and no scale variable or runtime listener is involved.
 
-Fixed-pixel exceptions are intentional and machine-checked: `radii.none` is `0`, `radii.full` is `9999px`, `componentRecipes.menu.separator.thickness` is `1px`, foundation and theme drop shadows stay pixel-based, and `glass.blur` stays `4px`. The glass inset edge is `0.0625rem`, so it scales independently of the blur. Recipe durations stay `ms`, `componentRecipes.menu.shortcut.letterSpacing` stays `em`, and `componentRecipes.menu.shortcut.marginInlineStart` stays `auto`.
+Fixed-pixel exceptions are intentional and machine-checked: `radii.none` is `0`, `radii.full` is `9999px`, `componentRecipes.menu.separator.thickness` is `1px`, and foundation and theme drop shadows stay pixel-based. Glass blur is `0.25rem` and its inset edge is `0.0625rem`; both follow the root font size. Recipe durations stay `ms`, `componentRecipes.menu.shortcut.letterSpacing` stays `em`, and `componentRecipes.menu.shortcut.marginInlineStart` stays `auto`.
 
 `RecipeLength` accepts `${number}rem`, `${number}px`, and `"0"`, so consumer-authored recipes may keep passing pixel values even though the built-in values use `rem`.
 
@@ -64,6 +64,6 @@ The focus-color check evaluates the semantic ring color against the page backgro
 
 ## Theme surfaces and glass
 
-The current source uses `#0088ff` for the primary brand fill. Dark uses `#0a0a0a` for the page and `#1b1b1b` for popover, modal, and menu surfaces; Pitch Black keeps a `#000000` page. Consume the semantic variables rather than copying these values into application styles.
+The current source uses `#0088ff` for the primary brand fill. Dark uses `#0a0a0a` for the page and `#1b1b1b` for popover, dialog, and menu surfaces; Pitch Black keeps a `#000000` page. Consume the semantic variables rather than copying these values into application styles.
 
-Every theme includes `glass`: neutral and danger colors, interaction backgrounds, fallback backgrounds, blur, saturation, and the inset edge. The generator keeps the text, danger colors, and edge linked to their source variables. The token stylesheet only supplies variables; `.ex-glass` behavior requires the public component stylesheet. See [Glass usage](../../skills/exui-usage/references/glass.md) and [Token customization](../../skills/exui-usage/references/token-customization.md).
+Every theme includes `glass`: neutral and danger colors, interaction backgrounds, fallback backgrounds, blur, saturation, and the inset edge. The generator keeps the text, danger colors, and edge linked to their source variables. The token stylesheet only supplies variables; `.ex-glass` behavior requires the public component stylesheet. See [Glass usage](../../skills/exui/references/exui/glass.md). For alias and density overrides, follow [Overriding Tokens](#overriding-tokens) and the [Token customization guide](../../skills/exui/references/exui/token-customization.md).

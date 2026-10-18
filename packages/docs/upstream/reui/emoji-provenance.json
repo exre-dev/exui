@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "base": "packages/docs",
+  "package": "emojibase-data",
+  "version": "17.0.0",
+  "files": [
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/en/data.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/en/data.json",
+      "sha256": "ed014f1049bd370c5794f815850156196ac382850f51c3e9f6a9e83553fb3f01",
+      "bytes": 775157
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/en/messages.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/en/messages.json",
+      "sha256": "6bffab078a0d90c4cca03bd3ff1045fdba33a77d31b1408b1cf1c414d7f1ab3c",
+      "bytes": 6499
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/zh/data.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/zh/data.json",
+      "sha256": "ab26566248ccb4e991c6314a0b98e07daa38325bf44bc32260a6502f4cd6cb37",
+      "bytes": 745736
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/zh/messages.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/zh/messages.json",
+      "sha256": "8502c94a29d2c4e5e0a402680f2b3c305c8684709e91ef40cf020eb42231c26a",
+      "bytes": 6200
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/de/data.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/de/data.json",
+      "sha256": "62c4877944d2347dc1a529b53f939ad87df09ba3e1f401ee31748aa59ff6f7ea",
+      "bytes": 808463
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/de/messages.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/de/messages.json",
+      "sha256": "0b2cf01ebc09606ac2a270cd02d92bdc59b481bea3a98e0823a90ba91a89050b",
+      "bytes": 6650
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/fr/data.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/fr/data.json",
+      "sha256": "2d98e00803f7c777f9127002b59965151e4e0522767c899f7af897d8ca98454e",
+      "bytes": 805524
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/fr/messages.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/fr/messages.json",
+      "sha256": "69bf79841214a3d9b023e7c5aadb01fd2b6161822a3d0b2df8123aff951bfbe9",
+      "bytes": 6782
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/ja/data.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/ja/data.json",
+      "sha256": "145a05c890312867ea1535ded173d81c4ac55aebed1a560c3d171e8fbed5554b",
+      "bytes": 775154
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/ja/messages.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/ja/messages.json",
+      "sha256": "69c8786fd571fdc544f22d8887ffde8ae3850c5cb1680749b3c2617e045233ae",
+      "bytes": 6780
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/en/shortcodes/github.json",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/en/shortcodes/github.json",
+      "sha256": "d6bb7101e7bab1e52b30f4b3562da2319b484a6266352a1119f0d1ba52db23db",
+      "bytes": 45309
+    },
+    {
+      "source": "https://cdn.jsdelivr.net/npm/emojibase-data@17.0.0/LICENSE",
+      "target": "public/examples/reui/emoji/emojibase-data-17.0.0/LICENSE",
+      "sha256": "5c4e1582dcae9429a5d00ec0a64185c3a711f9757b2308fdf275d90b120f6149",
+      "bytes": 1075
+    }
+  ],
+  "usage": "Public EmojiPicker/useEmojiPickerData use this local dataUrl/url; original en/de/fr/ja selector remains independent."
+}

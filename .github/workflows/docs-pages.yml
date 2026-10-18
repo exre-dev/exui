@@ -1,0 +1,222 @@
+name: Docs Pages
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    if: >-
+      github.event.workflow_run.name == 'CI' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.repository.full_name == github.repository &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      publish: ${{ steps.ready.outputs.publish }}
+      source_sha: ${{ steps.source.outputs.source_sha }}
+      source_run_id: ${{ steps.source.outputs.source_run_id }}
+      source_run_attempt: ${{ steps.source.outputs.source_run_attempt }}
+      pages_artifact: ${{ steps.source.outputs.pages_artifact }}
+    steps:
+      - name: Validate source CI and check current main
+        id: source
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            core.setOutput('current', 'false');
+            const run = context.payload.workflow_run;
+            const repository = `${context.repo.owner}/${context.repo.repo}`;
+            if (run?.name !== 'CI' || run.event !== 'push' || run.conclusion !== 'success' ||
+                run.head_branch !== 'main' || run.repository?.full_name !== repository ||
+                run.head_repository?.full_name !== repository) {
+              await core.summary.addHeading('Docs Pages skipped').addRaw('Source CI is not eligible.').write();
+              return;
+            }
+            if (!Number.isSafeInteger(run.id) || run.id <= 0 ||
+                !Number.isSafeInteger(run.run_attempt) || run.run_attempt <= 0 ||
+                typeof run.head_sha !== 'string' || !/^[a-f0-9]{40}$/.test(run.head_sha)) {
+              throw new Error('Invalid source CI identifiers');
+            }
+            const attempt = process.env.GITHUB_RUN_ATTEMPT;
+            if (!Number.isSafeInteger(context.runId) || context.runId <= 0 ||
+                !/^[1-9][0-9]*$/.test(attempt ?? '') || !Number.isSafeInteger(Number(attempt))) {
+              throw new Error('Invalid preparation run identifiers');
+            }
+            const sourceArtifact = `docs-site-${run.id}-${run.run_attempt}`;
+            const pagesArtifact = `github-pages-${context.runId}-${attempt}`;
+            core.setOutput('source_sha', run.head_sha);
+            core.setOutput('source_run_id', run.id);
+            core.setOutput('source_run_attempt', run.run_attempt);
+            core.setOutput('source_artifact', sourceArtifact);
+            core.setOutput('pages_artifact', pagesArtifact);
+            core.summary.addHeading('Docs Pages source')
+              .addLink('Verified CI', `${context.serverUrl}/${repository}/actions/runs/${run.id}/attempts/${run.run_attempt}`)
+              .addRaw(`\n\nSource SHA: ${run.head_sha}\n\nSource artifact: ${sourceArtifact}\n\nPages artifact: ${pagesArtifact}\n\n`);
+            const { data } = await github.rest.repos.getBranch({ ...context.repo, branch: 'main' });
+            if (data.commit.sha !== run.head_sha) {
+              await core.summary.addRaw(`Skipped: source superseded by main ${data.commit.sha}.`).write();
+              return;
+            }
+            core.setOutput('current', 'true');
+            await core.summary.write();
+
+      - name: Download the exact verified CI artifact
+        if: steps.source.outputs.current == 'true'
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          repository: ${{ github.repository }}
+          run-id: ${{ steps.source.outputs.source_run_id }}
+          name: ${{ steps.source.outputs.source_artifact }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/docs-site
+          skip-decompress: false
+          digest-mismatch: error
+
+      - name: Validate the downloaded static site
+        id: site
+        if: steps.source.outputs.current == 'true'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          SITE_ROOT: ${{ runner.temp }}/docs-site
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const root = process.env.SITE_ROOT;
+            const files = new Set();
+            async function inspect(directory, prefix = '') {
+              const stat = await fs.lstat(directory);
+              if (stat.isSymbolicLink()) throw new Error(`Symbolic link forbidden: ${directory}`);
+              if (!stat.isDirectory()) throw new Error(`Missing directory: ${directory}`);
+              for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+                const relative = prefix + entry.name;
+                if (entry.name === '.git' || entry.name === '.github') throw new Error(`Forbidden metadata: ${relative}`);
+                const filename = path.join(directory, entry.name);
+                const info = await fs.lstat(filename);
+                if (info.isSymbolicLink()) throw new Error(`Symbolic link forbidden: ${relative}`);
+                if (info.isDirectory()) await inspect(filename, `${relative}/`);
+                else if (info.isFile()) {
+                  if (info.size > 0) files.add(relative);
+                } else throw new Error(`Forbidden file type: ${relative}`);
+              }
+            }
+            await inspect(root);
+            for (const filename of [
+              'index.html', '404.html', '_.data',
+              'en/docs/index.html', 'en/docs/_.data', 'zh-CN/docs/index.html', 'zh-CN/docs/_.data',
+              'search/en/index.json', 'search/zh-CN/index.json',
+            ]) {
+              if (!files.has(filename)) throw new Error(`Missing or Empty static file: ${filename}`);
+            }
+            for (const prefix of ['assets/', 'examples/']) {
+              if (![...files].some(filename => filename.startsWith(prefix))) throw new Error(`Empty directory: ${prefix}`);
+            }
+            const examples = [...files].filter(filename => /^examples\/[^/]+\/index\.html$/.test(filename));
+            if (!examples.length) throw new Error('Missing example HTML');
+            for (const html of examples) for (const source of ['source.md', 'source.json']) {
+              const filename = html.replace(/index\.html$/, source);
+              if (!files.has(filename)) throw new Error(`Missing example source: ${filename}`);
+            }
+
+      - name: Prepare a complete Pages artifact
+        if: steps.source.outputs.current == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          name: ${{ steps.source.outputs.pages_artifact }}
+          path: ${{ runner.temp }}/docs-site
+          retention-days: 7
+          include-hidden-files: true
+
+      - name: Mark the prepared artifact ready
+        id: ready
+        if: steps.source.outputs.current == 'true'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            core.setOutput('publish', 'true');
+
+  deploy:
+    needs: prepare
+    if: needs.prepare.outputs.publish == 'true' && needs.prepare.outputs.pages_artifact != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: docs-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Read the enabled Pages configuration
+        id: configuration
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        with:
+          enablement: false
+
+      - name: Check the production prefix and current main before deploying
+        id: latest
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          PAGES_BASE_PATH: ${{ steps.configuration.outputs.base_path }}
+          SOURCE_SHA: ${{ needs.prepare.outputs.source_sha }}
+        with:
+          script: |
+            core.setOutput('publish', 'false');
+            const base = process.env.PAGES_BASE_PATH;
+            if (typeof base !== 'string' || !/^\/exui\/?$/.test(base)) {
+              throw new Error('Pages base must match the verified /exui/ build');
+            }
+            const source = process.env.SOURCE_SHA;
+            if (typeof source !== 'string' || !/^[a-f0-9]{40}$/.test(source)) throw new Error('Invalid source SHA');
+            const { data } = await github.rest.repos.getBranch({ ...context.repo, branch: 'main' });
+            if (data.commit.sha !== source) {
+              await core.summary.addHeading('Docs Pages skipped')
+                .addRaw(`Source ${source} superseded by main ${data.commit.sha}.`).write();
+              return;
+            }
+            core.setOutput('publish', 'true');
+
+      - name: Deploy the prepared artifact
+        id: deployment
+        if: steps.latest.outputs.publish == 'true'
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          artifact_name: ${{ needs.prepare.outputs.pages_artifact }}
+          preview: false
+
+      - name: Report the deployment result
+        if: always()
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          SOURCE_SHA: ${{ needs.prepare.outputs.source_sha }}
+          SOURCE_RUN_ID: ${{ needs.prepare.outputs.source_run_id }}
+          SOURCE_RUN_ATTEMPT: ${{ needs.prepare.outputs.source_run_attempt }}
+          PAGES_ARTIFACT: ${{ needs.prepare.outputs.pages_artifact }}
+          DEPLOYMENT_RESULT: ${{ steps.deployment.outcome }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        with:
+          script: |
+            const env = process.env;
+            const repository = `${context.repo.owner}/${context.repo.repo}`;
+            core.summary.addHeading('Docs Pages deployment')
+              .addLink('Source CI', `${context.serverUrl}/${repository}/actions/runs/${env.SOURCE_RUN_ID}/attempts/${env.SOURCE_RUN_ATTEMPT}`)
+              .addRaw(`\n\nSource SHA: ${env.SOURCE_SHA}\n\nPages artifact: ${env.PAGES_ARTIFACT}\n\nDeployment: ${env.DEPLOYMENT_RESULT}\n\n`);
+            if (env.DEPLOYMENT_RESULT === 'success' && env.PAGE_URL) core.summary.addLink('Published site', env.PAGE_URL);
+            await core.summary.write();

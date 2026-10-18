@@ -1,0 +1,28 @@
+---
+id: components/time-picker
+title: Time Picker
+description: 通过专用时间控件选择时刻。
+exampleFamily: time-picker
+---
+
+Time Picker：通过专用时间控件选择时刻。
+
+## 基本用法
+
+选择任务需要的时间粒度，使显示时间与单一值对应。
+
+### 当前示例源码摘录
+
+```tsx source="c-time-picker-1"
+import { TimePicker, TimePickerPanel } from "@exre/exui"
+
+<TimePicker i18n={exampleLocales.timePicker}
+          value={value}
+          onValueChange={setValue}
+          aria-label={copyExample("Meeting time")}
+        >
+          <TimePickerPanel />
+        </TimePicker>
+```
+
+[查看完整源码](../../../../examples/c-time-picker-1/)

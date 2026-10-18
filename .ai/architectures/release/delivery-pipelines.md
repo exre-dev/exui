@@ -1,6 +1,8 @@
 # 交付流水线与门禁
 
-最后更新：2026-09-18
+> 当前私有应用是 `packages/docs`（`@exre/exui-docs`），其静态文档站边界见 [`docs/site.md`](../docs/site.md)。下文原 Showcase 测试的历史证据按原名保留。
+
+最后更新：2026-10-16
 
 `release` 模块不产出可安装的包，它由三类互相衔接的门禁组成：合并前质量门禁、打包消费者门禁与基于标签的发布流水线。
 
@@ -15,9 +17,23 @@
 | 预置 | 缓存并安装 Playwright Chromium（缓存键为 `pnpm-lock.yaml` 哈希） |
 | 顶层权限 | `contents: read` |
 
-步骤顺序固定：tokens 校验 → 类型检查 → lint → 构建 → 技能自测 → 技能生成物一致性 → 技能示例 → 视觉测试 → 打包消费者 → 发布配置校验 → 发布自动化测试。前两步失败会阻断后续所有需要构建产物的步骤。
+步骤顺序固定：ReUI 缓存恢复与来源/适配校验 → tokens 校验 → 类型检查 → lint → 构建 → 文档内容、公开用法与根路径静态验收 → 示例分享 → ReUI 恢复与组件契约回归 → 图表/监听回归 → 技能自测 → 技能生成物一致性 → 技能示例 → 视觉测试 → 打包消费者 → 发布配置校验 → 发布自动化测试 → Pages 来源与产物守卫测试 → `/exui/` 文档构建及同前缀静态/分享验收 → 仅 main push 上传文档产物。前置校验失败会阻断后续所有需要构建产物的步骤。文档验证命令见 [TESTING.md](../../../TESTING.md)；ReUI 缓存与锁定来源的边界见 [`../components/public-surface.md`](../components/public-surface.md)，CI 不自行维护另一份版本或哈希。
 
 第二个作业 `ci-gate` 以 `if: always()` 依赖 `verify`，把 `verify` 的结果字符串与 `success` 比较。分支保护只要求这一个聚合检查名，因此新增或重命名 `verify` 内部步骤不会改变必需检查的名称。
+
+## 文档 Pages 交付
+
+CI 末尾将通过 `/exui/` 静态与分享验证的 `packages/docs/build/client` 保存为 `docs-site-<run_id>-<run_attempt>`，保留七天并包含隐藏文件。上传属于 CI 门禁；PR 不上传可发布产物。
+
+`.github/workflows/docs-pages.yml` 是成功 main CI 的独立消费者，与 npm Release 平行。`prepare` 只持有仓库和 Actions 读取权限，核对工作流名、事件、结论、分支、来源仓库与 head 仓库，按精确运行 ID 和次数取产物。它在下载前检查 main，下载时要求摘要一致，打包前检查站点根、中英文总览、搜索、路由数据、资源和示例源码，并拒绝符号链接及仓库元数据。部署作业不 checkout、不执行站点文件、不重新构建。
+
+Pages 中间产物命名为 `github-pages-<deploy_run_id>-<prepare_run_attempt>`；`deploy` 必须消费 prepare 的名称输出，不能用自己的运行次数重算。只有完成上传后 prepare 才输出发布资格。两个上传阶段都显式保留隐藏文件，避免站点文件在传输中消失。
+
+仅 `deploy` 申请 Pages 和 OIDC 写权限，使用 `github-pages` environment，并在固定 `docs-pages` 并发组中串行运行且不取消进行中的部署。取得机会后先读取已启用的 Pages 配置，要求路径与 `/exui/` 构建相符，再核对 main；过期来源正常跳过，查询和配置错误失败。最后一次检查后的 main 更新由后续 CI 接续发布。工作流及 environment 的 URL 来自 Pages 实际输出。
+
+恢复接口是完整重跑。来源产物缺失或过期需要重跑当前 main 的整个 CI；Pages 准备或部署失败则在来源仍合格时重跑整个 Docs Pages。部分作业重跑会改变运行次数，不能回退消费前一次的同名来源，也不能按 deploy 的次数猜测 prepare 产物。内容回退使用 main 上的新 revert 提交。工作流不自动启用 Pages；本地验证不证明远端 environment、deployment 或公开站点已验收。
+
+证据：`.github/workflows/ci.yml`、`.github/workflows/docs-pages.yml`、`scripts/docs-pages.test.mjs`。站点产物边界见 [`../docs/site.md`](../docs/site.md)。
 
 ## 发布声明
 
@@ -77,11 +93,11 @@ checkout 标签（fetch-depth: 0）
   → npm.mjs 发布
 ```
 
-`npm.mjs` 只发布声明中的包：打包后重新校验 tarball 内的 manifest，再以 `npm publish --access public --provenance --ignore-scripts` 发布，预发布版本落到 `next` 标签。发布前查询官方注册表，已存在则跳过（幂等），不可用或返回不一致元数据则中止。整个钩子要求运行上下文必须是 GitHub Actions 且仓库为 `caep-dev/exui`，无法在开发者机器上执行，见 `knowledge/release/release-automation-activation.md`。
+`npm.mjs` 只发布声明中的包：打包后重新校验 tarball 内的 manifest，再以 `npm publish --access public --provenance --ignore-scripts` 发布，预发布版本落到 `next` 标签。发布前查询官方注册表，已存在则跳过（幂等），不可用或返回不一致元数据则中止。整个钩子要求运行上下文必须是 GitHub Actions 且仓库为 `exre-dev/exui`，无法在开发者机器上执行，见 `knowledge/release/release-automation-activation.md`。
 
 ## 打包消费者门禁
 
-`scripts/verify-packages.mjs` 用 `pnpm verify:pack` 运行，是唯一在 workspace 之外验证产物的环节。它先做仓库边界检查（根包与 Showcase 必须私有，且不得占用公开包名），再 pack 公共包并按 `package-contract.mjs` 校验 manifest 与产物清单，然后建立独立的临时消费者 fixture：
+`scripts/verify-packages.mjs` 用 `pnpm verify:pack` 运行，是唯一在 workspace 之外验证产物的环节。它先做仓库边界检查（根包与文档应用必须私有，且不得占用公开包名），再 pack 公共包并按 `package-contract.mjs` 校验 manifest 与产物清单，然后建立独立的临时消费者 fixture：
 
 | fixture | 断言重点 |
 | --- | --- |
@@ -92,7 +108,7 @@ checkout 标签（fetch-depth: 0）
 | 生产构建的浏览器断言 | `scripts/verify-react-browser.mjs` 在 Chromium 中验证图表两点数据、ExUI 图例与 hover 后变化的 tooltip 值、Dialog 经 portal 打开、表单提交、Escape 归还焦点，以及 16px / 32px 根字号下的 Button 几何与 portal Dialog 内边距 |
 | ExForm 隔离消费者 | `scripts/form-consumer-fixture.mjs` 按 Zod 3.25.28 与 4.6.5 各建一个临时消费者，依次做 `skipLibCheck: false` 类型检查、生产构建、`--ssr` 构建与 SSR 冒烟；再由 `scripts/verify-form-browser.mjs` 在 Chromium 中断言 schema 错误到达绑定控件（含 `aria-invalid`）、非法输出不调用 `onSubmit`、成功解析恰好调用一次、解析后的数值输出不覆盖字符串草稿、重新校验成功后清除错误，且无浏览器运行时错误 |
 
-fixture 一律建在 `os.tmpdir()` 下的临时目录并在 `finally` 中清理；控制器复用 Showcase 锁定的 Playwright 依赖，浏览器只服务隔离消费者的构建产物。门禁的失效模式与不可替代性见 [[release/03-packed-consumer-gates]]。
+fixture 一律建在 `os.tmpdir()` 下的临时目录并在 `finally` 中清理；控制器复用文档应用锁定的 Playwright 依赖，浏览器只服务隔离消费者的构建产物。打包与技能示例校验共用 `scripts/run-command.mjs`：Windows 上通过当前 Node 的 npm/Corepack JavaScript 入口执行包管理器，保留参数边界；浏览器仍在独立子进程中运行，以便清理临时目录前释放原生绑定。门禁的失效模式与不可替代性见 [[release/03-packed-consumer-gates]]。
 
 ## 脚本模块
 

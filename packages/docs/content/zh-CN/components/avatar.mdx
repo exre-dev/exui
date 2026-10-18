@@ -1,0 +1,28 @@
+---
+id: components/avatar
+title: Avatar
+description: 直观呈现人物或实体。
+exampleFamily: avatar
+---
+
+Avatar：直观呈现人物或实体。
+
+## 基本用法
+
+同时提供头像图片与回退内容，让图片失败时仍可识别身份。
+
+### 当前示例源码摘录
+
+```tsx source="c-avatar-1"
+import { Avatar, AvatarFallback, AvatarImage } from "@exre/exui"
+
+<Avatar>
+      <AvatarImage
+        src="/examples/reui/photos/4349381d8a8476edbc.jpg"
+        alt={copyExample("Michael Rodriguez")}
+      />
+      <AvatarFallback>{<ExampleText>MR</ExampleText>}</AvatarFallback>
+    </Avatar>
+```
+
+[查看完整源码](../../../../examples/c-avatar-1/)

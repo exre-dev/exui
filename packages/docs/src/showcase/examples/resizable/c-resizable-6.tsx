@@ -1,0 +1,36 @@
+"use client"
+
+
+import { ExampleRuntimeProvider, ExampleText } from "../_shared/example-runtime"
+import dictionary from "./copy.generated"
+
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@exre/exui"
+
+  function OriginalPattern() {
+  return (
+    <div className="mx-auto w-full max-w-lg">
+      <ResizablePanelGroup
+        orientation="horizontal"
+        className="rounded-2xl min-h-[200px] border"
+      >
+        <ResizablePanel defaultSize={30}>
+          <div className="flex h-full items-center justify-center p-6">
+            <span className="text-sm font-semibold">{<ExampleText>Sidebar</ExampleText>}</span>
+          </div>
+        </ResizablePanel>
+        <ResizableHandle className="before:bg-muted-foreground/20 hover:before:bg-muted-foreground/40 active:before:bg-primary before:pointer-events-none before:absolute before:top-1/2 before:left-1/2 before:z-10 before:h-8 before:w-1 before:-translate-x-1/2 before:-translate-y-1/2 before:scale-y-75 before:rounded-full before:transition-all before:duration-300 before:ease-[cubic-bezier(0.32,0.72,0,1)] hover:before:scale-y-100 active:before:h-14 active:before:w-1.5 active:before:scale-y-100" />
+        <ResizablePanel defaultSize={70}>
+          <div className="flex h-full items-center justify-center p-6">
+            <span className="text-sm font-semibold">{<ExampleText>Content</ExampleText>}</span>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
+  )
+}
+
+export default function Pattern() { return <ExampleRuntimeProvider dictionary={dictionary}><OriginalPattern /></ExampleRuntimeProvider> }

@@ -1,0 +1,56 @@
+---
+id: components/chart
+title: Chart
+description: Styles data visualizations built with bundled Recharts.
+exampleFamily: chart
+---
+
+Chart: Styles data visualizations built with bundled Recharts.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-chart-1/)
+
+**ExUI addition**
+
+### Bundled chart and table runtimes
+
+Import `Recharts` and `TanStackTable` from the root package when composing ExUI charts or DataGrid. These namespaces use the same bundled instances as ExUI's components. The wrapped Recharts axes, tooltip and legend scale their omitted numeric defaults with the document root font. `TanStackTable.useTable` and its app hooks do the same for omitted column sizes. Explicit numeric sizes are pixels; bare non-React `constructTable` retains its upstream pixel defaults.
+
+```tsx verify
+import { Recharts, TanStackTable } from "@exre/exui"
+
+export const ExuiXAxis = Recharts.XAxis
+export const ExuiTableHook = TanStackTable.useTable
+```
+
+- [Live example](../../../../examples/c-chart-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Use the bundled Recharts namespace with ExUI chart helpers to keep one chart runtime.
+
+### Current example source excerpt
+
+```tsx source="c-chart-1"
+import { Recharts, ChartContainer } from "@exre/exui"
+
+<ChartContainer config={copyExampleData(chartConfig)}>
+  <Recharts.BarChart accessibilityLayer data={chartData}>
+    <Recharts.CartesianGrid vertical={false} />
+    <Recharts.XAxis dataKey="month" tickLine={false} axisLine={false} />
+  </Recharts.BarChart>
+</ChartContainer>
+```
+
+[View complete source](../../../../examples/c-chart-1/)

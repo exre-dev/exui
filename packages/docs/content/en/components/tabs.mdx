@@ -1,0 +1,67 @@
+---
+id: components/tabs
+title: Tabs
+description: Switches between related content panels.
+exampleFamily: tabs
+---
+
+Tabs: Switches between related content panels.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### ExUI tab appearance
+
+`TabsList` supports `variant="default"`, `"primary"` and `"line"`. The filled variants use pill-shaped horizontal tracks and triggers. Vertical triggers stay pill-shaped; the track's corners account for one trigger's height and the surrounding padding, so the first and last items fit inside its curve.
+
+Only the active trigger has a small, theme-aware shadow. The `primary` variant also uses the primary fill and foreground. The `line` variant retains its transparent background and selection indicator without the active shadow. Keyboard focus remains visible on the active item.
+
+- [Live example](../../../../examples/c-tabs-2/)
+- [Live example](../../../../examples/c-tabs-3/)
+- [Live example](../../../../examples/c-tabs-6/)
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `TabsList`, `TabsTrigger`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { TabsList } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof TabsList>) {
+  return <TabsList {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Give each trigger a stable value and pair it with the matching content panel.
+
+### Current example source excerpt
+
+```tsx source="c-tabs-1"
+import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@exre/exui"
+
+<Tabs defaultValue="account">
+  <TabsList>
+    <TabsTrigger value="account" />
+    <TabsTrigger value="password" />
+  </TabsList>
+  <TabsContent value="account">
+    <Card />
+  </TabsContent>
+</Tabs>
+```
+
+[View complete source](../../../../examples/c-tabs-1/)

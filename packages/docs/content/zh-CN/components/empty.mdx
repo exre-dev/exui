@@ -1,0 +1,30 @@
+---
+id: components/empty
+title: Empty
+description: 解释空集合并引导下一步操作。
+exampleFamily: empty
+---
+
+Empty：解释空集合并引导下一步操作。
+
+## 基本用法
+
+说明为什么当前没有项目，并在适用时给出下一步操作。
+
+### 当前示例源码摘录
+
+```tsx source="c-empty-1"
+import { Button, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@exre/exui"
+
+<Empty>
+  <EmptyHeader>
+    <EmptyTitle />
+    <EmptyDescription />
+  </EmptyHeader>
+  <EmptyContent>
+    <Button variant="link" asChild />
+  </EmptyContent>
+</Empty>
+```
+
+[查看完整源码](../../../../examples/c-empty-1/)

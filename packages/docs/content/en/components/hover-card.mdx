@@ -1,0 +1,66 @@
+---
+id: components/hover-card
+title: Hover Card
+description: Shows supplementary information on hover or focus.
+exampleFamily: hover-card
+---
+
+Hover Card: Shows supplementary information on hover or focus.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `HoverCardContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { HoverCardContent } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof HoverCardContent>) {
+  return <HoverCardContent {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Use it for optional context that does not carry the primary action.
+
+### Current example source excerpt
+
+```tsx source="c-hover-card-1"
+import { Button, HoverCard, HoverCardContent, HoverCardTrigger } from "@exre/exui"
+
+<HoverCard openDelay={100} closeDelay={100}>
+        <HoverCardTrigger asChild>
+          <Button variant="outline">{<ExampleText>Hover Me</ExampleText>}</Button>
+        </HoverCardTrigger>
+        <HoverCardContent>
+          <div className="flex flex-col gap-1">
+            <h4 className="leading-none font-medium">{<ExampleText>Hover Card</ExampleText>}</h4>
+            <p className="text-muted-foreground">
+              {<ExampleText>A basic hover card that appears when you hover over the trigger. </ExampleText>}</p>
+          </div>
+        </HoverCardContent>
+      </HoverCard>
+```
+
+[View complete source](../../../../examples/c-hover-card-1/)

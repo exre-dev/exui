@@ -23,8 +23,8 @@
 import { MIN_TEXT_CONTRAST, composite, contrastRatio, parseColor } from "./color-contrast-policy.mjs"
 import { REM_LENGTH_PATTERN } from "./token-length-policy.mjs"
 
-/** Fixed blur radius for the built-in glass material. */
-export const GLASS_BLUR = "4px"
+/** Scalable blur radius for the built-in glass material, at the 16px design base. */
+export const GLASS_BLUR = "0.25rem"
 
 /** Glass leaves that are part of the public customisation surface. */
 export const GLASS_PUBLIC_LEAVES = [

@@ -54,7 +54,7 @@ test("planning maps the public package to its package-version tag", (t) => {
 })
 test("private Changesets dependency entries with type none do not become releases", (t) => {
   const f = fixture(t)
-  f.write("packages/showcase/package.json", { name: "showcase", private: true, version: "0.0.0" })
+  f.write("packages/docs/package.json", { name: "showcase", private: true, version: "0.0.0" })
   f.write(".changeset/feature.md", '---\n"@exre/exui": minor\n---\nFeature\n')
   const status = join(f.base, "status.json")
   writeFileSync(status, JSON.stringify({ releases: [
@@ -72,7 +72,7 @@ test("a release commit recovers annotated tags idempotently at the same SHA", (t
   assert.equal(ok(f.cli("tags.mjs", "--plan", path, "--commit", sha)).tags[0].state, "created")
   assert.equal(f.git("cat-file", "-t", "refs/tags/@exre/exui@0.2.0"), "tag")
   assert.equal(ok(f.cli("tags.mjs", "--plan", path, "--commit", sha)).tags[0].state, "existing")
-  const context = ok(f.cli("hook-context.mjs", "--tag", "@exre/exui@0.2.0", "--commit", sha, "--provider", "github", "--repository", "caep-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main"))
+  const context = ok(f.cli("hook-context.mjs", "--tag", "@exre/exui@0.2.0", "--commit", sha, "--provider", "github", "--repository", "exre-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main"))
   assert.equal(context.RELEASE_PACKAGE, "@exre/exui")
   assert.equal(context.RELEASE_VERSION, "0.2.0")
 })
@@ -89,21 +89,21 @@ test("a private tokens package version bump never becomes a release", (t) => {
 test("legacy tokens release tags are rejected even when annotated on the release commit", (t) => {
   const f = fixture(t), sha = release(f)
   f.git("tag", "-a", "@exre/exui-tokens@0.2.0", "-m", "legacy", sha)
-  const result = f.cli("hook-context.mjs", "--tag", "@exre/exui-tokens@0.2.0", "--commit", sha, "--provider", "github", "--repository", "caep-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main")
+  const result = f.cli("hook-context.mjs", "--tag", "@exre/exui-tokens@0.2.0", "--commit", sha, "--provider", "github", "--repository", "exre-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main")
   assert.notEqual(result.status, 0)
   assert.match(result.stderr, /TAG_PACKAGE_MISMATCH|Unknown publishable package/)
 })
 test("release subject alone cannot authorize unrelated file changes", (t) => {
   const f = fixture(t), sha = release(f, true)
   f.git("tag", "-a", "@exre/exui@0.2.0", "-m", "release")
-  const result = f.cli("hook-context.mjs", "--tag", "@exre/exui@0.2.0", "--commit", sha, "--provider", "github", "--repository", "caep-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main")
+  const result = f.cli("hook-context.mjs", "--tag", "@exre/exui@0.2.0", "--commit", sha, "--provider", "github", "--repository", "exre-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main")
   assert.notEqual(result.status, 0)
   assert.match(result.stderr, /RELEASE_DIFF_INVALID/)
 })
 test("lightweight and mismatched tags never authorize publication", (t) => {
   const f = fixture(t), sha = release(f)
   f.git("tag", "@exre/exui@0.2.0")
-  const result = f.cli("hook-context.mjs", "--tag", "@exre/exui@0.2.0", "--commit", sha, "--provider", "github", "--repository", "caep-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main")
+  const result = f.cli("hook-context.mjs", "--tag", "@exre/exui@0.2.0", "--commit", sha, "--provider", "github", "--repository", "exre-dev/exui", "--hook-id", "npm", "--main-ref", "origin/main")
   assert.notEqual(result.status, 0)
   assert.match(result.stderr, /TAG_UNANNOTATED/)
 })

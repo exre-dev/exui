@@ -1,0 +1,22 @@
+---
+id: components/sortable
+title: Sortable
+description: 通过拖动调整项目顺序。
+exampleFamily: sortable
+---
+
+Sortable：通过拖动调整项目顺序。
+
+## 基本用法
+
+为每项设置稳定 id，在拖动完成后更新底层顺序。
+
+### 当前示例源码摘录
+
+```tsx source="c-sortable-1"
+import { Sortable } from "@exre/exui"
+
+<Sortable value={items} onValueChange={handleValueChange} getItemValue={getItemValue} />
+```
+
+[查看完整源码](../../../../examples/c-sortable-1/)

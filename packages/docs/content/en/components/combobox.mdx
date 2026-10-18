@@ -1,0 +1,61 @@
+---
+id: components/combobox
+title: Combobox
+description: Combines text entry with option selection.
+exampleFamily: combobox
+---
+
+Combobox: Combines text entry with option selection.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `ComboboxInput`, `ComboboxContent`, `ComboboxChips`, `ComboboxChip`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { ComboboxInput } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof ComboboxInput>) {
+  return <ComboboxInput {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Connect the searchable input to its option list and handle the selected value in the host.
+
+### Current example source excerpt
+
+```tsx source="c-combobox-1"
+import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxList } from "@exre/exui"
+
+<Combobox items={frameworks}>
+  <ComboboxInput placeholder={copyExample("Select a framework")} />
+  <ComboboxContent>
+    <ComboboxEmpty />
+    <ComboboxList />
+  </ComboboxContent>
+</Combobox>
+```
+
+[View complete source](../../../../examples/c-combobox-1/)

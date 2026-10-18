@@ -1,3 +1,4 @@
+import { useRootRem } from "@/hooks/use-root-rem"
 import * as React from "react"
 import { Combobox as ComboboxPrimitive } from "@base-ui/react"
 
@@ -89,7 +90,7 @@ function ComboboxInput({
 function ComboboxContent({
   className,
   side = "bottom",
-  sideOffset = 6,
+  sideOffset,
   align = "start",
   alignOffset = 0,
   anchor,
@@ -108,11 +109,12 @@ function ComboboxContent({
   // unchanged.
   const classNameText = typeof className === "string" ? className : undefined
 
+  const rootRem = useRootRem()
   return (
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Positioner
         side={side}
-        sideOffset={sideOffset}
+        sideOffset={sideOffset ?? rootRem * 0.375}
         align={align}
         alignOffset={alignOffset}
         anchor={anchor}

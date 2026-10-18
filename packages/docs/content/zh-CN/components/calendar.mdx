@@ -1,0 +1,34 @@
+---
+id: components/calendar
+title: Calendar
+description: 在可视化月视图中选择日期。
+exampleFamily: calendar
+---
+
+Calendar：在可视化月视图中选择日期。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 适配**
+
+### Calendar 选中形状
+
+单选及多选日期在一周的首末列仍保持圆形，包括显示周数的布局。日期范围的两端保持圆角，中间日期连成带状。ExUI 默认处理这些边缘形状；使用普通的 `Calendar` 选择属性即可，无需按列覆盖圆角。
+
+- [在线示例](../../../../examples/c-calendar-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+选择合适的日期选择模式，在应用状态中处理选中日期。
+
+### 当前示例源码摘录
+
+```tsx source="c-calendar-1"
+import { Calendar } from "@exre/exui"
+
+<Calendar labels={exampleLocales.calendarLabels} locale={exampleLocale} defaultMonth={new Date(EXAMPLE_EPOCH)} mode="single" onSelect={setDate} selected={date} />
+```
+
+[查看完整源码](../../../../examples/c-calendar-1/)

@@ -1,0 +1,43 @@
+---
+id: tokens/themes
+title: 主题
+description: 通过单一根主题控制器使用 ExUI 的浅色、深色与纯黑 Token 层。
+---
+
+Token 样式表以 `:root` 表示浅色、`.dark` 表示深色、`.pitch-black` 表示纯黑。纯黑是 CSS 层，不是 `ThemeProvider` 的取值。提供三种配色的应用应在切换前清除旧的 `light`、`dark`、`pitch-black` 根类；纯黑同时使用 `dark` 与 `pitch-black`。只需要浅色、深色、跟随系统的 React 宿主可用 `ThemeProvider` 与 `useTheme`，但该 Provider 初始化时读取浏览器存储，必须在浏览器挂载。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 主题宿主
+
+`ThemeProvider` 将 `dark`、`light` 或 `system` 存到 `storageKey`（默认 `theme`），并更新 document 根节点。初始化时会读取 `localStorage`，因此只能在浏览器完成 hydration 后挂载，不能直接用于服务端渲染。`useTheme` 必须位于 Provider 内。纯黑是单独的 Token CSS 类，不是 Provider 主题；使用前导入组件样式表。
+
+```tsx verify
+import * as React from "react"
+import { ThemeProvider, useTheme } from "@exre/exui"
+
+function ThemeButton() {
+  const { theme, setTheme } = useTheme()
+  return <button type="button" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>主题：{theme}</button>
+}
+export function ClientTheme() {
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+  return mounted ? <ThemeProvider defaultTheme="system"><ThemeButton /></ThemeProvider> : null
+}
+```
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button, ThemeProvider } from "@exre/exui"
+
+export function BrowserThemeDemo() {
+  return <ThemeProvider defaultTheme="light"><Button type="button">操作</Button></ThemeProvider>
+}
+```

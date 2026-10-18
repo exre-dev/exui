@@ -1,0 +1,36 @@
+---
+id: components/switch
+title: Switch
+description: Changes an immediate on-or-off setting.
+exampleFamily: switch
+---
+
+Switch: Changes an immediate on-or-off setting.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI adaptation**
+
+### Switch inside FieldLabel
+
+When a `FieldLabel` contains a `Switch`, toggling the switch changes its track without filling the entire label background. This applies to card and settings-row labels.
+
+Read [Switch inside FieldLabel](./field.mdx) for complete usage guidance.
+
+- [Live example](../../../../examples/c-switch-1/)
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Use a switch for a setting that takes effect immediately, paired with a descriptive label.
+
+### Current example source excerpt
+
+```tsx source="c-switch-1"
+import { Switch } from "@exre/exui"
+
+<Switch id={exampleId("switch-basic")} />
+```
+
+[View complete source](../../../../examples/c-switch-1/)

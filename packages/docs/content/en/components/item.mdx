@@ -1,0 +1,53 @@
+---
+id: components/item
+title: Item
+description: Presents a compact row of structured content.
+exampleFamily: item
+---
+
+Item: Presents a compact row of structured content.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `Item`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { Item } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof Item>) {
+  return <Item {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Use the item slots to separate leading media, primary text, and trailing action.
+
+### Current example source excerpt
+
+```tsx source="c-item-1"
+import { Item, ItemContent, ItemDescription, ItemTitle } from "@exre/exui"
+
+<Item>
+        <ItemContent>
+          <ItemTitle>{<ExampleText>Default Item</ExampleText>}</ItemTitle>
+          <ItemDescription>
+            {<ExampleText>A simple item with title and description. </ExampleText>}</ItemDescription>
+        </ItemContent>
+      </Item>
+```
+
+[View complete source](../../../../examples/c-item-1/)

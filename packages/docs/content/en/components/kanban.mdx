@@ -1,0 +1,27 @@
+---
+id: components/kanban
+title: Kanban
+description: Organizes work items into movable columns.
+exampleFamily: kanban
+---
+
+Kanban: Organizes work items into movable columns.
+
+## Basic usage
+
+Model columns and cards with stable ids, then persist moves in the host state.
+
+All six examples use a 1rem task radius and a 1.5rem column radius (16px and 24px at a 16px root font size), including the Frame-based examples. The Card-based examples use `size="sm"` for 1rem padding. Drag overlays match the dragged task or column separately.
+
+### Current example source excerpt
+
+```tsx source="c-kanban-1"
+import { Kanban, KanbanBoard, KanbanOverlay } from "@exre/exui"
+
+<Kanban value={columns} onValueChange={setColumns} getItemValue={(item) => item.id}>
+  <KanbanBoard />
+  <KanbanOverlay />
+</Kanban>
+```
+
+[View complete source](../../../../examples/c-kanban-1/)

@@ -1,5 +1,7 @@
 "use client"
 
+import { useRootRem } from "@/hooks/use-root-rem"
+
 import * as React from "react"
 import { Menubar as MenubarPrimitive } from "radix-ui"
 
@@ -70,19 +72,20 @@ function MenubarTrigger({
 function MenubarContent({
   className,
   align = "start",
-  alignOffset = -4,
-  sideOffset = 8,
+  alignOffset,
+  sideOffset,
   glass,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Content> &
   GlassSurfaceProps) {
+  const rootRem = useRootRem()
   return (
     <MenubarPortal>
       <MenubarPrimitive.Content
         data-slot="menubar-content"
         align={align}
-        alignOffset={alignOffset}
-        sideOffset={sideOffset}
+        alignOffset={alignOffset ?? rootRem * -0.25}
+        sideOffset={sideOffset ?? rootRem * 0.5}
         className={cn("z-50 min-w-48 origin-(--radix-menubar-content-transform-origin) overflow-hidden rounded-3xl p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 animate-none! relative bg-popover/70 before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit]", requestsGlass(glass, className) ? undefined : "before:backdrop-blur-2xl before:backdrop-saturate-150", glassClassName(glass), "**:data-[slot$=-item]:focus:bg-foreground/10 **:data-[slot$=-item]:data-highlighted:bg-foreground/10 **:data-[slot$=-separator]:bg-foreground/5 **:data-[slot$=-trigger]:focus:bg-foreground/10 **:data-[slot$=-trigger]:aria-expanded:bg-foreground/10! **:data-[variant=destructive]:focus:bg-foreground/10! **:data-[variant=destructive]:text-accent-foreground! **:data-[variant=destructive]:**:text-accent-foreground!", className )}
         {...props}
       />

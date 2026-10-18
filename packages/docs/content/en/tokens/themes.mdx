@@ -1,0 +1,43 @@
+---
+id: tokens/themes
+title: Themes
+description: Use ExUI's light, dark, and pitch-black Token layers with one root theme driver.
+---
+
+The Token stylesheet uses `:root` for light, `.dark` for dark, and `.pitch-black` for pitch black. Pitch black is a CSS layer, not a `ThemeProvider` value. An app offering all three palettes should remove the old `light`, `dark`, and `pitch-black` root classes before applying the new selection; pitch black uses both `dark` and `pitch-black`. For a light/dark/system React host, `ThemeProvider` and `useTheme` are available, but this provider reads browser storage during initialization and must mount in the browser.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Theme host
+
+`ThemeProvider` stores `dark`, `light` or `system` under `storageKey` (default `theme`) and updates the document root. Its initializer reads `localStorage`, so mount it only after browser hydration; a server render must not invoke it. `useTheme` must run beneath the provider. Pitch Black is a separate Token CSS class, not a provider theme; import the component stylesheet before using it.
+
+```tsx verify
+import * as React from "react"
+import { ThemeProvider, useTheme } from "@exre/exui"
+
+function ThemeButton() {
+  const { theme, setTheme } = useTheme()
+  return <button type="button" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>Theme: {theme}</button>
+}
+export function ClientTheme() {
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+  return mounted ? <ThemeProvider defaultTheme="system"><ThemeButton /></ThemeProvider> : null
+}
+```
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button, ThemeProvider } from "@exre/exui"
+
+export function BrowserThemeDemo() {
+  return <ThemeProvider defaultTheme="light"><Button type="button">Action</Button></ThemeProvider>
+}
+```

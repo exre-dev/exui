@@ -1,0 +1,22 @@
+---
+id: components/slider
+title: Slider
+description: Chooses a value along a continuous range.
+exampleFamily: slider
+---
+
+Slider: Chooses a value along a continuous range.
+
+## Basic usage
+
+Set the allowed range and step, and expose the current value in an accessible label.
+
+### Current example source excerpt
+
+```tsx source="c-slider-1"
+import { Slider } from "@exre/exui"
+
+<Slider defaultValue={[50]} max={100} step={1} />
+```
+
+[View complete source](../../../../examples/c-slider-1/)

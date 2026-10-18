@@ -1,0 +1,55 @@
+---
+id: components/tooltip
+title: Tooltip
+description: Provides a short label or explanation for a control.
+exampleFamily: tooltip
+---
+
+Tooltip: Provides a short label or explanation for a control.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `TooltipContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { TooltipContent } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof TooltipContent>) {
+  return <TooltipContent {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Keep the tooltip brief and ensure an icon-only trigger has its own accessible name.
+
+### Current example source excerpt
+
+```tsx source="c-tooltip-1"
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@exre/exui"
+
+<Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" className="w-fit">
+              {<ExampleText>Show Tooltip </ExampleText>}</Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-sm">{<ExampleText>Add to library</ExampleText>}</p>
+          </TooltipContent>
+        </Tooltip>
+```
+
+[View complete source](../../../../examples/c-tooltip-1/)

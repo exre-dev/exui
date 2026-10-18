@@ -1,0 +1,18 @@
+---
+id: getting-started/styles
+title: 样式与字体
+description: 按场景选择完整组件样式表或仅包含 Token 的样式表。
+---
+
+React 消费者只需导入一次 `@exre/exui/style.css`，其中已有 Token 变量、字体、组件样式与玻璃材质类；同一路径不用重复导入 Token 样式。非 React 消费者可以导入 `@exre/exui/tokens/style.css`，并按需添加 `tokens/font.css`。由应用打包器解析公开 CSS 入口。
+
+## 基本用法
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Badge } from "@exre/exui"
+
+export function StyledStatus() {
+  return <Badge>已就绪</Badge>
+}
+```

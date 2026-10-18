@@ -1,0 +1,40 @@
+.components-overview { display: grid; gap: 3rem; }
+.overview-group-heading { display: flex; align-items: center; gap: .625rem; margin-bottom: 1rem; }
+.overview-group-heading h2 { margin: 0; font-size: .875rem; font-weight: 600; }
+.overview-group-heading > span { color: var(--muted-foreground); font-size: .75rem; font-variant-numeric: tabular-nums; }
+.overview-group-heading + p { margin: -.5rem 0 1rem; color: var(--muted-foreground); font-size: .875rem; line-height: 1.5; }
+.overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 1rem; }
+.overview-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 2.6);
+  background: var(--card);
+  color: var(--card-foreground);
+  contain: layout style;
+}
+.overview-card:hover { border-color: color-mix(in oklab, var(--foreground) 30%, var(--border)); }
+.overview-card:focus-within { outline: 2px solid var(--ring); outline-offset: 3px; }
+.overview-card-preview { position: relative; height: 13.5rem; overflow: hidden; background: color-mix(in oklab, var(--muted) 35%, var(--card)); }
+.overview-card-preview, .overview-card-preview * { pointer-events: none; }
+.overview-card-preview *, .overview-card-preview *::before, .overview-card-preview *::after { animation: none !important; transition: none !important; }
+.overview-preview-viewport { position: absolute; inset: 0; }
+.overview-preview-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18rem;
+  transform: translate(-50%, -50%) scale(var(--overview-scale, .6));
+  transform-origin: center;
+}
+.overview-preview-stage-wide { width: 42rem; }
+.overview-preview-stage > div { display: flex; align-items: center; justify-content: center; min-width: 0; }
+.overview-preview-stage > div > :is(form, [data-slot="ex-item"]) { width: 100%; }
+.overview-preview-skeleton { position: absolute; width: 48%; height: 2.5rem; top: calc(50% - 1.25rem); left: 26%; }
+.overview-card-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.125rem; border-top: 1px solid var(--border); color: inherit; font-size: .8125rem; font-weight: 550; text-decoration: none; outline: none; }
+/* Keep the preview inert and the entire card clickable without nesting controls in a link. */
+.overview-card-link::after { content: ""; position: absolute; inset: 0; }
+.overview-card-link > svg { width: .875rem; height: .875rem; color: var(--muted-foreground); }
+.overview-card-count { margin-inline-start: auto; white-space: nowrap; color: var(--muted-foreground); font-size: .6875rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+.overview-glass-backdrop { width: 100%; padding: 1.5rem; border-radius: var(--density-control-radius); background: radial-gradient(ellipse at 10% 10%, var(--chart-1), transparent 75%), radial-gradient(ellipse at 90% 80%, var(--chart-2), transparent 75%), var(--muted); }

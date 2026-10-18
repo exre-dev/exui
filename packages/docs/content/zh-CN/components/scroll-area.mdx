@@ -1,0 +1,45 @@
+---
+id: components/scroll-area
+title: Scroll Area
+description: 为溢出内容提供带样式的滚动区域。
+exampleFamily: scroll-area
+---
+
+Scroll Area：为溢出内容提供带样式的滚动区域。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+先为滚动区域设置边界尺寸，再放入可能溢出的内容。
+
+### 当前示例源码摘录
+
+```tsx source="c-scroll-area-1"
+import { ScrollArea } from "@exre/exui"
+
+<ScrollArea className="rounded-2xl h-72 w-48 border">
+      <div className="p-4">
+        <h4 className="mb-4 text-sm leading-none font-medium">{<ExampleText>Releases</ExampleText>}</h4>
+        <div className="flex flex-col divide-y">
+          {<ExampleText>{tags.map((tag) => (
+            <div key={tag} className="py-2 text-sm">
+              {<ExampleText>{tag}</ExampleText>}
+            </div>
+          ))}</ExampleText>}
+        </div>
+      </div>
+    </ScrollArea>
+```
+
+[查看完整源码](../../../../examples/c-scroll-area-1/)

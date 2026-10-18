@@ -1,0 +1,45 @@
+---
+id: components/scroll-area
+title: Scroll Area
+description: Provides a styled region for overflowing content.
+exampleFamily: scroll-area
+---
+
+Scroll Area: Provides a styled region for overflowing content.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Set a bounded height or width before placing overflowing content inside the scroll area.
+
+### Current example source excerpt
+
+```tsx source="c-scroll-area-1"
+import { ScrollArea } from "@exre/exui"
+
+<ScrollArea className="rounded-2xl h-72 w-48 border">
+      <div className="p-4">
+        <h4 className="mb-4 text-sm leading-none font-medium">{<ExampleText>Releases</ExampleText>}</h4>
+        <div className="flex flex-col divide-y">
+          {<ExampleText>{tags.map((tag) => (
+            <div key={tag} className="py-2 text-sm">
+              {<ExampleText>{tag}</ExampleText>}
+            </div>
+          ))}</ExampleText>}
+        </div>
+      </div>
+    </ScrollArea>
+```
+
+[View complete source](../../../../examples/c-scroll-area-1/)

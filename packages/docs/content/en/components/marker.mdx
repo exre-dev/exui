@@ -1,0 +1,24 @@
+---
+id: components/marker
+title: Marker
+description: Highlights a location or notable item.
+exampleFamily: marker
+---
+
+Marker: Highlights a location or notable item.
+
+## Basic usage
+
+Attach a marker to the position or item it identifies, with descriptive text nearby.
+
+### Current example source excerpt
+
+```tsx source="c-marker-1"
+import { Marker, MarkerContent } from "@exre/exui"
+
+<Marker>
+        <MarkerContent>{<ExampleText>Read 14 files under src/billing</ExampleText>}</MarkerContent>
+      </Marker>
+```
+
+[View complete source](../../../../examples/c-marker-1/)

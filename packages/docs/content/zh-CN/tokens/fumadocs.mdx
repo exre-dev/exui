@@ -1,0 +1,15 @@
+---
+id: tokens/fumadocs
+title: Fumadocs 配色
+description: 在 Fumadocs UI 文档站中应用 ExUI 发布的颜色契约。
+---
+
+在消费站点安装 Fumadocs UI，然后导入一次 `@exre/exui/docs/theme.css`。该样式先加载 ExUI Token，再依次加载 Fumadocs 的 shadcn 颜色表与 preset。它只提供颜色：布局、圆角和动效仍由 Fumadocs 管理；不会新增 `@exre/exui/docs` JavaScript 入口，也不包装 Fumadocs 组件。每页使用一个根主题控制器。
+
+## 基本用法
+
+```ts verify
+import "@exre/exui/docs/theme.css"
+
+export const docsThemeEntry = "@exre/exui/docs/theme.css"
+```

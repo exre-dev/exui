@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { GLASS_REFERENCE_VARIABLE } from "@/lib/glass";
 import { supportsGlassRefraction } from "@/lib/glass-capabilities";
+import { useRootRem } from "@/hooks/use-root-rem";
 
 /**
  * Stable id of the shared refraction filter definition.
@@ -100,7 +101,10 @@ function attachDocumentReference(root: HTMLElement): () => void {
  * material works without it, just without refraction.
  */
 function GlassSeed(): React.ReactElement {
+  const seedRef = React.useRef<SVGSVGElement>(null);
+  const rootRem = useRootRem(seedRef);
   const attachSeed = React.useCallback((node: SVGSVGElement | null) => {
+    seedRef.current = node;
     if (node === null) {
       return;
     }
@@ -111,7 +115,11 @@ function GlassSeed(): React.ReactElement {
     }
 
     const root = node.ownerDocument.documentElement;
-    return attachDocumentReference(root);
+    const detach = attachDocumentReference(root);
+    return () => {
+      seedRef.current = null;
+      detach();
+    };
   }, []);
 
   return (
@@ -148,11 +156,11 @@ function GlassSeed(): React.ReactElement {
             seed="92"
             result="noise"
           />
-          <feGaussianBlur in="noise" stdDeviation="2" result="smooth-noise" />
+          <feGaussianBlur in="noise" stdDeviation={rootRem * 0.125} result="smooth-noise" />
           <feDisplacementMap
             in="SourceGraphic"
             in2="smooth-noise"
-            scale="12"
+            scale={rootRem * 0.75}
             xChannelSelector="R"
             yChannelSelector="G"
             result="distorted"

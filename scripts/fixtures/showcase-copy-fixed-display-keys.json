@@ -1,0 +1,162 @@
+[
+  {
+    "file": "accordion/c-accordion-6.tsx",
+    "keys": [
+      "New"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "accordion/c-accordion-7.tsx",
+    "keys": [
+      "New"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "attachment/c-attachment-3.tsx",
+    "keys": [
+      "Purple and orange gradient artwork",
+      "Blue and violet mesh render",
+      "Soft rainbow spectrum wash",
+      "Magenta and violet wave pattern",
+      "Colourful ink dispersing in water"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "button-group/c-button-group-41.tsx",
+    "keys": [
+      "Fast",
+      "Pro"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "button-group/c-button-group-44.tsx",
+    "keys": [
+      "Lead",
+      "Qualified",
+      "Proposal",
+      "Negotiation",
+      "Closed Won"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "button-group/c-button-group-57.tsx",
+    "keys": [
+      "2k credits",
+      "10k credits",
+      "Unlimited"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "card/c-card-14.tsx",
+    "keys": [
+      "Production",
+      "Healthy"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "card/c-card-17.tsx",
+    "keys": [
+      "View Orders"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "card/c-card-18.tsx",
+    "keys": [
+      "View docs"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "cascader/c-cascader-15.tsx",
+    "keys": [
+      "icons",
+      "templates",
+      "blocks",
+      "latest",
+      "stable"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "hover-card/c-hover-card-8.tsx",
+    "keys": [
+      "Latest",
+      "Patch",
+      "Minor",
+      "Major"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "input-group/c-input-group-32.tsx",
+    "keys": [
+      "Admin",
+      "Member",
+      "Viewer"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "input-group/c-input-group-37.tsx",
+    "keys": [
+      "Pending",
+      "Shipped",
+      "Cancelled"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "input-group/c-input-group-38.tsx",
+    "keys": [
+      "Global",
+      "United States",
+      "Europe",
+      "APAC"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "input-group/c-input-group-39.tsx",
+    "keys": [
+      "Active",
+      "Lead",
+      "Prospect"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "input-group/c-input-group-40.tsx",
+    "keys": [
+      "Private"
+    ],
+    "evidence": "Independent source data-to-display/ARIA review; fixed author UI enum/description. Canonical values remain unchanged."
+  },
+  {
+    "file": "card/c-card-15.tsx",
+    "keys": ["Revenue"],
+    "evidence": "Author-owned title identifier flows to visible card title."
+  },
+  {
+    "file": "input-group/c-input-group-29.tsx",
+    "keys": ["Category"],
+    "evidence": "Initial fixed category state flows to the selection button; canonical state remains unchanged."
+  },
+  {
+    "file": "cascader/c-cascader-9.tsx",
+    "keys": ["(none yet)"],
+    "evidence": "Initial fixed log state flows to visible status; canonical callback reason/path values remain unchanged."
+  },
+  {
+    "file": "file-type/c-file-type-9.tsx",
+    "keys": ["Nothing to resolve yet, so it shows a blank page.", "No extension or known MIME type, so it shows a blank page.", "Unknown extension, so it shows a neutral page with its label."],
+    "evidence": "describe helper fixed branches flow to visible role=status; user filename and MIME parsing stay raw."
+  }
+]

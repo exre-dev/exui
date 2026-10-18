@@ -135,6 +135,15 @@ async function run() {
   }
 
   const sections = []
+  const reuiManifest = await readJson(path.join(packageRoot, "upstream", "reui", "manifest.json"))
+  const reuiLicense = await readFile(path.join(packageRoot, "upstream", "reui", "LICENSE.md"), "utf8")
+  sections.push(renderSection({
+    name: "ReUI registry source",
+    version: reuiManifest.commit,
+    origin: "adapted source in @exre/exui",
+    license: reuiManifest.license,
+    licenseText: reuiLicense,
+  }))
   for (const key of [...packages.keys()].sort((left, right) => left.localeCompare(right, "en"))) {
     const record = packages.get(key)
     const directory = await resolvePackageDirectory(record.name, record.version, record.directory)

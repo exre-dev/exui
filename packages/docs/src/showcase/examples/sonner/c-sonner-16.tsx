@@ -1,0 +1,51 @@
+
+import { ExampleRuntimeProvider, ExampleText, useExampleRuntime } from "../_shared/example-runtime"
+import dictionary from "./copy.generated"
+import { AlertTriangleIcon } from "lucide-react"
+
+
+
+import { Button } from "@exre/exui"
+
+
+  function OriginalPattern() {
+  const { toast } = useExampleRuntime()
+
+  const showToast = () => {
+    toast.custom(
+      () => (
+        <div className="bg-invert text-invert-foreground rounded-[var(--border-radius)] flex w-full items-start gap-3 border border-transparent p-4 shadow-lg">
+          <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber-500 text-white">
+            <AlertTriangleIcon className="size-3.5" />
+          </div>
+          <div className="flex flex-1 flex-col gap-1">
+            <p className="text-sm font-semibold">{<ExampleText>Session Expiring</ExampleText>}</p>
+            <p className="text-invert-foreground/70 text-sm">
+              {<ExampleText>Your session will expire in 5 minutes due to inactivity. </ExampleText>}</p>
+            <div className="mt-2">
+              <Button
+                size="xs"
+                className="border-amber-700 bg-amber-500 text-white hover:border-amber-800 hover:bg-amber-600"
+                onClick={() => {
+                  toast.dismiss()
+                  toast.success("Session extended")
+                }}
+              >
+                {<ExampleText>Extend Session </ExampleText>}</Button>
+            </div>
+          </div>
+        </div>
+      ),
+      { duration: 10000 }
+    )
+  }
+
+  return (
+    <div className="flex items-center justify-center">
+      <Button onClick={showToast} variant="outline" className="w-fit">
+        {<ExampleText>Invert Warning Toast </ExampleText>}</Button>
+    </div>
+  )
+}
+
+export default function Pattern() { return <ExampleRuntimeProvider dictionary={dictionary}><OriginalPattern /></ExampleRuntimeProvider> }

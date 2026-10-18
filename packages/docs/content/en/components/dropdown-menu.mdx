@@ -1,0 +1,63 @@
+---
+id: components/dropdown-menu
+title: Dropdown Menu
+description: Puts secondary actions behind a trigger.
+exampleFamily: dropdown-menu
+---
+
+Dropdown Menu: Puts secondary actions behind a trigger.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `DropdownMenuContent`, `DropdownMenuSubContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { DropdownMenuContent } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof DropdownMenuContent>) {
+  return <DropdownMenuContent {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Use a trigger for less frequent actions and put individual commands in menu items.
+
+### Current example source excerpt
+
+```tsx source="c-dropdown-menu-1"
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuSeparator, DropdownMenuTrigger } from "@exre/exui"
+
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline" />
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuGroup />
+    <DropdownMenuSeparator />
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+[View complete source](../../../../examples/c-dropdown-menu-1/)

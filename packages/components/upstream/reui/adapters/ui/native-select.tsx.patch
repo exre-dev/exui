@@ -1,0 +1,64 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/native-select.tsx b/packages/components/src/components/ui/native-select.tsx
+index 273a3bc..5637b71 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/native-select.tsx
++++ b/packages/components/src/components/ui/native-select.tsx
+@@ -1,7 +1,8 @@
+ import * as React from "react"
+-import { cn } from "cn"
+ 
+-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
++import { cn } from "@/lib/utils"
++import { migrateGlass, type GlassSurfaceProps } from "@/lib/glass"
++import { ChevronDownIcon } from "lucide-react"
+ 
+ type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
+   size?: "sm" | "default"
+@@ -10,13 +11,19 @@ type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
+ function NativeSelect({
+   className,
+   size = "default",
++  glass,
+   ...props
+-}: NativeSelectProps) {
++}: NativeSelectProps & GlassSurfaceProps) {
++  // The caller's classes stay on the wrapper: they drive its layout, not the
++  // material. Only the marker moves to the `<select>` that paints the surface.
++  const { className: wrapperClassName, glassClassName: glassMarker } =
++    migrateGlass(glass, className)
++
+   return (
+     <div
+       className={cn(
+-        "cn-native-select-wrapper group/native-select relative w-fit has-[select:disabled]:opacity-50",
+-        className
++        "group/native-select relative w-fit has-[select:disabled]:opacity-50",
++        wrapperClassName
+       )}
+       data-slot="native-select-wrapper"
+       data-size={size}
+@@ -24,19 +31,14 @@ function NativeSelect({
+       <select
+         data-slot="native-select"
+         data-size={size}
+-        className="cn-native-select outline-none disabled:pointer-events-none disabled:cursor-not-allowed"
++        data-exui-glass-interactive=""
++        className={cn(
++          "h-[var(--density-control-height)] w-full min-w-0 appearance-none rounded-3xl border border-transparent bg-input/50 py-1 pr-8 pl-[var(--density-control-padding-inline)] text-sm transition-[color,box-shadow,background-color] outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-[size=sm]:h-8 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
++          glassMarker
++        )}
+         {...props}
+       />
+-      <IconPlaceholder
+-        lucide="ChevronDownIcon"
+-        tabler="IconSelector"
+-        hugeicons="UnfoldMoreIcon"
+-        phosphor="CaretDownIcon"
+-        remixicon="RiArrowDownSLine"
+-        className="cn-native-select-icon pointer-events-none absolute select-none"
+-        aria-hidden="true"
+-        data-slot="native-select-icon"
+-      />
++      <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 text-muted-foreground select-none" aria-hidden="true" data-slot="native-select-icon" />
+     </div>
+   )
+ }

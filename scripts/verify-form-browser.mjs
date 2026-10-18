@@ -3,7 +3,7 @@ import { createRequire } from "node:module"
 import { join } from "node:path"
 import { pathToFileURL } from "node:url"
 
-const requireFromShowcase = createRequire(new URL("../packages/showcase/package.json", import.meta.url))
+const requireFromShowcase = createRequire(new URL("../packages/docs/package.json", import.meta.url))
 
 async function verifyFormBrowser(consumerRoot) {
   const { chromium } = requireFromShowcase("playwright")

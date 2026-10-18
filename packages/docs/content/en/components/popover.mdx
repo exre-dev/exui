@@ -1,0 +1,62 @@
+---
+id: components/popover
+title: Popover
+description: Anchors short interactive content to a trigger.
+exampleFamily: popover
+---
+
+Popover: Anchors short interactive content to a trigger.
+
+{/* exui-capabilities:begin:docs */}
+## ExUI capabilities
+
+**ExUI addition**
+
+### Shared Glass material
+
+`glass` and the exact `ex-glass` class opt a surface into ExUI's material; each surface opts in independently, including a Select popup. Import `@exre/exui/style.css`.
+
+Glass surfaces in this family: `PopoverContent`.
+
+Keep this surface in its usual family composition; the wrapper opts that surface into Glass.
+
+```tsx verify
+import type { ComponentProps } from "react"
+import { PopoverContent } from "@exre/exui"
+
+export function GlassExample(props: ComponentProps<typeof PopoverContent>) {
+  return <PopoverContent {...props} glass />
+}
+```
+
+Read [Shared Glass material](../exui/glass.mdx) for complete usage guidance.
+
+**ExUI addition**
+
+### Density and root-font sizing
+
+The compact density scope changes the default geometry of `Button`, `Input`, `Textarea`, `Select`, `NativeSelect` and `InputGroup`. Explicit sizes and complex widget layouts do not all follow that compact scope.
+
+Read [Density and root-font sizing](../tokens/density.mdx) for complete usage guidance.
+{/* exui-capabilities:end:docs */}
+
+## Basic usage
+
+Anchor a short form or detail panel to its trigger rather than replacing the page.
+
+### Current example source excerpt
+
+```tsx source="c-popover-1"
+import { Button, Popover, PopoverContent, PopoverHeader, PopoverTrigger } from "@exre/exui"
+
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="outline" />
+  </PopoverTrigger>
+  <PopoverContent align="start">
+    <PopoverHeader />
+  </PopoverContent>
+</Popover>
+```
+
+[View complete source](../../../../examples/c-popover-1/)

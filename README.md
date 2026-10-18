@@ -4,7 +4,7 @@ This repository contains the Exre visual foundation as three pnpm workspaces:
 
 - `packages/tokens`: private, framework-neutral token sources. The generated artifacts ship through the public package's `@exre/exui/tokens` subpath.
 - `packages/components`: publishable React 19 component library `@exre/exui`. The single public package owns the component root, `@exre/exui/style.css`, and the framework-neutral tokens subpath.
-- `packages/showcase`: private Vite application that consumes only the public `@exre/exui` exports.
+- `packages/docs`: private React Router/Fumadocs documentation site. Its interactive examples consume the public `@exre/exui` exports; the former Showcase remains under `src/showcase` as an internal example and test fixture.
 
 The repository root is a private orchestration layer and is never published.
 
@@ -14,39 +14,44 @@ Use Node.js 24 and pnpm 11.9.0 (the version declared in `package.json`). Run com
 
 ```bash
 pnpm install
-pnpm dev
+pnpm upstream:restore
 pnpm tokens:check
-pnpm typecheck
 pnpm lint
-pnpm build
-pnpm --filter @exre/exui-showcase exec playwright install chromium
-pnpm test:visual
 pnpm verify:pack
 ```
 
-Run shadcn from `packages/components` so generated source uses that package's `components.json` and `@/*` alias.
+Component builds restore and verify their pinned source cache automatically. A complete cache works offline. Run `pnpm upstream:check` after changing component adapters or public exports; see [Testing](TESTING.md#source-maintenance-gates) for source locks, offline restoration, and update procedures.
 
-`pnpm dev` builds tokens and components before starting the Showcase. In a second terminal, run `pnpm watch` while editing library source. It performs an initial library build, watches the token and component source and script directories, and rebuilds components after token changes. It does not start the Showcase or watch package manifests and build configuration; restart or rebuild manually after those changes. The Showcase consumes built public package entries.
+`pnpm watch` builds tokens and components, then watches library source. It does not start the docs site or watch package manifests and build configuration; restart or rebuild manually after those changes. The docs site consumes built public package entries.
 
-The Showcase is a component catalog with name/use-case search, category navigation, and URL hash links. Use `Quality recipes` for the dedicated recipe previews; use the component categories for interactive examples. It displays English or Simplified Chinese based on the browser language, and its language switcher saves your choice for later visits. The Form controls and Feedback categories include interactive `ExForm` and `ExMessage` previews.
+Run `pnpm dev` for the local docs site. `pnpm build` writes a static site to `packages/docs/build/client`. Set `EXUI_DOCS_BASE=/exui/` for a subpath build; the same base must be supplied when verifying and hosting that build. Host the complete directory, including `.data/`, search indexes, assets, and example source files, with no SPA fallback or Node service. The source tree is in `packages/docs/content/` (English and Simplified Chinese); `pnpm docs:content:check` validates coverage and links, and the build generates its manifest. Each example share route has readable HTML, `source.md`, and `source.json` from one source export. See [Testing](TESTING.md) for separate content, static-site, source-export, browser, and packed-consumer checks.
 
 See [Testing](TESTING.md) for the full CI checks, visual-test prerequisites, and skill example validation. See [Contributing](CONTRIBUTING.md) for Changesets and DCO requirements.
+
+## Docs hosting
+
+The production target is [ExUI documentation](https://exre-dev.github.io/exui/). After the one-time GitHub Pages setup, each successful `main` push CI saves its verified `/exui/` static output; the independent `Docs Pages` workflow deploys that exact artifact when its commit is still current. Pull requests run the existing checks without publishing a preview. Docs deployment and npm Release consume CI independently.
+
+An administrator must select **GitHub Actions** in **Settings → Pages → Build and deployment → Source**, allow `main` in the `github-pages` environment without a required reviewer for every deployment, and then rerun the current `main` CI with **Re-run all jobs**. The deployment summary reports the URL returned by Pages. Workflow files and local checks alone do not establish that this target is enabled or that the hosted site has passed acceptance.
+
+Artifacts are retained for seven days. If a source artifact is missing or expired, rerun the current `main` CI in full. For a failed Pages run whose source is still current and available, use **Re-run all jobs** on `Docs Pages`; partial reruns are not the recovery interface. Old commits are skipped. To restore older content, revert it through a new `main` commit and CI. See [Testing](TESTING.md#github-pages-delivery) for configuration checks and hosted acceptance.
 
 ## Package usage
 
 React consumers should follow [`packages/components/README.md`](packages/components/README.md). Framework-neutral consumers can import `@exre/exui/tokens`, `@exre/exui/tokens/style.css`, and `@exre/exui/tokens/font.css` without installing React. The internal `@exre/exui-tokens` workspace is never published.
 
-Changesets version the single public package. The private Showcase and the private tokens workspace must never be selected for a release.
+Changesets version the single public package. The private docs site and the private tokens workspace must never be selected for a release.
 
 ## Documentation
 
 - [React package usage](packages/components/README.md): installation, themes, forms, managed notifications, Glass surfaces, sizing, and bundled chart APIs.
 - [Internal token workspace](packages/tokens/README.md): token builds, formats, and length policy.
-- [ExUI usage skill](skills/exui-usage/SKILL.md): component references, theme guidance, and consumer examples.
-- [Form reference](skills/exui-usage/references/components/Form.md): configured and composed forms, validation, and lifecycle.
-- [Notification reference](skills/exui-usage/references/components/Sonner.md): `Toaster`, `toast`, and managed `ExMessage` calls.
-- [Token customization](skills/exui-usage/references/token-customization.md): CSS overrides, theme scope, and foundation references.
-- [Fumadocs theme](skills/exui-usage/references/docs-theme.md): the optional `@exre/exui/docs/theme.css` stylesheet and its consumer prerequisites.
+- [ExUI skill](skills/exui/SKILL.md): component selection, composition, local references, and complete examples.
+- [Docs content](packages/docs/content/en/getting-started/quick-start.mdx): the maintained site source; `packages/docs/content/zh-CN/` contains its Chinese counterpart.
+- [Form reference](skills/exui/references/exui/form.md): configured and composed forms, validation, and lifecycle.
+- [Notification reference](skills/exui/references/exui/notifications.md): `Toaster`, `toast`, and managed `ExMessage` calls.
+- [Token customization](skills/exui/references/exui/token-customization.md): CSS overrides, theme scope, and foundation references.
+- [Fumadocs theme](skills/exui/references/exui/docs-theme.md): the optional `@exre/exui/docs/theme.css` stylesheet and its consumer prerequisites.
 
 `.docset.json` records the committed source snapshot reviewed for these documents and the additional contribution/testing guides. It advances only after the complete tracked scope has been reviewed and its documentation checks pass.
 
@@ -56,4 +61,4 @@ ExUI's scalable dimensions use `rem` against a 16px root font size. When the app
 
 For example, React `style={{ padding: "1.5rem", borderWidth: "1px" }}` scales the padding while keeping the border width fixed; `padding: 24` would remain 24px.
 
-Copy [EXUI_SCALING_RULES.md](skills/exui-usage/guides/EXUI_SCALING_RULES.md) into a third-party project's AI instructions or attach it to an AI request. It is a concise standalone English rule document covering scalable lengths, allowed pixel exceptions, and an application-level scale reference based on viewport height.
+Follow the [root-font scaling and density guide](skills/exui/references/exui/scaling.md) when building custom content. It covers scalable lengths, fixed effects, density, and validation at the application's root font size.

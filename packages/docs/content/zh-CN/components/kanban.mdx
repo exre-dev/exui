@@ -1,0 +1,27 @@
+---
+id: components/kanban
+title: Kanban
+description: 将工作项目组织为可移动列。
+exampleFamily: kanban
+---
+
+Kanban：将工作项目组织为可移动列。
+
+## 基本用法
+
+为列和卡片建立稳定 id，在宿主状态中保存移动结果。
+
+六组示例（包括使用 Frame 的示例）统一使用 1rem 的内层任务圆角和 1.5rem 的外层列圆角；根字号为 16px 时分别为 16px 和 24px。使用 Card 的示例通过 `size="sm"` 将内边距设为 1rem。拖动浮层分别匹配当前任务或整列的圆角。
+
+### 当前示例源码摘录
+
+```tsx source="c-kanban-1"
+import { Kanban, KanbanBoard, KanbanOverlay } from "@exre/exui"
+
+<Kanban value={columns} onValueChange={setColumns} getItemValue={(item) => item.id}>
+  <KanbanBoard />
+  <KanbanOverlay />
+</Kanban>
+```
+
+[查看完整源码](../../../../examples/c-kanban-1/)

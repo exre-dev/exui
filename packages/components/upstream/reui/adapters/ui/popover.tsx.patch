@@ -1,0 +1,70 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/popover.tsx b/packages/components/src/components/ui/popover.tsx
+index d8e5395..0611946 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/popover.tsx
++++ b/packages/components/src/components/ui/popover.tsx
+@@ -1,9 +1,10 @@
+-"use client"
+-
++import { useRootRem } from "@/hooks/use-root-rem"
+ import * as React from "react"
+-import { cn } from "cn"
+ import { Popover as PopoverPrimitive } from "radix-ui"
+ 
++import { cn } from "@/lib/utils"
++import { glassClassName, type GlassSurfaceProps } from "@/lib/glass"
++
+ function Popover({
+   ...props
+ }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
+@@ -19,17 +20,20 @@ function PopoverTrigger({
+ function PopoverContent({
+   className,
+   align = "center",
+-  sideOffset = 4,
++  sideOffset,
++  glass,
+   ...props
+-}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
++}: React.ComponentProps<typeof PopoverPrimitive.Content> & GlassSurfaceProps) {
++  const rootRem = useRootRem()
+   return (
+     <PopoverPrimitive.Portal>
+       <PopoverPrimitive.Content
+         data-slot="popover-content"
+         align={align}
+-        sideOffset={sideOffset}
++        sideOffset={sideOffset ?? rootRem * 0.25}
+         className={cn(
+-          "cn-popover-content z-50 w-72 origin-(--radix-popover-content-transform-origin) outline-hidden",
++          "z-50 flex w-72 origin-(--radix-popover-content-transform-origin) flex-col gap-4 rounded-3xl bg-popover p-4 text-sm text-popover-foreground shadow-lg ring-1 ring-foreground/5 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
++          glassClassName(glass),
+           className
+         )}
+         {...props}
+@@ -48,7 +52,7 @@ function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
+   return (
+     <div
+       data-slot="popover-header"
+-      className={cn("cn-popover-header", className)}
++      className={cn("flex flex-col gap-1 text-sm", className)}
+       {...props}
+     />
+   )
+@@ -58,7 +62,7 @@ function PopoverTitle({ className, ...props }: React.ComponentProps<"h2">) {
+   return (
+     <div
+       data-slot="popover-title"
+-      className={cn("cn-popover-title", className)}
++      className={cn("text-base font-medium", className)}
+       {...props}
+     />
+   )
+@@ -71,7 +75,7 @@ function PopoverDescription({
+   return (
+     <p
+       data-slot="popover-description"
+-      className={cn("cn-popover-description", className)}
++      className={cn("text-muted-foreground", className)}
+       {...props}
+     />
+   )

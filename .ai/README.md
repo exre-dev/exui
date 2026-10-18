@@ -1,10 +1,10 @@
 # ExUI 仓库知识库
 
-最后更新：2026-10-05
+最后更新：2026-10-16
 
 本目录记录 ExUI 仓库中**不能直接从源码读出来**的知识：系统边界与依赖方向、已被接受的技术决策及其理由、以及只有在真实运行或 CI 中才会暴露的约束。已落地行为以源码和运行证据为准；已批准但尚未实施的设计只放在标明“待实现”的决策记录中，不能当作当前行为。这些结论来自仓库证据或已批准设计，不包含未被接受的推测。
 
-普通的使用说明、安装步骤和入门指引不在这里：React 消费者看 `packages/components/README.md`，框架中立消费者看 [`skills/exui-usage/SKILL.md`](../skills/exui-usage/SKILL.md)，测试与提交流程看 `TESTING.md`、`CONTRIBUTING.md`。
+普通的使用说明、安装步骤和入门指引不在这里：React 消费者看 `packages/components/README.md`；唯一维护的消费 skill 是 [`skills/exui/SKILL.md`](../skills/exui/SKILL.md)，涵盖组件组合、Form、Glass、Shadow 与 Tokens。其组件文档使用 skill 内的本地链接，公开符号与 Token 索引由仓库级 `scripts/exui-skill/` 生成，示例校验脚本也位于该目录。经核查的 ExUI 扩展与适配说明通过能力清单同步至 docs 和 skill，其维护边界见 [`architectures/docs/site.md`](architectures/docs/site.md#exui-公开差异的文档边界)。维护命令见 [`TESTING.md`](../TESTING.md#exui-skill-reference-maintenance)。测试与提交流程看 `TESTING.md`、`CONTRIBUTING.md`。
 
 ## 模块划分
 
@@ -13,8 +13,9 @@
 | 模块 | 覆盖范围 |
 | --- | --- |
 | `tokens` | `packages/tokens`：私有工作区 `@exre/exui-tokens`，框架中立的 Token 源、生成器与校验 |
-| `components` | `packages/components`：唯一公开发布包 `@exre/exui`，React 19、shadcn/ui 源码、公开入口与子路径 |
-| `showcase` | `packages/showcase`：私有 Vite 应用 `@exre/exui-showcase`，只通过公开入口消费组件库，承载视觉测试 |
+| `components` | `packages/components`：唯一公开发布包 `@exre/exui`，React 19、固定 ReUI 源及 ExUI 适配、公开入口与子路径 |
+| `docs` | `packages/docs`：私有 React Router/Fumadocs 静态文档站，维护双语内容、静态分享和新站浏览器验证 |
+| `showcase` | `packages/docs/src/showcase`：原 Showcase 示例与浏览器测试夹具；相关决策与复审记录保留原模块名 |
 | `release` | 仓库级交付：`scripts/`、`scripts/release-bootstrap/`、`.github/workflows/`、`.release-bootstrap.yaml`、`.changeset/` |
 
 跨模块的事实写在本文件所在的 `architectures/overview.md`，不在各模块中重复。
@@ -50,14 +51,46 @@
 
 ## 主要证据来源
 
-表单模块：当前结构见 [`architectures/components/forms.md`](architectures/components/forms.md)，异步任务与消费约束见 [`knowledge/components/forms-lifecycle.md`](knowledge/components/forms-lifecycle.md)；ExItem 展示边界的决策见 [[components/07-ex-item-presentation-boundary]]。消费 API 用法继续由 `skills/exui-usage/references/components/Form.md` 维护；本目录不复制完整签名。
+ButtonGroup 的内侧圆角和共享边框可能被应用样式层覆盖，文字段 slot 还影响 Select 隐藏控件旁的末段识别，见 [`knowledge/components/button-group-seams.md`](knowledge/components/button-group-seams.md)。
+
+当前 ReUI 来源、适配与公共入口见 [`architectures/components/public-surface.md`](architectures/components/public-surface.md)；已移除 `Modal` 的历史标题布局只见 [`knowledge/components/modal-header-layout.md`](knowledge/components/modal-header-layout.md)。
+
+Windows 检出换行与公开导出校验的约束见 [`knowledge/components/source-checkout-line-endings.md`](knowledge/components/source-checkout-line-endings.md)。
+
+当前 Dialog 的快捷组合、独立正文边界、跨样式层全屏几何和焦点归还约束见 [`knowledge/components/dialog-layout.md`](knowledge/components/dialog-layout.md)。
+
+Tabs 横向胶囊与竖向轨道的嵌套圆角、选中投影及焦点优先级见 [`knowledge/components/tabs-track-corners.md`](knowledge/components/tabs-track-corners.md)。
+
+表单模块：当前结构见 [`architectures/components/forms.md`](architectures/components/forms.md)，异步任务与消费约束见 [`knowledge/components/forms-lifecycle.md`](knowledge/components/forms-lifecycle.md)；ExItem 展示边界的决策见 [[components/07-ex-item-presentation-boundary]]。消费 API 用法继续由 `skills/exui/references/exui/form.md` 维护；本目录不复制完整签名。
 
 全局消息模块：宿主和状态边界见 [`architectures/components/ex-message.md`](architectures/components/ex-message.md)，订阅时序与句柄约束见 [`knowledge/components/ex-message-lifecycle.md`](knowledge/components/ex-message-lifecycle.md)，共享宿主的取舍见 [[components/06-single-ex-message-host]]。
 
+Sonner 自定义通知的绘制层与几何验证边界见 [`knowledge/components/sonner-custom-surfaces.md`](knowledge/components/sonner-custom-surfaces.md)。
+
 图表外部配置的 SSR 与 CSS 边界见 [`knowledge/components/chart-style-inputs.md`](knowledge/components/chart-style-inputs.md)；源码监听中生成 CSS 的循环风险见 [`knowledge/release/watch-rebuilds.md`](knowledge/release/watch-rebuilds.md)。
+
+Accordion 内容测量的循环依赖与裁切检查见 [`knowledge/components/accordion-content-measurement.md`](knowledge/components/accordion-content-measurement.md)。
+
+Scrollspy 示例的实例 ID 与导航锚点必须成对映射，首尾选中可能掩盖断开的关联，见 [`knowledge/showcase/scrollspy-example-anchors.md`](knowledge/showcase/scrollspy-example-anchors.md)。
+
+FieldLabel 的 checked 后代规则可能让单选标签意外出现局部灰底，绘制层与检查边界见 [`knowledge/components/field-label-selection-background.md`](knowledge/components/field-label-selection-background.md)。
+
+PhoneInput 的 Button/Input 尺寸配对、标准搜索输入与空状态的跨样式层显示约束见 [`knowledge/components/phone-input-surfaces.md`](knowledge/components/phone-input-surfaces.md)。
+
+EmojiPicker 隐藏搜索时的 combobox 注册、网格焦点与默认布局边界见 [`knowledge/components/emoji-picker-search-visibility.md`](knowledge/components/emoji-picker-search-visibility.md)。
+
+CardAction 的跨样式层网格定位可能使 Questionnaire 标题与说明并排挤压，原因与检查边界见 [`knowledge/components/card-action-grid-placement.md`](knowledge/components/card-action-grid-placement.md)。
+
+Card 内边距与区块 gap 的独立归属、边框子槽和首图例外的检查边界见 [`knowledge/components/card-spacing-ownership.md`](knowledge/components/card-spacing-ownership.md)。
+
+Questionnaire 的勾号与内圆点可能被应用层 `hidden` 覆盖，状态绘制与检查边界见 [`knowledge/components/questionnaire-choice-indicators.md`](knowledge/components/questionnaire-choice-indicators.md)。
+
+Questionnaire 操作按钮在桌面和移动端都随共享 Button 的尺寸与密度变化，额外最小高度的覆盖风险与验证边界见 [`knowledge/components/questionnaire-action-sizing.md`](knowledge/components/questionnaire-action-sizing.md)。
+
+Badge 实底前景色不能复用于浅底、描边标签，以及文档样式层对暗色配色的影响，见 [`knowledge/components/badge-color-contrast.md`](knowledge/components/badge-color-contrast.md)。
 
 - 工作区与构建：`package.json`、`pnpm-workspace.yaml`、`tsconfig.json`、各包的 `package.json` 与 `vite.config.ts`
 - 生成与校验：`packages/tokens/scripts/`（`generate-css.mjs`、`verify-cjs.mjs`、`validate-tokens.mjs`、`token-length-policy.mjs`、`color-contrast-policy.mjs`、`foundation-reference-policy.mjs`、`glass-policy.mjs`）、`scripts/package-contract.mjs`、`scripts/verify-packages.mjs`、`scripts/verify-react-browser.mjs`、`scripts/verify-form-browser.mjs`、`scripts/form-consumer-fixture.mjs`
 - 交付与发布：`.github/workflows/ci.yml`、`release.yml`、`tag-npm.yml`、`.release-bootstrap.yaml`、`scripts/release-bootstrap/`、`.changeset/config.json`
-- 测试与视觉基线：`TESTING.md`、`packages/showcase/vitest.config.ts`、`packages/showcase/src/showcase/*.vrt.test.tsx` 与其 `__screenshots__/` 基线
+- 测试与视觉基线：`TESTING.md`、`packages/docs/vitest.config.ts`、`packages/docs/src/showcase/*.vrt.test.tsx` 与其 `__screenshots__/` 基线；当前站点的静态产物见 [`architectures/docs/site.md`](architectures/docs/site.md)
 - 设计依据：`.notes/archive/`、`.notes/rem-sizing/` 与 `.notes/glass-effects/` 下已归档或已被实现印证的设计文档

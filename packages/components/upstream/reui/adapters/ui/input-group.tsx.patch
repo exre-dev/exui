@@ -1,0 +1,125 @@
+diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/input-group.tsx b/packages/components/src/components/ui/input-group.tsx
+index 9126487..1af9bab 100644
+--- a/packages/components/upstream/reui/source/registry/bases/radix/ui/input-group.tsx
++++ b/packages/components/src/components/ui/input-group.tsx
+@@ -2,19 +2,32 @@
+ 
+ import * as React from "react"
+ import { cva, type VariantProps } from "class-variance-authority"
+-import { cn } from "cn"
+ 
+-import { Button } from "@/registry/bases/radix/ui/button"
+-import { Input } from "@/registry/bases/radix/ui/input"
+-import { Textarea } from "@/registry/bases/radix/ui/textarea"
++import { cn } from "@/lib/utils"
++import { glassClassName, type GlassSurfaceProps } from "@/lib/glass"
++import { Button } from "@/components/ui/button"
++import { Input } from "@/components/ui/input"
++import { Textarea } from "@/components/ui/textarea"
+ 
+-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
++function InputGroup({
++  className,
++  glass,
++  ...props
++}: React.ComponentProps<"div"> & GlassSurfaceProps) {
+   return (
+     <div
+       data-slot="input-group"
+       role="group"
++      data-exui-glass-interactive=""
+       className={cn(
+-        "group/input-group cn-input-group relative flex w-full min-w-0 items-center outline-none has-[>textarea]:h-auto",
++        // The group owns the form-control chrome, so it also owns the state
++        // rings: it paints the recipe's focus and invalid shadows on its own
++        // border box, exactly as `Input` and `SelectTrigger` do, and the
++        // control inside stops painting its own (`InputGroupInput`). Without
++        // that split the control's ring is a rectangle around the middle
++        // segment and the group's border straddles it.
++        "group/input-group relative flex h-[var(--density-control-height)] w-full min-w-0 items-center rounded-4xl border border-transparent bg-input/50 transition-[color,box-shadow,background-color] outline-none in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:[box-shadow:none] has-data-[align=block-end]:rounded-3xl has-data-[align=block-start]:rounded-3xl has-[[data-slot=input-group-control]:focus-visible]:[box-shadow:var(--exui-component-form-control-focus-shadow)] has-[[data-slot=input-group-control]:focus-visible]:[--_exui-glass-host-shadow:var(--exui-component-form-control-focus-shadow)] has-[[data-slot][aria-invalid=true]]:[box-shadow:var(--exui-component-form-control-invalid-shadow)] has-[[data-slot][aria-invalid=true]]:[--_exui-glass-host-shadow:var(--exui-component-form-control-invalid-shadow)] has-[textarea]:rounded-2xl has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-1.5 has-[>[data-align=inline-start]]:[&>input]:pl-1.5",
++        glassClassName(glass),
+         className
+       )}
+       {...props}
+@@ -23,16 +36,16 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
+ }
+ 
+ const inputGroupAddonVariants = cva(
+-  "cn-input-group-addon flex cursor-text items-center justify-center select-none",
++  "flex h-auto cursor-text items-center justify-center gap-2 py-2 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 **:data-[slot=kbd]:rounded-3xl **:data-[slot=kbd]:bg-muted-foreground/10 **:data-[slot=kbd]:px-1.5 [&>svg:not([class*='size-'])]:size-4",
+   {
+     variants: {
+       align: {
+-        "inline-start": "cn-input-group-addon-align-inline-start order-first",
+-        "inline-end": "cn-input-group-addon-align-inline-end order-last",
++        "inline-start": "order-first pl-3 has-[>button]:-ml-1 has-[>kbd]:-ml-1",
++        "inline-end": "order-last pr-3 has-[>button]:-mr-1 has-[>kbd]:-mr-1",
+         "block-start":
+-          "cn-input-group-addon-align-block-start order-first w-full justify-start",
++          "order-first w-full justify-start px-3 pt-3 group-has-[>input]/input-group:pt-3.5 [.border-b]:pb-3.5",
+         "block-end":
+-          "cn-input-group-addon-align-block-end order-last w-full justify-start",
++          "order-last w-full justify-start px-3 pb-3 group-has-[>input]/input-group:pb-3.5 [.border-t]:pt-3.5",
+       },
+     },
+     defaultVariants: {
+@@ -64,14 +77,14 @@ function InputGroupAddon({
+ }
+ 
+ const inputGroupButtonVariants = cva(
+-  "cn-input-group-button flex items-center shadow-none",
++  "flex items-center gap-2 rounded-4xl text-sm shadow-none",
+   {
+     variants: {
+       size: {
+-        xs: "cn-input-group-button-size-xs",
+-        sm: "cn-input-group-button-size-sm",
+-        "icon-xs": "cn-input-group-button-size-icon-xs",
+-        "icon-sm": "cn-input-group-button-size-icon-sm",
++        xs: "h-6 gap-1 rounded-xl px-1.5 [&>svg:not([class*='size-'])]:size-3.5",
++        sm: "",
++        "icon-xs": "size-6 rounded-xl p-0 has-[>svg]:p-0",
++        "icon-sm": "size-8 p-0 has-[>svg]:p-0",
+       },
+     },
+     defaultVariants: {
+@@ -103,7 +116,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
+   return (
+     <span
+       className={cn(
+-        "cn-input-group-text flex items-center [&_svg]:pointer-events-none",
++        "flex items-center gap-2 text-sm text-muted-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+         className
+       )}
+       {...props}
+@@ -118,7 +131,17 @@ function InputGroupInput({
+   return (
+     <Input
+       data-slot="input-group-control"
+-      className={cn("cn-input-group-input flex-1", className)}
++      className={cn(
++        // The control overrides the form-control recipe background with the same
++        // `background` shorthand the Input declares, so the two merge into one
++        // declaration. A `bg-transparent` utility would set `background-color`
++        // instead, survive the merge, and lose the cascade to the shorthand.
++        // The state shadows need the opposite treatment: they are the group's
++        // to paint, so the control clears them with the same arbitrary-property
++        // form, which merges with the recipe's own declaration.
++        "flex-1 rounded-none border-0 shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 focus-visible:[box-shadow:none] aria-invalid:[box-shadow:none] [background:transparent] hover:[background:transparent] focus-visible:[background:transparent] disabled:[background:transparent] aria-invalid:[background:transparent]",
++        className
++      )}
+       {...props}
+     />
+   )
+@@ -131,7 +154,10 @@ function InputGroupTextarea({
+   return (
+     <Textarea
+       data-slot="input-group-control"
+-      className={cn("cn-input-group-textarea flex-1 resize-none", className)}
++      className={cn(
++        "flex-1 resize-none rounded-none border-0 py-2.5 shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 focus-visible:[box-shadow:none] aria-invalid:[box-shadow:none] [background:transparent] hover:[background:transparent] focus-visible:[background:transparent] disabled:[background:transparent] aria-invalid:[background:transparent]",
++        className
++      )}
+       {...props}
+     />
+   )

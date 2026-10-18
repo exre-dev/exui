@@ -1,0 +1,78 @@
+---
+id: components/sonner
+title: Sonner
+description: 显示短暂的 Toast 通知。
+exampleFamily: sonner
+---
+
+Sonner：显示短暂的 Toast 通知。
+
+{/* exui-capabilities:begin:docs */}
+## ExUI 能力
+
+**ExUI 新增**
+
+### 托管消息与 Sonner
+
+调用 `ExMessage` 前先挂载一个 `ExMessageContext`。它已经渲染包内共享的 `Toaster`。`loading` 返回的 `onSuccess`、`onError` 和 `dismiss` 都作用于同一条消息。根入口的 `toast` 共用这个 Sonner 实例；应用自行安装的另一份 Sonner 有独立状态。`maxCount` 只会淘汰托管的 ExMessage 记录，但宿主也将其传给 `Toaster.visibleToasts`，因此直接调用的 toast 也共用可见条数上限。
+
+请阅读[托管消息与 Sonner](../exui/ex-message.mdx)，了解完整用法。
+
+- [在线示例](../../../../examples/c-sonner-1/)
+
+**ExUI 新增**
+
+### 密度与根字号缩放
+
+紧凑密度作用域会改变 `Button`、`Input`、`Textarea`、`Select`、`NativeSelect` 和 `InputGroup` 的默认几何尺寸。显式尺寸和复杂组件布局并非都会随该作用域缩小。CSS 中的 `rem` 尺寸随根字号变化。部分第三方组件只接受数字尺寸；ExUI 在 DOM 边界换算自己的默认值，并在根字号变化后更新。调用者显式传入的数字仍是像素，不应再次换算。
+
+请阅读[密度与根字号缩放](../tokens/density.mdx)，了解完整用法。
+
+**ExUI 适配**
+
+### 通知状态图标
+
+`Toaster` 的成功、错误、警告、信息和加载图标采用 Lucide 线框样式，其中错误图标使用圆形的 `CircleX`。尺寸为 1rem，使用 Lucide 默认描边，加载图标保留旋转动画。颜色继承通知的图标容器，可通过单条通知的 `classNames.icon` 设置；状态示例中的信息图标使用 `text-primary` 跟随主题主色。需要其他图标时，可通过 `Toaster.icons` 覆盖。
+
+- [在线示例](../../../../examples/c-sonner-4/)
+
+**ExUI 适配**
+
+### 通知卡片圆角
+
+`Toaster` 通知卡片使用 ExUI 的 `--radius-2xl` 圆角 Token，在默认 16px 根字号下为 18px。圆角随根字号和局部圆角 Token 调整。需要其他圆角时，可通过 `Toaster.style` 覆盖 `--border-radius` 变量。
+
+`toast.custom` 渲染的是无预设样式的通知，内容需要自行设置卡片圆角。Sonner 的自定义示例在外层卡片上使用 `rounded-[var(--border-radius)]` 继承宿主圆角及其覆盖值，并使用 `w-full` 跟随宿主的响应式宽度。组合自定义通知时可沿用这两个类名。
+
+- [在线示例](../../../../examples/c-sonner-1/)
+{/* exui-capabilities:end:docs */}
+
+## 基本用法
+
+在界面挂载一个 Toaster，再用公开 toast 实例发送通知。
+
+### 当前示例源码摘录
+
+```tsx source="c-sonner-1"
+import { Button } from "@exre/exui"
+
+<Button
+        onClick={() => toast("Event has been created")}
+        variant="outline"
+        className="w-fit"
+      >
+        {<ExampleText>Show Toast </ExampleText>}</Button>
+```
+
+[查看完整源码](../../../../examples/c-sonner-1/)
+
+应用自行发送通知时，挂载一次公开宿主并调用公开 toast 实例：
+
+```tsx verify
+import "@exre/exui/style.css"
+import { Button, Toaster, toast } from "@exre/exui"
+
+export function NotificationExample() {
+  return <><Toaster /><Button type="button" onClick={() => toast.success("已保存")}>保存</Button></>
+}
+```
