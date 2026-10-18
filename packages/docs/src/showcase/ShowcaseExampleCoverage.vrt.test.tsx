@@ -246,7 +246,10 @@ describe.skipIf(window.innerWidth < 1000)("full Showcase example coverage", () =
           expect(preview.getBoundingClientRect().top, `${entry.id}/${preview.dataset.exampleId}: scroll`).toBeLessThan(innerHeight)
           expect(preview.getBoundingClientRect().bottom, `${entry.id}/${preview.dataset.exampleId}: scroll`).toBeGreaterThan(0)
           expect(preview.querySelector('[data-page-error="true"]'), preview.dataset.exampleId).toBeNull()
-          expect(hasRealContent(preview), `${entry.id}/${preview.dataset.exampleId ?? "extension"}: empty scene`).toBe(true)
+          // A mounted preview can precede effect-driven content such as Headless Tree rows.
+          await expect.poll(() => hasRealContent(preview), {
+            message: `${entry.id}/${preview.dataset.exampleId ?? "extension"}: empty scene`,
+          }).toBe(true)
           inspectReferences(preview, `${entry.id}/${preview.dataset.exampleId}`)
           inspectSvgReferences(preview, `${entry.id}/${preview.dataset.exampleId ?? "extension"}`)
           for (const image of preview.querySelectorAll<HTMLImageElement>("img")) {
