@@ -24,7 +24,7 @@ packages/docs/tests/integration/       Built static docs and source-sharing veri
 
 There is no additional tooling workspace. Node suites are collected once with `packages/*/tests/**/*.test.mjs`; browser suites use `tests/browser/**/*.vrt.test.tsx`. The discovery regression rejects tests left in source or maintenance-script directories. Build and source-maintenance implementations stay in `scripts/`; dedicated acceptance verifiers live with their tests.
 
-The root runner caps Node test-file concurrency at two: several suites start Vite, Chromium or TypeScript processes, and unrestricted file parallelism can starve watcher readiness checks. Browser suites remain serial within Vitest. This limits resource contention without extending assertion timeouts.
+The root runner caps Node test-file concurrency at two: several suites start Vite, Chromium or TypeScript processes, and unrestricted file parallelism can starve watcher readiness checks. The full `pnpm test:visual` command runs the desktop Chromium project to completion before starting the mobile project; files remain serial within each project. Vitest's `fileParallelism: false` alone does not serialize separate browser projects. Focused direct Vitest commands can select either viewport with `--project chromium-desktop` or `--project chromium-mobile`. This limits resource contention without extending assertion timeouts.
 
 Focused browser example: `pnpm --filter @exre/exui-docs exec vitest run tests/browser/FormApi.vrt.test.tsx`. Each existing package also has a `test` entry for its Node suites; docs retains its separate `test:visual` entry.
 
