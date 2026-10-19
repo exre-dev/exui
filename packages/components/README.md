@@ -127,7 +127,7 @@ export function App() {
 - Restyle it with `--exui-glass-background`, `--exui-glass-foreground`, `--exui-glass-border`, `--exui-glass-shadow`, `--exui-glass-blur`, and `--exui-glass-saturation`, declared on the surface or any ancestor.
 - Where `backdrop-filter` is unavailable the surface falls back to an opaque themed background. A non-`none` `backdrop-filter` also makes the element a containing block for absolutely and fixed positioned descendants, so keep viewport-anchored content in a portal rather than inside a glass surface.
 
-The built-in blur is `0.25rem` and the inset edge is `0.0625rem`; both scale with the root font size. The stylesheet also adds a fixed-pixel white inset highlight. `CSS.supports` checks syntax acceptance only: the automated checks cover computed styles and lifecycle, not the rendered refraction effect.
+The built-in blur is `0.25rem` and the inset edge is `0.0625rem`; both scale with the root font size. The stylesheet also adds a fixed-pixel white inset highlight, with stronger intensity in light themes and softer intensity in dark and pitch-black themes. `CSS.supports` checks syntax acceptance only: the automated checks cover computed styles and lifecycle, not the rendered refraction effect.
 
 ### Customizing tokens
 

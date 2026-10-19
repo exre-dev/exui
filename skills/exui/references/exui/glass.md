@@ -95,7 +95,7 @@ The material reads `--exui-glass-*` custom properties published by the Token sty
 | `--exui-glass-selected-background` | Selected, checked, or expanded tint |
 | `--exui-glass-fallback-background` | Opaque background when backdrop filtering is unsupported |
 
-The material's edge is an inset shadow, never a border. Its built-in thickness is `0.0625rem`; it and the `0.25rem` blur scale with the root font size. The stylesheet adds a separate fixed-pixel white inset highlight. The surface's own border color and state transitions stay intact, so a bordered surface shows both its border and the material's inner edge.
+The material's edge is an inset shadow, never a border. Its built-in thickness is `0.0625rem`; it and the `0.25rem` blur scale with the root font size. The stylesheet adds a separate fixed-pixel white inset highlight, with stronger intensity in light themes and softer intensity in dark and pitch-black themes. The surface's own border color and state transitions stay intact, so a bordered surface shows both its border and the material's inner edge.
 
 Set direct material values on the surface or an ancestor to restyle it:
 
