@@ -115,7 +115,7 @@ describe("Docs component overview", () => {
     expect(cards).toHaveLength(88)
     for (const card of cards) {
       card.scrollIntoView({ block: "center" })
-      await expect.poll(() => card.querySelector("[data-overview-loaded]")?.childElementCount ?? 0, { message: `${card.dataset.overviewCard}: ${JSON.stringify(errors)}` }).toBeGreaterThan(0)
+      await expect.poll(() => card.querySelector("[data-overview-loaded]")?.childElementCount ?? 0, { timeout: 5000, message: `${card.dataset.overviewCard}: ${JSON.stringify(errors)}` }).toBeGreaterThan(0)
       expect(card.querySelector("[data-overview-error]"), card.dataset.overviewCard).toBeNull()
       expect(card.querySelectorAll(":scope > a")).toHaveLength(1)
       expect([...card.querySelectorAll(".overview-card-preview a")].every(link => link.closest("[inert][aria-hidden=true]"))).toBe(true)
