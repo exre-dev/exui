@@ -22,7 +22,8 @@ function OverviewRoute() {
   const language = pathname.startsWith("/en/") ? "en" : "zh-CN"
   const { density } = usePreferences()
   return <LanguageContext.Provider value={{ language, setLanguage: () => {} }}>
-    <Settings />
+    {/* Match the real layout's persistent settings area while scrolling previews. */}
+    <div style={{ position: "sticky", top: 0, zIndex: 1 }}><Settings /></div>
     <TooltipProvider><GlassSeed /><Toaster position="top-right" duration={3000} visibleToasts={3} />
     <ComponentsOverview exampleCounts={{ button: 61 }} density={density} renderLink={(entry, children) =>
       <Link className="overview-card-link" to={`/${language}/docs/${entry.group}/${entry.id}/`}>{children}</Link>
@@ -59,9 +60,7 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 async function choose(label: string, value: string) {
-  const trigger = page.getByRole("combobox", { name: label, exact: true })
-  trigger.element().scrollIntoView({ block: "center", behavior: "instant" })
-  await trigger.click()
+  await page.getByRole("combobox", { name: label, exact: true }).click()
   await page.getByRole("option", { name: value, exact: true }).click()
 }
 describe("Docs component overview", () => {
