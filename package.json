@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@11.9.0",
   "scripts": {
-    "dev": "pnpm --filter @exre/exui-tokens build && pnpm --filter @exre/exui build && pnpm --filter @exre/exui-docs dev",
+    "dev": "node scripts/dev.mjs",
     "watch": "node scripts/watch.mjs",
     "build": "pnpm --filter @exre/exui-tokens build && pnpm --filter @exre/exui build && pnpm --filter @exre/exui-docs build",
     "typecheck": "pnpm --filter @exre/exui-tokens typecheck && pnpm --filter @exre/exui typecheck && pnpm --filter @exre/exui build:types && pnpm --filter @exre/exui-docs typecheck",

@@ -76,3 +76,77 @@ if (target === "@exre/exui-tokens") {
     await removeTempRoot(root)
   }
 })
+
+test("library readiness and reload notifications follow complete successful builds", async () => {
+  const root = await mkdtemp(join(tmpdir(), "exui-watch-lifecycle-"))
+  const logPath = join(root, "builds.log")
+  let watcher
+  try {
+    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts"]) {
+      await mkdir(join(root, directory), { recursive: true })
+    }
+    await writeFile(logPath, "")
+    const fakePnpm = join(root, "fake-pnpm.mjs")
+    await writeFile(fakePnpm, `
+import { appendFile, access } from "node:fs/promises"
+import { join } from "node:path"
+const target = process.argv[process.argv.indexOf("--filter") + 1]
+await appendFile("builds.log", target + "\\n")
+try { await access("fail-build"); process.exit(7) } catch {}
+`)
+    const entry = join(root, "entry.mjs")
+    await writeFile(entry, `
+import { appendFile } from "node:fs/promises"
+import { watchLibrary } from ${JSON.stringify(new URL("./watch.mjs", import.meta.url).href)}
+const watcher = watchLibrary({ onBuild: ({ initial }) => appendFile("builds.log", (initial ? "ready" : "reload") + "\\n") })
+await watcher.ready
+process.on("SIGTERM", () => { void watcher.close() })
+`)
+    watcher = spawn(process.execPath, [entry], { cwd: root, env: { ...process.env, npm_execpath: fakePnpm }, stdio: "ignore" })
+    assert.deepEqual(await waitForBuilds(logPath, 3), ["@exre/exui-tokens", "@exre/exui", "ready"])
+
+    await writeFile(join(root, "fail-build"), "")
+    await writeFile(join(root, "packages/components/src/source.ts"), "first edit")
+    await waitForBuilds(logPath, 4)
+    await new Promise(resolve => setTimeout(resolve, 350))
+    assert.equal((await readFile(logPath, "utf8")).includes("reload"), false, "failed builds must not reload docs")
+    await rm(join(root, "fail-build"))
+    await writeFile(join(root, "packages/components/src/source.ts"), "fixed edit")
+    const recovered = await waitForBuilds(logPath, 6)
+    assert.deepEqual(recovered.slice(3), ["@exre/exui", "@exre/exui", "reload"])
+  } finally {
+    if (watcher && watcher.exitCode === null) {
+      const closed = new Promise(resolve => watcher.once("close", resolve))
+      watcher.kill()
+      await closed
+    }
+    await removeTempRoot(root)
+  }
+})
+
+test("watch exits when the initial build fails", async () => {
+  const root = await mkdtemp(join(tmpdir(), "exui-watch-initial-failure-"))
+  let watcher
+  try {
+    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts"]) {
+      await mkdir(join(root, directory), { recursive: true })
+    }
+    const fakePnpm = join(root, "fake-pnpm.mjs")
+    await writeFile(fakePnpm, "process.exit(7)\n")
+    watcher = spawn(process.execPath, [watchScript], { cwd: root, env: { ...process.env, npm_execpath: fakePnpm }, stdio: "ignore" })
+    let timer
+    const result = await Promise.race([
+      new Promise(resolve => watcher.once("close", code => resolve(code))),
+      new Promise(resolve => { timer = setTimeout(() => resolve("still running"), 2_000) }),
+    ])
+    clearTimeout(timer)
+    assert.equal(result, 1, "a failed initial build must stop startup")
+  } finally {
+    if (watcher && watcher.exitCode === null) {
+      const closed = new Promise(resolve => watcher.once("close", resolve))
+      watcher.kill()
+      await closed
+    }
+    await removeTempRoot(root)
+  }
+})
