@@ -4,4 +4,4 @@
 
 自定义内容位于 Sonner 的 `[data-content]` / `[data-title]` 包装内，通知节点的第一个子元素不是卡片。几何回归必须测量绘制背景的内容，不能把包装层的零圆角误报为卡片圆角。示例内容的宽度还应受宿主约束，避免固定像素宽度绕开移动端边距与根字号缩放。
 
-证据：`packages/docs/src/showcase/examples/sonner/c-sonner-9.tsx` 至 `c-sonner-17.tsx`、`c-sonner-20.tsx`、`c-sonner-21.tsx`；`packages/docs/src/showcase/Sonner.vrt.test.tsx` 使用真实示例和公开包验证四角、宽度及宿主覆盖。
+证据：`packages/docs/src/showcase/examples/sonner/c-sonner-9.tsx` 至 `c-sonner-17.tsx`、`c-sonner-20.tsx`、`c-sonner-21.tsx`；`packages/docs/tests/browser/Sonner.vrt.test.tsx` 使用真实示例和公开包验证四角、宽度及宿主覆盖。

@@ -30,8 +30,10 @@
     "build:cjs": "tsc -p tsconfig.cjs.json && node scripts/write-cjs-package.mjs",
     "build": "pnpm build:js && pnpm build:cjs && node scripts/generate-css.mjs && node scripts/copy-css.mjs && node scripts/validate-tokens.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.cjs.json --noEmit",
-    "lint": "oxlint src scripts",
-    "tokens:check": "pnpm typecheck && pnpm build:js && pnpm build:cjs && node scripts/verify-cjs.mjs && node scripts/generate-css.mjs --check && node scripts/copy-css.mjs && node scripts/validate-tokens.mjs && node --test \"scripts/**/*.test.mjs\""
+    "lint": "oxlint src scripts tests",
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "check:built": "node scripts/verify-cjs.mjs && node scripts/generate-css.mjs --check && node scripts/copy-css.mjs && node scripts/validate-tokens.mjs",
+    "tokens:check": "pnpm build:js && pnpm build:cjs && pnpm check:built && pnpm test"
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.8"

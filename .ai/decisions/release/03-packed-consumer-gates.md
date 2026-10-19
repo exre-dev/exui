@@ -5,7 +5,7 @@
 状态：已接受
 模块：release
 日期：2026-09-09
-来源：`scripts/verify-packages.mjs`、`scripts/verify-react-browser.mjs`、`TESTING.md`
+来源：`packages/components/tests/consumers/verify-packages.mjs`、`packages/components/tests/consumers/verify-react-browser.mjs`、`TESTING.md`
 
 背景：workspace 内的模块解析会通过 `workspace:*` 链接、路径映射与提升后的依赖满足导入，因此"在仓库里能跑"无法证明"消费者装得上"。项目历史上出现过对包契约的判断来自双包结构 CI 的情况，而那套证据不能代表迁移后的单包产物。产物层面还有一类只能靠真实安装暴露的失效：产物清单少了文件、声明引用了没有安装的包、依赖树里混进了本不该出现的 React 或实现库。
 
@@ -17,4 +17,4 @@
 
 重新审视条件：出现能等价证明消费契约的更轻量机制时；或包管理器默认安装行为变化使某条 fixture 不再可复现时。
 
-证据：`scripts/verify-packages.mjs` 的整体流程（在 `os.tmpdir()` 下建 fixture、`finally` 中清理）、`verifyRootBoundary`、`assertTokensOnlyTree` 对虚拟店与嵌套 `node_modules` 的递归收集与禁止包集合、`tokensRuntimeCheck` 的 CJS/ESM 等值、深度冻结、主题与密度键名完整、rem 值与固定像素例外断言、缺失 React 时组件根入口必须报错、`verifyTokensTypecheck` 的 `skipLibCheck: false` 与两种解析模式与 `tsc --listFiles` 声明入口断言、`verifyTokensStylesheet` 的独立 Vite 构建与"不得泄漏组件 Tailwind 样式"断言、`verifyReactConsumer` 的严格类型检查与生产构建与服务端渲染冒烟与单 React 实例断言，以及"在子进程中运行 preview 以便 Windows 释放原生绑定"的注释；`scripts/verify-react-browser.mjs` 的图表、Dialog、表单与根字号几何断言；`scripts/package-contract.mjs` 的 manifest 与 exports 锁定；`TESTING.md` 的 Packed-consumer gates 段；根 `package.json` 的 `verify:pack`，以及 `ci.yml`、`release.yml`、`tag-npm.yml` 对它的调用。
+证据：`packages/components/tests/consumers/verify-packages.mjs` 的整体流程（在 `os.tmpdir()` 下建 fixture、`finally` 中清理）、`verifyRootBoundary`、`assertTokensOnlyTree` 对虚拟店与嵌套 `node_modules` 的递归收集与禁止包集合、`tokensRuntimeCheck` 的 CJS/ESM 等值、深度冻结、主题与密度键名完整、rem 值与固定像素例外断言、缺失 React 时组件根入口必须报错、`verifyTokensTypecheck` 的 `skipLibCheck: false` 与两种解析模式与 `tsc --listFiles` 声明入口断言、`verifyTokensStylesheet` 的独立 Vite 构建与"不得泄漏组件 Tailwind 样式"断言、`verifyReactConsumer` 的严格类型检查与生产构建与服务端渲染冒烟与单 React 实例断言，以及"在子进程中运行 preview 以便 Windows 释放原生绑定"的注释；`packages/components/tests/consumers/verify-react-browser.mjs` 的图表、Dialog、表单与根字号几何断言；`scripts/package-contract.mjs` 的 manifest 与 exports 锁定；`TESTING.md` 的 Packed-consumer gates 段；根 `package.json` 的 `verify:pack`，以及 `ci.yml`、`release.yml`、`tag-npm.yml` 对它的调用。

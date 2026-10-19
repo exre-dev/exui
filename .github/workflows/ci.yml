@@ -34,12 +34,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Restore pinned component sources
-        run: pnpm upstream:restore
-
-      - name: Verify component source locks and adapters
-        run: pnpm upstream:check
-
       - name: Cache Playwright Chromium
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
@@ -49,82 +43,8 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @exre/exui-docs exec playwright install chromium
 
-      - name: Validate tokens
-        run: pnpm tokens:check
-
-      - name: Type-check workspaces
-        run: pnpm typecheck
-
-      - name: Lint workspaces
-        run: pnpm lint
-
-      - name: Build workspaces
-        run: pnpm build
-
-      - name: Test docs content and static contracts
-        run: pnpm test:docs-content
-
-      - name: Test ExUI capability coverage
-        run: pnpm test:docs-capabilities
-
-      - name: Check ExUI capability coverage
-        run: pnpm docs:capabilities:check
-
-      - name: Verify docs public snippets
-        run: pnpm docs:snippets:verify
-
-      - name: Verify docs static production output
-        run: pnpm docs:static:verify
-
-      - name: Test docs example sharing
-        run: pnpm test:docs-sharing
-
-      - name: Verify docs example sharing
-        run: pnpm docs:sharing:verify
-
-      - name: Test component source restoration and contracts
-        run: pnpm test:upstream
-
-      - name: Test chart style and tooling regressions
-        run: pnpm test:regressions
-
-      - name: Test ExUI Skill reference synchronization
-        run: node --test scripts/exui-skill/sync-references.test.mjs
-
-      - name: Check ExUI Skill references and inventories
-        run: |
-          node scripts/exui-skill/sync-references.mjs --check
-          node scripts/exui-skill/update-inventories.mjs --check
-          node scripts/exui-skill/verify.mjs
-
-      - name: Verify Skill examples
-        run: node scripts/exui-skill/verify-examples.mjs
-
-      - name: Run visual tests
-        run: pnpm test:visual
-
-      - name: Verify packed consumers
-        run: pnpm verify:pack
-
-      - name: Verify release configuration
-        run: pnpm release:verify
-
-      - name: Test release automation
-        run: pnpm test:release
-
-      - name: Test docs Pages guards
-        run: node --test scripts/docs-pages.test.mjs
-
-      - name: Build docs under a deployment prefix
-        env:
-          EXUI_DOCS_BASE: /exui/
-        run: pnpm --filter @exre/exui-docs build
-
-      - name: Verify docs static output under a deployment prefix
-        run: pnpm docs:static:verify packages/docs/build/client /exui/
-
-      - name: Verify docs sharing under a deployment prefix
-        run: pnpm docs:sharing:verify packages/docs/build/client /exui/
+      - name: Verify workspaces and both docs bases
+        run: pnpm verify
 
       - name: Save verified docs for Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'

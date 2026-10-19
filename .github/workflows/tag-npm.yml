@@ -56,7 +56,7 @@ jobs:
         run: pnpm --filter @exre/exui-docs exec playwright install --with-deps chromium
       - name: Verify and build release packages
         run: |
-          pnpm release:verify
+          node scripts/release-bootstrap/verify.mjs --root .
           pnpm build
           pnpm verify:pack
       - name: Publish only the tagged package using npm OIDC

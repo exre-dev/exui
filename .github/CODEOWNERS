@@ -4,8 +4,9 @@
 /.changeset/config.json @wojzj57 @Xiamolc007
 /package.json @wojzj57 @Xiamolc007
 /scripts/package-contract.mjs @wojzj57 @Xiamolc007
-/scripts/verify-packages.mjs @wojzj57 @Xiamolc007
+/packages/components/tests/consumers/verify-packages.mjs @wojzj57 @Xiamolc007
 /scripts/release-bootstrap/ @wojzj57 @Xiamolc007
+/packages/components/tests/tooling/release/ @wojzj57 @Xiamolc007
 /packages/tokens/package.json @wojzj57 @Xiamolc007
 /packages/components/package.json @wojzj57 @Xiamolc007
 /.github/workflows/tag-npm.yml @wojzj57 @Xiamolc007

@@ -16,6 +16,6 @@ Badge 在组件内派生浅底、语义色描边的文字色，保留对当前�
 引用的颜色类，避免通用类在两个编译产物中重复后破坏主题切换与 Glass 绘制。
 
 证据：`packages/components/src/components/reui/badge.tsx`、
-`packages/docs/src/showcase/Badge.vrt.test.tsx`。该浏览器测试从真实合成背景测量
+`packages/docs/tests/browser/Badge.vrt.test.tsx`。该浏览器测试从真实合成背景测量
 文字对比度，同时验证所有变体、标准背景、主题、密度、Glass、几何和覆盖入口；
 不将自定义配色或任意图片背景纳入默认配色保证。

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "pnpm docs:prepare && react-router dev",
     "build": "pnpm docs:prepare && node ../../scripts/docs-examples.mjs check && node ../../scripts/docs-example-assets.mjs && react-router typegen && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit && react-router build && node ../../scripts/docs-static.mjs",
-    "lint": "oxlint src app lib *.ts",
+    "lint": "oxlint src app lib tests *.ts",
+    "test": "node ../../scripts/tasks.mjs test:node packages/docs/tests/**/*.test.mjs",
     "test:visual": "vitest run --project visual",
     "typecheck": "pnpm docs:prepare && react-router typegen && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
     "preview": "vite preview --outDir build/client",

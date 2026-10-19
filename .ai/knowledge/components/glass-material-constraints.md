@@ -27,7 +27,7 @@
 
 ## 4. 增强没有任何像素级验证覆盖
 
-仓库明确不做玻璃的视觉验证（不加截图基线、不做像素比对）。因此关于材质的自动化证据只有三类，且都只读 computed style 或标记：`pnpm tokens:check` 的 `glass-policy.mjs`（形状、派生关系、发射保持引用、三主题对比度）、`Glass.vrt.test.tsx`（标记落点、几何与层叠不变、状态可辨、seed 生命周期）、打包消费者门禁（真实 tarball 的 Token 变量、负向类型、SSR seed、computed style）。
+仓库明确不做玻璃的视觉验证（不加截图基线、不做像素比对）。因此关于材质的自动化证据只有三类，且都只读 computed style 或标记：`pnpm --filter @exre/exui-tokens tokens:check` 的 `glass-policy.mjs`（形状、派生关系、发射保持引用、三主题对比度）、`Glass.vrt.test.tsx`（标记落点、几何与层叠不变、状态可辨、seed 生命周期）、打包消费者门禁（真实 tarball 的 Token 变量、负向类型、SSR seed、computed style）。
 
 **操作约束**：这三类证据都不能支持"折射**渲染**可用"的结论，交付与发布说明里该结论必须标为未验证。已完成的既有非 Glass 视觉基线仍然照跑，那属于回归覆盖而不是玻璃验证。需要真实像素证据时，按 [[components/04-glass-capability-gating]] 的重新审视条件处理。
 

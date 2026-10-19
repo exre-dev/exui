@@ -17,6 +17,8 @@ DataGrid 家族页会同时渲染多个表格预览，语言切换也会更新�
 
 `ExampleGallery` 以稳定的示例数组作为 props，并在画廊边界使用 React memo。主题与密度通过 CSS 生效，不应因宿主状态更新而重新执行所有表格；语言 Context 更新仍须穿过该边界，更新同一预览的文案。交互回归通过真实基础 DataGrid 的模块 spy 计数，同时检查中文表头和预览连接状态；原分页、状态保留及 15 秒预算不变。不能通过增加用例超时来掩盖这种无关设置造成的重复工作。
 
+该边界也依赖生产文档路由的 `LanguageContext.value` 身份稳定。即使语言字符串未变，偏好设置重渲染时新建 value 对象仍会穿透画廊的 memo，让真实示例重新执行。`app/routes/docs.tsx` 缓存语言 value；浏览器测试适配器采用相同规则，不能仅优化测试夹具而留下生产路由的重复渲染。
+
 浏览器的物理指针不会随 React 卸载而复位。NavigationMenu 夹具在挂载前将指针移到固定的中性区域，并重置滚动位置，避免前一用例的指针在新菜单上触发 hover。弹层几何和链接查询必须限定到目标触发器所属的菜单，保留真实点击及 `elementFromPoint` 命中断言，不能靠强制点击绕过遮挡。
 
 ## 日历边缘圆角必须比较四个角
@@ -31,7 +33,7 @@ Calendar 的周首、周末选择器会覆盖日期按钮一侧的圆角。若�
 
 Calendar 的组合示例要按实际预览宽度适配，而非只看浏览器断点：文档正文切成双列时，宽视口里的单张卡片也可能比手机容器更窄。宽示例的通栏占位来自 `upstream/reui/coverage.json`，注册文件由 `docs-examples.mjs generate` 生成；日期与时间面板使用有明确宽度的命名容器，双月视图保留两个月并自动换行。`CalendarLayouts.vrt.test.tsx` 在中英文、两档密度和四档容器宽度下检查全部 30 个预览的实际溢出，并验证缩窄后预约草稿与全部时间选项保留。尺寸切换会触发 Button 的几何过渡，溢出断言应等待计算几何稳定，不能只等两帧后立即取值。
 
-ReUI 示例还有一层 Showcase 私有工具类编译。`ShowcaseExampleStyles.vrt.test.tsx` 运行在 Vitest Browser / Chromium 下，验证四个代表性源示例的布局、交互和公开控件计算样式；`pnpm showcase:examples:styles:check` 则读取已构建的 Showcase CSS，并用临时夹具检查工具类与 dark 变体。运行后者前必须完成 Showcase 构建，否则检查会读取旧的 `dist/assets`。资源 SHA 与路径另由 `pnpm showcase:examples:assets:check` 验证；全量逐页浏览器用例还需检查真实加载和绘制。
+ReUI 示例还有一层私有工具类编译。`ShowcaseExampleStyles.vrt.test.tsx` 运行在 Vitest Browser / Chromium 下，验证四个代表性源示例的布局、交互和公开控件计算样式；`node scripts/docs-example-styles.mjs` 则读取已构建的 docs CSS，并用临时夹具检查工具类与 dark 变体。运行后者前必须完成对应 docs 构建，否则会读取旧的 `build/client/assets`。资源 SHA 与路径另由 `node scripts/docs-example-assets.mjs` 验证；全量逐页浏览器用例还需检查真实加载和绘制。
 
 私有 Tailwind 的默认 theme 导入和语义映射都必须使用 `inline reference`。仅有 `inline` 时，示例里的 arbitrary property 会触发默认 palette 或语义别名输出到 `:root` / `:host`，覆盖公共品牌变量。样式门禁检查实际生产 CSS 没有这类根赋值；不能通过放宽 no-root 断言来消除失败。
 

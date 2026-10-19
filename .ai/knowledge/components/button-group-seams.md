@@ -6,4 +6,4 @@
 
 `ButtonGroup.vrt.test.tsx` 加载完整生产文档样式和全部 57 个真实示例，在中英文、三种主题、两档密度及桌面/移动端检查内侧直角、相邻几何与单边框。补充夹具覆盖 `ButtonGroupText asChild`、纵向文字段和 form 内的 Select 隐藏控件；菜单用例验证键盘打开、Escape 焦点归还与输入草稿保留。只加载公共 CSS 无法复现这类覆盖。
 
-证据：`packages/components/src/components/ui/button-group.tsx`、`packages/docs/app/styles/docs.css`、`packages/docs/src/showcase/ButtonGroup.vrt.test.tsx`。
+证据：`packages/components/src/components/ui/button-group.tsx`、`packages/docs/app/styles/docs.css`、`packages/docs/tests/browser/ButtonGroup.vrt.test.tsx`。

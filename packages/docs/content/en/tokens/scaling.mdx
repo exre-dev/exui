@@ -8,7 +8,7 @@ ExUI's scalable defaults use `rem` against a 16px design base. A 20px root font 
 
 Explicit numeric props retain pixel semantics: `sideOffset={8}`, `indent={20}`, column widths and controlled resize state stay pixels. Rem strings scale wherever a prop accepts CSS lengths. Measured DOM geometry, SVG content coordinates, chart data and signature strokes are unchanged.
 
-Use the bundled `Recharts` and `TanStackTable` namespaces for the adapted React defaults. Toaster/ExMessage, Resizable and MessageScroller also scale their owned defaults. Low-level non-React `TanStackTable.constructTable` keeps upstream pixel defaults; InputOTP's private password-manager badge reserve/probe remains 40px/18px. The docs theme adapts named Fumadocs slides and scrollbar sizes, while the app owns the installed preset version. Changing the root affects every other `rem` in the application; keep 16px if no scaling is wanted.
+Use the bundled `Recharts` and `TanStackTable` namespaces for the adapted React defaults. Toaster, Resizable and MessageScroller also scale their owned defaults. Low-level non-React `TanStackTable.constructTable` keeps upstream pixel defaults; InputOTP's private password-manager badge reserve/probe remains 40px/18px. The docs theme adapts named Fumadocs slides and scrollbar sizes, while the app owns the installed preset version. Changing the root affects every other `rem` in the application; keep 16px if no scaling is wanted.
 
 {/* exui-capabilities:begin:docs */}
 ## ExUI capabilities

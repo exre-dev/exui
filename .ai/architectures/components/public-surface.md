@@ -49,13 +49,13 @@ React 与 React DOM 是**可选 peer**，范围 `>=19.0.0 <20`，`peerDependenci
 `src/index.ts` 汇总三层：
 
 - `src/components/theme-provider.tsx` 以**显式命名导出**给出 `ThemeProvider` 与 `useTheme`，不使用 `export *`。
-- 既有基础组件与 `src/hooks/use-mobile`、`src/lib/utils` 维持逐文件公开；`Questionnaire` 在 `src/index.ts` 手写基础组件转发，其基础文件覆盖由 `scripts/reui-exports.test.mjs` 检查。ReUI 组件、4 个共享 hooks 与公开类型的显式根导出由 `scripts/reui-exports.mjs` 和 `upstream/reui/public-exports.json` 校验。与既有名称冲突的导出使用清单中的 `Reui` 前缀，私有 Context 值不公开。
+- 既有基础组件与 `src/hooks/use-mobile`、`src/lib/utils` 维持逐文件公开；`Questionnaire` 在 `src/index.ts` 手写基础组件转发，其基础文件覆盖由 `packages/components/tests/upstream/reui-exports.test.mjs` 检查。ReUI 组件、4 个共享 hooks 与公开类型的显式根导出由 `scripts/reui-exports.mjs` 和 `upstream/reui/public-exports.json` 校验。与既有名称冲突的导出使用清单中的 `Reui` 前缀，私有 Context 值不公开。
 - 表单组件、同源 hooks 和公开类型采用显式命名导出；私有 Context、协调器、绑定适配器与导航入口不从根公开。
-- 全局消息宿主、静态调用入口和公开类型采用显式命名导出；状态归属见 [`ex-message`](ex-message.md)。
+- 全局通知入口由 Sonner 适配文件转发公开；实例和任务归属见 [`notifications`](notifications.md)。
 
 新增或升级 ReUI 组件时必须同步库存、适配源、公开导出清单和 `src/index.ts`。`scripts/reui-sync.mjs --check` 比对原始源与适配哈希，`scripts/reui-foundation-diff.mjs --check` 校验基础文件的补丁，`scripts/reui-exports.mjs --check` 校验公开面。`--update` 是显式维护模式：先验证再写入，默认保留已有 ReUI 与基础 UI 适配、重写共享 source hooks，并重记当前适配哈希；它产生待审差异，不代表人工批准。`--accept-adapters` 可单独重记适配哈希，`--rebase-upstream` 会替换 `registry-json-luma` 类 ReUI 适配，需审查替换结果。
 
-`upstream/reui/source/` 与 `style-luma.css` 是可重建的本地缓存，不进入 Git；manifest、许可证、公开清单与适配补丁仍受版本控制。`scripts/reui-restore.mjs` 按 manifest 的固定 GitHub revision 下载缺失项，并以源码哈希和 `assets` 中的许可/样式哈希校验；已有内容不匹配时失败，不自动覆盖。完整缓存不访问网络；显式 `EXUI_REUI_CHECKOUT` 可从本地 Git 对象读取相同 revision，恢复与更新均不再依赖个人临时目录。所有下载完成并通过锁定哈希后才写入，恢复操作不改写已审适配及清单。维护入口为 `pnpm upstream:restore` / `pnpm upstream:check`；组件 `build`、源码对照和样式校验入口会先补齐缓存。
+`upstream/reui/source/` 与 `style-luma.css` 是可重建的本地缓存，不进入 Git；manifest、许可证、公开清单与适配补丁仍受版本控制。`scripts/reui-restore.mjs` 按 manifest 的固定 GitHub revision 下载缺失项，并以源码哈希和 `assets` 中的许可/样式哈希校验；已有内容不匹配时失败，不自动覆盖。完整缓存不访问网络；显式 `EXUI_REUI_CHECKOUT` 可从本地 Git 对象读取相同 revision，恢复与更新均不再依赖个人临时目录。所有下载完成并通过锁定哈希后才写入，恢复操作不改写已审适配及清单。维护入口为 `node scripts/reui-restore.mjs` / `pnpm check`；组件 `build`、源码对照和样式校验入口会先补齐缓存。
 
 ## 样式表源
 

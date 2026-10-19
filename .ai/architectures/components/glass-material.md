@@ -76,8 +76,8 @@ GlassSeed 挂载
 
 | 层 | 门禁 |
 | --- | --- |
-| Token | `pnpm tokens:check` 的 `glass-policy.mjs`：形状、rem 长度、正的 saturation、派生关系、发射保持引用、三主题状态对比度 |
-| 组件行为 | `packages/showcase/src/showcase/Glass.vrt.test.tsx`（computed style 与标记落点，不录截图基线） |
-| 打包产物 | `scripts/verify-packages.mjs` 的 packed tokens 断言、`glass-types.tsx` 负向类型 fixture、SSR seed 断言；`scripts/verify-react-browser.mjs` 的隔离消费者浏览器断言 |
+| Token | `pnpm --filter @exre/exui-tokens tokens:check` 的 `glass-policy.mjs`：形状、rem 长度、正的 saturation、派生关系、发射保持引用、三主题状态对比度 |
+| 组件行为 | `packages/docs/tests/browser/Glass.vrt.test.tsx`（computed style 与标记落点，不录截图基线） |
+| 打包产物 | `packages/components/tests/consumers/verify-packages.mjs` 的 packed tokens 断言、`glass-types.tsx` 负向类型 fixture、SSR seed 断言；`packages/components/tests/consumers/verify-react-browser.mjs` 的隔离消费者浏览器断言 |
 
 这些门禁都只读 computed style 与标记，**不构成对折射渲染的证明**。原因与后果见 [玻璃材质的层叠与运行约束](../../knowledge/components/glass-material-constraints.md)。

@@ -17,4 +17,4 @@
 
 重新审视条件：需要同页不同缩放基准、任意跨 document 表模型归属、依赖提供新的私有几何适配点，或更改16px设计基准时。
 
-证据：`packages/tokens/scripts/token-length-policy.mjs`、`glass-policy.mjs` 及其策略测试；`packages/components/src/lib/rem.ts`、`hooks/use-root-rem.ts`、`lib/recharts.tsx`、`lib/tanstack-table.ts`；`packages/docs/src/showcase/RemSizing.vrt.test.tsx` 与六组 `*RemSizing.vrt.test.tsx` 的16/21.328/32px矩阵、显式数字兼容性及动态布局回归；`scripts/verify-packages.mjs` 的隔离公开包消费者；消费者缩放指南 `skills/exui/references/exui/scaling.md`。源码检查、交互测试与打包证据的范围分别记录，不能推断为远端发布或真实折射效果验收。
+证据：`packages/tokens/scripts/token-length-policy.mjs`、`glass-policy.mjs` 及其策略测试；`packages/components/src/lib/rem.ts`、`hooks/use-root-rem.ts`、`lib/recharts.tsx`、`lib/tanstack-table.ts`；`packages/docs/tests/browser/RemSizing.vrt.test.tsx` 与六组 `*RemSizing.vrt.test.tsx` 的16/21.328/32px矩阵、显式数字兼容性及动态布局回归；`packages/components/tests/consumers/verify-packages.mjs` 的隔离公开包消费者；消费者缩放指南 `skills/exui/references/exui/scaling.md`。源码检查、交互测试与打包证据的范围分别记录，不能推断为远端发布或真实折射效果验收。

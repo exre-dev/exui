@@ -20,12 +20,9 @@ Use Node.js 24 and pnpm 11.9.0. Install from the repository root and use the agg
 
 ```bash
 pnpm install
-pnpm tokens:check
-pnpm typecheck
-pnpm lint
-pnpm build
+pnpm check
 pnpm --filter @exre/exui-docs exec playwright install chromium
-pnpm verify:pack
+pnpm verify
 ```
 
 Run shadcn commands from `packages/components`. The repository root, `packages/docs`, and the internal `packages/tokens` workspace are private; only `@exre/exui` participates in Changesets and publication.

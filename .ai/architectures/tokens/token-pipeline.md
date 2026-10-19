@@ -60,7 +60,7 @@ validate-tokens scripts/validate-tokens.mjs → 结构与取值校验
 
 ```text
 typecheck → build:js → build:cjs → verify-cjs → generate-css --check
-          → copy-css → validate-tokens → node --test scripts/**/*.test.mjs
+          → copy-css → validate-tokens → node --test tests/**/*.test.mjs
 ```
 
 其中五项承担契约级断言：

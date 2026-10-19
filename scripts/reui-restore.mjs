@@ -36,7 +36,7 @@ export async function readUpstreamFile(identity, source, { checkout = process.en
     requireCondition(response.ok, `HTTP ${response.status} for ${source}`)
     return Buffer.from(await response.arrayBuffer())
   } catch (error) {
-    throw new Error(`Cannot download ReUI ${identity.commit}:${source}: ${error.message}. Retry pnpm upstream:restore when connectivity is available, or set EXUI_REUI_CHECKOUT to a local Git checkout containing the pinned commit.`, { cause: error })
+    throw new Error(`Cannot download ReUI ${identity.commit}:${source}: ${error.message}. Retry node scripts/reui-restore.mjs when connectivity is available, or set EXUI_REUI_CHECKOUT to a local Git checkout containing the pinned commit.`, { cause: error })
   }
 }
 
@@ -64,7 +64,7 @@ export async function restoreReuiSnapshot({ snapshot = defaultSnapshot, readSour
   for (const entry of files) {
     const filename = path.join(snapshot, entry.target)
     if (!existsSync(filename)) missing.push(entry)
-    else requireCondition(sha(readFileSync(filename)) === entry.sha256, `ReUI cache hash mismatch: ${entry.target}. Remove the invalid cache file and run pnpm upstream:restore; tracked metadata and adapters must be reviewed separately.`)
+    else requireCondition(sha(readFileSync(filename)) === entry.sha256, `ReUI cache hash mismatch: ${entry.target}. Remove the invalid cache file and run node scripts/reui-restore.mjs; tracked metadata and adapters must be reviewed separately.`)
   }
 
   const download = readSource ?? ((source) => readUpstreamFile(manifest, source))

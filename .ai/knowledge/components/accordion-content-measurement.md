@@ -6,4 +6,4 @@ Radix 在挂载和展开时测量内容区，将结果写入 `--radix-accordion-
 
 浏览器回归使用真实 FAQ 与嵌套示例，通过文字 Range 与展开面板的几何比较检查可见范围，并覆盖重新展开、嵌套项切换和窄宽度换行。仅断言 `aria-expanded` 或文本存在无法发现这个失败模式。测试入口见 [TESTING.md](../../../TESTING.md#visual-tests)。
 
-证据：`packages/components/src/components/ui/accordion.tsx`、`packages/docs/src/showcase/Accordion.vrt.test.tsx`。
+证据：`packages/components/src/components/ui/accordion.tsx`、`packages/docs/tests/browser/Accordion.vrt.test.tsx`。

@@ -13,7 +13,7 @@
 
 决策：增强资格由 `supportsGlassRefraction(view, reference)` 在做 ref 回调时判定，同时试标准属性与 `-webkit-backdrop-filter` 前缀属性，要求两者之一既接受 `blur(1px) saturate(1.2) brightness(1)` 也接受同一串加 URL 引用的形式；探测字面量与 `glass.css` 里实际声明的形状一致（`var()` 在解析期不会被替换，探测必须用字面量）。通过则该 document 的 `documentElement` 得到 `--_exui-glass-reference`，否则不写，链尾落在恒等 `brightness(1)`。函数是纯的、导入期不读 `navigator`，缺失 `CSS.supports`、detached window 与服务端渲染一律返回 `false`。
 
-理由：这条件只依赖引擎自身能力，不需要在每次浏览器发主版本时重跑验证、补表项、或忍受新版本静默降级；`pnpm tokens:check`、Showcase 契约测试与打包消费者门禁共同保证基础材质、标记落点、状态与几何不因这条路径而回退。探测形状与真实声明对齐，是为了避免"测的形状和发的形状不是同一个"这类无效证据。
+理由：这条件只依赖引擎自身能力，不需要在每次浏览器发主版本时重跑验证、补表项、或忍受新版本静默降级；`pnpm --filter @exre/exui-tokens tokens:check`、Showcase 契约测试与打包消费者门禁共同保证基础材质、标记落点、状态与几何不因这条路径而回退。探测形状与真实声明对齐，是为了避免"测的形状和发的形状不是同一个"这类无效证据。
 
 代价：这是一个**语法接受度**检查，不是渲染检查。一个"能解析 url 链、绘制时丢弃整条链"的引擎仍然会通过检查，而此时 `--_exui-glass-reference` 已被写入，滤镜引用与 `blur()`/`saturate()` 共用同一条 `backdrop-filter` 声明，所以丢弃会连基础模糊一起带走。CSS 层面没有"只保留 blur"的回退手段：同属性的两条声明里，一旦含 URL 的那条在级联中胜出，就不存在让浏览器退回上一条的机制（这与"解析即失败"不同，后者才会自然回退）。这条残留风险不能靠加 `@supports` 消除。另外，增强的渲染本身没有任何像素级验证覆盖（明确不做玻璃视觉验证），因此"折射在目标引擎上可用"这一结论目前只有一次性的实测记录，没有进入任何门禁。
 
@@ -21,4 +21,4 @@
 
 重新审视条件：需要在 Chromium 之外的引擎上承诺增强一致性时；目标 Chromium 出现"接受但丢弃 URL 链"的回归时；或要求把"折射渲染可用"纳入发布门禁的真实像素证据时——那时应恢复能力表或改为引擎实测清单，而不是继续放宽语法检查。
 
-证据：`packages/components/src/lib/glass-capabilities.ts` 的 `supportsGlassRefraction` 与 `BASIC_CHAIN` / `referenceChain`；`packages/components/src/components/glass-seed.tsx` 的 `attachDocumentReference`；`packages/components/src/glass.css` 中 `.ex-glass` 的 `backdrop-filter` 声明；`packages/showcase/src/showcase/Glass.vrt.test.tsx` 中"引擎拒绝滤镜链时保留基础 blur"用例（该用例桩掉 `CSS.supports` 并断言桩确实生效）；本地 pinned Chromium 151.0.7922.34 的实测记录。
+证据：`packages/components/src/lib/glass-capabilities.ts` 的 `supportsGlassRefraction` 与 `BASIC_CHAIN` / `referenceChain`；`packages/components/src/components/glass-seed.tsx` 的 `attachDocumentReference`；`packages/components/src/glass.css` 中 `.ex-glass` 的 `backdrop-filter` 声明；`packages/docs/tests/browser/Glass.vrt.test.tsx` 中"引擎拒绝滤镜链时保留基础 blur"用例（该用例桩掉 `CSS.supports` 并断言桩确实生效）；本地 pinned Chromium 151.0.7922.34 的实测记录。

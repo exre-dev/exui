@@ -19,7 +19,7 @@ Real components from the ExUI documentation catalog, shown with demonstration co
 
 - **Components for application interfaces.** Controls, dialogs, navigation, data grids, charts, scheduling, and media, exposed through one React 19 package.
 - **Tokens and themes.** Shared colors, typography, radii, and shadows, with light, dark, and pitch-black themes and density controls. Token entries also work without React.
-- **Typed forms and notifications.** Configure `ExForm` or compose `Form` fields; use `Toaster` and `toast`, or managed `ExMessage` calls, for feedback.
+- **Typed forms and notifications.** Configure or compose typed `Form` fields; use `Toaster` and `toast` for messages, Promise results, and loading updates by ID.
 - **Opt-in Glass surfaces.** Add the shared material treatment to supported components, with an opaque themed background when `backdrop-filter` is unavailable.
 
 ## Package usage
@@ -51,12 +51,12 @@ For framework-neutral use, import `@exre/exui/tokens`, `@exre/exui/tokens/style.
 
 Start with **[ExUI Docs](https://exre-dev.github.io/exui/)** for the component catalog, interactive examples, and guides in English and Simplified Chinese.
 
-- [React package usage](packages/components/README.md): installation, themes, forms, managed notifications, Glass surfaces, sizing, and bundled chart APIs.
+- [React package usage](packages/components/README.md): installation, themes, forms, notifications, Glass surfaces, sizing, and bundled chart APIs.
 - [Internal token workspace](packages/tokens/README.md): token builds, formats, and length policy.
 - [ExUI skill](skills/exui/SKILL.md): component selection, composition, local references, and complete examples.
 - [Docs content](packages/docs/content/en/getting-started/quick-start.mdx): the maintained site source; `packages/docs/content/zh-CN/` contains its Chinese counterpart.
 - [Form reference](skills/exui/references/exui/form.md): configured and composed forms, validation, and lifecycle.
-- [Notification reference](skills/exui/references/exui/notifications.md): `Toaster`, `toast`, and managed `ExMessage` calls.
+- [Notification reference](skills/exui/references/exui/notifications.md): shared `Toaster` and `toast`, Promise results, and loading updates by ID.
 - [Token customization](skills/exui/references/exui/token-customization.md): CSS overrides, theme scope, and foundation references.
 - [Fumadocs theme](skills/exui/references/exui/docs-theme.md): the optional `@exre/exui/docs/theme.css` stylesheet and its consumer prerequisites.
 
@@ -76,28 +76,33 @@ Use **Node.js 24** and **pnpm 11.9.0**. From the repository root:
 
 ```bash
 pnpm install
-pnpm upstream:restore
 pnpm dev
 ```
 
+`pnpm dev` builds Tokens and components, then starts the docs site and watches library source. Successful library rebuilds refresh the page, resetting example drafts; docs edits retain their usual hot updates. Package manifests and build configuration require a restart. The docs site continues consuming built public package entries.
+
 | Command | Purpose |
 | --- | --- |
-| `pnpm watch` | Build tokens and components, then watch library source. |
-| `pnpm tokens:check` | Validate token data, CSS, semantics, and exports. |
-| `pnpm typecheck` | Check types across the workspaces. |
-| `pnpm lint` | Lint source with Oxlint. |
-| `pnpm build` | Build tokens, components, declarations, and the static docs site. |
-| `pnpm verify:pack` | Verify the packed public package in isolated consumers. |
+| `pnpm check` | Prepare required types and run lint, type checks and source consistency checks without Chromium. |
+| `pnpm verify` | Run the complete CI workflow, including builds, regressions, Chromium, packed consumers and both docs deployment bases. |
+| `pnpm build` | Build Tokens, components and the static docs site. |
+| `pnpm typecheck` / `pnpm lint` | Run a focused workspace check. |
+| `pnpm test` | Run all retained regressions: Node, Chromium, packed consumers, Skill examples and both docs deployment bases, preparing their builds. |
+| `pnpm test:node [files...]` | Prepare the public library and run all or selected Node regression files under package `tests/` directories. |
+| `pnpm test:visual` / `pnpm verify:pack` | Run browser fixtures or isolated packed consumers after a build. |
+| `pnpm changeset` / `pnpm version-packages` | Maintain release notes and package versions. |
 
-Component builds restore and verify their pinned source cache automatically; a complete cache works offline. After changing component adapters or public exports, run `pnpm upstream:check`. See [source maintenance gates](TESTING.md#source-maintenance-gates) for the locks and update procedure.
+Component builds and source checks restore and verify their pinned source cache automatically. A complete cache works offline. Browser gates need Chromium installed once with `pnpm --filter @exre/exui-docs exec playwright install chromium`. `verify` leaves the final docs output built and verified at `/exui/`; standalone `build` honors `EXUI_DOCS_BASE` (default `/`). See [Testing](TESTING.md) for focused checks, low-frequency generation/restoration commands and hosting prerequisites.
 
-`pnpm watch` does not start the docs site or watch manifests and build configuration; restart or rebuild after those changes. The docs site consumes built public package entries. See [Testing](TESTING.md) for the full checks, visual-test prerequisites, and skill example validation, and [Contributing](CONTRIBUTING.md) for DCO and Changeset requirements. Changesets version only the public package; the private docs and tokens workspaces must never be selected for release.
+See [Testing](TESTING.md) for the full CI checks, visual-test prerequisites, and skill example validation. See [Contributing](CONTRIBUTING.md) for Changesets and DCO requirements.
+
+Changesets version only the public package; the private docs and tokens workspaces must never be selected for release.
 
 ## Docs hosting
 
 The production target is [ExUI Docs](https://exre-dev.github.io/exui/). `pnpm build` writes the static site to `packages/docs/build/client`. Set `EXUI_DOCS_BASE=/exui/` for a subpath build; supply the same base when verifying and hosting it.
 
-Host the complete directory, including `.data/`, search indexes, assets, and example source files, without an SPA fallback or Node service. Each example share route provides readable HTML, `source.md`, and `source.json` from one source export. Run `pnpm docs:content:check` for bilingual content and link checks; see [Testing](TESTING.md) for static-site, source-export, browser, and packed-consumer checks.
+Host the complete directory, including `.data/`, search indexes, assets, and example source files, without an SPA fallback or Node service. Each example share route provides readable HTML, `source.md`, and `source.json` from one source export. Run `pnpm check` for bilingual content and link checks; see [Testing](TESTING.md) for static-site, source-export, browser, and packed-consumer checks.
 
 <details>
 <summary>GitHub Pages setup and recovery</summary>

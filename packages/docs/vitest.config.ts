@@ -11,7 +11,7 @@ export default defineConfig({
   optimizeDeps: { include: [...exampleDependencies, "react-router"] },
   test: {
     name: "visual",
-    include: ["src/**/*.vrt.test.tsx"],
+    include: ["tests/browser/**/*.vrt.test.tsx"],
     fileParallelism: false,
     browser: {
       enabled: true,
