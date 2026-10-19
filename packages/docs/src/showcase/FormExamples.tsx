@@ -2,9 +2,10 @@ import * as React from "react"
 import { z } from "zod"
 import { useShowcaseLanguage } from "./language"
 import { useIssueSeparator, useT } from "./translations"
+import "./examples/field/exui-field-layout.css"
 import {
   Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle,
-  DialogTrigger, ExForm, ExItem, Form, FormErrorSummary, FormItem, FormList, Input, useForm,
+  DialogTrigger, Field, FieldContent, FieldDescription, FieldLabel, Form, FormErrorSummary, FormField, FormList, Input, useForm,
 } from "@exre/exui"
 
 const profileSchema = z.object({
@@ -67,7 +68,7 @@ function ConfiguredProfile() {
   const issueSeparator = useIssueSeparator()
   const [output, setOutput] = React.useState<string>("")
   return <Example title={t("Configured profile")} description={t("One schema binds the fields. Age stays text while editing and becomes a number on submit.")}>
-    <ExForm schema={schemas.profileSchema} defaultValues={{ name: "", email: "", age: "", birthDate: "2000-01-15" }}
+    <Form schema={schemas.profileSchema} defaultValues={{ name: "", email: "", age: "", birthDate: "2000-01-15" }}
       fields={[
         { name: "name", label: t("Name"), control: "text", required: true },
         { name: "email", label: t("Email"), control: "email", required: true },
@@ -79,21 +80,23 @@ function ConfiguredProfile() {
       issueSeparator={issueSeparator}
       onSubmit={(values) => { setOutput(JSON.stringify(values, null, 2)) }}>
       <FormErrorSummary title={t("Please check the following issues")} />
-    </ExForm>
+    </Form>
     {output && <pre className="form-example-output" aria-live="polite">{output}</pre>}
   </Example>
 }
 
 function ItemLayoutPreview() {
   const t = useT()
+  const standaloneId = React.useId()
   const form = useForm({ schema: itemLayoutSchema, defaultValues: { handle: "" } })
   return <Example title={t("Item layouts")} description={t("A standalone input and a form field share the same title and control layout.")}>
     <div style={{ display: "grid", gap: "1.5rem", maxWidth: "28rem" }}>
-      <ExItem title={t("Standalone input")} desc={t("This input is not registered with a form.")} layout="horizontal">
-        <Input placeholder={t("Try an independent input")} />
-      </ExItem>
+      <Field orientation="horizontal"><FieldLabel htmlFor={standaloneId}>{t("Standalone input")}</FieldLabel><FieldContent>
+        <Input id={standaloneId} aria-describedby={`${standaloneId}-description`} placeholder={t("Try an independent input")} />
+        <FieldDescription id={`${standaloneId}-description`}>{t("This input is not registered with a form.")}</FieldDescription>
+      </FieldContent></Field>
       <Form form={form} onSubmit={() => {}} layout="horizontal">
-        <FormItem form={form} name="handle" label={t("Form handle")} description={t("This field overrides the form layout.")}
+        <FormField form={form} name="handle" label={t("Form handle")} description={t("This field overrides the form layout.")}
           control="text" layout="vertical" />
       </Form>
     </div>
@@ -102,6 +105,7 @@ function ItemLayoutPreview() {
 
 function ContentSizingPreview() {
   const t = useT()
+  const standaloneId = React.useId()
   const [align, setAlign] = React.useState<"left" | "right">("right")
   const [width, setWidth] = React.useState("18rem")
   const [narrow, setNarrow] = React.useState(false)
@@ -116,13 +120,15 @@ function ContentSizingPreview() {
     </div>
     <div style={{ display: "grid", gap: "1.5rem", width: narrow ? "20rem" : "100%", maxWidth: "100%" }}>
       <Form form={form} onSubmit={() => {}} layout="horizontal" contentMaxWidth={width} contentAlign={align}>
-        <ExItem title={t("Shared defaults")} desc={t("An independent item inherits the form settings.")}><Input /></ExItem>
-        <FormItem form={form} name="inherited" label={t("Inherited content")} control="text" />
-        <FormItem form={form} name="overridden" label={t("Local override")} description={t("Always left aligned, up to 10rem in a horizontal row.")}
+        <div className="exui-field-layout" style={{ "--exui-standalone-control-width": width } as React.CSSProperties}>
+          <Field><FieldLabel htmlFor={standaloneId}>{t("Standalone input")}</FieldLabel><FieldContent data-align={align}><Input id={standaloneId} aria-describedby={`${standaloneId}-description`} /><FieldDescription id={`${standaloneId}-description`}>{t("This input is not registered with a form.")}</FieldDescription></FieldContent></Field>
+        </div>
+        <FormField form={form} name="inherited" label={t("Inherited content")} control="text" />
+        <FormField form={form} name="overridden" label={t("Local override")} description={t("Always left aligned, up to 10rem in a horizontal row.")}
           control="text" contentMaxWidth="10rem" contentAlign="left" />
-        <FormItem form={form} name="full" label={t("Unlimited content")} control="text" contentMaxWidth="none" />
+        <FormField form={form} name="full" label={t("Unlimited content")} control="text" contentMaxWidth="none" />
       </Form>
-      <ExForm schema={itemLayoutSchema} defaultValues={{ handle: "" }} layout="horizontal" contentMaxWidth={width} contentAlign={align}
+      <Form schema={itemLayoutSchema} defaultValues={{ handle: "" }} layout="horizontal" contentMaxWidth={width} contentAlign={align}
         fields={[{ name: "handle", label: t("Configured content"), description: t("The configured form uses the same defaults."), control: "text" }]}
         footer={null} onSubmit={() => {}} />
     </div>
@@ -137,8 +143,8 @@ function ControlGallery() {
     { value: "first", label: t("First option") },
     { value: "second", label: t("Second option") },
   ] as const
-  return <Example title={t("Every built-in input type")} description={t("Try each ExForm control, then submit to inspect its values locally.")}>
-    <ExForm schema={schemas.controlGallerySchema} defaultValues={{
+  return <Example title={t("Every built-in input type")} description={t("Try each Form control, then submit to inspect its values locally.")}>
+    <Form schema={schemas.controlGallerySchema} defaultValues={{
       text: "", email: "", password: "", number: "", date: "1995-02-10", notes: "",
       select: "first", radio: "first", checkbox: false, switch: false,
       checkboxes: [], multiSelect: [], suggestion: "", files: [],
@@ -162,7 +168,7 @@ function ControlGallery() {
     formatIssue={t} issueSeparator={issueSeparator}
     onSubmit={(values) => setOutput(JSON.stringify({ ...values, files: values.files.map((file) => file.name) }, null, 2))}>
       <FormErrorSummary title={t("Please check the following issues")} />
-    </ExForm>
+    </Form>
     {output && <pre className="form-example-output" aria-live="polite">{output}</pre>}
   </Example>
 }
@@ -176,14 +182,14 @@ function ComposedPreferences() {
   return <Example title={t("Composed preferences")} description={t("Custom rendering uses the same typed field, errors, and focus target as built-in controls.")}>
     <Form form={form} layout="horizontal" formatIssue={t} issueSeparator={issueSeparator} onSubmit={() => { setSaved(true) }}>
       <FormErrorSummary form={form} title={t("Please check the following issues")} />
-      <FormItem form={form} name="workspace" label={t("Workspace")} description={t("This field uses a custom Input render.")}
+      <FormField form={form} name="workspace" label={t("Workspace")} description={t("This field uses a custom Input render.")}
         render={({ field, state, accessibility }) => <Input {...accessibility} ref={field.ref}
           value={field.value} onChange={(event) => field.onChange(event.target.value)}
           onBlur={field.onBlur} disabled={state.disabled} />} />
-      <FormItem form={form} name="role" label={t("Role")} control="select" controlProps={{ options: [
+      <FormField form={form} name="role" label={t("Role")} control="select" controlProps={{ options: [
         { value: "member", label: t("Member") }, { value: "admin", label: t("Administrator") },
       ] }} />
-      <FormItem form={form} name="notifications" label={t("Email notifications")} control="checkbox" />
+      <FormField form={form} name="notifications" label={t("Email notifications")} control="checkbox" />
       <div className="form-example-actions">
         <Button type="submit" disabled={form.state.isSubmitting}>{t("Save preferences")}</Button>
         <Button type="button" variant="secondary" onClick={() => form.setFocus("workspace")}>{t("Focus workspace")}</Button>
@@ -203,13 +209,13 @@ function TeamList() {
   return <Example title={t("Dependencies and member list")} description={t("A conditional team name preserves its draft. Member rows support adding, moving, and removing.")}>
     <Form form={form} formatIssue={t} issueSeparator={issueSeparator} onSubmit={(values) => { setSaved(JSON.stringify(values, null, 2)) }}>
       <FormErrorSummary form={form} title={t("Please check the following issues")} />
-      <FormItem form={form} name="hasTeam" label={t("Enable team mode")} control="switch" />
-      <FormItem form={form} name="teamName" label={t("Team name")} control="text" dependencies={["hasTeam"]}
+      <FormField form={form} name="hasTeam" label={t("Enable team mode")} control="switch" />
+      <FormField form={form} name="teamName" label={t("Team name")} control="text" dependencies={["hasTeam"]}
         visibleWhen={(values) => values.hasTeam} />
       <FormList form={form} name="members" label={t("Members")} defaultItem={{ name: "" }}
         render={({ items, append, remove, move }) => <div className="form-example-list">
           {items.map(({ key, index }) => <div key={key} className="form-example-row">
-            <FormItem form={form} name={`members.${index}.name`} label={`${t("Member")} ${index + 1}`} control="text" />
+            <FormField form={form} name={`members.${index}.name`} label={`${t("Member")} ${index + 1}`} control="text" />
             <div className="form-example-actions">
               <Button type="button" variant="secondary" disabled={index === 0 || form.state.isSubmitting}
                 onClick={() => move(index, index - 1)}>{t("Move up")}</Button>
@@ -242,7 +248,7 @@ function ApplicationDialog() {
       <DialogContent className="form-example-dialog" closeLabel={t("Close")}>
         <DialogHeader><DialogTitle>{t("Local application preview")}</DialogTitle>
           <DialogDescription>{t("No application is sent. Use Back to revisit the contact draft.")}</DialogDescription></DialogHeader>
-        <ExForm form={form} clearOnDestroy fields={[
+        <Form form={form} clearOnDestroy fields={[
           { name: "email", label: t("Contact email"), control: "email" },
           { name: "accepted", label: t("I understand this is a local preview"), control: "checkbox" },
         ]} steps={[
@@ -255,7 +261,7 @@ function ApplicationDialog() {
         formatIssue={t} issueSeparator={issueSeparator}
         onSubmit={() => { setSaved(true); setOpen(false); form.reset() }}>
           <FormErrorSummary title={t("Please check the following issues")} />
-        </ExForm>
+        </Form>
       </DialogContent>
     </Dialog>
     {saved && <p role="status">{t("Application preview confirmed locally.")}</p>}
@@ -273,7 +279,7 @@ function FilesAndAsync() {
       aria-pressed={failNext} onClick={() => setFailNext((value) => !value)}>
       {t(failNext ? "Next submit simulates a failure" : "Next submit succeeds")}
     </Button></div>
-    <ExForm schema={schemas.attachmentSchema} defaultValues={{ title: "", attachments: [] }} fields={[
+    <Form schema={schemas.attachmentSchema} defaultValues={{ title: "", attachments: [] }} fields={[
       { name: "title", label: t("Report title"), control: "text" },
       { name: "attachments", label: t("Attachments"), control: "files", controlProps: {
         accept: "image/png,image/jpeg,text/plain",
@@ -298,7 +304,7 @@ function FilesAndAsync() {
       }
     }}>
       <FormErrorSummary title={t("Please check the following issues")} />
-    </ExForm>
+    </Form>
     {saved && <p role="status">{saved}</p>}
   </Example>
 }

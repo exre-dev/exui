@@ -5,7 +5,7 @@ import { page } from "vitest/browser"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { z } from "zod"
 import {
-  ExForm, Form, FormItem, FormErrorSummary, FormList, useForm, useFieldArray, useWatch,
+  Form, FormField, FormErrorSummary, FormList, useForm, useFieldArray, useWatch,
   type FormInstance, type StandardSchemaV1,
 } from "@exre/exui"
 
@@ -25,15 +25,15 @@ let form: FormInstance<Values, Values>
 function Fixture({ schema }: { schema: StandardSchemaV1<Values, Values> }) {
   form = useForm({ schema, defaultValues: defaults })
   return <Form form={form} onSubmit={() => {}}>
-    <FormItem form={form} name="age" label="Age" control="number" />
-    <FormItem form={form} name="profile.message" label="Message" control="text" />
-    <FormItem form={form} name="profile.type" label="Type" control="text" />
-    <FormItem form={form} name="profile.types" label="Types" control="text" />
-    <FormItem form={form} name="profile.issues" label="Issues" control="text" />
-    <FormItem form={form} name="profile.ref" label="Ref" control="text" />
-    <FormItem form={form} name="future" label="Future" control="text" />
+    <FormField form={form} name="age" label="Age" control="number" />
+    <FormField form={form} name="profile.message" label="Message" control="text" />
+    <FormField form={form} name="profile.type" label="Type" control="text" />
+    <FormField form={form} name="profile.types" label="Types" control="text" />
+    <FormField form={form} name="profile.issues" label="Issues" control="text" />
+    <FormField form={form} name="profile.ref" label="Ref" control="text" />
+    <FormField form={form} name="future" label="Future" control="text" />
     <FormList form={form} name="rows" defaultItem={{ title: "New" }} render={({ items }) => items.map(item =>
-      <FormItem key={item.key} form={form} name={`rows.${item.index}.title`} label={`Row ${item.index}`} control="text" />
+      <FormField key={item.key} form={form} name={`rows.${item.index}.title`} label={`Row ${item.index}`} control="text" />
     )} />
     <FormErrorSummary form={form} />
   </Form>
@@ -49,17 +49,17 @@ beforeEach(() => { const host = document.createElement("div"); document.body.rep
 afterEach(() => { root.unmount(); vi.restoreAllMocks() })
 
 describe("Form public schema and error contract", () => {
-  it("renders the error summary in ExForm only when explicitly composed", async () => {
+  it("renders the error summary in Form only when explicitly composed", async () => {
     const schema = z.object({ age: z.string().min(1, "Enter your age") })
     const fields = [{ name: "age", label: "Age", control: "number" }] as const
-    root.render(<ExForm schema={schema} defaultValues={{ age: "" }} fields={fields} onSubmit={() => {}} />)
+    root.render(<Form schema={schema} defaultValues={{ age: "" }} fields={fields} onSubmit={() => {}} />)
     await expect.element(page.getByRole("spinbutton", { name: "Age" })).toBeVisible()
     await page.getByRole("button", { name: "提交" }).click()
     await expect.element(page.getByText("请检查以下问题", { exact: true })).not.toBeInTheDocument()
 
-    root.render(<ExForm key="with-summary" schema={schema} defaultValues={{ age: "" }} fields={fields} onSubmit={() => {}}>
+    root.render(<Form key="with-summary" schema={schema} defaultValues={{ age: "" }} fields={fields} onSubmit={() => {}}>
       <FormErrorSummary />
-    </ExForm>)
+    </Form>)
     await expect.element(page.getByRole("spinbutton", { name: "Age" })).toBeVisible()
     await page.getByRole("button", { name: "提交" }).click()
     await expect.element(page.getByText("请检查以下问题", { exact: true })).toBeVisible()
@@ -73,7 +73,7 @@ describe("Form public schema and error contract", () => {
     function Transformed() {
       current = useForm({ schema, defaultValues: { age: "invalid" } })
       const watchedAge = useWatch({ form: current, name: "age" })
-      return <Form form={current} onSubmit={onSubmit}><FormItem form={current} name="age" label="Age" control="number" /><output data-testid="watched-age">{watchedAge}</output></Form>
+      return <Form form={current} onSubmit={onSubmit}><FormField form={current} name="age" label="Age" control="number" /><output data-testid="watched-age">{watchedAge}</output></Form>
     }
     root.render(<Transformed />)
     await expect.element(page.getByRole("spinbutton", { name: "Age" })).toBeVisible()
@@ -137,7 +137,7 @@ describe("Form public schema and error contract", () => {
     function Owners() {
       active = useForm({ schema, defaultValues: defaults })
       return <Form form={active} onSubmit={(_data, context) => context.setFieldError("profile.message", { message: "server" })}>
-        <FormItem form={active} name="profile.message" label="Message" control="text" />
+        <FormField form={active} name="profile.message" label="Message" control="text" />
       </Form>
     }
     root.render(<Owners />)
@@ -202,7 +202,7 @@ describe("Form object list identity and issue movement", () => {
       form = useForm({ schema, defaultValues: defaults })
       array = useFieldArray({ form, name: "rows" })
       return <Form form={form} onSubmit={() => {}}>{array.items.map(item =>
-        <FormItem key={item.key} form={form} name={`rows.${item.index}.title`} label={`Row ${item.index}`} control="text" />
+        <FormField key={item.key} form={form} name={`rows.${item.index}.title`} label={`Row ${item.index}`} control="text" />
       )}</Form>
     }
     root.render(<List />)

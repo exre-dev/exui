@@ -4,7 +4,7 @@ import { createRoot, type Root } from "react-dom/client"
 import { page } from "vitest/browser"
 import { afterEach, beforeEach, expect, it } from "vitest"
 import { z } from "zod"
-import { ExForm } from "@exre/exui"
+import { Form } from "@exre/exui"
 
 const schema = z.object({
   text: z.string(), search: z.array(z.string()), date: z.string(),
@@ -20,7 +20,7 @@ beforeEach(() => {
 afterEach(() => root.unmount())
 
 it("uses the same idle field background across form controls", async () => {
-  root.render(<ExForm schema={schema} defaultValues={{ text: "", search: [], date: "", files: [] }}
+  root.render(<Form schema={schema} defaultValues={{ text: "", search: [], date: "", files: [] }}
     fields={[
       { name: "text", label: "Plain", control: "text" },
       { name: "search", label: "Search", control: "multi-select", controlProps: { options: [{ value: "one", label: "One" }] } },

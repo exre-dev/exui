@@ -46,7 +46,7 @@ describe("ExUI page interactions", () => {
     const FormPage = pages.form
     root.render(<FormPage />)
     let submissions = 0
-    const name = page.getByRole("textbox", { name: "Project name", exact: true })
+    const name = page.getByRole("textbox", { name: "Project name", exact: true }).first()
     await name.fill("")
     name.element().closest("form")!.addEventListener("submit", () => { submissions++ })
     await page.getByRole("button", { name: "Save project", exact: true }).click()
@@ -54,13 +54,13 @@ describe("ExUI page interactions", () => {
     await name.fill("Borealis")
     await page.getByRole("button", { name: "Save project", exact: true }).click()
     expect(submissions).toBe(2)
-    await expect.element(page.getByRole("status")).toHaveTextContent("Borealis")
+    await expect.element(page.getByRole("status").last()).toHaveTextContent("Borealis")
   })
 
-  it("reviews the ExForm draft before launching and resets the completed flow", async () => {
-    const ExFormPage = pages["ex-form"]
-    root.render(<ExFormPage />)
-    const projectName = page.getByRole("textbox", { name: "Project name", exact: true })
+  it("reviews the configured Form draft before launching and resets the completed flow", async () => {
+    const ConfiguredFormPage = pages.form
+    root.render(<ConfiguredFormPage />)
+    const projectName = page.getByRole("textbox", { name: "Project name", exact: true }).last()
     await expect.element(projectName).toBeVisible()
     let submissions = 0
     projectName.element().closest("form")!.addEventListener("submit", () => { submissions++ })
@@ -71,15 +71,15 @@ describe("ExUI page interactions", () => {
     await page.getByRole("button", { name: "Continue", exact: true }).click()
     await expect.element(page.getByRole("button", { name: "Launch project", exact: true })).toBeVisible()
     expect(submissions).toBe(0)
-    await expect.element(page.getByRole("status")).not.toBeInTheDocument()
+    await expect.element(page.getByRole("status").last()).not.toBeInTheDocument()
     await page.getByRole("button", { name: "Launch project", exact: true }).click()
     expect(submissions).toBe(1)
-    await expect.element(page.getByRole("status")).toHaveTextContent("Aurora is ready")
-    await page.getByRole("button", { name: "Reset", exact: true }).click()
+    await expect.element(page.getByRole("status").last()).toHaveTextContent("Aurora is ready")
+    await page.getByRole("button", { name: "Reset", exact: true }).last().click()
     await expect.element(projectName).toBeVisible()
     await expect.element(projectName).toHaveValue("Aurora")
     await expect.element(page.getByRole("button", { name: "Continue", exact: true })).toBeVisible()
-    await expect.element(page.getByRole("status")).not.toBeInTheDocument()
+    await expect.element(page.getByRole("status").last()).not.toBeInTheDocument()
     await expect.element(page.getByRole("button", { name: "Back", exact: true })).not.toBeInTheDocument()
   })
 })

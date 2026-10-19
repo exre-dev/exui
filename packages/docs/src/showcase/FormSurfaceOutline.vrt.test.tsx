@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client"
 import { page } from "vitest/browser"
 import { expect, it } from "vitest"
 import { z } from "zod"
-import { ExForm } from "@exre/exui"
+import { Form } from "@exre/exui"
 
 const schema = z.object({ text: z.string(), notes: z.string(), choice: z.string(), date: z.string(), search: z.array(z.string()), files: z.array(z.custom<File>()) })
 
@@ -16,7 +16,7 @@ it.each(["light", "dark", "pitch-black"])("keeps Input borders transparent and o
   document.body.replaceChildren(host)
   const root = createRoot(host)
   try {
-    root.render(<ExForm schema={schema} defaultValues={{ text: "", notes: "", choice: "one", date: "", search: [], files: [] }}
+    root.render(<Form schema={schema} defaultValues={{ text: "", notes: "", choice: "one", date: "", search: [], files: [] }}
       fields={[
         { name: "text", label: "Text", control: "text" },
         { name: "notes", label: "Notes", control: "textarea" },

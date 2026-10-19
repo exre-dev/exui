@@ -6,7 +6,7 @@ import { useFieldArray } from "@/hooks/use-form-field-array"
 import { FormContext, getInternal } from "@/lib/forms/context"
 import type { FormListProps, FormObjectArrayPath, FormValues } from "@/lib/forms/types"
 import { cn } from "@/lib/utils"
-import { formColumnStyle } from "./form"
+import { formColumnStyle } from "./form-shell"
 
 export function FormList<I extends FormValues, O, P extends FormObjectArrayPath<I>>(props: FormListProps<I, O, P>) {
   const { form, name, render, label, description, className, colSpan = "full", columns, layout } = props

@@ -8,12 +8,12 @@ const families: { module: PageModule; ids: string[] }[] = [
   { module: "content", ids: ["card", "avatar", "table", "chart", "carousel", "aspect-ratio", "item", "attachment", "bubble", "message", "message-scroller", "trace", "kbd", "marker", "empty", "progress", "skeleton", "spinner", "sonner"] },
   { module: "advanced-controls", ids: ["badge", "alert", "code-block", "file-type", "icon-tile", "icon-stack", "frame", "timeline", "scrollspy"] },
   { module: "data-workflows", ids: ["data-grid", "filters", "tree", "sortable", "kanban", "event-calendar", "gantt"] },
-  { module: "exui", ids: ["glass", "form", "ex-form", "ex-item", "ex-message"] },
+  { module: "exui", ids: ["glass", "form", "ex-message"] },
 ]
 
 const names: Record<string, string> = {
+  "ex-message": "ExMessage",
   "input-otp": "Input OTP", kbd: "Kbd", scrollspy: "Scrollspy",
-  "ex-form": "ExForm", "ex-item": "ExItem", "ex-message": "ExMessage",
 }
 
 export const catalogPages: CatalogPage[] = families.flatMap(({ module, ids }) => ids.map((id) => ({

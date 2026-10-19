@@ -2,7 +2,7 @@
 
 # ExUI public exports
 
-Generated from the current repository package root (@exre/exui, source manifest version 0.8.0); 1550 names. The version is source metadata, not a statement about a published tarball. This symbol inventory does not define props; read the installed package declarations for the consuming version.
+Generated from the current repository package root (@exre/exui, source manifest version 1.0.0); 1547 names. The version is source metadata, not a statement about a published tarball. This symbol inventory does not define props; read the installed package declarations for the consuming version.
 
 | Public name | Kind | Related contract |
 | --- | --- | --- |
@@ -645,15 +645,6 @@ Generated from the current repository package root (@exre/exui, source manifest 
 | `EventCalendarWeekRow` | type | [contract](../components/event-calendar.md) |
 | `EventCalendarWeekView` | value | [contract](../components/event-calendar.md) |
 | `eventsOverlap` | value | [contract](../components/event-calendar.md) |
-| `ExForm` | value | [contract](../exui/form.md) |
-| `ExFormCommonProps` | type | [contract](../exui/form.md) |
-| `ExFormFooterArguments` | type | [contract](../exui/form.md) |
-| `ExFormInstanceProps` | type | [contract](../exui/form.md) |
-| `ExFormSchemaProps` | type | [contract](../exui/form.md) |
-| `ExItem` | value | [contract](../exui/form.md) |
-| `ExItemLayout` | type | [contract](../exui/form.md) |
-| `ExItemProps` | type | [contract](../exui/form.md) |
-| `ExItemSpan` | type | [contract](../exui/form.md) |
 | `ExMessage` | value | [contract](../exui/notifications.md) |
 | `ExMessageContext` | value | [contract](../exui/notifications.md) |
 | `ExMessageContextProps` | type | [contract](../exui/notifications.md) |
@@ -816,6 +807,10 @@ Generated from the current repository package root (@exre/exui, source manifest 
 | `FormCheckboxControlProps` | type | [contract](../exui/form.md) |
 | `FormColumnCount` | type | [contract](../exui/form.md) |
 | `FormColumns` | type | [contract](../exui/form.md) |
+| `FormComposedProps` | type | [contract](../exui/form.md) |
+| `FormConfiguredCommonProps` | type | [contract](../exui/form.md) |
+| `FormConfiguredInstanceProps` | type | [contract](../exui/form.md) |
+| `FormConfiguredSchemaProps` | type | [contract](../exui/form.md) |
 | `FormDateControlProps` | type | [contract](../exui/form.md) |
 | `FormDefaults` | type | [contract](../exui/form.md) |
 | `FormErrorInput` | type | [contract](../exui/form.md) |
@@ -824,18 +819,21 @@ Generated from the current repository package root (@exre/exui, source manifest 
 | `FormErrors` | type | [contract](../exui/form.md) |
 | `FormErrorSummary` | value | [contract](../exui/form.md) |
 | `FormErrorSummaryProps` | type | [contract](../exui/form.md) |
+| `FormField` | value | [contract](../exui/form.md) |
 | `FormFieldArray` | type | [contract](../exui/form.md) |
 | `FormFieldBase` | type | [contract](../exui/form.md) |
 | `FormFieldBinding` | type | [contract](../exui/form.md) |
 | `FormFieldConfig` | type | [contract](../exui/form.md) |
+| `FormFieldLayout` | type | [contract](../exui/form.md) |
+| `FormFieldProps` | type | [contract](../exui/form.md) |
+| `FormFieldSpan` | type | [contract](../exui/form.md) |
 | `FormFieldState` | type | [contract](../exui/form.md) |
 | `FormFilesControlProps` | type | [contract](../exui/form.md) |
+| `FormFooterArguments` | type | [contract](../exui/form.md) |
 | `FormInput` | type | [contract](../exui/form.md) |
 | `FormInputControlProps` | type | [contract](../exui/form.md) |
 | `FormInstance` | type | [contract](../exui/form.md) |
 | `FormIssue` | type | [contract](../exui/form.md) |
-| `FormItem` | value | [contract](../exui/form.md) |
-| `FormItemProps` | type | [contract](../exui/form.md) |
 | `FormLayout` | type | [contract](../exui/form.md) |
 | `FormLayoutOptions` | type | [contract](../exui/form.md) |
 | `FormList` | value | [contract](../exui/form.md) |
@@ -849,7 +847,6 @@ Generated from the current repository package root (@exre/exui, source manifest 
 | `FormOutput` | type | [contract](../exui/form.md) |
 | `FormPath` | type | [contract](../exui/form.md) |
 | `FormPathValue` | type | [contract](../exui/form.md) |
-| `FormProps` | type | [contract](../exui/form.md) |
 | `FormRenderArguments` | type | [contract](../exui/form.md) |
 | `FormSchema` | type | [contract](../exui/form.md) |
 | `FormSelectControlProps` | type | [contract](../exui/form.md) |

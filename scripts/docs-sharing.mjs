@@ -105,8 +105,11 @@ export async function loadShareExamples(root = repository) {
   const exui = parse(exuiSource, read(path.join(root, exuiSource)))
   const pageFunctions = new Map()
   walk(exui, node => {
-    if (ts.isVariableDeclaration(node) && node.name.getText() === 'pages') {
-      for (const item of node.initializer.properties) pageFunctions.set(item.initializer.text, item.name.text)
+    if (ts.isVariableDeclaration(node) && ['pages', 'previewFamilies'].includes(node.name.getText())) {
+      for (const item of node.initializer.properties) {
+        if (node.name.getText() === 'previewFamilies') pageFunctions.set(item.name.text, item.initializer.text)
+        else if (!pageFunctions.has(item.initializer.text)) pageFunctions.set(item.initializer.text, item.name.text)
+      }
     }
   })
   for (const statement of exui.statements.filter(ts.isFunctionDeclaration)) {
@@ -176,7 +179,7 @@ function isolateExui(text, example) {
   const statements = source.statements.filter(node => {
     if (ts.isImportDeclaration(node)) return node.moduleSpecifier.text !== '../Preview'
     if (ts.isFunctionDeclaration(node)) return node.name.text === 'useCopy'
-    return ts.isVariableStatement(node) && !node.declarationList.declarations.some(declaration => declaration.name.getText(source) === 'pages')
+    return ts.isVariableStatement(node) && !node.declarationList.declarations.some(declaration => ['pages', 'previewFamilies'].includes(declaration.name.getText(source)))
   })
   const output = printer.printFile(ts.factory.updateSourceFile(source, [...statements, entry]))
   transformed.dispose()

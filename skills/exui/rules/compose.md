@@ -14,7 +14,7 @@ Settings rails become horizontal or collapse below the host's small breakpoint. 
 
 ## Fill regions by responsibility
 
-1. Select the matching ExUI public component: DataGrid for table interactions, Filters for query editing, Kanban for boards, ExForm/Form for validated input, ExItem for standalone title/description/control presentation.
+1. Select the matching ExUI public component: DataGrid for table interactions, Filters for query editing, Kanban for boards, Form for validated input, Field primitives for standalone title/description/control presentation.
 2. Use public primitives for local composition: Tabs, Dialog, AlertDialog, Sheet, Card, Frame, Empty, Skeleton, Command.
 3. Read a relevant [local pattern](../references/components.md), then compose its behavior using the installed ExUI API.
 
@@ -26,7 +26,7 @@ Read [components](components.md) for DataGrid's table instance, Filters' query t
 
 Keep [Filters chips](../references/exui/filters.md) joined and let the toolbar wrap complete conditions; avoid adding rounded corners or multiline labels to individual segments.
 
-A settings form uses [Form](../references/exui/form.md) rather than a hand-built validator. An independent titled control uses ExItem. Titled overlays use Dialog composition; the old Modal export is removed.
+A settings form uses [Form](../references/exui/form.md) rather than a hand-built validator. An independent titled control uses [Field primitives](../references/exui/field-layout.md) with explicit labels and ARIA. Titled overlays use Dialog composition; the old Modal export is removed.
 
 ## Headers, states and responsive behavior
 

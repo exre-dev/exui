@@ -14,25 +14,49 @@ Form：将共享草稿与校验、提交连接起来。
 
 ### ExUI Form 生命周期
 
-`useForm` 持有稳定的草稿和校验 schema；`Form` 接入提交与字段状态。schema 转换后的输入、输出类型可能不同，校验与提交也可能异步。`FormItem` 绑定字段路径，`FormErrorSummary` 展示校验问题。跨重渲染保持同一表单实例；即使同时显示通知，字段错误仍应留在表单内。
+`useForm` 持有稳定的草稿和校验 schema；`Form` 接入提交与字段状态。schema 转换后的输入、输出类型可能不同，校验与提交也可能异步。`FormField` 绑定字段路径，`FormErrorSummary` 展示校验问题。组合式 Form 要求 children 和同源实例，不接收 fields 或配置式 footer/步骤属性；包装器使用 `FormComposedProps<I, O>`。跨重渲染保持同一表单实例；即使同时显示通知，字段错误仍应留在表单内。
 
 使用下方 Zod schema 时，消费应用需自行安装 `zod`。
 
 ```tsx verify
-import { Button, Form, FormItem, useForm } from "@exre/exui"
+import { Button, Form, FormField, useForm } from "@exre/exui"
 import { z } from "zod"
 
 const schema = z.object({ name: z.string().min(1) })
 export function ProjectForm() {
   const form = useForm({ schema, defaultValues: { name: "" } })
   return <Form form={form} onSubmit={(value) => console.log(value.name)}>
-    <FormItem form={form} name="name" label="项目名称" control="text" />
+    <FormField form={form} name="name" label="项目名称" control="text" />
     <Button type="submit">保存</Button>
   </Form>
 }
 ```
 
 - [在线示例](../../../../examples/exui-form-1/)
+- [在线示例](../../../../examples/exui-form-models/)
+
+**ExUI 新增**
+
+### 配置式 Form
+
+`Form` 根据配置渲染字段和可选步骤。传 `schema` 与 `defaultValues`，或传 `useForm` 创建的 `form`；两种入口互斥。每个编辑步骤单独校验，确认步骤渲染当前快照。配置式 children 位于生成字段或确认内容之前，footer 位于其后；省略 footer 使用内置操作，传 null、节点或回调可替换。`fields !== undefined`（包括空数组）选择此分支，切换到组合式需更换 React key。包装器使用 `FormConfiguredSchemaProps<S>` 或 `FormConfiguredInstanceProps<I, O>`。schema 对象应跨重渲染保持稳定；引用 `File` 的 schema 要在浏览器环境创建。
+
+使用此示例时，消费应用需自行安装 `zod`。
+
+```tsx verify
+import { Form } from "@exre/exui"
+import { z } from "zod"
+
+const schema = z.object({ name: z.string().min(1) })
+export function ProjectSetup() {
+  return <Form schema={schema} defaultValues={{ name: "" }}
+    fields={[{ name: "name", label: "项目名称", control: "text" }]}
+    onSubmit={(value) => console.log(value.name)} />
+}
+```
+
+- [在线示例](../../../../examples/exui-form-configured/)
+- [在线示例](../../../../examples/exui-form-models/)
 {/* exui-capabilities:end:docs */}
 
 ## 基本用法
@@ -42,16 +66,39 @@ export function ProjectForm() {
 ### 当前示例源码摘录
 
 ```tsx source="exui-form-1"
-import { Form, FormErrorSummary, FormItem } from "@exre/exui"
+import { Form, FormErrorSummary, FormField } from "@exre/exui"
 
 <Form form={form} onSubmit={(data) => setSaved(data.name)} formatIssue={(message) => c(message, issueTranslations[message] ?? message)}>
   <FormErrorSummary title={c("Check these fields", "请检查以下字段")} />
-  <FormItem form={form} name="name" label={c("Project name", "项目名称")} />
+  <FormField form={form} name="name" label={c("Project name", "项目名称")} control="text" />
 </Form>
 ```
 
 [查看完整源码](../../../../examples/exui-form-1/)
 
-## 相关指南
+## 组合式与配置式
 
-按 Schema 配置字段见 [ExForm](./ex-form.mdx)，独立的带标签控件见 [ExItem](./ex-item.mdx)。
+使用 `Form form={form}` 和 `FormField` 子项自由组合布局；添加 `fields` 则使用配置式控件与默认页脚。也可以提供 `schema`、`defaultValues` 和 `fields`。实例与 schema 互斥。每个示例持有独立草稿，并仅保留一个原生 form 和状态 owner。`footer={null}` 关闭配置式页脚。
+
+独立控件与展示内容使用 [Field](../components/field.mdx)。Field 不绑定表单状态，也不继承 Form 布局。
+
+```tsx verify
+import { Button, Form, FormField, useForm } from "@exre/exui"
+import { z } from "zod"
+const schema = z.object({ name: z.string().min(1) })
+export function FormModels() {
+  const composed = useForm({ schema, defaultValues: { name: "" } })
+  const configured = useForm({ schema, defaultValues: { name: "" } })
+  const fields = [{ name: "name", label: "Name", control: "text" }] as const
+  return <div>
+    <Form form={composed} onSubmit={values => console.log(values.name)}>
+      <FormField form={composed} name="name" label="Name" control="text" />
+      <Button type="submit">Save</Button>
+    </Form>
+    <Form form={configured} fields={fields} onSubmit={values => console.log(values.name)} />
+    <Form schema={schema} defaultValues={{ name: "" }} fields={fields} onSubmit={values => console.log(values.name)} />
+  </div>
+}
+```
+
+按分支使用 `FormComposedProps`、`FormConfiguredInstanceProps` 或 `FormConfiguredSchemaProps`。`FormConfiguredCommonProps` 和 `FormFooterArguments` 描述配置式公共行为；`FormFieldProps`、`FormFieldLayout` 和 `FormFieldSpan` 描述绑定字段的组合。

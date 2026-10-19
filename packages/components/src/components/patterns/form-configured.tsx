@@ -6,34 +6,30 @@ import { useForm } from "@/hooks/use-form"
 import { useWatch as useRHFWatch } from "react-hook-form"
 import { FormContext, getInternal } from "@/lib/forms/context"
 import { readPath, parsePath, normalizePaths } from "@/lib/forms/paths"
-import type { ExFormSchemaProps, ExFormInstanceProps, ExFormCommonProps, ExFormFooterArguments, FormSchema, FormValues, FormInstance, FormFieldArray, FormErrors, FormSnapshot, FormValidationScope } from "@/lib/forms/types"
-import { FormShell, RetainStepFieldsContext } from "./form"
-import { FormItem } from "./form-item"
+import type { FormConfiguredSchemaProps, FormConfiguredInstanceProps, FormConfiguredCommonProps, FormFooterArguments, FormSchema, FormValues, FormInstance, FormFieldArray, FormErrors, FormSnapshot, FormValidationScope } from "@/lib/forms/types"
+import { FormShell, RetainStepFieldsContext } from "./form-shell"
+import { FormField } from "./form-field"
 import { FormList } from "./form-list"
 import { FormStepsController, stepStructure } from "./form-steps"
 
-export function ExForm<const S extends FormSchema>(props: ExFormSchemaProps<S>): React.ReactElement
-export function ExForm<I extends FormValues, O>(props: ExFormInstanceProps<I, O>): React.ReactElement
-export function ExForm(props: unknown): React.ReactElement {
-  const runtime = props as ExFormSchemaProps<FormSchema> | ExFormInstanceProps<FormValues, unknown>
-  if (runtime.form && "schema" in runtime && runtime.schema !== undefined) throw new Error("ExUI ExForm: pass either schema or form, never both.")
-  return runtime.form ? <ConfiguredForm {...runtime} form={runtime.form} /> : <SchemaForm {...runtime as ExFormSchemaProps<FormSchema>} />
+export function FormConfigured(props: FormConfiguredSchemaProps<FormSchema> | FormConfiguredInstanceProps<FormValues, unknown>): React.ReactElement {
+  return props.form ? <ConfiguredForm {...props} form={props.form} /> : <SchemaForm {...props as FormConfiguredSchemaProps<FormSchema>} />
 }
 
-function SchemaForm<S extends FormSchema>(props: ExFormSchemaProps<S>) {
+function SchemaForm<S extends FormSchema>(props: FormConfiguredSchemaProps<S>) {
   const { schema, defaultValues, mode, reValidateMode, ...configuration } = props
   const form = useForm({ schema, defaultValues, mode, reValidateMode })
   return <ConfiguredForm {...configuration} form={form} />
 }
 
-function ConfiguredForm<I extends FormValues, O>(props: ExFormCommonProps<I, O> & { form: FormInstance<I, O> }) {
+function ConfiguredForm<I extends FormValues, O>(props: FormConfiguredCommonProps<I, O> & { form: FormInstance<I, O> }) {
   const { form, children, fields, steps = [], currentStep, onStepChange, footer, submitLabel = "提交", resetLabel, backLabel = "上一步", nextLabel = "下一步", stepsAriaLabel = "表单步骤", ...formProps } = props
   const internal = getInternal(form)
   useRHFWatch({ control: internal.rhf.control })
   const state = React.useSyncExternalStore(internal.subscribe, internal.getSnapshot, internal.getServerSnapshot)
   const names = fields.map((field) => field.name)
   names.forEach(parsePath)
-  if (new Set(names).size !== names.length) throw new Error("ExUI ExForm: configured field paths must be unique.")
+  if (new Set(names).size !== names.length) throw new Error("ExUI Form: configured field paths must be unique.")
   const structure = stepStructure(steps, names)
   const initial = React.useRef({ steps, names, currentStep })
   const controller = React.useMemo(() => new FormStepsController(form, internal, initial.current.steps, initial.current.names, initial.current.currentStep), [form, internal])
@@ -42,7 +38,7 @@ function ConfiguredForm<I extends FormValues, O>(props: ExFormCommonProps<I, O> 
   React.useEffect(() => { controller.update(steps, names, currentStep, onStepChange) })
   const namesKey = JSON.stringify([...names].sort())
   React.useEffect(() => internal.declareFields(JSON.parse(namesKey) as string[]), [internal, namesKey])
-  // Config metadata survives step unmounts; mounted FormItem supplies the focus
+  // Config metadata survives step unmounts; mounted FormField supplies the focus
   // target. Labels are read from the latest display configuration.
   const display = React.useRef({ fields, steps })
   display.current = { fields, steps }
@@ -53,7 +49,7 @@ function ConfiguredForm<I extends FormValues, O>(props: ExFormCommonProps<I, O> 
     }))
     return () => releases.forEach((release) => release())
   }, [internal, controller, structure, namesKey])
-  const footerArgs: ExFormFooterArguments<I> = {
+  const footerArgs: FormFooterArguments<I> = {
     state, currentStep: actualStep, isFirstStep: controller.isFirst, isLastStep: controller.isLast,
     next: controller.next, back: controller.back, goTo: controller.goTo,
     submit: () => form.submit(), reset: () => form.reset(),
@@ -100,7 +96,7 @@ interface RuntimeConfiguration {
   [key: string]: unknown
 }
 type RuntimeArray = FormFieldArray<FormValues, never>
-const RuntimeItem = FormItem as unknown as React.ComponentType<{ form: unknown } & RuntimeConfiguration>
+const RuntimeItem = FormField as unknown as React.ComponentType<{ form: unknown } & RuntimeConfiguration>
 const RuntimeList = FormList as unknown as React.ComponentType<{ form: unknown; name: string; defaultItem: FormValues; render(array: RuntimeArray): React.ReactNode } & Record<string, unknown>>
 
 function ConfiguredField<I extends FormValues, O>({ form, configuration, prefix = "" }: { form: FormInstance<I, O>; configuration: RuntimeConfiguration; prefix?: string }) {

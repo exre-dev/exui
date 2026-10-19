@@ -1,6 +1,6 @@
 # 表单异步任务与消费约束
 
-最后更新：2026-09-27
+最后更新：2026-10-19
 
 结构与权威状态边界见 [`forms`](../../architectures/components/forms.md)。以下约束解释消费代码为什么可能出现看似意外的行为。
 
@@ -12,6 +12,6 @@
 - 文件只在内存中保留原生对象身份，不通过 JSON 快照转换。文件 dirty 沿用 RHF 的原生对象比较限制；有效性由 schema 检查，不能用 dirty 判断文件内容是否相同。选择器 `accept` 只是提示。
 - 日期控件的 `min` / `max` 与“今天”按钮只限制日历交互；它们不会替代 schema 验证，也不会自动清除来自默认值、`setValue` 或服务端的越界草稿。日期按本地年月日解析和写回 `YYYY-MM-DD`，避免 UTC 转换导致日期偏移。
 - `clearOnDestroy` 依赖 Form 真正卸载。只隐藏的 Dialog 必须由消费方关闭处理程序调用 reset/cancelPending。步骤暂时隐藏与条件字段 `preserve=false` 删除值是不同操作。
-- 横向 Item 的内容宽度限制作用于内部内容块，外层仍保留原有换行空间，因此缩小内容上限不会推迟窄容器的上下换行。标题、间距、控件区域合计需要 21.75rem；低于该宽度时内容限制和对齐不生效，避免窄屏中留下空白。布局证据见 `ExItem.vrt.test.tsx`。
+- 横向字段的内容宽度限制作用于内部内容块，外层仍保留原有换行空间，因此缩小内容上限不会推迟窄容器的上下换行。标题、间距、控件区域合计需要 21.75rem；低于该宽度时内容限制和对齐不生效，避免窄屏中留下空白。绑定字段布局见 `FieldLayout.vrt.test.tsx`，独立 Field 的真实站点几何见 `DocsFormGallery.vrt.test.tsx`。
 
 证据：协调器与路径快照源码；`FormAsync.vrt.test.tsx`、`FormSteps.vrt.test.tsx`、`FormControls.vrt.test.tsx` 的公共接口反例；消费契约见 [`Form` 参考](../../../skills/exui/references/exui/form.md)。本地检查结果不代表远端 CI 或 npm 发布已通过。

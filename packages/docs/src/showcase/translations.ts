@@ -385,7 +385,7 @@ const chinese: Record<string, string> = {
   "Today": "今天",
   "Whole years": "周岁",
   "Every built-in input type": "所有内置输入类型",
-  "Try each ExForm control, then submit to inspect its values locally.": "试用每种 ExForm 控件，提交后可在本地查看输入值。",
+  "Try each Form control, then submit to inspect its values locally.": "试用每种 Form 控件，提交后可在本地查看输入值。",
   "Text": "文本",
   "Email input": "邮箱输入",
   "Password": "密码",

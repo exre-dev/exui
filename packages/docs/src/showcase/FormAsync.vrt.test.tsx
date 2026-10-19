@@ -5,7 +5,7 @@ import { createRoot, type Root } from "react-dom/client"
 import { page } from "vitest/browser"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import {
-  Form, FormItem, useForm, useFormContext,
+  Form, FormField, useForm, useFormContext,
   type FormInstance, type FormSubmitContext, type StandardSchemaV1,
 } from "@exre/exui"
 
@@ -58,8 +58,8 @@ function Fixture({ schema, onSubmit = () => {}, onSubmitError, mode = "onSubmit"
       {form.state.isSubmitting ? "submitting" : form.state.isValidating ? "validating" : "idle"}
     </button>
     <Form form={form} onSubmit={onSubmit} onSubmitError={onSubmitError}>
-      <FormItem form={form} name="name" label="Name" control="text" />
-      <FormItem form={form} name="email" label="Email" control="text" />
+      <FormField form={form} name="name" label="Name" control="text" />
+      <FormField form={form} name="email" label="Email" control="text" />
       <ContextStatus />
       <button type="submit">Save</button>
     </Form>

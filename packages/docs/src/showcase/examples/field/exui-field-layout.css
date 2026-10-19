@@ -1,0 +1,37 @@
+.exui-field-layout {
+  container: exui-standalone-layout / inline-size;
+  display: grid;
+  gap: 1.25rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.exui-field-layout [data-slot="field"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: .75rem;
+}
+
+.exui-field-layout [data-slot="field-content"] {
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* 9rem label + 12rem minimum control + .75rem gap, measured per recipe. */
+@container exui-standalone-layout (min-width: 21.75rem) {
+  .exui-field-layout [data-slot="field"] {
+    grid-template-columns: 9rem minmax(0, 1fr);
+  }
+
+  .exui-field-layout [data-slot="field-content"] {
+    max-width: var(--exui-standalone-control-width, 16rem);
+    justify-self: start;
+  }
+
+  .exui-field-layout [data-slot="field-content"][data-align="right"] {
+    justify-self: end;
+  }
+}

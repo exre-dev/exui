@@ -1,7 +1,7 @@
 import "@exre/exui/style.css"
 import { useState } from "react"
 import { z } from "zod"
-import { ExForm, FormErrorSummary } from "@exre/exui"
+import { Form, FormErrorSummary } from "@exre/exui"
 
 // Keep the initializing schema stable across renders.
 const emailStepSchema = z.object({
@@ -17,7 +17,7 @@ export default function ConfiguredForm() {
   const [saved, setSaved] = useState("")
   return (
     <section style={{ maxWidth: "36rem" }}>
-      <ExForm
+      <Form
         schema={profileSchema}
         defaultValues={{ email: "", age: "", role: "member" }}
         fields={[
@@ -28,9 +28,14 @@ export default function ConfiguredForm() {
           } },
         ]}
         submitLabel="Save profile"
+        resetLabel="Reset"
+        backLabel="Back"
+        nextLabel="Next"
+        stepsAriaLabel="Profile steps"
         steps={[
           { id: "contact", title: "Contact", fields: ["email"], validationSchema: emailStepSchema },
           { id: "details", title: "Details", fields: ["age", "role"], validationSchema: detailsStepSchema },
+          { id: "review", title: "Review", kind: "review", render: (draft) => <p>{draft.email}: {draft.age} ({draft.role})</p> },
         ]}
         onSubmit={(output) => {
           // output.age is number; the form's input draft remains string.
@@ -38,7 +43,7 @@ export default function ConfiguredForm() {
         }}
       >
         <FormErrorSummary title="Please check the following issues" />
-      </ExForm>
+      </Form>
       <output aria-live="polite">{saved}</output>
     </section>
   )

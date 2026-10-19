@@ -5,7 +5,7 @@ import { page } from "vitest/browser"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import {
   Button, Dialog, DialogContent, DialogTitle, DialogTrigger,
-  Form, FormItem, ExForm, useForm,
+  Form, FormField, useForm,
   type FormInstance, type StandardSchemaV1,
 } from "@exre/exui"
 
@@ -32,11 +32,11 @@ function Fixture({ schema = passSchema, disabled = false, mode = "onSubmit", onS
 }) {
   form = useForm({ schema, defaultValues: defaults, mode })
   return <Form form={form} onSubmit={onSubmit} disabled={disabled}>
-    <FormItem form={form} name="name" label="Name" control="text" />
-    <FormItem form={form} name="role" label="Role" description="Choose permission" control="select" controlProps={{ options: [{ value: "member", label: "Member" }, { value: "admin", label: "Admin" }] }} />
-    <FormItem form={form} name="accepted" label="Accepted" control="checkbox" />
-    <FormItem form={form} name="tags" label="Tags" control="checkbox-group" controlProps={{ options: [{ value: "a", label: "Alpha" }, { value: "b", label: "Beta" }] }} />
-    <FormItem form={form} name="files" label="Files" control="files" controlProps={{ buttonLabel: "Pick files", accept: "text/plain" }} />
+    <FormField form={form} name="name" label="Name" control="text" />
+    <FormField form={form} name="role" label="Role" description="Choose permission" control="select" controlProps={{ options: [{ value: "member", label: "Member" }, { value: "admin", label: "Admin" }] }} />
+    <FormField form={form} name="accepted" label="Accepted" control="checkbox" />
+    <FormField form={form} name="tags" label="Tags" control="checkbox-group" controlProps={{ options: [{ value: "a", label: "Alpha" }, { value: "b", label: "Beta" }] }} />
+    <FormField form={form} name="files" label="Files" control="files" controlProps={{ buttonLabel: "Pick files", accept: "text/plain" }} />
     <button type="submit">Save</button>
   </Form>
 }
@@ -75,7 +75,7 @@ describe("Form public control adapters", () => {
     function DateFixture() {
       dateForm = useForm({ schema: dateSchema, defaultValues: { birthDate: "2000-01-15" } })
       return <Form form={dateForm} onSubmit={submitted}>
-        <FormItem form={dateForm} name="birthDate" label="Birth date" control="date"
+        <FormField form={dateForm} name="birthDate" label="Birth date" control="date"
           controlProps={{ min: "2000-01-10", max: "2000-01-20", placeholder: "Select birth date" }} />
         <button type="submit">Save date</button>
         <button type="button" onClick={() => dateForm.reset()}>Reset date</button>
@@ -133,7 +133,7 @@ describe("Form public control adapters", () => {
     function TodayFixture() {
       dateForm = useForm({ schema: dateSchema, defaultValues: { birthDate: "" } })
       return <Form form={dateForm} onSubmit={() => {}}>
-        <FormItem form={dateForm} name="birthDate" label="Birth date" control="date"
+        <FormField form={dateForm} name="birthDate" label="Birth date" control="date"
           controlProps={{ min: today, max: today, todayLabel: "Today" }} />
       </Form>
     }
@@ -178,7 +178,7 @@ describe("Form public control adapters", () => {
     function NavigationFixture() {
       const form = useForm({ schema, defaultValues: { date: "2000-01-15" } })
       return <Form form={form} onSubmit={() => {}}>
-        <FormItem form={form} name="date" label="Date" control="date"
+        <FormField form={form} name="date" label="Date" control="date"
           controlProps={{ min: "1999-01-01", max: "2002-12-31" }} />
       </Form>
     }
@@ -250,8 +250,8 @@ describe("Form public control adapters", () => {
     function Choices() {
       form = useForm({ schema: passSchema, defaultValues: defaults })
       return <Form form={form} onSubmit={() => {}}>
-        <FormItem form={form} name="role" label="Radio role" control="radio-group" controlProps={{ options: [{ value: "member", label: "Member" }, { value: "admin", label: "Admin" }] }} />
-        <FormItem form={form} name="tags" label="Multi tags" control="multi-select" controlProps={{ options: [{ value: "a", label: "Alpha" }, { value: "b", label: "Beta" }] }} />
+        <FormField form={form} name="role" label="Radio role" control="radio-group" controlProps={{ options: [{ value: "member", label: "Member" }, { value: "admin", label: "Admin" }] }} />
+        <FormField form={form} name="tags" label="Multi tags" control="multi-select" controlProps={{ options: [{ value: "a", label: "Alpha" }, { value: "b", label: "Beta" }] }} />
       </Form>
     }
     root.render(<Choices />)
@@ -289,7 +289,7 @@ describe("Form public control adapters", () => {
       return <Form form={form} onSubmit={(_data, context) => {
         context.setFieldError("name", { message: "Server name" })
         context.setFieldError("role", { message: "Server role" })
-      }}><FormItem form={form} name="name" label="Name" control="text" /></Form>
+      }}><FormField form={form} name="name" label="Name" control="text" /></Form>
     }
     root.render(<Server />)
     await expect.element(page.getByRole("textbox", { name: "Name", exact: true })).toBeVisible()
@@ -319,7 +319,7 @@ describe("Form public control adapters", () => {
   it("provides same-source typed render and error accessibility when noStyle removes the built-in shell", async () => {
     function Bare() {
       form = useForm({ schema: passSchema, defaultValues: defaults })
-      return <Form form={form} onSubmit={() => {}}><FormItem form={form} name="name" noStyle render={({ field, state, accessibility }) =>
+      return <Form form={form} onSubmit={() => {}}><FormField form={form} name="name" noStyle render={({ field, state, accessibility }) =>
         <div data-testid="bare">
           <label htmlFor={accessibility.id}>Custom name</label>
           <input {...accessibility} ref={field.ref} value={field.value} onChange={event => field.onChange(event.target.value)} onBlur={field.onBlur} />
@@ -428,12 +428,12 @@ describe("Form local file lifecycle", () => {
   })
 })
 
-describe("ExForm container layout and Dialog", () => {
+describe("Form container layout and Dialog", () => {
   it.each([320, 375, 390, 1000])("lays out a %spx container without overflowing long labels, errors or filenames", async width => {
     await page.viewport(width, 844)
     function Layout() {
       form = useForm({ schema: passSchema, defaultValues: { ...defaults, files: [textFile(`${"long_filename_".repeat(20)}.txt`)] } })
-      return <div data-testid="layout-container" style={{ width, maxWidth: "100%" }}><ExForm form={form} onSubmit={() => {}} columns={{ base: 1, sm: 2, md: 3 }} fields={[
+      return <div data-testid="layout-container" style={{ width, maxWidth: "100%" }}><Form form={form} onSubmit={() => {}} columns={{ base: 1, sm: 2, md: 3 }} fields={[
         { name: "name", label: "Long label ".repeat(30), control: "text" },
         { name: "role", label: "Role", control: "select", controlProps: { options: [{ value: "member", label: "Member" }] } },
         { name: "files", label: "Files", control: "files" },
@@ -460,7 +460,7 @@ describe("ExForm container layout and Dialog", () => {
       return <Dialog><DialogTrigger asChild><Button>Open form dialog</Button></DialogTrigger>
         <DialogContent style={{ width: 320, maxWidth: "calc(100vw - 2rem)", maxHeight: 200, overflowY: "auto" }}>
           <DialogTitle>Form dialog</DialogTitle>
-          <ExForm form={form} onSubmit={() => {}} columns={{ base: 1, sm: 2, md: 3 }} fields={[
+          <Form form={form} onSubmit={() => {}} columns={{ base: 1, sm: 2, md: 3 }} fields={[
             { name: "name", label: "Name", control: "text" },
             { name: "role", label: "Role", control: "select", controlProps: { options: [{ value: "member", label: "Member" }] } },
             { name: "files", label: "Files", control: "files" },

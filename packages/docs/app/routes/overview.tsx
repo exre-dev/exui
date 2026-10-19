@@ -4,7 +4,7 @@ import { ExMessageContext, GlassSeed, TooltipProvider } from "@exre/exui"
 import { DocsLayout } from "fumadocs-ui/layouts/glass"
 import { DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layouts/glass/page"
 import ComponentsOverview from "../../src/showcase/ComponentsOverview"
-import { catalogPages } from "../../src/showcase/catalog"
+import { presentationPages } from "../../src/showcase/catalog-presentation"
 import { LanguageContext } from "../../src/showcase/language"
 import { docPath, overviewPath, preferenceKeys } from "../../lib/site-contract.mjs"
 import { listShareExamples } from "../../lib/source-export.server"
@@ -43,7 +43,7 @@ export default function Overview({ loaderData: page }: Route.ComponentProps) {
   return <LanguageContext.Provider value={{ language: page.locale, setLanguage }}>
     <DocsLayout tree={page.tree} tabs={false} nav={{ title: <span className="docs-brand"><ExIcon />ExUI</span>, url: overviewPath(page.locale, base) }} slots={{ themeSwitch: Settings }}>
       <DocsPage full>
-        <DocsTitle>{page.group === "exui" ? "Blocks" : page.group === "components" ? "Components" : zh ? "组件总览" : "All components"}<span className="docs-overview-total">{catalogPages.filter(entry => !page.group || entry.group === page.group).length}</span></DocsTitle>
+        <DocsTitle>{page.group === "exui" ? "Blocks" : page.group === "components" ? "Components" : zh ? "组件总览" : "All components"}<span className="docs-overview-total">{presentationPages.filter(entry => !page.group || entry.navigationGroup === page.group).length}</span></DocsTitle>
         <DocsDescription>{zh ? "Components 是基础组件；Blocks 是由基础组件组装而成的可复用界面区块。选择组件或区块查看用法和示例。" : "Components are basic UI elements. Blocks assemble them into reusable interface sections. Choose a component or block to see its usage and examples."}</DocsDescription>
         <TooltipProvider>
           <GlassSeed />

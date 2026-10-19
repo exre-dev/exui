@@ -7,7 +7,7 @@ description: "Use when building or restyling interfaces with @exre/exui, choosin
 
 ExUI provides reusable components, shared Tokens, forms, Glass surfaces, and application notifications. Use this skill in consuming applications. Package-source maintenance follows the repository's own instructions.
 
-**Components** are basic UI elements, such as Button, Input, and Dialog. **Blocks** are reusable interface sections assembled from these basic components. The docs category previously labeled ExUI is labeled Blocks; its existing `exui/` URLs remain stable.
+**Components** are basic UI elements, such as Button, Input, and Dialog. **Blocks** are reusable interface sections assembled from these basic components. The docs category previously labeled ExUI is labeled Blocks; retained block pages keep their existing `exui/` URLs.
 
 ## Authority
 
@@ -37,7 +37,8 @@ Complete the loop only when every component used has a verified public import an
 | Colors, status, charts | [Color](rules/color.md) |
 | Lucide icons and icon buttons | [Icons](rules/icons.md) |
 | Themes, density, sizing | [Theming](rules/theming.md), [theme usage](references/exui/theme-usage.md), [scaling](references/exui/scaling.md) |
-| Configured/composed forms, object lists, steps, standalone settings rows | [Form](references/exui/form.md) |
+| Configured/composed forms, object lists, steps | [Form](references/exui/form.md) |
+| Standalone settings rows, display fields and explicit labels | [Field layout](references/exui/field-layout.md) |
 | Translucent surfaces and optional refraction | [Glass](references/exui/glass.md) |
 | Elevation, focus rings, glass edge composition | [Shadows](references/exui/shadows.md) |
 | CSS/JS Tokens and component recipes, including non-React use | [Token usage](references/exui/token-usage.md), [customization](references/exui/token-customization.md), [exact inventory](references/generated/token-paths.md) |
@@ -57,7 +58,7 @@ Find all 87 documented component families and ExUI-native capabilities by use ca
 | Use case | Component references |
 | --- | --- |
 | Actions | [Button / ActionButton](references/components/button.md), [ButtonGroup](references/components/button-group.md), [Toggle](references/components/toggle.md), [ToggleGroup](references/components/toggle-group.md) |
-| Form structure and field presentation | [ExForm / Form](references/exui/form.md), [ExItem](references/exui/form.md#item-presentation-and-layout), [Field](references/components/field.md), [Label](references/components/label.md) |
+| Form structure and field presentation | [Form / FormField](references/exui/form.md), [Field layout](references/exui/field-layout.md), [Field](references/components/field.md), [Label](references/components/label.md) |
 | Text and numeric input | [Input](references/components/input.md), [InputGroup](references/components/input-group.md), [InputOTP](references/components/input-otp.md), [Textarea](references/components/textarea.md), [NumberField](references/components/number-field.md), [PhoneInput](references/components/phone-input.md) |
 | Selection and pickers | [Checkbox](references/components/checkbox.md), [RadioGroup](references/components/radio-group.md), [Switch](references/components/switch.md), [Slider](references/components/slider.md), [Select](references/components/select.md), [NativeSelect](references/components/native-select.md), [Combobox](references/components/combobox.md), [Autocomplete](references/components/autocomplete.md), [Cascader](references/components/cascader.md), [ColorPicker](references/components/color-picker.md), [EmojiPicker](references/components/emoji-picker.md), [Rating](references/components/rating.md) |
 | Dates and time | [Calendar](references/components/calendar.md), [DateSelector](references/components/date-selector.md), [TimePicker](references/components/time-picker.md) |

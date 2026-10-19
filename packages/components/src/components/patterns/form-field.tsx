@@ -4,18 +4,18 @@ import * as React from "react"
 import { useController, useWatch as useRHFWatch } from "react-hook-form"
 import { FieldError } from "@/components/ui/field"
 import { FormContext, getInternal } from "@/lib/forms/context"
-import type { FormFieldState, FormIssue, FormItemProps, FormPath, FormPathValue, FormRenderArguments, FormValues } from "@/lib/forms/types"
+import type { FormFieldState, FormIssue, FormFieldProps, FormPath, FormPathValue, FormRenderArguments, FormValues } from "@/lib/forms/types"
 import { cn } from "@/lib/utils"
 import { equalValue, normalizePaths, snapshot as immutableSnapshot } from "@/lib/forms/paths"
 import { FormControl } from "./form-controls"
-import { ExItem } from "./ex-item"
-import { RetainStepFieldsContext } from "./form"
+import { FormFieldLayout } from "./form-field-layout"
+import { RetainStepFieldsContext } from "./form-shell"
 
-export function FormItem<I extends FormValues, O, P extends FormPath<I>>(props: FormItemProps<I, O, P>) {
+export function FormField<I extends FormValues, O, P extends FormPath<I>>(props: FormFieldProps<I, O, P>) {
   const { form, name, dependencies = [], visibleWhen, disabledWhen, preserve = true, label, description,
     disabled = false, validationScope } = props
   const context = React.useContext(FormContext)
-  if (!context || context.form !== form) throw new Error("ExUI FormItem: the nearest Form must use the same instance.")
+  if (!context || context.form !== form) throw new Error("ExUI FormField: the nearest Form must use the same instance.")
   const internal = getInternal(form)
   const retainStepFields = React.useContext(RetainStepFieldsContext)
   const state = React.useSyncExternalStore(internal.subscribe, internal.getSnapshot, internal.getServerSnapshot)
@@ -75,7 +75,7 @@ export function FormItem<I extends FormValues, O, P extends FormPath<I>>(props: 
     internal.dependencyChange(name, stableScope)
   }, [dependencyValues, internal, name, stableScope, dependencies.length])
   if (!visible) return null
-  return <BoundFormItem<I, O, P> configuration={props} isDisabled={Boolean(isDisabled)} id={id} labelId={labelId} container={container} target={target}
+  return <BoundFormField<I, O, P> configuration={props} isDisabled={Boolean(isDisabled)} id={id} labelId={labelId} container={container} target={target}
     describedBy={[descriptionId, ownIssues.length > 0 && errorId].filter(Boolean).join(" ") || undefined}
     fieldState={fieldState} ownIssues={ownIssues} formatIssue={context.formatIssue} />
 }
@@ -88,7 +88,7 @@ interface BoundProps {
   formatIssue?: (message: string) => string
 }
 
-function BoundFormItem<I extends FormValues, O, P extends FormPath<I>>(props: { configuration: FormItemProps<I, O, P>; isDisabled: boolean } & BoundProps) {
+function BoundFormField<I extends FormValues, O, P extends FormPath<I>>(props: { configuration: FormFieldProps<I, O, P>; isDisabled: boolean } & BoundProps) {
   const { id, labelId, describedBy, container, target, isDisabled: disabled, fieldState, ownIssues, formatIssue } = props
   const { form, name, label, description, required, noStyle, className, colSpan = 1, layout, contentMaxWidth, contentAlign } = props.configuration
   const internal = getInternal(form)
@@ -105,12 +105,12 @@ function BoundFormItem<I extends FormValues, O, P extends FormPath<I>>(props: { 
     controlProps={props.configuration.controlProps as Record<string, unknown> | undefined}
     binding={{ ...binding, onChange: (next: unknown) => binding.onChange(next as FormPathValue<I, P>), disabled: Boolean(disabled), accessibility, labelId }} />
   if (noStyle) return <>{control}</>
-  return <ExItem ref={container} className={cn("ex-form-item", className)} span={colSpan} layout={layout}
+  return <FormFieldLayout ref={container} className={cn("ex-form-item", className)} span={colSpan} layout={layout}
     contentMaxWidth={contentMaxWidth} contentAlign={contentAlign}
     title={label != null ? <>{label}{required && <span aria-hidden="true">*</span>}</> : undefined}
     desc={description} controlId={id} data-invalid={ownIssues.length > 0} data-disabled={disabled}>
     <>{control}
       <FieldError id={`${id}-error`} errors={ownIssues.map((issue) => ({ message: formatIssue?.(issue.message) ?? issue.message }))} />
     </>
-  </ExItem>
+  </FormFieldLayout>
 }

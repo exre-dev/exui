@@ -18,7 +18,7 @@ Use Frame for tool/data regions and Card for bounded content. Prefer one family 
 
 Place `CardAction` directly inside `CardHeader` for a trailing action or progress indicator. The header keeps its title and description stacked in the leading column, including Questionnaire titles rendered through `CardTitle` and descriptions rendered through `CardDescription`.
 
-Use ExItem for title/description/control presentation; FormItem owns registered field errors. Do not put a layout-only settings row into a form just to obtain its label spacing.
+Use [Field primitives](../references/exui/field-layout.md) for title/description/control presentation; FormField owns registered field errors. Do not put a layout-only settings row into a form just to obtain its label spacing.
 
 Material and elevation are separate choices. Read [Glass](../references/exui/glass.md) before using translucent surfaces, and [Shadows](../references/exui/shadows.md) before adjusting elevation. Do not hand-roll a frosted background when `glass` or `ex-glass` covers the requirement.
 

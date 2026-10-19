@@ -12,9 +12,9 @@ Read at the [quality gate](quality.md). These pairs cover the upstream habits th
 | Use the removed `Modal` export | Compose Dialog and its public parts |
 | Pass `data`/`columns` directly to DataGrid | Build the v9 table instance and pass `table` plus `recordCount` |
 | Import another TanStack Table or Sonner instance by habit | Use ExUI's bundled TanStackTable and root toast/Toaster exports |
-| Hand-build form validation to match a demo | Use ExForm or composed Form and the ExUI hooks |
+| Hand-build form validation to match a demo | Use configured or composed Form and the ExUI hooks |
 | Pass an external RHF instance into Form | Use ExUI's useForm instance |
-| Use ExForm for a standalone title/description row | Use ExItem with explicit control association where needed |
+| Use Form for a standalone title/description row | Compose Field primitives with explicit control IDs and ARIA |
 | Call `setTheme("pitch-black")` | Use the CSS palette class under one external theme driver |
 | Override Tokens inside `@layer base` | Use later unlayered declarations in the intended scope |
 | Assume CSS customization mutates `exuiTokens` | JS Tokens remain frozen built-in data |

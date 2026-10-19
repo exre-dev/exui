@@ -5,8 +5,8 @@ import { createRoot, type Root } from "react-dom/client"
 import { page } from "vitest/browser"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import {
-  ExForm, useForm,
-  type ExFormFooterArguments, type FormInstance, type StandardSchemaV1,
+  Form, useForm,
+  type FormFooterArguments, type FormInstance, type StandardSchemaV1,
 } from "@exre/exui"
 
 type Values = { first: string; second: string; accepted: boolean }
@@ -27,9 +27,9 @@ const firstScope = schemaFor(value => value.first ? { value } : { issues: [{ mes
 const lastScope = schemaFor(value => value.accepted ? { value } : { issues: [{ message: "Accept required", path: ["accepted"] }] })
 let root: Root
 let form: FormInstance<Values, Values>
-let navigation: ExFormFooterArguments<Values>
+let navigation: FormFooterArguments<Values>
 
-function Footer(args: ExFormFooterArguments<Values>) {
+function Footer(args: FormFooterArguments<Values>) {
   navigation = args
   return <>
     <output data-testid="step">{args.currentStep}</output>
@@ -56,7 +56,7 @@ function Fixture({ secondScope, controlled = false, onSubmit = () => {}, schema 
     <button type="button" data-testid="retitle" onClick={() => setTitle("Retitled")}>Retitle</button>
     <output data-testid="request">{requested}</output>
     <output data-testid="parent-validating">{String(form.state.isValidating)}</output>
-    <ExForm form={form} onSubmit={onSubmit} footer={Footer}
+    <Form form={form} onSubmit={onSubmit} footer={Footer}
       currentStep={controlled ? current : undefined} onStepChange={setRequested}
       // These deliberately get fresh object/array/function references on every state render.
       fields={[
@@ -90,7 +90,7 @@ function controlledScope() {
 beforeEach(() => { const host = document.createElement("div"); document.body.replaceChildren(host); root = createRoot(host) })
 afterEach(() => { root.unmount(); vi.restoreAllMocks() })
 
-describe("ExForm public step navigation", () => {
+describe("Form public step navigation", () => {
   it("allows current scope despite a missing future value, then runs the full cross-field rule on final submit", async () => {
     const onSubmit = vi.fn()
     const second = schemaFor(value => value.second ? { value } : { issues: [{ message: "Second required", path: ["second"] }] })
@@ -289,7 +289,7 @@ describe("ExForm public step navigation", () => {
         <button type="button" data-testid="rerender-stale-step" onClick={() => setRenderCount(count => count + 1)}>Render unchanged stale step</button>
         <button type="button" data-testid="confirm-first-step" onClick={() => setCurrent("a")}>Confirm first step</button>
         <output data-testid="render-count">{renderCount}</output>
-        <ExForm form={form} onSubmit={() => {}} fields={[]} currentStep={current} onStepChange={requested} footer={Footer}
+        <Form form={form} onSubmit={() => {}} fields={[]} currentStep={current} onStepChange={requested} footer={Footer}
           steps={removed ? [
             { id: "a", title: "First review", kind: "review", render: snapshot => <output data-testid="first-step-review">{snapshot.first}</output> },
           ] : [

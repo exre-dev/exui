@@ -1,70 +1,43 @@
 "use client"
 
 import * as React from "react"
-import { FormContext, getInternal } from "@/lib/forms/context"
-import type { FormColumns, FormErrors, FormInstance, FormProps, FormValues } from "@/lib/forms/types"
-import { cn } from "@/lib/utils"
-import { ExItemLayoutProvider } from "./ex-item"
+import { getInternal } from "@/lib/forms/context"
+import type { FormComposedProps, FormConfiguredInstanceProps, FormConfiguredSchemaProps, FormSchema, FormValues } from "@/lib/forms/types"
+import { FormConfigured } from "./form-configured"
+import { FormShell } from "./form-shell"
 
-export const RetainStepFieldsContext = React.createContext(false)
+const configurationProps = ["steps", "currentStep", "onStepChange", "footer", "submitLabel", "resetLabel", "backLabel", "nextLabel", "stepsAriaLabel"] as const
+const sourceProps = ["schema", "defaultValues", "mode", "reValidateMode"] as const
 
-// Private extension used by the configuration layer, never exported at the root.
-export interface FormRouting<I extends FormValues> {
-  canSubmit?(): boolean
-  onDomSubmit?(): void | Promise<unknown>
-  onReset?(): void
-  onCancel?(): void
-  focusErrors?(errors: FormErrors<I>): void
-  navigateToField?(name: string): void
-}
-
-export function formColumnStyle(columns: FormColumns = {}): React.CSSProperties {
-  const base = columns.base ?? 1
-  const sm = columns.sm ?? base
-  const md = columns.md ?? sm
-  const lg = columns.lg ?? md
-  for (const value of [base, sm, md, lg]) {
-    if (!Number.isInteger(value) || value < 1 || value > 4) throw new Error("ExUI Form: columns must be between 1 and 4.")
+function assertEntry(props: Record<string, unknown>, configured: boolean) {
+  const fail = (message: string): never => { throw new Error(`ExUI Form: ${message}`) }
+  if (typeof props.onSubmit !== "function") fail("onSubmit must be a function.")
+  if (props.onReset !== undefined || props.noValidate !== undefined) fail("onReset and noValidate are managed by Form.")
+  if (configured && !Array.isArray(props.fields)) fail("fields must be an array.")
+  if (props.form !== undefined) {
+    if (sourceProps.some((name) => props[name] !== undefined)) fail("an existing form cannot receive schema, defaultValues or validation modes.")
+    try { getInternal(props.form as FormComposedProps<FormValues, unknown>["form"]) }
+    catch { fail("form must be an instance created by ExUI useForm.") }
+  } else if (configured) {
+    const schema = props.schema as FormSchema | null | undefined
+    if (!schema || (typeof schema !== "object" && typeof schema !== "function") || schema["~standard"]?.version !== 1 || typeof schema["~standard"].validate !== "function") fail("configured forms require an ExUI form instance or a Standard Schema.")
+    if (!props.defaultValues || typeof props.defaultValues !== "object" || Array.isArray(props.defaultValues)) fail("schema forms require defaultValues.")
+  } else {
+    fail("composed forms require an ExUI form instance; schema forms require fields.")
   }
-  return { "--ex-form-base": base, "--ex-form-sm": sm, "--ex-form-md": md, "--ex-form-lg": lg } as React.CSSProperties
+  if (!configured && configurationProps.some((name) => props[name] !== undefined)) fail("configured props require fields.")
 }
 
-export function Form<I extends FormValues, O>(props: FormProps<I, O>) {
-  return <FormShell {...props} />
-}
-
-export function FormShell<I extends FormValues, O>(props: FormProps<I, O> & { routing?: FormRouting<I> }) {
-  const { form, children, onSubmit, onInvalid, onSubmitError, submitErrorMessage, formatIssue, issueSeparator, disabled = false,
-    clearOnDestroy = false, layout = "vertical", contentMaxWidth, contentAlign, columns, name, className, style, routing } = props
-  const internal = getInternal(form)
-  const state = React.useSyncExternalStore(internal.subscribe, internal.getSnapshot, internal.getServerSnapshot)
-  const owner = React.useRef({})
-  const options = { onSubmit, onInvalid, onSubmitError, submitErrorMessage, ...routing }
-  const latest = React.useRef({ options, clearOnDestroy })
-  latest.current = { options, clearOnDestroy }
-  React.useEffect(() => {
-    const release = internal.connect(owner.current, latest.current.options)
-    return () => {
-      release()
-      if (latest.current.clearOnDestroy) form.reset()
-    }
-  }, [internal, form])
-  React.useEffect(() => { internal.updateOwner(owner.current, options) })
-  const context = React.useMemo(() => ({ form, disabled: disabled || state.isSubmitting, layout, columns, formatIssue, issueSeparator }), [form, disabled, state.isSubmitting, layout, columns, formatIssue, issueSeparator])
-  const onDomSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    try {
-      Promise.resolve(routing?.onDomSubmit ? routing.onDomSubmit() : form.submit()).catch((error: unknown) => onSubmitError?.(error))
-    } catch (error) { onSubmitError?.(error) }
-  }
-  return <FormContext.Provider value={{ ...context, form: form as unknown as FormInstance<FormValues, unknown> }}>
-    <ExItemLayoutProvider layout={layout === "vertical" ? "vertical" : "horizontal"} contentMaxWidth={contentMaxWidth} contentAlign={contentAlign}>
-    <form noValidate name={name} className={cn("ex-form", className)} style={style} onSubmit={onDomSubmit}
-      onReset={(event) => { event.preventDefault(); form.reset() }} aria-busy={state.isSubmitting || state.isValidating}>
-      <div className="ex-form-container">
-        <div className="ex-form-grid" data-layout={layout} style={formColumnStyle(columns)}>{children}</div>
-      </div>
-    </form>
-    </ExItemLayoutProvider>
-  </FormContext.Provider>
+export function Form<const S extends FormSchema>(props: FormConfiguredSchemaProps<S>): React.ReactElement
+export function Form<I extends FormValues, O>(props: FormConfiguredInstanceProps<I, O>): React.ReactElement
+export function Form<I extends FormValues, O>(props: FormComposedProps<I, O>): React.ReactElement
+export function Form(props: unknown): React.ReactElement {
+  const runtime = props as Record<string, unknown>
+  const configured = runtime.fields !== undefined
+  const initialBranch = React.useRef(configured)
+  if (initialBranch.current !== configured) throw new Error("ExUI Form: changing composed/configured mode requires a new key.")
+  assertEntry(runtime, configured)
+  return configured
+    ? <FormConfigured {...props as FormConfiguredSchemaProps<FormSchema> | FormConfiguredInstanceProps<FormValues, unknown>} />
+    : <FormShell {...props as FormComposedProps<FormValues, unknown>} />
 }

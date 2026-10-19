@@ -13,7 +13,7 @@ import {
   AutocompleteItem,
   AutocompleteList,
 } from "@exre/exui"
-import { Form, FormItem, useForm } from "@exre/exui"
+import { Form, FormField, useForm } from "@exre/exui"
 
 import { z } from "zod"
 
@@ -70,7 +70,7 @@ const FormSchema = z.object({
         <FieldGroup>
           <FieldSet>
             <FieldGroup>
-              <FormItem form={form} noStyle
+              <FormField form={form} noStyle
                 name="feature"
 
                 render={({ field, state: fieldState }) => (

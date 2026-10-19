@@ -51,9 +51,10 @@ export function createFamilySnippet(document, family) {
     function summarize(current, depth) {
       const open = ts.isJsxElement(current) ? current.openingElement : current
       const name = open.tagName.getText(source)
+      const defining = name === "Form" ? ["form", "schema", "defaultValues", "fields", "onSubmit"] : name === "FormField" ? ["form", "name", "control", "render"] : []
       const attributes = open.attributes.properties.filter(ts.isJsxAttribute)
-        .filter((item) => !["className", "style", "children"].includes(item.name.text) && item.getText(source).length <= 90)
-        .slice(0, 3).map((item) => item.getText(source))
+        .filter((item) => defining.includes(item.name.text) || (!["className", "style", "children"].includes(item.name.text) && item.getText(source).length <= 90))
+        .filter((item, index) => defining.includes(item.name.text) || index < 3).map((item) => item.getText(source))
       const start = `<${name}${attributes.length ? ` ${attributes.join(" ")}` : ""}`
       const children = ts.isJsxElement(current) ? current.children.filter((child) => (ts.isJsxElement(child) || ts.isJsxSelfClosingElement(child)) && isPublicTag((ts.isJsxElement(child) ? child.openingElement : child).tagName.getText(source))).slice(0, 2) : []
       if (depth >= 2 || children.length === 0) return `${start} />`
@@ -98,7 +99,7 @@ export function addCapabilitySources(documents, examples, registry, makeDocument
 }
 
 export function glassSurfaceTypeContract(registry) {
-  const names = [...new Set(registry.capabilities.flatMap((item) => Object.values(item.surfaces ?? {}).flat()))].sort()
+  const names = [...publicNames.keys()].filter((name) => jsx.includes(`<${name}`) || (family === "ex-message" && name === "ExMessage"))
   if (!names.length) throw new Error("No registered Glass surfaces for public type verification")
   return `import type { ComponentProps } from "react"\nimport { ${names.join(", ")} } from "@exre/exui"\n\nexport const glassSurfaceContract = {\n${names.map((name) => `  ${name}: true satisfies ComponentProps<typeof ${name}>["glass"],`).join("\n")}\n}\n`
 }
@@ -114,7 +115,10 @@ async function familySourceDocuments(pages, root) {
     if (!example || example.page.id !== page.exampleFamily || example.page.group !== page.group) throw new Error(`${page.id}: first source example ${id} is missing or belongs to another family`)
     documents.set(id, createSourceDocument(root, example))
   }
-  if (documents.size !== 91) throw new Error(`Expected 91 family source documents, found ${documents.size}`)
+  const families = pages.filter(item => item.locale === "en" && item.exampleFamily)
+  if (documents.size !== families.length) throw new Error(`Family source coverage mismatch: ${documents.size} sources for ${families.length} families`)
+  // Every authored extension is a public consumer, including secondary Form branches.
+  for (const example of examples.filter(item => item.extension || item.page.id === "form")) if (!documents.has(example.id)) documents.set(example.id, createSourceDocument(root, example))
   const registry = JSON.parse(await readFile(join(root, "packages/docs/exui/capabilities.json"), "utf8"))
   addCapabilitySources(documents, examples, registry, (example) => createSourceDocument(root, example))
   return documents

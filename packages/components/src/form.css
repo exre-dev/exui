@@ -97,9 +97,7 @@
 .ex-form-list-row { display: flex; flex-direction: column; gap: .75rem; min-width: 0; }
 .ex-form-row-actions, .ex-form-footer { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
 .ex-form-footer { padding-top: .25rem; }
-.ex-form-summary { padding: 1rem; border: 1px solid var(--destructive); border-radius: 1rem; color: var(--destructive); overflow-wrap: anywhere; }
-.ex-form-summary-title { font-weight: 600; margin-bottom: .5rem; }
-.ex-form-summary ul { padding-left: 1.25rem; list-style: disc; }
+.ex-form-summary { overflow-wrap: anywhere; }
 .ex-form-summary-link { color: inherit; text-decoration: underline; text-align: start; cursor: pointer; overflow-wrap: anywhere; }
 .ex-form-summary-link:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: .25rem; }
 .ex-form-steps { display: flex; flex-wrap: wrap; gap: .75rem; padding: 0; margin: 0; list-style: none; }

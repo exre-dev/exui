@@ -76,11 +76,8 @@ export * from "./components/ui/toggle-group"
 export * from "./components/ui/tooltip"
 export * from "./hooks/use-mobile"
 export * from "./lib/utils"
-export { ExForm } from "./components/patterns/ex-form"
-export { ExItem } from "./components/patterns/ex-item"
-export type { ExItemProps, ExItemLayout, ExItemSpan } from "./components/patterns/ex-item"
 export { Form } from "./components/patterns/form"
-export { FormItem } from "./components/patterns/form-item"
+export { FormField } from "./components/patterns/form-field"
 export { FormList } from "./components/patterns/form-list"
 export { FormErrorSummary } from "./components/patterns/form-error-summary"
 export { useForm } from "./hooks/use-form"
@@ -93,15 +90,15 @@ export type {
   FormErrorPath, FormSnapshot, FormDefaults, SnapshotPathTuple, FormOptions,
   FormIssue, FormErrorNode, FormErrors, FormState, FormFieldState, FormErrorInput,
   FormValidationScope, FormSubmitResult, FormSubmitContext, FormSubmitHandler,
-  FormInstance, FormObjectArrayPath, FormArrayItem, FormFieldArray, FormLayout,
+  FormFieldLayout, FormFieldSpan, FormInstance, FormObjectArrayPath, FormArrayItem, FormFieldArray, FormLayout,
   FormColumnCount, FormColumns, FormLayoutOptions, FormRenderArguments,
   FormFieldBase, FormInputControlProps, FormDateControlProps, FormTextareaControlProps,
   FormCheckboxControlProps, FormSwitchControlProps, FormSelectOption,
   FormSelectControlProps, FormMultiSelectControlProps, FormSelectOrInputControlProps,
-  FormFilesControlProps, FormFieldBinding, FormItemProps, FormOrdinaryFieldConfig,
-  FormListConfig, FormFieldConfig, FormListProps, FormProps, FormErrorSummaryProps,
-  FormStep, ExFormFooterArguments, ExFormCommonProps, ExFormSchemaProps,
-  ExFormInstanceProps,
+  FormFilesControlProps, FormFieldBinding, FormFieldProps, FormOrdinaryFieldConfig,
+  FormListConfig, FormFieldConfig, FormListProps, FormComposedProps, FormErrorSummaryProps,
+  FormStep, FormFooterArguments, FormConfiguredCommonProps, FormConfiguredSchemaProps,
+  FormConfiguredInstanceProps,
 } from "./lib/forms/types"
 
 // REUI_PUBLIC_EXPORTS_START

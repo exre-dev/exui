@@ -12,6 +12,9 @@
 @import "../../src/showcase/ShowcasePages.css";
 @source "../";
 @source "../../content/";
+/* Keep Field's public responsive variants beside the app's generic flex/width
+   utilities; otherwise the later app layer overrides the public exui layer. */
+@source inline("@md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto @md/field-group:*:data-[slot=field-label]:flex-auto @md/field-group:has-[>[data-slot=field-content]]:items-start");
 
 .docs-app { margin: 0; font-family: var(--font-sans); background: var(--background); color: var(--foreground); }
 .docs-brand { display: inline-flex; align-items: center; gap: .6rem; font-weight: 650; }

@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useEffect, useLayoutEffect, useRef, useState
 import { Skeleton } from "@exre/exui"
 import { ArrowUpRightIcon } from "lucide-react"
 import { catalogPages, pageHref, type CatalogPage } from "./catalog"
+import { presentationPages } from "./catalog-presentation"
 import { useShowcaseLanguage } from "./language"
 import "./ComponentsOverview.css"
 
@@ -14,7 +15,7 @@ const previews = new Map(catalogPages.filter((entry) => entry.group === "compone
 })]))
 const ExUIPreview = lazy(() => import("./OverviewExUIPreviews"))
 const widePreviews = new Set(["bubble", "chart", "data-grid", "event-calendar", "filters", "gantt", "kanban", "message-scroller", "navigation-menu", "resizable", "scrollspy", "sidebar", "sortable", "table", "timeline"])
-const groups = (["components", "exui"] as const).map((id) => ({ id, pages: catalogPages.filter((entry) => entry.group === id).sort((a, b) => a.name.localeCompare(b.name, "en")) }))
+const groups = (["components", "exui"] as const).map((id) => ({ id, pages: presentationPages.filter((entry) => entry.navigationGroup === id).sort((a, b) => a.name.localeCompare(b.name, "en")) }))
 
 type ComponentsOverviewProps = {
   group?: CatalogPage["group"]
