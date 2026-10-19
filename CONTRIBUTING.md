@@ -27,7 +27,7 @@ pnpm verify
 
 Run shadcn commands from `packages/components`. The repository root, `packages/docs`, and the internal `packages/tokens` workspace are private; only `@exre/exui` participates in Changesets and publication.
 
-Follow [TESTING.md](TESTING.md) for the complete checks, including docs content, static output, visual tests, and consumer examples. Keep docs examples and the retained Showcase fixture on the public `@exre/exui` entries.
+Follow [TESTING.md](TESTING.md) for test authoring principles. Keep docs examples and the retained Showcase fixture on the public `@exre/exui` entries.
 
 ## Documentation and pull requests
 

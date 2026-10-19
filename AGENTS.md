@@ -59,7 +59,7 @@ Write TypeScript and TSX using the existing component style. Prefer named export
 
 ## Testing Guidelines
 
-Follow the engineering testing policy in `TESTING.md`. Node regressions use `*.test.mjs`; visual fixtures use `*.vrt.test.tsx`. Run `pnpm check` for daily validation and `pnpm verify` for the full CI workflow. Focused maintenance commands and build/browser prerequisites are documented in `TESTING.md`.
+Follow `TESTING.md` for test authoring and execution timing. Validation steps are maintained in `scripts/tasks.mjs`.
 
 ## Commit & Pull Request Guidelines
 

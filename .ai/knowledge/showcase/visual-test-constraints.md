@@ -1,6 +1,6 @@
 # 视觉测试的运行前提与失败模式
 
-> 本文的 Showcase 用例现作为 `packages/docs/src/showcase/` 中的保留夹具运行；当前静态站点另见 [`docs/site.md`](../../architectures/docs/site.md) 和 [`TESTING.md`](../../../TESTING.md#static-docs-site)。旧夹具的通过不能替代新站的静态目录与浏览器验证。
+> 本文的 Showcase 用例现作为 `packages/docs/src/showcase/` 中的保留夹具运行；当前静态站点另见 [`docs/site.md`](../../architectures/docs/site.md)，测试规范见 [`TESTING.md`](../../../TESTING.md)。旧夹具的通过不能替代新站的静态目录与浏览器验证。
 
 最后更新：2026-10-16
 
@@ -47,7 +47,7 @@ NavigationMenu 的内容区与弹层都必须把基础全宽限制在 `md` 以�
 
 原本依赖当前时间的示例 fixture 使用 2026-02-09 固定基准；源场景已明确写死的日期继续保留，例如 TimePicker13 的 2026-10-01/14。公开 DateSelector 在 `value` 为空时仍以内部 `new Date()` 选取初始月份，且没有公开的 `viewMonth` 属性。不能为测试稳定性虚构业务 `value` 或冻结全局时钟；浏览器断言应依据当前实际月份或使用真实用户操作。该限制属于公开配置边界，不是示例覆盖的 `gap`。
 
-双语展示不能改写已保存的业务值。TimePicker 的安排时间和 Questionnaire 的选择保留原值，显示时再翻译；Signature Pad 仅在名字确实为空时显示本地化的未署名占位，用户输入即使等于英文占位也必须原样保留。Emoji 回应保留 emoji、肤色与参与者等原始状态，展示名称从当前语言的公开 emoji 数据取值，再组合计数与 ARIA 文案。模板插值只翻译开发者选定的模板，用户参数不做递归翻译或替换。对应 Node/SSR 门禁见 [`TESTING.md`](../../../TESTING.md#showcase-reui-example-maintenance)；浏览器中的切换与交互仍需单独验收。
+双语展示不能改写已保存的业务值。TimePicker 的安排时间和 Questionnaire 的选择保留原值，显示时再翻译；Signature Pad 仅在名字确实为空时显示本地化的未署名占位，用户输入即使等于英文占位也必须原样保留。Emoji 回应保留 emoji、肤色与参与者等原始状态，展示名称从当前语言的公开 emoji 数据取值，再组合计数与 ARIA 文案。模板插值只翻译开发者选定的模板，用户参数不做递归翻译或替换。对应 Node/SSR 门禁见 `packages/docs/tests/node/docs-example-copy*.test.mjs`；浏览器中的切换与交互仍需单独验收。
 
 ## 门禁实际上只在 Windows 上有效
 

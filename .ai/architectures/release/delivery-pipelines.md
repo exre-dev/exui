@@ -8,7 +8,7 @@
 
 ## CI 质量门禁
 
-测试按所属工作区归档到 `tests/`；仓库开发、发布与 Skill 测试由 `packages/components/tests/tooling/` 持有，不新增工作区。根 `pnpm test` 执行 Node、Chromium、打包消费者、Skill 示例和两种 base 的静态回归；`pnpm test:node` 提供定向 Node 入口。`pnpm verify` 在同一编排中增加 lint、源锁/内容一致性、发布配置与空白检查，共享构建和回归阶段。详细命令只在 [TESTING.md](../../../TESTING.md) 维护。
+测试按所属工作区归档到 `tests/`；仓库开发、发布与 Skill 测试由 `packages/components/tests/tooling/` 持有，不新增工作区。根 `pnpm test` 执行 Node、Chromium、打包消费者、Skill 示例和两种 base 的静态回归；`pnpm test:node` 提供定向 Node 入口。`pnpm verify` 在同一编排中增加 lint、源锁/内容一致性、发布配置与空白检查，共享构建和回归阶段。测试编写原则与执行时机由 [TESTING.md](../../../TESTING.md) 统一维护。
 
 `.github/workflows/ci.yml` 在 `pull_request` 与推送 `main` 时运行，只有一个执行作业：
 
@@ -19,7 +19,7 @@
 | 预置 | 缓存并安装 Playwright Chromium（缓存键为 `pnpm-lock.yaml` 哈希） |
 | 顶层权限 | `contents: read` |
 
-CI 和本地完整验证共同调用 `scripts/tasks.mjs` 的 `verify` 流程。协调器按依赖顺序执行来源与 Token 检查、组件构建、lint 与源一致性、根路径 docs 构建、全部 Node 回归、文档片段与生产样式、skill 示例、视觉与打包消费者、发布与空白检查，再验证根路径静态/分享输出，最后顺序构建并验证 `/exui/` 静态/分享输出。组件与 docs 构建包含自身类型检查，不再额外重复生成同一组声明；Token 的 ESM/CommonJS 编译同时承担对应配置的类型检查。每一步保留名称并在失败时终止。仅完整验证成功的 main push 上传最终前缀产物。命令与前置依赖由 [TESTING.md](../../../TESTING.md) 维护；ReUI 缓存与锁定来源的边界见 [`../components/public-surface.md`](../components/public-surface.md)。
+CI 和本地完整验证共同调用 `scripts/tasks.mjs` 的 `verify` 流程。协调器按依赖顺序执行来源与 Token 检查、组件构建、lint 与源一致性、根路径 docs 构建、全部 Node 回归、文档片段与生产样式、skill 示例、视觉与打包消费者、发布与空白检查，再验证根路径静态/分享输出，最后顺序构建并验证 `/exui/` 静态/分享输出。组件与 docs 构建包含自身类型检查，不再额外重复生成同一组声明；Token 的 ESM/CommonJS 编译同时承担对应配置的类型检查。每一步保留名称并在失败时终止。仅完整验证成功的 main push 上传最终前缀产物。各阶段命令以协调器源码为准；ReUI 缓存与锁定来源的边界见 [`../components/public-surface.md`](../components/public-surface.md)。
 
 第二个作业 `ci-gate` 以 `if: always()` 依赖 `verify`，把 `verify` 的结果字符串与 `success` 比较。分支保护只要求这一个聚合检查名，因此新增或重命名 `verify` 内部步骤不会改变必需检查的名称。
 

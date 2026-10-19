@@ -4,7 +4,7 @@
 
 本目录记录 ExUI 仓库中**不能直接从源码读出来**的知识：系统边界与依赖方向、已被接受的技术决策及其理由、以及只有在真实运行或 CI 中才会暴露的约束。已落地行为以源码和运行证据为准；已批准但尚未实施的设计只放在标明“待实现”的决策记录中，不能当作当前行为。这些结论来自仓库证据或已批准设计，不包含未被接受的推测。
 
-普通的使用说明、安装步骤和入门指引不在这里：React 消费者看 `packages/components/README.md`；唯一维护的消费 skill 是 [`skills/exui/SKILL.md`](../skills/exui/SKILL.md)，涵盖组件组合、Form、Glass、Shadow 与 Tokens。其组件文档使用 skill 内的本地链接，公开符号与 Token 索引由仓库级 `scripts/exui-skill/` 生成，隔离示例校验脚本归入 `packages/components/tests/tooling/skill/`。经核查的 ExUI 扩展与适配说明通过能力清单同步至 docs 和 skill，其维护边界见 [`architectures/docs/site.md`](architectures/docs/site.md#exui-公开差异的文档边界)。维护命令见 [`TESTING.md`](../TESTING.md#exui-skill-reference-maintenance)。测试与提交流程看 `TESTING.md`、`CONTRIBUTING.md`。
+普通的使用说明、安装步骤和入门指引不在这里：React 消费者看 `packages/components/README.md`；唯一维护的消费 skill 是 [`skills/exui/SKILL.md`](../skills/exui/SKILL.md)，涵盖组件组合、Form、Glass、Shadow 与 Tokens。其组件文档使用 skill 内的本地链接，公开符号与 Token 索引由仓库级 `scripts/exui-skill/` 生成，隔离示例校验脚本归入 `packages/components/tests/tooling/skill/`。经核查的 ExUI 扩展与适配说明通过能力清单同步至 docs 和 skill，其维护边界见 [`architectures/docs/site.md`](architectures/docs/site.md#exui-公开差异的文档边界)。测试规范与提交流程看 `TESTING.md`、`CONTRIBUTING.md`。
 
 ## 模块划分
 

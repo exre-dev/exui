@@ -295,7 +295,7 @@ pnpm lint
 pnpm verify:pack
 ```
 
-The documentation site, retained browser fixtures, and consumer skill use the public package entries. Run the workspace, browser, skill, and isolated packed-consumer gates in [Testing](../../TESTING.md); each verifies a different consumption boundary.
+The documentation site, retained browser fixtures, and consumer skill use the public package entries. CI verifies workspace, browser, skill, and isolated packed-consumer boundaries; follow [Testing](../../TESTING.md) for test authoring and execution timing.
 
 ## Versioning
 
@@ -319,4 +319,4 @@ There is no local `pnpm release` command. Maintainers must configure the Release
 
 ## Source maintenance
 
-Component source locks, licenses, public export metadata, and adapter patches are maintained with the package. See [Testing](../../TESTING.md#source-maintenance-gates) for cache restoration, integrity checks, and deliberate source updates. Raw source caches and maintenance tooling are excluded from the published package; required third-party notices remain included.
+Component source locks, licenses, public export metadata, and adapter patches are maintained with the package. Cache restoration and source maintenance use the repository's `scripts/reui-*.mjs` tools. Raw source caches and maintenance tooling are excluded from the published package; required third-party notices remain included.

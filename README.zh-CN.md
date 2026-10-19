@@ -90,7 +90,7 @@ pnpm dev
 | `pnpm test:visual` / `pnpm verify:pack` | 构建后执行浏览器夹具或隔离的打包消费方检查。 |
 | `pnpm changeset` / `pnpm version-packages` | 维护发布说明及包版本。 |
 
-组件构建与源码检查会自动恢复并校验固定版本的源缓存；完整缓存支持离线使用。浏览器门禁首次运行前需通过 `pnpm --filter @exre/exui-docs exec playwright install chromium` 安装 Chromium。`verify` 最后保留已构建并验证的 `/exui/` 文档产物；独立 `build` 使用 `EXUI_DOCS_BASE`，默认值为 `/`。聚焦检查、低频生成与恢复命令及托管前置条件见[测试指南](TESTING.md)。
+创建或更新 PR 前运行 `pnpm check`，无需安装 Chromium。组件构建与源码检查会自动恢复并校验固定版本的源缓存；完整缓存支持离线使用。显式复现浏览器或完整 CI 门禁前需通过 `pnpm --filter @exre/exui-docs exec playwright install chromium` 安装 Chromium。`verify` 最后保留已构建并验证的 `/exui/` 文档产物；独立 `build` 使用 `EXUI_DOCS_BASE`，默认值为 `/`。测试编写原则与执行时机见[测试规范](TESTING.md)。
 
 DCO 与 Changeset 要求见[贡献指南](CONTRIBUTING.md)。Changesets 只管理公开包版本，私有 docs 和 tokens 工作区不得参与发布。
 
@@ -98,7 +98,7 @@ DCO 与 Changeset 要求见[贡献指南](CONTRIBUTING.md)。Changesets 只管�
 
 生产目标为 [ExUI Docs](https://exre-dev.github.io/exui/)。`pnpm build` 将静态站点输出到 `packages/docs/build/client`。子路径部署需在构建时设置 `EXUI_DOCS_BASE=/exui/`，验证和托管时使用相同的 base。
 
-完整托管该目录，包括 `.data/`、搜索索引、资源和示例源码文件，不使用 SPA 回退或 Node 服务。每个示例分享路由都从同一份源导出提供可读 HTML、`source.md` 和 `source.json`。运行 `pnpm check` 检查双语内容与链接；静态站点、源导出、浏览器及打包消费方检查见[测试指南](TESTING.md)。
+完整托管该目录，包括 `.data/`、搜索索引、资源和示例源码文件，不使用 SPA 回退或 Node 服务。每个示例分享路由都从同一份源导出提供可读 HTML、`source.md` 和 `source.json`。`pnpm check` 包含双语内容与链接检查；CI 还验证静态产物、源导出、浏览器行为及打包消费方。
 
 <details>
 <summary>GitHub Pages 配置与恢复</summary>
@@ -107,7 +107,7 @@ DCO 与 Changeset 要求见[贡献指南](CONTRIBUTING.md)。Changesets 只管�
 
 管理员需在 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**，允许 `main` 使用 `github-pages` 环境且不要求每次部署人工审批，再对当前 `main` CI 执行 **Re-run all jobs**。部署摘要会报告 Pages 返回的实际 URL。工作流文件和本地检查本身不能证明目标已启用或线上站点通过验收。
 
-产物保留七天。源产物丢失或过期时，完整重跑当前 `main` CI。若 Pages 执行失败，但源提交仍为当前提交且产物可用，对 `Docs Pages` 使用 **Re-run all jobs**；部分重跑不是恢复入口。旧提交会被跳过。恢复旧内容需通过新的 `main` revert 提交及 CI。配置检查与线上验收见 [GitHub Pages 交付](TESTING.md#github-pages-delivery)。
+产物保留七天。源产物丢失或过期时，完整重跑当前 `main` CI。若 Pages 执行失败，但源提交仍为当前提交且产物可用，对 `Docs Pages` 使用 **Re-run all jobs**；部分重跑不是恢复入口。旧提交会被跳过。恢复旧内容需通过新的 `main` revert 提交及 CI。
 
 </details>
 

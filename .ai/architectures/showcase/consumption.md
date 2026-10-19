@@ -1,6 +1,6 @@
 # Showcase 消费模型与视觉测试
 
-> 本文记录迁移前 Showcase 外壳与保留的内部示例/测试夹具。其历史 `packages/showcase` 路径用于追溯原始证据；现行代码位于 `packages/docs/src/showcase/`，生产入口已改为静态文档站。当前结构见 [`docs/site.md`](../docs/site.md)，验证分工见 [`TESTING.md`](../../../TESTING.md#static-docs-site)。
+> 本文记录迁移前 Showcase 外壳与保留的内部示例/测试夹具。其历史 `packages/showcase` 路径用于追溯原始证据；现行代码位于 `packages/docs/src/showcase/`，生产入口已改为静态文档站。当前结构见 [`docs/site.md`](../docs/site.md)，测试规范见 [`TESTING.md`](../../../TESTING.md)。
 
 最后更新：2026-10-16
 
@@ -13,7 +13,7 @@
 - 它消费的是**构建后的公共包产物**，不是组件源码。因此视觉测试前必须先完成一次 workspace 构建，否则测试会对着上一版产物运行。
 - Showcase 用自己的 Tailwind 4.3.2 编译上游示例布局类；私有 `example-utilities.css` 只扫描 `examples/` 与 `pages/components/`，不导入 Preflight，也不设根品牌或密度变量。公开组件的 CSS 仍由公共包提供。私有样式边界只为 Showcase 示例服务，不扩展公共包的消费契约。
 
-`packages/showcase/upstream/reui/source-lock.json` 固定来源与示例 ID，`coverage.json` 记录每例状态和家族模式。当前候选示例均指向已适配文件，通用家族均使用 `upstream` 模式；File Upload 原例按锁中记录排除。`scripts/showcase-examples.mjs` 校验锁、覆盖、页面绑定及生成产物。每族 `examples/<family>/index.generated.ts` 注册示例，`component-loaders.generated.ts` 按族导入组件页；`page-loaders.ts` 把各目录页包装并缓存为稳定的 `React.lazy` 身份。原先通用组件的五个聚合页模块已移除；五个 ExUI 页仍经原 `pages/exui` 模块加载。完整状态的检查方式见 [`TESTING.md`](../../../TESTING.md#reui-example-and-legacy-showcase-fixture-maintenance)。
+`packages/showcase/upstream/reui/source-lock.json` 固定来源与示例 ID，`coverage.json` 记录每例状态和家族模式。当前候选示例均指向已适配文件，通用家族均使用 `upstream` 模式；File Upload 原例按锁中记录排除。`scripts/showcase-examples.mjs` 校验锁、覆盖、页面绑定及生成产物。每族 `examples/<family>/index.generated.ts` 注册示例，`component-loaders.generated.ts` 按族导入组件页；`page-loaders.ts` 把各目录页包装并缓存为稳定的 `React.lazy` 身份。原先通用组件的五个聚合页模块已移除；五个 ExUI 页仍经原 `pages/exui` 模块加载。当前完整状态检查由 `scripts/docs-examples.mjs check` 承担。
 
 示例的逐族双语文案在 `examples/<family>/copy.generated.ts`，共享语言与实例资源域在 [`examples/_shared/example-runtime.tsx`](../../../packages/docs/src/showcase/examples/_shared/example-runtime.tsx)。它为各预览提供稳定实例身份，并管理本例的异步任务与消息清理；业务值和输入草稿保持原义。图片、国旗与 emoji 的本地资源来源及字节校验分别记录在 `packages/showcase/upstream/reui/{asset,flag,emoji}-provenance.json`。这些私有数据不进入公共组件包。
 
@@ -39,7 +39,7 @@
 
 `sharing-plugin.ts` 在开发服务器按需返回资料，在生产构建结束时写入 `examples/<id>/index.html` 和 `source.md`。分享 HTML 本身含完整可读资料，复用构建后的应用脚本；浏览器入口在挂载前把地址切回应用根及具体 hash，随后展示原组件页。普通 HTTP 读取不执行该切换，直接取得当前例的源码。分享链接不携带主题、密度、语言或交互快照，访问者设置继续由现有本地存储管理。
 
-生成器要求绝对路径形式的 Vite base，以确保固定入口和子目录部署的资源链接一致；可读源码不进入初始应用 JavaScript，只在点击复制时获取。测试与部署产物要求见 [`TESTING.md`](../../../TESTING.md#showcase-example-sharing)。
+生成器要求绝对路径形式的 Vite base，以确保固定入口和子目录部署的资源链接一致；可读源码不进入初始应用 JavaScript，只在点击复制时获取。当前部署产物边界见 [`docs/site.md`](../docs/site.md)。
 
 ## 主题与密度
 
@@ -93,7 +93,7 @@
 | `FormContentSizing.vrt.test.tsx` | Showcase 中切换共享尺寸与对齐后草稿不丢失，窄行回退为填满可用宽度 | 否 |
 | `FormAppearance.vrt.test.tsx` | 三主题下表单背景一致、透明 Input 边框与其他控件共享描边 | 否 |
 
-逐例检查仍覆盖共享示例的 DOM/SVG/ARIA 关联与资源加载；交互用例保留真实业务状态。测试运行约束见[视觉测试知识](../../knowledge/showcase/visual-test-constraints.md)，命令与当前套件说明由 [`TESTING.md`](../../../TESTING.md) 维护。
+逐例检查仍覆盖共享示例的 DOM/SVG/ARIA 关联与资源加载；交互用例保留真实业务状态。测试运行约束见[视觉测试知识](../../knowledge/showcase/visual-test-constraints.md)，测试编写原则与执行时机由 [`TESTING.md`](../../../TESTING.md) 维护。
 
 ### 公共夹具模式
 

@@ -92,9 +92,9 @@ pnpm dev
 | `pnpm test:visual` / `pnpm verify:pack` | Run browser fixtures or isolated packed consumers after a build. |
 | `pnpm changeset` / `pnpm version-packages` | Maintain release notes and package versions. |
 
-Component builds and source checks restore and verify their pinned source cache automatically. A complete cache works offline. Browser gates need Chromium installed once with `pnpm --filter @exre/exui-docs exec playwright install chromium`. `verify` leaves the final docs output built and verified at `/exui/`; standalone `build` honors `EXUI_DOCS_BASE` (default `/`). See [Testing](TESTING.md) for focused checks, low-frequency generation/restoration commands and hosting prerequisites.
+Use `pnpm check` before creating or updating a PR; it needs no Chromium installation. Component builds and source checks restore and verify their pinned source cache automatically. A complete cache works offline. Explicit browser/complete-CI reproduction needs Chromium installed once with `pnpm --filter @exre/exui-docs exec playwright install chromium`. `verify` leaves the final docs output built and verified at `/exui/`; standalone `build` honors `EXUI_DOCS_BASE` (default `/`).
 
-See [Testing](TESTING.md) for the full CI checks, visual-test prerequisites, and skill example validation. See [Contributing](CONTRIBUTING.md) for Changesets and DCO requirements.
+See [Testing](TESTING.md) for test authoring and execution timing. See [Contributing](CONTRIBUTING.md) for Changesets and DCO requirements.
 
 Changesets version only the public package; the private docs and tokens workspaces must never be selected for release.
 
@@ -102,7 +102,7 @@ Changesets version only the public package; the private docs and tokens workspac
 
 The production target is [ExUI Docs](https://exre-dev.github.io/exui/). `pnpm build` writes the static site to `packages/docs/build/client`. Set `EXUI_DOCS_BASE=/exui/` for a subpath build; supply the same base when verifying and hosting it.
 
-Host the complete directory, including `.data/`, search indexes, assets, and example source files, without an SPA fallback or Node service. Each example share route provides readable HTML, `source.md`, and `source.json` from one source export. Run `pnpm check` for bilingual content and link checks; see [Testing](TESTING.md) for static-site, source-export, browser, and packed-consumer checks.
+Host the complete directory, including `.data/`, search indexes, assets, and example source files, without an SPA fallback or Node service. Each example share route provides readable HTML, `source.md`, and `source.json` from one source export. `pnpm check` includes bilingual content and link checks; CI also verifies static output, source exports, browser behavior and packed consumers.
 
 <details>
 <summary>GitHub Pages setup and recovery</summary>
@@ -111,7 +111,7 @@ After the one-time GitHub Pages setup, each successful `main` push CI saves its 
 
 An administrator must select **GitHub Actions** in **Settings → Pages → Build and deployment → Source**, allow `main` in the `github-pages` environment without a required reviewer for every deployment, and then rerun the current `main` CI with **Re-run all jobs**. The deployment summary reports the URL returned by Pages. Workflow files and local checks alone do not establish that this target is enabled or that the hosted site has passed acceptance.
 
-Artifacts are retained for seven days. If a source artifact is missing or expired, rerun the current `main` CI in full. For a failed Pages run whose source is still current and available, use **Re-run all jobs** on `Docs Pages`; partial reruns are not the recovery interface. Old commits are skipped. To restore older content, revert it through a new `main` commit and CI. See [Testing](TESTING.md#github-pages-delivery) for configuration checks and hosted acceptance.
+Artifacts are retained for seven days. If a source artifact is missing or expired, rerun the current `main` CI in full. For a failed Pages run whose source is still current and available, use **Re-run all jobs** on `Docs Pages`; partial reruns are not the recovery interface. Old commits are skipped. To restore older content, revert it through a new `main` commit and CI.
 
 </details>
 
