@@ -247,23 +247,18 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     expect(written[0]).toContain("useTotals")
   })
 
-  it("skips Data Grid renders for theme and density while still updating language", async () => {
+  it.each([["Theme", "dark"], ["Density", "compact"]])("skips Data Grid renders when changing %s", async (label, value) => {
     const grid = await scene("data-grid", "c-data-grid-1")
     await expect.poll(() => grid.querySelectorAll("tbody tr[data-row-id]").length).toBe(5)
     const example = vi.mocked(BasicDataGridExample)
     const initialRenders = example.mock.calls.length
     expect(initialRenders).toBeGreaterThan(0)
-    await setting("Theme", "dark")
-    expect(example.mock.calls.length, "theme is applied through CSS").toBe(initialRenders)
-    await setting("Density", "compact")
-    expect(example.mock.calls.length, "density is applied through CSS").toBe(initialRenders)
-    await setting("Language", "zh-CN")
-    await expect.poll(() => grid.querySelector("thead th")?.textContent?.trim()).toBe("姓名")
-    expect(example.mock.calls.length).toBeGreaterThan(initialRenders)
+    await setting(label, value)
+    expect(example.mock.calls.length, `${label} is applied through CSS`).toBe(initialRenders)
     expect(grid.isConnected).toBe(true)
   })
 
-  it("pages Data Grid and retains its page through settings", async () => {
+  it.each([["Theme", "dark"], ["Density", "compact"], ["Language", "zh-CN"]])("retains the Data Grid page when changing %s", async (label, value) => {
     const grid = await scene("data-grid", "c-data-grid-1")
     const rows = () => Array.from(grid.querySelectorAll<HTMLElement>("tbody tr[data-row-id]"), row => row.dataset.rowId)
     await expect.poll(() => rows().length).toBe(5)
@@ -274,9 +269,7 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     await page.elementLocator(nextPage!).click()
     await expect.poll(rows).not.toEqual(first)
     const second = rows()
-    await setting("Theme", "dark")
-    await setting("Density", "compact")
-    await setting("Language", "zh-CN")
+    await setting(label, value)
     expect(rows()).toEqual(second)
     expect(grid.isConnected).toBe(true)
   })
@@ -303,8 +296,11 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     const basic = await scene("data-grid", "c-data-grid-1")
     const headers = () => Array.from(basic.querySelectorAll("thead th"), item => item.textContent?.trim())
     expect(headers()).toEqual(["Name", "Email", "Location", "Balance ($)"])
+    const example = vi.mocked(BasicDataGridExample)
+    const initialRenders = example.mock.calls.length
     await setting("Language", "zh-CN")
     await expect.poll(headers).toEqual(["姓名", "邮箱", "所在地", "余额（美元）"])
+    expect(example.mock.calls.length).toBeGreaterThan(initialRenders)
     expect(basic.isConnected).toBe(true)
   })
 

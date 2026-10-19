@@ -16,6 +16,7 @@ let router: ReturnType<typeof createMemoryRouter>
 let classes: string
 let colorScheme: string
 let preferences: Map<string, string | null>
+let previousScroll: { x: number; y: number }
 function OverviewRoute() {
   const { pathname } = useLocation()
   const language = pathname.startsWith("/en/") ? "en" : "zh-CN"
@@ -38,6 +39,8 @@ function render() {
 beforeEach(() => {
   classes = document.documentElement.className
   colorScheme = document.documentElement.style.colorScheme
+  previousScroll = { x: scrollX, y: scrollY }
+  scrollTo(0, 0)
   const defaults = { [preferenceKeys.theme]: "light", [preferenceKeys.density]: "standard", [preferenceKeys.language]: "en" }
   preferences = new Map(Object.keys(defaults).map(key => [key, localStorage.getItem(key)]))
   Object.entries(defaults).forEach(([key, value]) => localStorage.setItem(key, value))
@@ -51,11 +54,14 @@ afterEach(() => {
   container.remove()
   document.documentElement.className = classes
   document.documentElement.style.colorScheme = colorScheme
+  scrollTo(previousScroll.x, previousScroll.y)
   preferences.forEach((value, key) => value === null ? localStorage.removeItem(key) : localStorage.setItem(key, value))
   vi.restoreAllMocks()
 })
 async function choose(label: string, value: string) {
-  await page.getByRole("combobox", { name: label, exact: true }).click()
+  const trigger = page.getByRole("combobox", { name: label, exact: true })
+  trigger.element().scrollIntoView({ block: "center", behavior: "instant" })
+  await trigger.click()
   await page.getByRole("option", { name: value, exact: true }).click()
 }
 describe("Docs component overview", () => {
