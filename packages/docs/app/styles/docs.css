@@ -1,19 +1,17 @@
-@layer theme, base, exui, components, utilities;
+@layer theme, base, components, utilities;
+/* Preserve the public sheet's unlayered material and interaction rules. Import
+   its utilities first so the app and Fumadocs utilities win by source order. */
+@import "@exre/exui/style.css";
 @import "tailwindcss";
 @import "fumadocs-ui/css/generated/glass.css";
 @import "@exre/exui/docs/theme.css";
-/* The public sheet is already compiled. Keep its generic utilities below the
-   app utilities so .flex and .p-6 cannot override Glass responsive variants.
-   Component interaction rules belong to this sheet; duplicating solid state
-   backgrounds in the app layer would override Glass state materials. */
-@import "@exre/exui/style.css" layer(exui);
 @import "../../src/showcase/example-utilities.css";
 @import "../../src/showcase/Showcase.css";
 @import "../../src/showcase/ShowcasePages.css";
 @source "../";
 @source "../../content/";
-/* Keep Field's public responsive variants beside the app's generic flex/width
-   utilities; otherwise the later app layer overrides the public exui layer. */
+/* Emit Field's responsive variants beside the app's generic flex/width utilities
+   so the app's regenerated utilities cannot override the public variants. */
 @source inline("@md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto @md/field-group:*:data-[slot=field-label]:flex-auto @md/field-group:has-[>[data-slot=field-content]]:items-start");
 
 .docs-app { margin: 0; font-family: var(--font-sans); background: var(--background); color: var(--foreground); }

@@ -20,9 +20,9 @@ MDX 中的文档链接以源文件为基准编写，例如 `../tokens/density.md
 
 开发服务器由 `lib/example-sources.ts` 的 Vite 插件提供相同的 JSON 与 Markdown 源码端点，并在 Router 页面处理中间件前注册。它复用静态导出器，遵循 Vite base，不依赖已有 `build/client`。缺少这条接线时，源码 URL 会落入页面路由并返回 HTML，代码视图与复制源码会同时失败；真实开发配置的 HTTP 回归见 `packages/docs/tests/node/docs-dev-sources.test.mjs`。
 
-`app/styles/docs.css` 将公共包已编译的 `style.css` 放入独立 `exui` 样式层，优先级低于站点的 `utilities`。两个 Tailwind 编译产物若直接合并到同一层，后导入的 `.flex`、`.p-6` 会覆盖 Glass 的 `md:hidden`、`md:pt-16`。设置组件必须接收布局 slot 的 `className`，让桌面工具栏和移动抽屉各自的可见性规则生效。
+`app/styles/docs.css` 先导入公共包已编译的 `style.css`，再导入站点 Tailwind 与 Fumadocs 样式；公共与站点的同名层合并，站点工具类在后。公共表中的无层 Glass 材质和交互规则保持无层：把整张表包进低优先级层，会让站点重新生成的 `.bg-card`、`.bg-popover` 等实底工具类盖住半透明材质。公共表若在站点之后导入，其 `.flex`、`.p-6` 又会覆盖 Fumadocs Glass 布局的 `md:hidden`、`md:pt-16`，所以两类问题通过导入顺序同时约束。设置组件必须接收布局 slot 的 `className`，让桌面工具栏和移动抽屉各自的可见性规则生效。`DocsGlass.vrt.test.tsx` 使用生产文档样式和实际示例宿主验证三主题、两密度、材质开关及 Portal 表面的计算样式，不证明 SVG 折射绘制质量。
 
-同样的层级会让站点 `utilities` 中的普通 Field 列布局覆盖公共样式的响应式查询类。`app/styles/docs.css` 用有界的 `@source inline(...)` 桥接这些公共类，使它们在站点层重新生成并保留响应式行为；不应通过改写公共 Field 或锁定上游示例修复这个宿主问题。普通 `orientation="responsive"` Field 需要 `FieldGroup` 提供具名查询容器，与[独立 Field 配方](../../../skills/exui/references/exui/field-layout.md)逐项测量的 21.75rem 限宽/对齐规则不同。真实宿主验证见 `DocsFormGallery.vrt.test.tsx`，独立源码消费验证见 `packages/docs/tests/node/docs-sharing.test.mjs`。
+站点后生成的普通 Field 列布局工具类仍可能覆盖公共表中先声明的响应式查询类。`app/styles/docs.css` 用有界的 `@source inline(...)` 桥接这些公共类，使它们与站点工具类一起生成并保留响应式行为；不应通过改写公共 Field 或锁定上游示例修复这个宿主问题。普通 `orientation="responsive"` Field 需要 `FieldGroup` 提供具名查询容器，与[独立 Field 配方](../../../skills/exui/references/exui/field-layout.md)逐项测量的 21.75rem 限宽/对齐规则不同。真实宿主验证见 `DocsFormGallery.vrt.test.tsx`，独立源码消费验证见 `packages/docs/tests/node/docs-sharing.test.mjs`。
 
 Filters 的片段拼接由公共样式表根据内置片段标记处理，内部圆角与共享边框不能被应用层的通用圆角、边框工具类覆盖；自定义 `renderChip` 不带该标记，继续自行控制外观。文档页不再为 Portal 菜单预留固定预览高度，卡片跟随闭合内容增长；完整样式层下的几何、窄容器及跨卡片菜单点击由 `Filters.vrt.test.tsx` 验证。消费布局约定见 [Filters](../../../skills/exui/references/exui/filters.md)。
 
