@@ -1,0 +1,147 @@
+import assert from "node:assert/strict"
+import { spawn as realSpawn, spawnSync } from "node:child_process"
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
+import os from "node:os"
+import path from "node:path"
+import test from "node:test"
+import { fileURLToPath } from "node:url"
+
+const runner = new URL("./tasks.mjs", import.meta.url)
+
+// Replace only the expensive subprocess boundary. Real child processes retain
+// argument, cwd, environment, exit and close behavior; no test files are generated.
+async function exercise(t, mode, files = [], { fail = "", env = {} } = {}) {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "exui tasks "))
+  t.after(() => rm(temporary, { recursive: true, force: true }))
+  const output = path.join(temporary, "events.jsonl")
+  const cli = path.join(temporary, "fake cli.mjs")
+  await writeFile(cli, `
+import { appendFileSync } from "node:fs"
+const [command, ...args] = process.argv.slice(2)
+appendFileSync(process.env.TASK_EVENTS, JSON.stringify({ command, args, cwd: process.cwd(), base: process.env.EXUI_DOCS_BASE }) + "\\n")
+if (args.includes(process.env.TASK_FAIL)) process.exitCode = 7
+`)
+  const logs = []
+  const { runTasks } = await import(runner.href)
+  let error
+  try {
+    await runTasks(mode, files, {
+      env: { ...process.env, npm_execpath: cli, TASK_EVENTS: output, TASK_FAIL: fail, ...env },
+      log: (message) => logs.push(message),
+      spawn: (command, args, options) => realSpawn(process.execPath, [cli, command, ...args], { ...options, stdio: "ignore" }),
+    })
+  } catch (caught) {
+    error = caught
+  }
+  const events = (await readFile(output, "utf8").catch(() => "")).trim().split("\n").filter(Boolean).map(JSON.parse)
+  return { events, logs, error, cli }
+}
+
+const has = (event, value) => event.args.includes(value)
+const index = (events, value) => events.findIndex((event) => has(event, value))
+
+test("check prepares Tokens and declarations before consumers without starting browsers or production builds", async (t) => {
+  const { events, error } = await exercise(t, "check")
+  assert.ifError(error)
+  assert.ok(index(events, "build:js") < index(events, "build:cjs"))
+  assert.ok(index(events, "build:cjs") < index(events, "check:built"))
+  assert.ok(index(events, "check:built") < index(events, "build:types"))
+  const docsTypes = events.findIndex((event) => has(event, "@exre/exui-docs") && has(event, "typecheck"))
+  assert.ok(index(events, "build:types") < docsTypes)
+  for (const event of events) {
+    assert.ok(!event.args.includes("build"), JSON.stringify(event))
+    assert.ok(!event.args.some((arg) => /verify-docs-|verify-packages|verify-examples|docs-example-styles\.mjs|test:visual/.test(arg)), JSON.stringify(event))
+  }
+  for (const source of ["scripts/reui-sync.mjs", "scripts/reui-exports.mjs", "scripts/reui-foundation-diff.mjs", "scripts/generate-reui-luma.mjs", "scripts/docs-content.mjs", "scripts/docs-examples.mjs", "scripts/docs-example-assets.mjs", "scripts/exui-capabilities.mjs", "scripts/exui-skill/sync-references.mjs", "scripts/exui-skill/update-inventories.mjs", "scripts/exui-skill/verify.mjs"]) {
+    assert.ok(index(events, source) >= 0, source)
+  }
+})
+
+test("failed token checks stop before declarations, consumers and later gates", async (t) => {
+  const { events, error, logs } = await exercise(t, "check", [], { fail: "check:built" })
+  assert.match(error?.message ?? "", /7/)
+  assert.equal(index(events, "build:types"), -1)
+  assert.equal(index(events, "scripts/docs-content.mjs"), -1)
+  assert.ok(logs.some((line) => /Token/.test(line)))
+})
+
+test("focused test paths are passed literally after one public-package preparation", async (t) => {
+  const files = ["scripts/docs-content.test.mjs", "a folder/literal & name.test.mjs"]
+  const { events, error } = await exercise(t, "test", files)
+  assert.ifError(error)
+  const tests = events.filter((event) => has(event, "--test"))
+  assert.equal(tests.length, 1)
+  assert.deepEqual(tests[0].args, ["--test", ...files])
+  assert.equal(events.filter((event) => has(event, "build:js")).length, 1)
+  assert.equal(events.filter((event) => has(event, "@exre/exui") && has(event, "build")).length, 1)
+  assert.ok(index(events, "build") < index(events, "--test"))
+})
+
+test("verify includes all Node inventories and every full gate, building each prerequisite only once", async (t) => {
+  const { events, error } = await exercise(t, "verify", [], { env: { EXUI_DOCS_BASE: "/unexpected/" } })
+  assert.ifError(error)
+  for (const item of ["build:js", "build:cjs", "check:built"]) assert.equal(events.filter((event) => has(event, item)).length, 1, item)
+  assert.equal(events.filter((event) => has(event, "@exre/exui") && has(event, "build")).length, 1)
+  assert.equal(index(events, "build:types"), -1, "component build already emits declarations")
+  const tests = events.filter((event) => has(event, "--test"))
+  assert.equal(tests.length, 1)
+  for (const glob of ["scripts/**/*.test.mjs", "packages/components/scripts/**/*.test.mjs", "packages/tokens/scripts/**/*.test.mjs"]) assert.ok(tests[0].args.includes(glob), glob)
+  for (const gate of ["scripts/docs-example-styles.mjs", "scripts/docs-snippets.mjs", "scripts/exui-skill/verify-examples.mjs", "scripts/verify-packages.mjs", "scripts/release-bootstrap/verify.mjs", "test:visual", "git"]) assert.ok(index(events, gate) >= 0, gate)
+  const tail = events.slice(-3)
+  assert.ok(has(tail[0], "@exre/exui-docs") && has(tail[0], "build"))
+  assert.equal(tail[0].base, "/exui/")
+  assert.deepEqual(tail[1].args, ["scripts/verify-docs-static.mjs", "packages/docs/build/client", "/exui/"])
+  assert.deepEqual(tail[2].args, ["scripts/verify-docs-sharing.mjs", "packages/docs/build/client", "/exui/"])
+  const rootBuild = events.find((event) => has(event, "@exre/exui-docs") && has(event, "build"))
+  assert.equal(rootBuild.base, "/")
+  const rootStatic = events.find((event) => has(event, "scripts/verify-docs-static.mjs"))
+  assert.equal(rootStatic.args.at(-1), "/")
+})
+
+test("typecheck prepares public Tokens before declarations and docs types", async (t) => {
+  const { events, error } = await exercise(t, "typecheck")
+  assert.ifError(error)
+  assert.ok(index(events, "check:built") < index(events, "packages/components/scripts/copy-tokens-dist.mjs"))
+  assert.ok(index(events, "packages/components/scripts/copy-tokens-dist.mjs") < index(events, "build:types"))
+  assert.ok(!events.some((event) => has(event, "build")))
+})
+
+test("build orders public packages before the docs and preserves a requested deployment base", async (t) => {
+  const { events, error } = await exercise(t, "build", [], { env: { EXUI_DOCS_BASE: "/preview/" } })
+  assert.ifError(error)
+  assert.deepEqual(events.map((event) => event.args.slice(2)), [["@exre/exui-tokens", "build"], ["@exre/exui", "build"], ["@exre/exui-docs", "build"]])
+  assert.equal(events.at(-1).base, "/preview/")
+})
+
+test("CLI rejects unknown modes and extra non-test arguments before launching work", () => {
+  for (const args of [["unknown"], ["build", "scripts/chart-style.test.mjs"]]) {
+    const result = spawnSync(process.execPath, [fileURLToPath(runner), ...args], { encoding: "utf8" })
+    assert.equal(result.status, 1)
+    assert.match(result.stderr, /Usage:/)
+  }
+})
+
+test("CLI uses the current Node and pnpm entry without a shell, even when paths contain spaces", async (t) => {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "exui cli "))
+  t.after(() => rm(temporary, { recursive: true, force: true }))
+  const cli = path.join(temporary, "pnpm entry.mjs")
+  const output = path.join(temporary, "events.jsonl")
+  await writeFile(cli, `
+import { appendFileSync } from "node:fs"
+appendFileSync(process.env.TASK_EVENTS, JSON.stringify({ args: process.argv.slice(2), cwd: process.cwd(), node: process.execPath, base: process.env.EXUI_DOCS_BASE }) + "\\n")
+`)
+  const result = spawnSync(process.execPath, [fileURLToPath(runner), "build"], {
+    cwd: temporary,
+    env: { ...process.env, npm_execpath: cli, TASK_EVENTS: output, EXUI_DOCS_BASE: "/custom/" },
+    encoding: "utf8",
+  })
+  assert.equal(result.status, 0, result.stderr)
+  const events = (await readFile(output, "utf8")).trim().split("\n").map(JSON.parse)
+  assert.deepEqual(events.map((event) => event.args), [["--filter", "@exre/exui-tokens", "build"], ["--filter", "@exre/exui", "build"], ["--filter", "@exre/exui-docs", "build"]])
+  for (const event of events) {
+    assert.equal(event.node, process.execPath)
+    assert.equal(event.cwd, path.resolve(fileURLToPath(new URL("../", import.meta.url))))
+    assert.equal(event.base, "/custom/")
+  }
+  assert.match(result.stdout, /\[tasks\] Build docs/)
+})

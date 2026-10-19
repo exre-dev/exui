@@ -1,0 +1,23 @@
+{
+  "name": "@exre/exui-workspace",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/tasks.mjs build",
+    "typecheck": "node scripts/tasks.mjs typecheck",
+    "lint": "oxlint scripts && pnpm --filter @exre/exui-tokens lint && pnpm --filter @exre/exui lint && pnpm --filter @exre/exui-docs lint",
+    "test": "node scripts/tasks.mjs test",
+    "test:visual": "pnpm --filter @exre/exui-docs test:visual",
+    "check": "node scripts/tasks.mjs check",
+    "verify": "node scripts/tasks.mjs verify",
+    "verify:pack": "node scripts/verify-packages.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0",
+    "oxlint": "^1.71.0"
+  }
+}
