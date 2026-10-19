@@ -1,8 +1,7 @@
-import { ExMessage, type ExMessageLoadingHandle } from "@exre/exui"
 /* oxlint-disable react/only-export-components -- The lazy Showcase router consumes stable page registries. */
 import * as React from "react"
 import { z } from "zod"
-import { ArrowDown, ArrowUp, Check, CheckCircle2, Cloud, Folder, Info, Mail, Plus, Trash2, TriangleAlert, X } from "lucide-react"
+import { ArrowDown, ArrowUp, Check, CheckCircle2, Folder, Mail, Plus, Trash2 } from "lucide-react"
 import {
   Alert, AlertDescription, Badge, Button, Card, CardContent, CardHeader, CardTitle,
   Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
@@ -184,39 +183,7 @@ function FormPage() { return <PreviewGrid><ProjectFormPreview /><FormModelsPrevi
 // Leaf Preview ownership does not depend on the page registry's composition.
 export const previewFamilies = { GlassPage: "glass", ProjectFormPreview: "form", FormModelsPreview: "form", ConfiguredFormPreview: "form" }
 
-function ExMessagePage() {
-  const c = useCopy()
-  const handle = React.useRef<ExMessageLoadingHandle | null>(null)
-  const [loading, setLoading] = React.useState(false)
-  React.useEffect(() => () => { handle.current?.dismiss(); handle.current = null }, [])
-  const complete = (outcome: "success" | "error" | "dismiss") => {
-    if (outcome === "success") handle.current?.onSuccess(c("Files synced", "文件已同步"))
-    else if (outcome === "error") handle.current?.onError(c("Sync failed. Your files are safe.", "同步失败，文件仍安全保留。"))
-    else handle.current?.dismiss()
-    handle.current = null
-    setLoading(false)
-  }
-  return <PreviewGrid>
-    <Preview shareId="exui-ex-message-1"><div style={row}>
-      <Button variant="outline" disabled={loading} onClick={() => ExMessage.info(c("Your workspace is up to date", "工作区已是最新状态"))}><Info />{c("Info", "提示")}</Button>
-      <Button variant="outline" disabled={loading} onClick={() => ExMessage.success(c("Changes saved", "更改已保存"))}><CheckCircle2 />{c("Success", "成功")}</Button>
-      <Button variant="outline" disabled={loading} onClick={() => ExMessage.warn(c("Storage is almost full", "存储空间即将用完"))}><TriangleAlert />{c("Warning", "警告")}</Button>
-      <Button variant="outline" disabled={loading} onClick={() => ExMessage.error(c("Unable to save changes", "无法保存更改"))}><X />{c("Error", "错误")}</Button>
-    </div></Preview>
-    <Preview shareId="exui-ex-message-2"><div style={stack}>
-      <div style={row}><Cloud /><strong>{c("Workspace files", "工作区文件")}</strong><Badge variant="secondary">{loading ? c("Syncing", "同步中") : c("Ready", "就绪")}</Badge></div>
-      <div style={row}>
-        <Button disabled={loading} onClick={() => { handle.current = ExMessage.loading(c("Syncing files…", "正在同步文件…")); setLoading(true) }}><Cloud />{c("Start sync", "开始同步")}</Button>
-        <Button variant="outline" disabled={!loading} onClick={() => complete("success")}>{c("Complete", "完成")}</Button>
-        <Button variant="outline" disabled={!loading} onClick={() => complete("error")}>{c("Fail", "失败")}</Button>
-        <Button variant="ghost" disabled={!loading} onClick={() => complete("dismiss")}>{c("Dismiss", "关闭")}</Button>
-      </div>
-    </div></Preview>
-  </PreviewGrid>
-}
-
 export const pages: Record<string, React.ComponentType> = {
   glass: GlassPage,
   form: FormPage,
-  "ex-message": ExMessagePage,
 }

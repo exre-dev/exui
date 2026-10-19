@@ -1,5 +1,3 @@
-import { ExMessage } from "@exre/exui"
-import { CheckIcon } from "lucide-react"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Form, FormField, useForm } from "@exre/exui"
 import { z } from "zod"
 import { usePreviewCopy } from "./preview-copy"
@@ -26,7 +24,6 @@ export default function OverviewExUIPreviews({ id }: { id: string }) {
   switch (id) {
     case "form": return <FormPreview />
     case "glass": return <div className="overview-glass-backdrop"><Card glass><CardHeader><CardTitle>ExUI <Badge variant="secondary">Glass</Badge></CardTitle></CardHeader><CardContent><Button glass>{copy("Continue", "继续")}</Button></CardContent></Card></div>
-    case "ex-message": return <Button variant="outline" onClick={() => ExMessage.success(copy("Changes saved", "更改已保存"))}><CheckIcon />{copy("Success message", "成功消息")}</Button>
     default: throw new Error(`Missing ExUI overview preview: ${id}`)
   }
 }

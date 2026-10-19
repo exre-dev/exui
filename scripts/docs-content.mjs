@@ -8,7 +8,7 @@ const requireDocs = createRequire(join(repoRoot, "packages/docs/package.json"))
 const { parseDocument } = requireDocs("yaml")
 const groups = new Set(["getting-started", "components", "exui", "tokens"])
 const guideIds = [
-  "getting-started/installation", "getting-started/quick-start", "getting-started/skills", "getting-started/styles",
+  "getting-started/installation", "getting-started/quick-start", "getting-started/skills", "getting-started/styles", "getting-started/ex-message-migration",
   "tokens/usage", "tokens/customization", "tokens/themes", "tokens/density", "tokens/scaling", "tokens/fumadocs",
 ]
 const locales = ["zh-CN", "en"]

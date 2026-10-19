@@ -3,18 +3,20 @@ import { createRoot, type Root } from "react-dom/client"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { page, userEvent } from "vitest/browser"
 import { toast, TooltipProvider } from "@exre/exui"
-import Showcase from "./Showcase"
+import { mountDocsExamples } from "./test-fixtures/docs-examples"
+import { preferenceKeys } from "../../lib/site-contract.mjs"
 import { ShowcaseLanguageProvider } from "./ShowcaseLanguageProvider"
 import SidebarExample from "./examples/sidebar/c-sidebar-1"
 import BasicDataGridExample from "./examples/data-grid/c-data-grid-1"
 
-vi.mock("./examples/data-grid/c-data-grid-1", { spy: true })
+vi.mock("../../src/showcase/examples/data-grid/c-data-grid-1", { spy: true })
 
-const keys = ["exui-showcase-language", "exui-showcase-theme", "exui-showcase-density"] as const
+const keys = [preferenceKeys.language, preferenceKeys.theme, preferenceKeys.density] as const
 type ActiveToast = Exclude<ReturnType<typeof toast.getToasts>[number], { dismiss: boolean }>
 function activeToasts(): ActiveToast[] {
   return toast.getToasts().filter((item): item is ActiveToast => !("dismiss" in item))
 }
+let examplesHost: ReturnType<typeof mountDocsExamples>
 let root: Root
 let container: HTMLDivElement
 let saved: { hash: string; classes: string; lang: string; title: string; scrollX: number; scrollY: number; storage: (string | null)[]; sidebarCookie: string | null }
@@ -24,12 +26,11 @@ beforeEach(async () => {
     lang: document.documentElement.lang, title: document.title, scrollX, scrollY, storage: keys.map(key => localStorage.getItem(key)),
     sidebarCookie: document.cookie.split("; ").find(part => part.startsWith("sidebar_state=")) ?? null }
   keys.forEach((key, index) => localStorage.setItem(key, ["en", "light", "standard"][index]))
-  history.replaceState(null, "", "#/components/button")
   container = document.createElement("div")
   document.body.replaceChildren(container)
   root = createRoot(container)
   if (window.innerWidth >= 1000) {
-    root.render(<Showcase />)
+    examplesHost = mountDocsExamples(root, "button")
     await document.fonts.ready
     await expect.poll(() => container.querySelector("[data-page-loaded]")?.getAttribute("data-page-loaded")).toBe("button")
   }
@@ -88,6 +89,7 @@ describe.skipIf(window.innerWidth >= 1000)("mobile Sidebar example fixture", () 
 })
 afterEach(() => {
   root.unmount()
+  examplesHost?.router.dispose()
   document.documentElement.className = saved.classes
   document.documentElement.lang = saved.lang
   document.title = saved.title
@@ -100,7 +102,7 @@ afterEach(() => {
 })
 
 async function openPage(group: "components" | "exui", family: string) {
-  location.hash = `#/${group}/${family}`
+  await examplesHost.open(group, family)
   await expect.poll(() => container.querySelector("[data-page-loaded]")?.getAttribute("data-page-loaded"), { timeout: 20000 }).toBe(family)
   return container.querySelector<HTMLElement>(`[data-page-loaded="${family}"]`)!
 }
@@ -117,7 +119,7 @@ function within(node: Element, selector: string) {
   return page.elementLocator(target!)
 }
 async function setting(label: string, value: string) {
-  await page.getByRole("combobox", { name: label, exact: true }).selectOptions(value)
+  await examplesHost.setting(label, value)
 }
 async function tabIntoSceneTrigger(trigger: HTMLElement) {
   // A local focus entry avoids opening another page example's Tooltip first.
@@ -134,11 +136,8 @@ async function tabIntoSceneTrigger(trigger: HTMLElement) {
   }
 }
 function setSettingBehindModal(label: string, value: string) {
-  // An open modal makes the header inert; this changes only Showcase's preference.
-  const select = container.querySelector<HTMLSelectElement>(`.showcase-topbar select[aria-label="${label}"]`)
-  expect(select, `header setting ${label}`).not.toBeNull()
-  select!.value = value
-  select!.dispatchEvent(new Event("change", { bubbles: true }))
+  // Keep the modal open while changing the real route/provider state.
+  examplesHost.setBehindModal(label, value)
 }
 
 describe.skipIf(window.innerWidth < 1000)("adapted source example interactions", () => {
@@ -852,19 +851,22 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
 
   it("validates and saves the ExUI form with localized messages and an unchanged business draft", async () => {
     const form = await openPage("exui", "form")
-    const name = page.getByRole("textbox", { name: "Project name", exact: true })
+    const projectCard = form.querySelector<HTMLElement>('[data-share-example-id="exui-form-1"]')
+    expect(projectCard).not.toBeNull()
+    const project = page.elementLocator(projectCard!)
+    const name = project.getByRole("textbox", { name: "Project name", exact: true })
     await name.fill("")
     const original = name.element()
-    await page.getByRole("button", { name: "Save project", exact: true }).click()
-    await expect.element(page.getByText("Enter at least 2 characters", { exact: true }).first()).toBeVisible()
+    await project.getByRole("button", { name: "Save project", exact: true }).click()
+    await expect.element(project.getByText("Enter at least 2 characters", { exact: true }).first()).toBeVisible()
     await setting("Language", "zh-CN")
-    const translated = page.getByRole("textbox", { name: "项目名称", exact: true })
+    const translated = project.getByRole("textbox", { name: "项目名称", exact: true })
     expect(translated.element()).toBe(original)
-    await expect.element(page.getByText("请输入至少 2 个字符", { exact: true }).first()).toBeVisible()
+    await expect.element(project.getByText("请输入至少 2 个字符", { exact: true }).first()).toBeVisible()
     await translated.fill("海星计划")
-    await page.getByRole("button", { name: "保存项目", exact: true }).click()
-    await expect.element(page.getByRole("status")).toHaveTextContent("海星计划")
-    expect(form.querySelector('input[name="name"]')).toBe(original)
+    await project.getByRole("button", { name: "保存项目", exact: true }).click()
+    await expect.element(page.elementLocator(projectCard!.querySelector<HTMLElement>('.showcase-preview')!).getByRole("status")).toHaveTextContent("海星计划")
+    expect(projectCard!.querySelector('input[name="name"]')).toBe(original)
   })
 
   it("submits the migrated c-number-field-6 through the public Form adapter", async () => {
@@ -886,14 +888,31 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     expect(successToast?.textContent).toContain("successfully submitted with amount: 12")
   })
 
-  it("cleans a page-owned loading toast on navigation and preserves another notification", async () => {
-    await openPage("exui", "ex-message")
-    await page.getByRole("button", { name: "Start sync", exact: true }).click()
-    await expect.element(page.getByText("Syncing files…", { exact: true })).toBeVisible()
-    toast.success("External workflow")
+  it("cleans the Glass example notifications on navigation and preserves another task", async () => {
+    const publishSuccess = toast.success
+    vi.spyOn(toast, "success").mockImplementation((message, options) => publishSuccess(message, { ...options, duration: Infinity }))
+    await openPage("exui", "glass")
+    const card = container.querySelector<HTMLElement>('[data-docs-example-card="exui-glass-1"]')!
+    await page.elementLocator(card).getByRole("button", { name: "Save collection", exact: true }).click()
+    const ownedId = activeToasts().find(item => item.title === "Collection saved")!.id
+    const externalId = toast.info("Another task", { duration: Infinity })
+    await expect.element(page.getByText("Another task", { exact: true })).toBeVisible()
+    await openPage("components", "button")
+    expect(activeToasts().some(item => item.id === ownedId)).toBe(false)
+    expect(activeToasts().some(item => item.id === externalId)).toBe(true)
+  })
+
+  it("cleans a Sonner loading toast on family navigation and preserves another notification", async () => {
+    const upload = await scene("sonner", "c-sonner-21")
+    const existing = new Set(activeToasts().map(item => item.id))
+    await within(upload, "button").click()
+    await expect.poll(() => activeToasts().filter(item => !existing.has(item.id)).length).toBe(1)
+    const ownedId = activeToasts().find(item => !existing.has(item.id))!.id
+    const externalId = toast.success("External workflow", { duration: Infinity })
     await expect.element(page.getByText("External workflow", { exact: true })).toBeVisible()
     await openPage("components", "button")
-    await expect.element(page.getByText("Syncing files…", { exact: true })).not.toBeInTheDocument()
+    await expect.poll(() => activeToasts().some(item => item.id === ownedId)).toBe(false)
+    expect(activeToasts().some(item => item.id === externalId)).toBe(true)
     await expect.element(page.getByText("External workflow", { exact: true })).toBeVisible()
   })
 
@@ -984,6 +1003,6 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     expect(panel!.isConnected).toBe(false)
     await userEvent.keyboard("{Control>}b{/Control}")
     expect(container.querySelector('[data-slot="sidebar"]')).toBeNull()
-    expect(location.hash).toBe("#/components/button")
+    expect(examplesHost.router.state.location.pathname).toMatch(/\/docs\/components\/button\/$/)
   })
 })

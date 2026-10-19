@@ -95,9 +95,16 @@ describe.skipIf(window.innerWidth < 1000)("Showcase sharing", () => {
     const extension = container.querySelector('[data-share-example-id="exui-direction"]')!
     expect(extension.querySelector('[data-example-id]')).toBeNull()
     expect(extension.querySelector('.showcase-example-number')?.textContent).toBe('Input Group · E01')
-    location.hash = '#/exui/ex-item'
-    await expect.poll(() => container.querySelectorAll('.showcase-example-header').length).toBe(3)
-    expect(container.querySelectorAll('[data-share-example-id^="exui-ex-item-"]')).toHaveLength(3)
+    location.hash = '#/components/field'
+    await expect.poll(() => container.querySelector('[data-page-loaded]')?.getAttribute('data-page-loaded')).toBe('field')
+    await expect.poll(() => container.querySelectorAll('.showcase-example-header').length).toBe(14)
+    expect(Array.from(container.querySelectorAll<HTMLElement>('[data-share-example-id^="exui-field-"]'), node => node.dataset.shareExampleId)).toEqual([
+      'exui-field-settings', 'exui-field-display', 'exui-field-layout',
+    ])
+    expect(Array.from(container.querySelectorAll<HTMLElement>('[data-example-id]'), node => node.dataset.exampleId)).toEqual(
+      Array.from({ length: 11 }, (_, index) => `c-field-${index + 1}`),
+    )
+    expect(container.querySelectorAll('[data-share-example-id]')).toHaveLength(14)
   })
 
   it("accepts a valid Markdown document from a static host with a generic content type", async () => {

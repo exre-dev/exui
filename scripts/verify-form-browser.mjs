@@ -43,5 +43,5 @@ async function verifyFormBrowser(consumerRoot) {
   }
 }
 
-assert.equal(process.argv.length, 3, "usage: node scripts/verify-form-browser.mjs <consumer-directory>")
+assert.equal(process.argv.length, 3, "usage: node packages/components/tests/consumers/verify-form-browser.mjs <consumer-directory>")
 await verifyFormBrowser(process.argv[2])

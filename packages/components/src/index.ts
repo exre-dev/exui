@@ -6,14 +6,6 @@ import "./index.css"
 // surface.
 export { ThemeProvider, useTheme } from "./components/theme-provider"
 export { GlassSeed } from "./components/glass-seed"
-export { ExMessageContext } from "./components/ex-message-context"
-export { ExMessage } from "./lib/ex-message-controller"
-export type {
-  ExMessageContextProps,
-  ExMessageLoadingHandle,
-  ExMessageOptions,
-  ExMessagePlacement,
-} from "./lib/ex-message-controller"
 export * from "./components/ui/accordion"
 export * from "./components/ui/alert-dialog"
 export * from "./components/ui/aspect-ratio"

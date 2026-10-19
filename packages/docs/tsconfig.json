@@ -5,6 +5,11 @@
     "lib": ["ES2023", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "paths": {
+      "@exre/exui": ["./node_modules/@exre/exui"],
+      "react": ["./node_modules/@types/react"],
+      "react/*": ["./node_modules/@types/react/*"]
+    },
     "types": ["vite/client", "node"],
     "rootDirs": [".", "./.react-router/types"],
     "resolveJsonModule": true,

@@ -170,10 +170,6 @@ async function verifyReactBrowser(consumerRoot) {
     assert.equal(await readonlyRating.getAttribute("aria-valuenow"), "2.5")
     assert.equal(await readonlyRating.getAttribute("aria-valuemax"), "5")
 
-    await page.locator("[data-sonner-toast]").getByText("Boot complete", { exact: true }).waitFor({ state: "visible" })
-    assert.equal(await page.locator("[data-sonner-toast]").getByText("Booting", { exact: true }).count(), 0,
-      "completing a loading handle before the host is ready must replace the pending loading state")
-
     await page.locator("[data-slot='data-grid']").getByText("Ada", { exact: true }).waitFor({ state: "visible" })
     assert.equal((await page.locator("[data-slot='data-grid']").getAttribute("class"))?.includes("ex-glass"), true,
       "the packed grid container must accept Glass on its outer surface")
@@ -250,16 +246,45 @@ async function verifyReactBrowser(consumerRoot) {
     await profileDialog.waitFor({ state: "hidden" })
     await page.waitForFunction(() => document.activeElement?.textContent === "Open profile")
 
-    // A notification from the packed public API must reach its bundled host.
+    // Public Toaster and toast must share the packed package's Sonner instance.
     await page.getByRole("button", { name: "Notify", exact: true }).click()
     await page.locator("[data-sonner-toast]").getByText("Packed message ready", { exact: true })
       .waitFor({ state: "visible" })
-    await page.getByRole("button", { name: "Host off" }).click()
-    await page.locator("[data-sonner-toast]").waitFor({ state: "hidden" })
-    await page.getByRole("button", { name: "Host on" }).click()
-    await page.getByRole("button", { name: "Notify", exact: true }).click()
-    await page.locator("[data-sonner-toast]").getByText("Packed message ready", { exact: true })
-      .waitFor({ state: "visible" })
+    const activeToast = page.locator('[data-sonner-toast]:not([data-removed="true"])')
+    await page.getByRole("button", { name: "Start loading" }).click()
+    const loadingToast = activeToast.filter({ hasText: "Upload starting" })
+    await loadingToast.waitFor({ state: "visible" })
+    const loadingNode = await loadingToast.elementHandle()
+    for (const [button, message] of [
+      ["Progress 30%", "Upload 30%"],
+      ["Progress 70%", "Upload 70%"],
+      ["Complete loading", "Upload complete"],
+    ]) {
+      await page.getByRole("button", { name: button }).click()
+      const updated = activeToast.filter({ hasText: message })
+      await updated.waitFor({ state: "visible" })
+      assert.equal(await updated.evaluate((element, previous) => element === previous, loadingNode), true,
+        `${message} must update the same toast DOM node`)
+    }
+    await page.getByRole("button", { name: "Start loading" }).click()
+    await activeToast.filter({ hasText: "Upload starting" }).waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Progress 30%" }).click()
+    await activeToast.filter({ hasText: "Upload 30%" }).waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Fail loading" }).click()
+    await activeToast.filter({ hasText: "Upload failed" }).waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Start loading" }).click()
+    await activeToast.filter({ hasText: "Upload starting" }).waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Dismiss loading" }).click()
+    await activeToast.filter({ hasText: "Upload starting" }).waitFor({ state: "hidden" })
+
+    await page.getByRole("button", { name: "Start promise" }).click()
+    await activeToast.filter({ hasText: "Promise working" }).waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Resolve promise" }).click()
+    await activeToast.filter({ hasText: "Promise resolved: done" }).waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Start promise" }).click()
+    await activeToast.filter({ hasText: "Promise working" }).waitFor({ state: "visible" })
+    await page.getByRole("button", { name: "Reject promise" }).click()
+    await activeToast.filter({ hasText: "Promise rejected: failed" }).waitFor({ state: "visible" })
 
     // The packed tarball has to ship the material itself: the seed's filter, the
     // class entry point on an element that is not an ExUI component, the prop
@@ -418,5 +443,5 @@ async function verifyReactBrowser(consumerRoot) {
   }
 }
 
-assert.equal(process.argv.length, 3, "usage: node scripts/verify-react-browser.mjs <consumer-directory>")
+assert.equal(process.argv.length, 3, "usage: node packages/components/tests/consumers/verify-react-browser.mjs <consumer-directory>")
 await verifyReactBrowser(process.argv[2])

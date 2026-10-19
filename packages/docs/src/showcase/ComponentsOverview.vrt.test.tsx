@@ -47,8 +47,8 @@ describe.skipIf(window.innerWidth < 1000)("Components overview", () => {
     expect(location.hash).toBe("#/components/")
     const groups = container.querySelectorAll("[data-overview-group]")
     expect(groups).toHaveLength(2)
-    expect(groups[0].querySelectorAll("a")).toHaveLength(86)
-    expect(groups[1].querySelectorAll("a")).toHaveLength(5)
+    expect(groups[0].querySelectorAll("a")).toHaveLength(87)
+    expect(groups[1].querySelectorAll("a")).toHaveLength(2)
     for (const group of groups) {
       const names = Array.from(group.querySelectorAll("a"), (link) => link.textContent?.trim() ?? "")
       expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, "en")))
@@ -75,8 +75,8 @@ describe.skipIf(window.innerWidth < 1000)("Components overview", () => {
     await expect.poll(() => location.hash).toBe("#/components/button")
     history.forward()
     await expect.poll(() => location.hash).toBe("#/components/")
-    await overview.getByRole("link", { name: "ExItem", exact: true }).click()
-    await expect.element(page.getByRole("heading", { level: 1 })).toHaveTextContent("ExItem")
+    await overview.getByRole("link", { name: "Field", exact: true }).click()
+    await expect.element(page.getByRole("heading", { level: 1 })).toHaveTextContent("Field")
     await expect.element(page.getByRole("heading", { level: 1 })).toBeVisible()
     await page.getByRole("link", { name: "All components", exact: true }).click()
     await expect.element(overview).toBeVisible()
@@ -107,14 +107,14 @@ describe.skipIf(window.innerWidth < 1000)("Components overview", () => {
     await captureOverview("../../../../output/components-overview-dark.png")
   })
 
-  it("loads a real preview for all 91 families without runtime failures", async () => {
+  it("loads a real preview for all 89 families without runtime failures", async () => {
     const errors: unknown[] = []
     const errorSpy = vi.spyOn(console, "error").mockImplementation((...args) => { errors.push(args) })
     try {
       root.render(<Showcase />)
       await expect.element(page.getByTestId("components-overview")).toBeVisible()
       const cards = Array.from(container.querySelectorAll<HTMLElement>("[data-overview-card]"))
-      expect(cards).toHaveLength(91)
+      expect(cards).toHaveLength(89)
       for (const card of cards) {
         card.scrollIntoView({ block: "center" })
         await expect.poll(() => card.querySelector("[data-overview-loaded]")?.childElementCount, { message: card.dataset.overviewCard }).toBeGreaterThan(0)

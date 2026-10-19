@@ -42,7 +42,7 @@ Complete the loop only when every component used has a verified public import an
 | Translucent surfaces and optional refraction | [Glass](references/exui/glass.md) |
 | Elevation, focus rings, glass edge composition | [Shadows](references/exui/shadows.md) |
 | CSS/JS Tokens and component recipes, including non-React use | [Token usage](references/exui/token-usage.md), [customization](references/exui/token-customization.md), [exact inventory](references/generated/token-paths.md) |
-| Global notifications | [Notifications](references/exui/notifications.md) |
+| Global notifications | [Notifications](references/exui/notifications.md), [ExMessage migration](references/exui/ex-message-migration.md) |
 | Fumadocs | [Docs theme](references/exui/docs-theme.md) |
 | Animation and reduced motion | [Motion](rules/motion.md) |
 | Package installation or upstream registry confusion | [CLI](rules/cli.md), [registry boundary](rules/registry.md) |
@@ -72,7 +72,7 @@ Find all 87 documented component families and ExUI-native capabilities by use ca
 | Feedback and loading | [Alert](references/components/alert.md), [Empty](references/components/empty.md), [Progress](references/components/progress.md), [Skeleton](references/components/skeleton.md), [Spinner](references/components/spinner.md), [Sonner patterns](references/components/sonner.md) |
 | Messaging and attachments | [Attachment](references/components/attachment.md), [Bubble](references/components/bubble.md), [Message](references/components/message.md), [MessageScroller](references/components/message-scroller.md), [Marker](references/components/marker.md) |
 | File input and signing | [File upload / useFileUpload](references/components/file-upload.md), [SignaturePad](references/components/signature-pad.md) |
-| Global notifications | [Toaster / toast](references/exui/notifications.md), [ExMessage / ExMessageContext](references/exui/notifications.md) |
+| Global notifications, loading and Promise results | [Toaster / toast](references/exui/notifications.md) |
 | Themes and materials | [ThemeProvider / useTheme](references/exui/theme-usage.md), [GlassSeed / glass / ex-glass](references/exui/glass.md), [Shadows](references/exui/shadows.md) |
 
 Use the ExUI references for native forms, notifications, themes and materials. File upload is a composed pattern backed by `useFileUpload`, not an exported `FileUpload` component. The [catalog](references/components.md) and linked `c-*` pages provide pattern guidance; they do not define ExUI exports or props. Use Dialog for overlays formerly using Modal.

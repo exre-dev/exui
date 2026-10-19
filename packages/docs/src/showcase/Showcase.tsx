@@ -1,7 +1,8 @@
 import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from "react"
-import { Button, ExMessageContext, GlassSeed, NativeSelect, NativeSelectOption, Skeleton, TooltipProvider } from "@exre/exui"
+import { Button, GlassSeed, NativeSelect, NativeSelectOption, Skeleton, Toaster, TooltipProvider } from "@exre/exui"
 import { LayoutGridIcon, RotateCwIcon } from "lucide-react"
-import { catalogPages, overviewPage, pageHref, resolveExample, resolvePage } from "./catalog"
+import { overviewPage, pageHref, resolveExample, resolvePage } from "./catalog"
+import { presentationPages } from "./catalog-presentation"
 import { ExampleNavigationContext } from "./example-navigation"
 import { pageComponents } from "./page-loaders"
 import { ShowcaseLanguageProvider } from "./ShowcaseLanguageProvider"
@@ -86,7 +87,7 @@ function ShowcaseContent() {
   const Page = isOverview ? ComponentsOverview : pageComponents.get(active.id)!
   return <TooltipProvider>
     <GlassSeed />
-    <ExMessageContext />
+    <Toaster position="top-right" duration={3000} visibleToasts={3} />
     <div className="showcase-app">
       <header className="showcase-topbar">
         <a className="showcase-brand" href={pageHref(overviewPage)} aria-label="ExUI"><span className="showcase-brand-mark" aria-hidden="true"><span className="showcase-brand-icon" style={{ maskImage: `url("${import.meta.env.BASE_URL}icon.svg")` }} /></span>ExUI</a>
@@ -123,7 +124,7 @@ function ShowcaseContent() {
         <nav className="showcase-directory" aria-label={zh ? "组件" : "Components"}>
           {(["components", "exui"] as const).map((group) => <div className="showcase-directory-group" data-nav-group={group} key={group}>
             <div className="showcase-group-name">{group === "exui" ? "Blocks" : "Components"}</div>
-            {catalogPages.filter((page) => page.group === group).sort((a, b) => a.name.localeCompare(b.name, "en")).map((page) => <Button
+            {presentationPages.filter((page) => page.navigationGroup === group).sort((a, b) => a.name.localeCompare(b.name, "en")).map((page) => <Button
               asChild className="showcase-navigation-link" variant={page.id === active.id ? "secondary" : "ghost"} key={page.id}
             >
               <a href={pageHref(page)} data-page-id={page.id} aria-current={page.id === active.id ? "page" : undefined}>{page.name}</a>

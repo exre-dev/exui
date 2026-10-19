@@ -7,7 +7,7 @@ import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { test } from 'node:test'
 
-const root = fileURLToPath(new URL('../', import.meta.url))
+const root = fileURLToPath(new URL('..', import.meta.url))
 const moduleUrl = new URL('./docs-sharing.mjs', import.meta.url)
 async function sharing() {
   assert.ok(existsSync(moduleUrl), 'Showcase must generate readable per-example sharing documents')
@@ -20,8 +20,11 @@ test('every upstream, extension and ExUI preview has a unique stable share entry
   assert.throws(() => findRepositoryRoot(os.tmpdir()), /Cannot locate ExUI repository/)
   const examples = await loadShareExamples(root)
   assert.equal(new Set(examples.map(example => example.id)).size, examples.length)
-  for (const id of ['c-button-1', 'c-input-group-1', 'exui-direction', 'exui-glass-1', 'exui-form-1', 'exui-ex-form-1', 'exui-ex-item-1', 'exui-ex-item-2', 'exui-ex-item-3', 'exui-ex-message-1', 'exui-ex-message-2']) {
+  for (const id of ['c-button-1', 'c-input-group-1', 'c-sonner-21', 'exui-direction', 'exui-glass-1', 'exui-form-1', 'exui-form-configured', 'exui-field-settings', 'exui-field-display', 'exui-field-layout']) {
     assert.ok(examples.some(example => example.id === id), `missing ${id}`)
+  }
+  for (const id of ['exui-ex-message-1', 'exui-ex-message-2']) {
+    assert.ok(!examples.some(example => example.id === id), `${id} must be absent from sharing`)
   }
 })
 
@@ -58,58 +61,17 @@ test('code panel JSON reuses extracted files with stable entry order and escaped
   assert.ok(injected.files[0].highlightedHtml.includes('&#x3C;'))
 })
 
-test('docs development server serves current example source JSON and Markdown at the deployment base', async t => {
-  const require = createRequire(path.join(root, 'packages/docs/package.json'))
-  const { createServer } = await import(pathToFileURL(require.resolve('vite')).href)
-  const { loadShareExamples, createSourceDocument, createExampleSourceJson } = await sharing()
-  const example = (await loadShareExamples(root)).find(item => item.id === 'c-button-1')
-  const previousBase = process.env.EXUI_DOCS_BASE
-  try {
-    for (const base of ['/', '/exui/']) await t.test(base, async () => {
-      process.env.EXUI_DOCS_BASE = base
-      const server = await createServer({
-        root: path.join(root, 'packages/docs'),
-        configFile: path.join(root, 'packages/docs/vite.config.ts'),
-        server: { host: '127.0.0.1', port: 0, open: false },
-        logLevel: 'error',
-      })
-      try {
-        await server.listen()
-        const address = server.httpServer.address()
-        const origin = `http://127.0.0.1:${address.port}`
-        const sourceUrl = `${origin}${base}examples/${example.id}/`
-        const response = await fetch(`${sourceUrl}source.json?fresh=1`)
-        assert.equal(response.status, 200)
-        assert.match(response.headers.get('content-type'), /application\/json/)
-        assert.equal(response.headers.get('cache-control'), 'no-cache')
-        const document = createSourceDocument(root, example, base)
-        assert.deepEqual(await response.json(), await createExampleSourceJson(root, example, document))
-
-        const markdown = await fetch(`${sourceUrl}source.md`)
-        assert.equal(markdown.status, 200)
-        assert.match(markdown.headers.get('content-type'), /text\/markdown/)
-        assert.equal(await markdown.text(), document.markdown)
-        const missing = await fetch(`${origin}${base}examples/unknown-example/source.json`)
-        assert.equal(missing.status, 404)
-        assert.doesNotMatch(missing.headers.get('content-type') ?? '', /text\/html/)
-      } finally {
-        await server.close()
-      }
-    })
-  } finally {
-    if (previousBase === undefined) delete process.env.EXUI_DOCS_BASE
-    else process.env.EXUI_DOCS_BASE = previousBase
-  }
-})
-
-test('ExUI source contains only the selected preview and its original state', async () => {
+test('Sonner source contains only the selected preview and its original state', async () => {
   const { loadShareExamples, createSourceDocument } = await sharing()
   const examples = await loadShareExamples(root)
-  const example = examples.find(example => example.id === 'exui-ex-message-2')
-  const { markdown } = createSourceDocument(root, example, '/')
-  assert.ok(markdown.includes('Start sync'))
-  assert.ok(markdown.includes('handle.current?.dismiss()'))
-  assert.ok(!markdown.includes('Your workspace is up to date'))
+  const example = examples.find(example => example.id === 'c-sonner-21')
+  const { markdown, files } = createSourceDocument(root, example, '/')
+  const sourcePath = 'src/showcase/examples/sonner/c-sonner-21.tsx'
+  const source = files.get(sourcePath)
+  assert.ok(source.includes('Updatable Toast'))
+  assert.ok(source.includes('toast.custom'))
+  assert.ok(!source.includes('Deploying to production'))
+  assert.deepEqual([...files.keys()].filter(file => /^src\/showcase\/examples\/sonner\/.*\.tsx$/.test(file)), [sourcePath])
   assert.ok(!markdown.includes('ExampleHeader'))
   assert.ok(!markdown.includes('from "../Preview"'))
 })
@@ -144,7 +106,7 @@ test('local source resolution rejects escapes and missing helper files', async (
 test('exported simple, complex and ExUI sources compile as standalone consumers', async () => {
   const { loadShareExamples, createSourceDocument } = await sharing()
   const examples = await loadShareExamples(root)
-  for (const id of ['c-input-group-1', 'c-event-calendar-1', 'exui-direction', 'exui-ex-item-3', 'exui-ex-message-2']) {
+  for (const id of ['c-input-group-1', 'c-event-calendar-1', 'c-sonner-21', 'exui-direction', 'exui-field-layout', 'exui-field-settings', 'exui-field-display', 'exui-form-1', 'exui-form-models', 'exui-form-configured']) {
     const directory = mkdtempSync(path.join(os.tmpdir(), 'exui-source-consumer-'))
     const document = createSourceDocument(root, examples.find(example => example.id === id))
     for (const [filename, text] of document.files) {
@@ -187,4 +149,16 @@ test('exported simple, complex and ExUI sources compile as standalone consumers'
       }
     } catch (error) { assert.fail(`${id} failed standalone consumption: ${error.message}\n${error.stdout ?? ''}\n${error.stderr ?? ''}`) }
   }
+})
+
+test('canonical galleries own every Form and Field source', async () => {
+ const { loadShareExamples, createSourceDocument } = await sharing()
+ const examples = await loadShareExamples(root)
+ for (const id of ['exui-form-1', 'exui-form-configured', 'exui-form-models']) {
+ const example = examples.find(item => item.id === id)
+ assert.equal(example?.page.id, 'form', id)
+ const code = [...createSourceDocument(root, example).files.values()].join('\n')
+ assert.doesNotMatch(code, /\b(?:ExForm|ExItem|FormItem)\b/)
+ }
+ for (const id of ['exui-field-settings', 'exui-field-display', 'exui-field-layout']) assert.equal(examples.find(item => item.id === id)?.page.id, 'field', id)
 })

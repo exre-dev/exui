@@ -59,3 +59,11 @@ test("Glass type contract checks every registered public slot, including later e
   for (const name of ["TabsList", "TabsTrigger", "DataGridContainer"]) assert.match(contract, new RegExp(`ComponentProps<typeof ${name}>\\["glass"\\]`))
   assert.doesNotMatch(contract, /ComponentProps<typeof Tabs>\[/)
 })
+
+test("Form summaries retain branch and binding props", () => {
+ const code = `import { Form, FormField } from "@exre/exui"
+ export function Example() { return <Form className="long" schema={schema} defaultValues={defaults} fields={fields} onSubmit={(values) => { console.log(values); console.log("${"x".repeat(100)}") }}> <FormField className="long" form={form} name="email" control="email" render={(binding) => <input {...binding} data-long="${"x".repeat(700)}" />} /></Form> }`
+ const document = {entry:"src/example.tsx", files:new Map([["src/example.tsx", code]])}
+ const snippet = createFamilySnippet(document, "form")
+ for (const prop of ["schema=", "defaultValues=", "fields=", "onSubmit=", "form=", "name=", "control=", "render="]) assert.ok(snippet.includes(prop), prop)
+})

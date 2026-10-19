@@ -590,8 +590,8 @@ async function verifyReactConsumer(tarballPath) {
 
   const application = `
 import "@exre/exui/style.css"
-import { useEffect, useState } from "react"
-import { Button, Badge, Card, CardContent, ExMessage, ExMessageContext, GlassSeed, ThemeProvider, Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter, Field, Input, InputGroup, InputGroupInput, Textarea, Select, NativeSelect, Rating, Label, Recharts, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartConfig, useIsMobile, CodeBlock, DataGrid, DataGridContainer, DataGridTable, dataGridFeatures, TanStackTable } from "@exre/exui"
+import { useState } from "react"
+import { Button, Badge, Card, CardContent, Toaster, toast, GlassSeed, ThemeProvider, Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter, Field, Input, InputGroup, InputGroupInput, Textarea, Select, NativeSelect, Rating, Label, Recharts, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartConfig, useIsMobile, CodeBlock, DataGrid, DataGridContainer, DataGridTable, dataGridFeatures, TanStackTable } from "@exre/exui"
 
 const { BarChart, Bar, XAxis } = Recharts
 const chartData = [
@@ -603,18 +603,39 @@ const chartConfig = {
   visitors: { label: "Visitors", color: "var(--chart-1)" },
 } satisfies ChartConfig
 
-function EarlyMessage() {
-  useEffect(() => {
-    const loading = ExMessage.loading("Booting")
-    loading.onSuccess("Boot complete", { duration: 60_000 })
-  }, [])
-  return null
+let pendingId: string | number | undefined
+let settlePromise: ((value: string) => void) | undefined
+let rejectPromise: ((reason: Error) => void) | undefined
+
+function beginLoading(label: string) {
+  pendingId = toast.loading(label)
+}
+
+function updateLoading(label: string) {
+  if (pendingId !== undefined) toast.loading(label, { id: pendingId })
+}
+
+function finishLoading(label: string, failed = false) {
+  if (pendingId === undefined) return
+  if (failed) toast.error(label, { id: pendingId, duration: 60_000 })
+  else toast.success(label, { id: pendingId, duration: 60_000 })
+}
+
+function beginPromise() {
+  const task = new Promise<string>((resolve, reject) => {
+    settlePromise = resolve
+    rejectPromise = reject
+  })
+  toast.promise(task, {
+    loading: "Promise working",
+    success: (result) => "Promise resolved: " + result,
+    error: (error) => "Promise rejected: " + error.message,
+  })
 }
 
 export function App() {
   const [submittedEmail, setSubmittedEmail] = useState("")
   const [modalDraft, setModalDraft] = useState("")
-  const [hostMounted, setHostMounted] = useState(true)
   const [selectedRating, setSelectedRating] = useState(2)
   const grid = TanStackTable.useTable({
     data: [{ id: 1, name: "Ada" }],
@@ -623,11 +644,17 @@ export function App() {
   })
   return (
     <ThemeProvider>
-      <EarlyMessage />
-      {hostMounted && <ExMessageContext />}
-      <Button onClick={() => ExMessage.success("Packed message ready")}>Notify</Button>
-      <Button onClick={() => setHostMounted(false)}>Host off</Button>
-      <Button onClick={() => setHostMounted(true)}>Host on</Button>
+      <Toaster position="top-right" duration={3000} visibleToasts={3} />
+      <Button onClick={() => toast.success("Packed message ready", { duration: 60_000 })}>Notify</Button>
+      <Button onClick={() => beginLoading("Upload starting")}>Start loading</Button>
+      <Button onClick={() => updateLoading("Upload 30%")}>Progress 30%</Button>
+      <Button onClick={() => updateLoading("Upload 70%")}>Progress 70%</Button>
+      <Button onClick={() => finishLoading("Upload complete")}>Complete loading</Button>
+      <Button onClick={() => finishLoading("Upload failed", true)}>Fail loading</Button>
+      <Button onClick={() => { if (pendingId !== undefined) toast.dismiss(pendingId) }}>Dismiss loading</Button>
+      <Button onClick={beginPromise}>Start promise</Button>
+      <Button onClick={() => settlePromise?.("done")}>Resolve promise</Button>
+      <Button onClick={() => rejectPromise?.(new Error("failed"))}>Reject promise</Button>
       <GlassSeed />
       <Dialog>
         <DialogTrigger asChild>
@@ -740,6 +767,22 @@ export const withChildren = <GlassSeed>Nope</GlassSeed>
 // @ts-expect-error Modal was removed in favor of ReUI Dialog.
 import { Modal } from "@exre/exui"
 `
+  const removedMessageTypes = `
+// @ts-expect-error ExMessage was removed from the public root.
+import { ExMessage } from "@exre/exui"
+// @ts-expect-error ExMessageContext was removed from the public root.
+import { ExMessageContext } from "@exre/exui"
+// @ts-expect-error ExMessageContextProps was removed from the public root.
+import type { ExMessageContextProps } from "@exre/exui"
+// @ts-expect-error ExMessageLoadingHandle was removed from the public root.
+import type { ExMessageLoadingHandle } from "@exre/exui"
+// @ts-expect-error ExMessageOptions was removed from the public root.
+import type { ExMessageOptions } from "@exre/exui"
+// @ts-expect-error ExMessagePlacement was removed from the public root.
+import type { ExMessagePlacement } from "@exre/exui"
+void [ExMessage, ExMessageContext]
+export type RemovedMessageTypes = [ExMessageContextProps, ExMessageLoadingHandle, ExMessageOptions, ExMessagePlacement]
+`
   const dialogTypes = `
 import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle, type DialogAction, type DialogProps } from "@exre/exui"
 
@@ -773,6 +816,7 @@ if (container) {
   await writeFile(join(consumerRoot, "app.tsx"), application)
   await writeFile(join(consumerRoot, "glass-types.tsx"), glassTypes)
   await writeFile(join(consumerRoot, "removed-modal-types.tsx"), removedModalTypes)
+  await writeFile(join(consumerRoot, "removed-message-types.tsx"), removedMessageTypes)
   await writeFile(join(consumerRoot, "dialog-types.tsx"), dialogTypes)
   await writeFile(join(consumerRoot, "minimal-es2023.tsx"), `
 import { Badge, CodeBlock, type CodeBlockTransformer } from "@exre/exui"
@@ -814,7 +858,7 @@ export const sample = <><Badge>Ready</Badge><CodeBlock code="const ready = true"
           lib: ["ES2023", "DOM", "DOM.Iterable"],
           types: ["node", "vite/client"],
         },
-        include: ["app.tsx", "main.tsx", "glass-types.tsx", "removed-modal-types.tsx", "dialog-types.tsx"],
+        include: ["app.tsx", "main.tsx", "glass-types.tsx", "removed-modal-types.tsx", "removed-message-types.tsx", "dialog-types.tsx"],
       },
       null,
       2
@@ -834,7 +878,8 @@ export default defineConfig({
   const serverSmoke = `
 import { renderToString } from "react-dom/server"
 import { createElement } from "react"
-import { Button, Card, GlassSeed, Field, Input, Label, Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, ChartContainer, ChartTooltip } from "@exre/exui"
+import * as exui from "@exre/exui"
+const { Button, Card, GlassSeed, Field, Input, Label, Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, ChartContainer, ChartTooltip } = exui
 import { createRequire } from "node:module"
 import { fileURLToPath } from "node:url"
 import path from "node:path"
@@ -875,6 +920,11 @@ assert.doesNotMatch(html, /glass="/, "the glass prop must never reach the server
 assert.match(html, /Open profile/, "SSR output must contain the Dialog trigger")
 assert.doesNotMatch(html, /Server profile/, "the Dialog portal must not emit content that needs a document")
 assert.doesNotMatch(html, /aria-describedby/, "no description target may be promised on the server")
+for (const name of ["ExMessage", "ExMessageContext", "ExMessageContextProps", "ExMessageLoadingHandle", "ExMessageOptions", "ExMessagePlacement"]) {
+  assert.equal(Object.hasOwn(exui, name), false, name + " must not be exported from the packed runtime")
+}
+assert.ok(exui.Toaster, "the packed root must export Toaster")
+assert.equal(typeof exui.toast.loading, "function", "the packed root must export toast")
 
 const require = createRequire(import.meta.url)
 const rootReact = require.resolve("react")
@@ -896,7 +946,7 @@ console.log("react consumer SSR smoke ok:", html.length, "chars, single React in
   run("node", ["smoke.mjs"], consumerRoot)
   // Run Vite's preview in a child process so Windows releases its native
   // bindings before the parent removes the isolated consumer directory.
-  console.log(run(process.execPath, [join(repositoryRoot, "scripts", "verify-react-browser.mjs"), consumerRoot], consumerRoot))
+  console.log(run(process.execPath, [fileURLToPath(new URL("./verify-react-browser.mjs", import.meta.url)), consumerRoot], consumerRoot))
 }
 
 // Each version is installed outside the workspace, so workspace overrides
@@ -938,7 +988,7 @@ async function verifyFormConsumer(tarballPath, zodVersion) {
   run("node", [join(consumerRoot, "node_modules", "vite", "bin", "vite.js"), "build"], consumerRoot)
   run("node", [join(consumerRoot, "node_modules", "vite", "bin", "vite.js"), "build", "--ssr", "server.tsx", "--outDir", "ssr"], consumerRoot)
   run("node", ["smoke.mjs"], consumerRoot)
-  console.log(run(process.execPath, [join(repositoryRoot, "scripts", "verify-form-browser.mjs"), consumerRoot], consumerRoot))
+  console.log(run(process.execPath, [fileURLToPath(new URL("./verify-form-browser.mjs", import.meta.url)), consumerRoot], consumerRoot))
   logStage(`Zod ${zodVersion}: strict types, SSR, production build and ExForm browser passed`)
 }
 

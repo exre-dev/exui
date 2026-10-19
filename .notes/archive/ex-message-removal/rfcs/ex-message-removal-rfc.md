@@ -11,7 +11,7 @@
 
 保留现有 `components/ui/sonner.tsx` 及其根入口导出。主题、图标、响应式几何、圆角与根字号适配不变。应用从 `@exre/exui` 同时导入 `Toaster` 和 `toast`，共享包内 Sonner。页面内 `Alert` 不受影响。
 
-本次为破坏性变更，增加 `@exre/exui` major Changeset。版本与历史 Changelog 由正式发布流程处理，本地不发布、不提交、不推送、不修改下游仓库。
+本次为破坏性变更。按用户后续明确决定，保留合并后的 `.changeset/form-and-notification-updates.md` 及其 `@exre/exui` minor 级别，取代源 Spec 原先的 major Changeset 约定；说明正文继续列出 Breaking Changes。版本与历史 Changelog 由正式发布流程处理，本地不发布、不提交、不推送、不修改下游仓库。
 
 ## 通知契约
 

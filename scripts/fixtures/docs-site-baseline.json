@@ -528,24 +528,6 @@
       "name": "Form",
       "group": "exui",
       "module": "exui"
-    },
-    {
-      "id": "ex-form",
-      "name": "ExForm",
-      "group": "exui",
-      "module": "exui"
-    },
-    {
-      "id": "ex-item",
-      "name": "ExItem",
-      "group": "exui",
-      "module": "exui"
-    },
-    {
-      "id": "ex-message",
-      "name": "ExMessage",
-      "group": "exui",
-      "module": "exui"
     }
   ],
   "examples": [
@@ -8086,38 +8068,14 @@
       "native": true
     },
     {
-      "id": "exui-ex-form-1",
-      "family": "ex-form",
+      "id": "exui-form-models",
+      "family": "form",
       "extension": false,
       "native": true
     },
     {
-      "id": "exui-ex-item-1",
-      "family": "ex-item",
-      "extension": false,
-      "native": true
-    },
-    {
-      "id": "exui-ex-item-2",
-      "family": "ex-item",
-      "extension": false,
-      "native": true
-    },
-    {
-      "id": "exui-ex-item-3",
-      "family": "ex-item",
-      "extension": false,
-      "native": true
-    },
-    {
-      "id": "exui-ex-message-1",
-      "family": "ex-message",
-      "extension": false,
-      "native": true
-    },
-    {
-      "id": "exui-ex-message-2",
-      "family": "ex-message",
+      "id": "exui-form-configured",
+      "family": "form",
       "extension": false,
       "native": true
     },

@@ -82,11 +82,15 @@ test("legacy hash resolves known families and preserves a valid example", () => 
   assert.equal(resolveLegacyHash("#/components/button/../../", "en", catalog), null)
 })
 
-test("current bilingual content covers 91 families and ten guides", async () => {
+test("current bilingual content covers 88 families and eleven guides", async () => {
   const pages = await loadPages()
-  assert.equal(pages.length, 202)
-  assert.equal(pages.filter((page) => page.locale === "zh-CN" && page.exampleFamily).length, 91)
-  assert.equal(pages.filter((page) => page.locale === "en" && !page.exampleFamily).length, 10)
+  assert.equal(pages.length, 198)
+  assert.equal(pages.filter((page) => page.locale === "zh-CN" && page.exampleFamily).length, 88)
+  assert.equal(pages.filter((page) => page.locale === "en" && !page.exampleFamily).length, 11)
+  for (const locale of ["en", "zh-CN"]) {
+    assert.ok(pages.some(page => page.locale === locale && page.id === "getting-started/ex-message-migration"))
+    assert.ok(!pages.some(page => page.locale === locale && page.id === "exui/ex-message"))
+  }
   const output = await writeContentManifest()
   const manifest = JSON.parse(await readFile(output, "utf8"))
   assert.equal(manifest.schemaVersion, 1)
@@ -140,4 +144,15 @@ test("a family page must show its current public source excerpt and complete-sou
   assert.throws(() => validateFamilySnippet(page, content.replace("source=\"c-button-1\"", "source=\"c-button-2\""), document), /source-linked/)
   assert.throws(() => validateFamilySnippet(page, content.replace("Go", "Changed"), document), /differs/)
   assert.throws(() => validateFamilySnippet(page, content.replace("[Source]", "Source"), document), /link is missing/)
+})
+
+test("canonical catalog preserves loader groups and presentation", async () => {
+ const { loadCatalog } = await import("./docs-examples.mjs")
+ const { navigationGroup } = await import("../packages/docs/lib/site-contract.mjs")
+ const catalog = await loadCatalog()
+ assert.equal(catalog.length, 88)
+ assert.equal(catalog.filter(page => navigationGroup(page) === "components").length, 87)
+ assert.equal(catalog.filter(page => navigationGroup(page) === "exui").length, 1)
+ assert.equal(catalog.find(page => page.id === "form").group, "exui")
+ assert.ok(!catalog.some(page => ["ex-form", "ex-item"].includes(page.id)))
 })

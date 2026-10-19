@@ -114,7 +114,7 @@ describe.skipIf(window.innerWidth < 1000)("Showcase component pages", () => {
     languageSelector.dispatchEvent(new Event("change", { bubbles: true }))
     await expect.poll(() => document.documentElement.lang).toBe(language)
     const links = Array.from(container.querySelectorAll<HTMLAnchorElement>('nav a[href^="#/"]'))
-    expect(links).toHaveLength(91)
+    expect(links).toHaveLength(89)
     const diagnostics: string[] = []
     const originalError = console.error
     const errorSpy = vi.spyOn(console, "error").mockImplementation((...args: unknown[]) => {

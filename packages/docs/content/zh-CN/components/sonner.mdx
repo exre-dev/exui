@@ -10,15 +10,19 @@ Sonner：显示短暂的 Toast 通知。
 {/* exui-capabilities:begin:docs */}
 ## ExUI 能力
 
-**ExUI 新增**
+**ExUI 适配**
 
-### 托管消息与 Sonner
+### 共用 Sonner 通知
 
-调用 `ExMessage` 前先挂载一个 `ExMessageContext`。它已经渲染包内共享的 `Toaster`。`loading` 返回的 `onSuccess`、`onError` 和 `dismiss` 都作用于同一条消息。根入口的 `toast` 共用这个 Sonner 实例；应用自行安装的另一份 Sonner 有独立状态。`maxCount` 只会淘汰托管的 ExMessage 记录，但宿主也将其传给 `Toaster.visibleToasts`，因此直接调用的 toast 也共用可见条数上限。
+从 `@exre/exui` 同时导入 `Toaster` 和 `toast`，使通知使用同一份包内 Sonner 实例。先挂载一个稳定的 `Toaster`，再触发通知。应用另装的 Sonner 实例拥有独立状态。
 
-请阅读[托管消息与 Sonner](../exui/ex-message.mdx)，了解完整用法。
+用 `toast.loading` 创建加载通知并保留返回的 ID；将这个 ID 传给 `toast.loading`、`toast.success` 或 `toast.error`，即可更新同一条通知。`toast.promise` 随 Promise 在加载、成功和失败之间切换。调用 `toast.dismiss(id)` 关闭通知；警告方法名为 `toast.warning`。
 
-- [在线示例](../../../../examples/c-sonner-1/)
+`visibleToasts` 限制可见条数，不淘汰旧记录。应用负责取消、截止时间、迟到回调保护和资源清理。卸载宿主不会清空通知 store；loading 的时长参数也不能替代任务截止计时。
+
+- [在线示例](../../../../examples/c-sonner-4/)
+- [在线示例](../../../../examples/c-sonner-7/)
+- [在线示例](../../../../examples/c-sonner-21/)
 
 **ExUI 新增**
 
@@ -76,3 +80,7 @@ export function NotificationExample() {
   return <><Toaster /><Button type="button" onClick={() => toast.success("已保存")}>保存</Button></>
 }
 ```
+
+## 从 ExMessage 升级
+
+通过[升级指南](../getting-started/ex-message-migration.mdx)替换已删除的宿主和加载句柄，并核对生命周期差异。

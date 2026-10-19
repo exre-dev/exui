@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react"
 import { Link, useNavigate } from "react-router"
-import { ExMessageContext, GlassSeed, TooltipProvider } from "@exre/exui"
+import { GlassSeed, Toaster, TooltipProvider } from "@exre/exui"
 import { DocsLayout } from "fumadocs-ui/layouts/glass"
 import { DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layouts/glass/page"
 import ComponentsOverview from "../../src/showcase/ComponentsOverview"
@@ -47,7 +47,7 @@ export default function Overview({ loaderData: page }: Route.ComponentProps) {
         <DocsDescription>{zh ? "Components 是基础组件；Blocks 是由基础组件组装而成的可复用界面区块。选择组件或区块查看用法和示例。" : "Components are basic UI elements. Blocks assemble them into reusable interface sections. Choose a component or block to see its usage and examples."}</DocsDescription>
         <TooltipProvider>
           <GlassSeed />
-          <ExMessageContext />
+          <Toaster position="top-right" duration={3000} visibleToasts={3} />
           <ComponentsOverview group={page.group} exampleCounts={page.exampleCounts} density={density} renderLink={(entry, children) =>
             <Link className="overview-card-link" to={appPath(docPath(page.locale, `${entry.group}/${entry.id}`, base))}>{children}</Link>
           } />

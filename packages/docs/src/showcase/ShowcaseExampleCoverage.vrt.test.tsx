@@ -192,9 +192,9 @@ it("rejects dangling SVG paint references and definitions from another example",
 })
 
 describe.skipIf(window.innerWidth < 1000)("full Showcase example coverage", () => {
-  it("retains the frozen 86 component and five ExUI routes", () => {
+  it("retains the 86 upstream component and two ExUI module routes", () => {
     expect(catalogPages.filter(item => item.group === "components")).toHaveLength(86)
-    expect(catalogPages.filter(item => item.group === "exui")).toHaveLength(5)
+    expect(catalogPages.filter(item => item.group === "exui").map(item => item.id).sort()).toEqual(["form", "glass"])
   })
 
   for (const language of ["en", "zh-CN"] as const) for (const entry of catalogPages) {

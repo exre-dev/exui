@@ -6,9 +6,9 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadShareExamples } from './docs-sharing.mjs'
 import { loadCatalog } from './docs-examples.mjs'
-import { docPath, examplePath, locales, normalizeBase, overviewPath } from '../packages/docs/lib/site-contract.mjs'
+import { navigationGroup, docPath, examplePath, locales, normalizeBase, overviewPath } from '../packages/docs/lib/site-contract.mjs'
 
-const repository = fileURLToPath(new URL('../', import.meta.url))
+const repository = fileURLToPath(new URL('..', import.meta.url))
 const docsRoot = path.join(repository, 'packages/docs')
 const require = createRequire(path.join(docsRoot, 'package.json'))
 const mime = { '.html': 'text/html', '.data': 'text/plain', '.md': 'text/markdown', '.json': 'application/json', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.woff': 'font/woff', '.woff2': 'font/woff2', '.ico': 'image/x-icon' }
@@ -71,7 +71,7 @@ async function searchFor(page, locale, query, route) {
   const input = page.locator(`input[aria-label="${zh ? '搜索文档' : 'Search documentation'}"]`)
   await input.waitFor()
   await input.fill(query)
-  await page.locator(`[role="option"][id$="${route.slice(0, -1)}"]`).first().click()
+  await page.locator(`[role="option"][id$="${route}"]`).first().click()
   await page.waitForURL(url => url.pathname.endsWith(route))
 }
 
@@ -187,7 +187,7 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
   const overviewRoutes = locales.flatMap(locale => [overviewPath(locale), overviewPath(locale, '/', 'components'), overviewPath(locale, '/', 'exui')])
   assert.deepEqual(new Set(paths.filter(route => route.includes('/docs/'))), new Set([...pageByRoute.keys(), ...overviewRoutes]), 'Document prerender paths must cover content and both overviews')
   const examples = await loadShareExamples(repository)
-  const baseline = JSON.parse(readFileSync(path.join(repository, 'scripts/fixtures/docs-site-baseline.json'), 'utf8'))
+  const baseline = JSON.parse(readFileSync(path.join(repository, 'packages/docs/tests/fixtures/docs-site-baseline.json'), 'utf8'))
   const catalog = await loadCatalog(repository)
   const coverage = JSON.parse(readFileSync(path.join(docsRoot, 'upstream/reui/coverage.json'), 'utf8'))
   const capabilities = JSON.parse(readFileSync(path.join(docsRoot, 'exui/capabilities.json'), 'utf8'))
@@ -218,7 +218,7 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
       if (overviewRoutes.includes(route)) {
         const locale = route.split('/')[1]
         const group = route.split('/')[3]
-        for (const family of catalog.filter(family => !group || family.group === group)) {
+        for (const family of catalog.filter(family => !group || navigationGroup(family) === group)) {
           assert.ok(html.includes(`data-overview-card="${family.id}"`), `${route} missing card ${family.id} without JavaScript`)
           assert.ok(html.includes(`href="${docPath(locale, `${family.group}/${family.id}`, normalizedBase)}"`), `${route} missing link ${family.id}`)
         }
@@ -449,7 +449,7 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
       await retryPage.locator('input[aria-label="搜索文档"]').fill('Button')
       await retryPage.getByRole('alert').filter({ hasText: '搜索索引加载失败' }).waitFor()
       await retryPage.getByRole('button', { name: '重试' }).click()
-      await retryPage.locator('[role="option"][id$="/zh-CN/docs/components/button"]').first().waitFor()
+      await retryPage.locator('[role="option"][id$="/zh-CN/docs/components/button/"]').first().waitFor()
       assert.equal(searchFetches, 2, 'Search retry must refetch the static index')
       await retryPage.close()
       console.log('Browser search verified: three queries and failed index retry')
@@ -496,13 +496,19 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
       await formCard.getByRole('textbox', { name: '项目名称' }).fill('Verification project')
       await formCard.getByRole('button', { name: '保存项目' }).click()
       await formCard.getByRole('status').filter({ hasText: 'Verification project' }).waitFor()
-      await representative.goto(`${origin}${normalizedBase}zh-CN/docs/exui/ex-message/`)
-      const messageCard = representative.locator('[data-testid="example-exui-ex-message-1"]')
-      await messageCard.waitFor()
-      await messageCard.getByRole('button', { name: '提示' }).click()
-      await representative.getByText('工作区已是最新状态', { exact: true }).waitFor()
+      for (const locale of ['en', 'zh-CN']) {
+        const guide = await representative.goto(`${origin}${normalizedBase}${locale}/docs/getting-started/ex-message-migration/`)
+        assert.equal(guide.status(), 200, `${locale} migration guide must be prerendered`)
+      }
+      const removedPage = await representative.goto(`${origin}${normalizedBase}zh-CN/docs/exui/ex-message/`)
+      assert.equal(removedPage.status(), 404, 'removed ExMessage route must not redirect or fall back')
+      await representative.goto(`${origin}${normalizedBase}zh-CN/docs/components/sonner/`)
+      const sonnerCard = representative.locator('[data-testid="example-c-sonner-1"]')
+      await sonnerCard.waitFor()
+      await sonnerCard.getByRole('button', { name: '显示提示' }).click()
+      await representative.getByText('日程已创建', { exact: true }).waitFor()
       await representative.goto(`${origin}${normalizedBase}zh-CN/docs/components/button/`)
-      assert.equal(await representative.getByText('工作区已是最新状态', { exact: true }).count(), 0, 'ExMessage toast must clean up on route departure')
+      assert.equal(await representative.getByText('日程已创建', { exact: true }).count(), 0, 'Sonner toast must clean up on route departure')
       for (const [family, exampleId, asset] of [
         ['button', 'c-button-56', 'photos/0a10b9bc070f3bdf60.jpg'],
         ['badge', 'c-badge-25', 'flags/us.svg'],
@@ -525,7 +531,7 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
       assert.equal(new URL(emojiResponse.url()).pathname, `${normalizedBase}examples/reui/emoji/emojibase-data-17.0.0/zh/data.json`, 'Emoji data must use the docs base')
       assert.equal(emojiResponse.status(), 200, 'Emoji data must load from static output')
       await representative.close()
-      console.log('Browser examples verified: Dialog, Sidebar, Chart, DataGrid, Form, ExMessage and managed assets')
+      console.log('Browser examples verified: Dialog, Sidebar, Chart, DataGrid, Form, Sonner and managed assets')
 
       await page.goto(`${origin}${normalizedBase}zh-CN/docs/components/button/`)
       await page.locator('[data-testid="example-c-button-1"]').waitFor()

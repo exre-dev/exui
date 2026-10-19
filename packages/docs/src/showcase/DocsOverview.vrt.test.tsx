@@ -30,8 +30,8 @@ describe("Docs component overview", () => {
       <Route path="/en/docs/components/button/" element={<h1>Button detail</h1>} />
     </Routes></MemoryRouter>)
     await expect.element(page.getByTestId("components-overview")).toBeVisible()
-    expect(container.querySelectorAll('[data-overview-group="components"] [data-overview-card]')).toHaveLength(86)
-    expect(container.querySelectorAll('[data-overview-group="exui"] [data-overview-card]')).toHaveLength(5)
+    expect(container.querySelectorAll('[data-overview-group="components"] [data-overview-card]')).toHaveLength(87)
+    expect(container.querySelectorAll('[data-overview-group="exui"] [data-overview-card]')).toHaveLength(2)
     expect(container.querySelector('input[type="search"]')).toBeNull()
     const card = container.querySelector<HTMLElement>('[data-overview-card="button"]')!
     expect(card.querySelector(".overview-card-count")?.textContent).toBe("61 examples")

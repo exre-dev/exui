@@ -7,7 +7,7 @@ import { showcaseSharing } from "./sharing-plugin.js"
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), showcaseSharing()],
-  resolve: { dedupe: ["react", "react-dom"] },
+  resolve: { dedupe: ["react", "react-dom", "@exre/exui"] },
   optimizeDeps: { include: [...exampleDependencies, "react-router"] },
   test: {
     name: "visual",

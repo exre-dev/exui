@@ -41,7 +41,7 @@ export function createFamilySnippet(document, family) {
     ts.forEachChild(node, visit)
   }
   visit(source)
-  const primary = family === "input-otp" ? "InputOTP" : family === "kbd" ? "Kbd" : family === "scrollspy" ? "Scrollspy" : family === "sonner" ? "Toaster" : family === "glass" ? "Card" : family === "ex-message" ? "Button" : family === "chart" ? "ChartContainer" : family === "resizable" ? "ResizablePanelGroup" : family === "sidebar" ? "SidebarMenu" : family === "stepper" ? "StepperNav" : family.split("-").map((part) => part[0].toUpperCase() + part.slice(1)).join("")
+  const primary = family === "input-otp" ? "InputOTP" : family === "kbd" ? "Kbd" : family === "scrollspy" ? "Scrollspy" : family === "sonner" ? "Toaster" : family === "glass" ? "Card" : family === "chart" ? "ChartContainer" : family === "resizable" ? "ResizablePanelGroup" : family === "sidebar" ? "SidebarMenu" : family === "stepper" ? "StepperNav" : family.split("-").map((part) => part[0].toUpperCase() + part.slice(1)).join("")
   let selected = candidates.find(({ tag, opening }) => tag === primary && (family !== "glass" || opening.attributes.properties.some((item) => item.name?.getText(source) === "glass")))
   selected ??= candidates.find(({ tag }) => tag === primary) ?? candidates[0]
   if (!selected) throw new Error(`No public JSX composition in ${document.entry}`)
@@ -62,7 +62,7 @@ export function createFamilySnippet(document, family) {
     }
     jsx = summarize(node, 0)
   }
-  const names = [...publicNames.keys()].filter((name) => jsx.includes(`<${name}`) || (family === "ex-message" && name === "ExMessage"))
+  const names = [...publicNames.keys()].filter((name) => jsx.includes(`<${name}`))
   if (!names.includes(tag)) names.unshift(tag)
   return `import { ${names.map((name) => publicNames.has(name) && publicNames.get(name) !== name ? `${publicNames.get(name)} as ${name}` : name).join(", ")} } from "@exre/exui"\n\n${jsx}`
 }
@@ -99,7 +99,7 @@ export function addCapabilitySources(documents, examples, registry, makeDocument
 }
 
 export function glassSurfaceTypeContract(registry) {
-  const names = [...publicNames.keys()].filter((name) => jsx.includes(`<${name}`) || (family === "ex-message" && name === "ExMessage"))
+  const names = [...new Set(registry.capabilities.flatMap((item) => Object.values(item.surfaces ?? {}).flat()))].sort()
   if (!names.length) throw new Error("No registered Glass surfaces for public type verification")
   return `import type { ComponentProps } from "react"\nimport { ${names.join(", ")} } from "@exre/exui"\n\nexport const glassSurfaceContract = {\n${names.map((name) => `  ${name}: true satisfies ComponentProps<typeof ${name}>["glass"],`).join("\n")}\n}\n`
 }

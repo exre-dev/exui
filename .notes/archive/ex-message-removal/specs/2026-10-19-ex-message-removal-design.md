@@ -5,6 +5,8 @@
 模块目录：`.notes/archive/ex-message-removal/`\
 后续 RFC：[ExMessage 移除与 Sonner 消费迁移](../rfcs/ex-message-removal-rfc.md)
 
+后续发布决策（2026-10-19）：用户明确要求保留合并后的 `.changeset/form-and-notification-updates.md` 及其 `minor` 级别，取代本文原先的 major Changeset 约定。删除公开 API 仍作为 Breaking Changes 明确记录；其他批准范围不变。
+
 ## 决策摘要
 
 从 `@exre/exui` 删除 `ExMessage`、`ExMessageContext` 及其公开类型，不保留别名、弃用壳或替代的消息控制器。全局通知统一通过根入口公开的 `Toaster` 和 `toast` 使用包内同一份 Sonner；页面内的持续提示继续使用 `Alert`。

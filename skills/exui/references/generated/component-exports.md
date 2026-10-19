@@ -2,7 +2,7 @@
 
 # ExUI public exports
 
-Generated from the current repository package root (@exre/exui, source manifest version 1.0.0); 1547 names. The version is source metadata, not a statement about a published tarball. This symbol inventory does not define props; read the installed package declarations for the consuming version.
+Generated from the current repository package root (@exre/exui, source manifest version 1.0.0); 1541 names. The version is source metadata, not a statement about a published tarball. This symbol inventory does not define props; read the installed package declarations for the consuming version.
 
 | Public name | Kind | Related contract |
 | --- | --- | --- |
@@ -645,12 +645,6 @@ Generated from the current repository package root (@exre/exui, source manifest 
 | `EventCalendarWeekRow` | type | [contract](../components/event-calendar.md) |
 | `EventCalendarWeekView` | value | [contract](../components/event-calendar.md) |
 | `eventsOverlap` | value | [contract](../components/event-calendar.md) |
-| `ExMessage` | value | [contract](../exui/notifications.md) |
-| `ExMessageContext` | value | [contract](../exui/notifications.md) |
-| `ExMessageContextProps` | type | [contract](../exui/notifications.md) |
-| `ExMessageLoadingHandle` | type | [contract](../exui/notifications.md) |
-| `ExMessageOptions` | type | [contract](../exui/notifications.md) |
-| `ExMessagePlacement` | type | [contract](../exui/notifications.md) |
 | `expandRecurrence` | value | [contract](../components/event-calendar.md) |
 | `Field` | value | [contract](../components/field.md) |
 | `FieldContent` | value | [contract](../components/field.md) |

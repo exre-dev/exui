@@ -2,7 +2,7 @@ import "@exre/exui/style.css"
 import { createRoot, type Root } from "react-dom/client"
 import { page } from "vitest/browser"
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
-import { ExMessageContext, toast } from "@exre/exui"
+import { toast } from "@exre/exui"
 import { pages } from "./pages/exui"
 
 let root: Root
@@ -19,29 +19,6 @@ afterEach(() => {
 })
 
 describe("ExUI page interactions", () => {
-  it("protects a loading notification until it can be completed", async () => {
-    const MessagePage = pages["ex-message"]
-    root.render(<><ExMessageContext /><MessagePage /></>)
-    await page.getByRole("button", { name: "Start sync", exact: true }).click()
-    await expect.element(page.getByText("Syncing files…", { exact: true })).toBeVisible()
-    await expect.element(page.getByRole("button", { name: "Info", exact: true })).toBeDisabled()
-    await page.getByRole("button", { name: "Complete", exact: true }).click()
-    await expect.element(page.getByText("Files synced", { exact: true })).toBeVisible()
-    await expect.element(page.getByRole("button", { name: "Info", exact: true })).toBeEnabled()
-  })
-
-  it("dismisses only the page-owned loading notification on unmount", async () => {
-    const MessagePage = pages["ex-message"]
-    root.render(<><ExMessageContext /><MessagePage /></>)
-    await page.getByRole("button", { name: "Start sync", exact: true }).click()
-    await expect.element(page.getByText("Syncing files…", { exact: true })).toBeVisible()
-    const external = toast.success("Other workflow")
-    root.render(<ExMessageContext />)
-    await expect.element(page.getByText("Syncing files…", { exact: true })).not.toBeInTheDocument()
-    await expect.element(page.getByText("Other workflow", { exact: true })).toBeVisible()
-    toast.dismiss(external)
-  })
-
   it("validates and saves an edited project through the Form preview", async () => {
     const FormPage = pages.form
     root.render(<FormPage />)

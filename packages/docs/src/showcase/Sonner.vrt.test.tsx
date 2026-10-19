@@ -1,4 +1,5 @@
 import "./ShowcaseStyles"
+import "@exre/exui/style.css"
 import type { CSSProperties } from "react"
 import { flushSync } from "react-dom"
 import { createRoot, type Root } from "react-dom/client"
@@ -53,6 +54,50 @@ function expectCardGeometry() {
 }
 
 describe("Sonner example notification surfaces", () => {
+  it("renders outline Lucide status icons with inherited colors in each theme", async () => {
+    flushSync(() => root.render(<Toaster />))
+    await expect.poll(() => container.querySelector("section[aria-live='polite']")).not.toBeNull()
+    const cases = [
+      { kind: "info", publish: toast.info, icon: "lucide-info" },
+      { kind: "warning", publish: toast.warning, icon: "lucide-triangle-alert" },
+      { kind: "error", publish: toast.error, icon: "lucide-circle-x" },
+      { kind: "success", publish: toast.success, icon: "lucide-circle-check" },
+      { kind: "loading", publish: toast.loading, icon: "lucide-loader-circle" },
+    ] as const
+
+    for (const theme of ["light", "dark", "pitch-black"] as const) {
+      document.documentElement.className = theme === "pitch-black" ? "pitch-black dark" : theme
+      for (const { kind, publish, icon: iconClass } of cases) {
+        const label = `${theme} ${kind} icon`
+        const id = publish(label)
+        try {
+          await expect.poll(() => [...container.querySelectorAll<HTMLElement>("[data-sonner-toast]")]
+            .find(item => item.textContent?.includes(label))?.querySelector("svg") ?? null).not.toBeNull()
+          const icon = [...container.querySelectorAll<HTMLElement>("[data-sonner-toast]")]
+            .find(item => item.textContent?.includes(label))!.querySelector("svg")!
+          const iconHost = icon.parentElement!
+          expect(getComputedStyle(icon).color).toBe(getComputedStyle(iconHost).color)
+          expect(icon.classList.contains("lucide")).toBe(true)
+          expect(icon.classList.contains(iconClass)).toBe(true)
+          for (const shape of icon.querySelectorAll<SVGElement>("path, circle, rect, polygon")) {
+            expect(getComputedStyle(shape).fill).toBe("none")
+            expect(getComputedStyle(shape).stroke).toBe(getComputedStyle(icon).color)
+            expect(getComputedStyle(shape).strokeWidth).toBe("2px")
+          }
+          const originalColor = iconHost.style.color
+          iconHost.style.color = "rgb(12, 34, 56)"
+          expect(getComputedStyle(icon).color).toBe("rgb(12, 34, 56)")
+          iconHost.style.color = originalColor
+          if (kind === "loading") expect(icon.classList.contains("animate-spin")).toBe(true)
+        } finally {
+          toast.dismiss(id)
+          await expect.poll(() => [...container.querySelectorAll<HTMLElement>("[data-sonner-toast]")]
+            .some(item => item.textContent?.includes(label))).toBe(false)
+        }
+      }
+    }
+  })
+
   for (const { id, Component } of examples) {
     it(`keeps ${id} corners and width consistent with its Toaster`, async () => {
       flushSync(() => root.render(<><Toaster /><Component /></>))
