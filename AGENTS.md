@@ -41,12 +41,12 @@ Use pnpm 11.9.0, as declared in `package.json`.
 
 - `pnpm install`: install dependencies.
 - `pnpm dev`: build and watch the library, start docs, and reload after successful library rebuilds.
-- `pnpm check`: prepare required types and run lint, type and source consistency checks without Chromium.
-- `pnpm verify`: run the complete CI workflow and verify root and `/exui/` docs output sequentially.
+- `pnpm check`: the single routine local validation entry; prepare the public library once and run lint, types, source consistency and fast Node/SSR regressions without Chromium.
+- `pnpm verify`: run the complete workflow used by both PR and main CI, verifying all regressions and root and `/exui/` docs output sequentially.
 - `pnpm typecheck`: run TypeScript checks across all three workspaces.
 - `pnpm lint`: run Oxlint with React and TypeScript rules.
 - `pnpm build`: build Tokens, components, declarations, and the private static docs site in dependency order.
-- `pnpm test`: prepare required builds and run the full Node, Chromium, packed-consumer, Skill-example and static-docs regression suite.
+- `pnpm test`: prepare the public library and run fast Node/SSR regressions independently; already included in `check`.
 - `pnpm test:node [files...]`: prepare the public library and run all or selected Node regressions from package `tests/` directories.
 - `pnpm test:visual`: run the docs Chromium fixtures after building.
 - `pnpm verify:pack`: pack the public tarball and run the isolated packed-consumer gates (npm and pnpm tokens-only installs, token type and stylesheet checks, and a React consumer with strict type-checking, a production build, server-render smoke, and Chromium chart/dialog/form interactions).
@@ -59,7 +59,7 @@ Write TypeScript and TSX using the existing component style. Prefer named export
 
 ## Testing Guidelines
 
-Follow `TESTING.md` for test authoring and execution timing. Validation steps are maintained in `scripts/tasks.mjs`.
+Follow `TESTING.md` for test authoring and execution timing. Suite classification and validation steps are maintained in `scripts/test-suites.mjs` and `scripts/tasks.mjs`.
 
 ## Commit & Pull Request Guidelines
 

@@ -91,6 +91,6 @@ Badge 实底前景色不能复用于浅底、描边标签，以及文档样式�
 
 - 工作区与构建：`package.json`、`pnpm-workspace.yaml`、`tsconfig.json`、各包的 `package.json` 与 `vite.config.ts`
 - 生成与校验：`packages/tokens/scripts/`（`generate-css.mjs`、`verify-cjs.mjs`、`validate-tokens.mjs`、`token-length-policy.mjs`、`color-contrast-policy.mjs`、`foundation-reference-policy.mjs`、`glass-policy.mjs`）、`scripts/package-contract.mjs`、`packages/components/tests/consumers/verify-packages.mjs`、`packages/components/tests/consumers/verify-react-browser.mjs`、`packages/components/tests/consumers/verify-form-browser.mjs`、`packages/components/tests/consumers/form-consumer-fixture.mjs`
-- 交付与发布：`.github/workflows/ci.yml`、`release.yml`、`tag-npm.yml`、`.release-bootstrap.yaml`、`scripts/release-bootstrap/`、`.changeset/config.json`
+- 交付与发布：`.github/workflows/ci.yml`、`release.yml`、`tag-npm.yml`、`.release-bootstrap.yaml`、`scripts/release-bootstrap/`、`.changeset/config.json`；本地快速检查与全量 CI 的取舍见 [[release/04-local-check-full-ci]]，执行边界见 [`architectures/release/delivery-pipelines.md`](architectures/release/delivery-pipelines.md)
 - 测试与视觉基线：`TESTING.md`、`packages/docs/vitest.config.ts`、`packages/docs/tests/browser/*.vrt.test.tsx` 与其 `__screenshots__/` 基线；当前站点的静态产物见 [`architectures/docs/site.md`](architectures/docs/site.md)
 - 设计依据：`.notes/archive/`、`.notes/rem-sizing/` 与 `.notes/glass-effects/` 下已归档或已被实现印证的设计文档

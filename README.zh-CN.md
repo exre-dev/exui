@@ -81,11 +81,11 @@ pnpm dev
 
 | 命令 | 用途 |
 | --- | --- |
-| `pnpm check` | 准备所需类型，执行 lint、类型及源码一致性检查，不启动 Chromium。 |
-| `pnpm verify` | 执行完整 CI 流程，涵盖构建、回归、Chromium、打包消费方及两种文档部署 base。 |
+| `pnpm check` | 日常本地验证：只准备一次公开组件库，执行 lint、类型、源码一致性及快速 Node/SSR 回归，不启动 Chromium。 |
+| `pnpm verify` | 执行 PR 与主分支 CI 使用的完整流程，涵盖构建、全部回归、Chromium、打包消费方及两种文档部署 base。 |
 | `pnpm build` | 构建 Tokens、组件与静态文档站。 |
 | `pnpm typecheck` / `pnpm lint` | 执行聚焦的工作区检查。 |
-| `pnpm test` | 准备构建，执行全部保留回归：Node、Chromium、打包消费方、Skill 示例及两种文档部署 base。 |
+| `pnpm test` | 准备公开组件库，独立运行快速 Node/SSR 回归；已包含在 `check` 中。 |
 | `pnpm test:node [files...]` | 准备公开组件库，执行包内 `tests/` 下全部或指定 Node 回归文件。 |
 | `pnpm test:visual` / `pnpm verify:pack` | 构建后执行浏览器夹具或隔离的打包消费方检查。 |
 | `pnpm changeset` / `pnpm version-packages` | 维护发布说明及包版本。 |

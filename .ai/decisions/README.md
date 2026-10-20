@@ -43,3 +43,4 @@
 | [[release/01-single-public-package]] | 只发布 `@exre/exui` 一个公共包 | 已接受 | 2026-09-09 |
 | [[release/02-tag-driven-oidc-release]] | 合并即发布：标签驱动的 OIDC 发布流水线 | 已接受 | 2026-09-09 |
 | [[release/03-packed-consumer-gates]] | 发布前以 workspace 外的打包消费者门禁验收 | 已接受 | 2026-09-09 |
+| [[release/04-local-check-full-ci]] | 本地快速反馈，所有 PR 与主分支 CI 保留完整验证 | 已接受 | 2026-10-19 |

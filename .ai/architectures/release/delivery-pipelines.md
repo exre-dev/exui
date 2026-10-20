@@ -8,7 +8,7 @@
 
 ## CI 质量门禁
 
-测试按所属工作区归档到 `tests/`；仓库开发、发布与 Skill 测试由 `packages/components/tests/tooling/` 持有，不新增工作区。根 `pnpm test` 执行 Node、Chromium、打包消费者、Skill 示例和两种 base 的静态回归；`pnpm test:node` 提供定向 Node 入口。`pnpm verify` 在同一编排中增加 lint、源锁/内容一致性、发布配置与空白检查，共享构建和回归阶段。测试编写原则与执行时机由 [TESTING.md](../../../TESTING.md) 统一维护。
+测试按所属工作区归档到 `tests/`；仓库开发、发布与 Skill 测试由 `packages/components/tests/tooling/` 持有，不新增工作区。`scripts/test-suites.mjs` 将所有 Node 套件显式分为快速回归和集成回归，发现测试拒绝遗漏、重复及失效路径。`check` 共用一次 Token 和公开组件库准备，完成静态检查与快速 Node/SSR 回归；`test` 可独立运行同一组快速回归，`test:node` 保留显式全部或定向 Node 入口。PR 与主分支 CI 统一执行完整 `verify`，保留所有 Node、浏览器、隔离消费者、示例及双 base 文档门禁。取舍理由见 [[release/04-local-check-full-ci]]；测试编写原则与执行时机由 [TESTING.md](../../../TESTING.md) 统一维护。
 
 `.github/workflows/ci.yml` 在 `pull_request` 与推送 `main` 时运行，只有一个执行作业：
 

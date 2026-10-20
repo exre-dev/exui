@@ -2,7 +2,7 @@
 
 Test observable public behavior and meaningful failure paths with the least expensive suitable test; use a real browser when interaction or layout needs proof. Avoid tests that merely restate implementation.
 
-Keep regressions and dedicated fixtures in the owning package's `tests/`: Node files use `*.test.mjs`, browser files use `*.vrt.test.tsx`.
+Keep regressions and dedicated fixtures in the owning package's `tests/`: Node files use `*.test.mjs`, browser files use `*.vrt.test.tsx`. Classify every Node suite in `scripts/test-suites.mjs`.
 
 Use Node.js 24 and pnpm 11.9.0 from the repository root.
 

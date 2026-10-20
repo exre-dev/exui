@@ -1,6 +1,7 @@
 import { spawn as nodeSpawn } from "node:child_process"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import path from "node:path"
+import { fastNodeTests } from "./test-suites.mjs"
 
 const root = fileURLToPath(new URL("../", import.meta.url))
 const usage = "Usage: node scripts/tasks.mjs <build|typecheck|check|test|test:node|verify> [test-files for test:node...]"
@@ -77,18 +78,23 @@ export async function runTasks(mode, files = [], { env = process.env, spawn = no
 
   if (mode === "check" || mode === "verify") await sourceChecks()
   await prepareTokens()
-  if (mode === "typecheck" || mode === "check") {
+  if (mode === "typecheck") {
     await prepareTypes()
-    if (mode === "check") {
-      await pnpm("Lint workspaces and tooling", ["lint"])
-      await consistencyChecks()
-    }
     return
   }
 
   // Node SSR regressions, skill examples and browser consumers all import the
   // built public package. Prepare it once even for focused test invocations.
   await workspace("Build components", "@exre/exui", "build")
+  if (mode === "check" || mode === "test") {
+    if (mode === "check") {
+      await workspace("Docs types", "@exre/exui-docs", "typecheck")
+      await pnpm("Lint workspaces and tooling", ["lint"])
+      await consistencyChecks()
+    }
+    await node("Fast Node and SSR regressions", ...nodeTestArguments, ...fastNodeTests)
+    return
+  }
   if (mode === "test:node") {
     await node("Node regressions", ...nodeTestArguments, ...(files.length ? files : nodeTests))
     return

@@ -83,11 +83,11 @@ pnpm dev
 
 | Command | Purpose |
 | --- | --- |
-| `pnpm check` | Prepare required types and run lint, type checks and source consistency checks without Chromium. |
-| `pnpm verify` | Run the complete CI workflow, including builds, regressions, Chromium, packed consumers and both docs deployment bases. |
+| `pnpm check` | Run routine local validation: prepare the public library once, then check lint, types, source consistency and fast Node/SSR regressions without Chromium. |
+| `pnpm verify` | Run the complete workflow used by both PR and main CI, including builds, all regressions, Chromium, packed consumers and both docs deployment bases. |
 | `pnpm build` | Build Tokens, components and the static docs site. |
 | `pnpm typecheck` / `pnpm lint` | Run a focused workspace check. |
-| `pnpm test` | Run all retained regressions: Node, Chromium, packed consumers, Skill examples and both docs deployment bases, preparing their builds. |
+| `pnpm test` | Prepare the public library and run the fast Node/SSR regressions independently; already included in `check`. |
 | `pnpm test:node [files...]` | Prepare the public library and run all or selected Node regression files under package `tests/` directories. |
 | `pnpm test:visual` / `pnpm verify:pack` | Run browser fixtures or isolated packed consumers after a build. |
 | `pnpm changeset` / `pnpm version-packages` | Maintain release notes and package versions. |

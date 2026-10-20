@@ -40,21 +40,35 @@ if (args.includes(process.env.TASK_FAIL)) process.exitCode = 7
 const has = (event, value) => event.args.includes(value)
 const index = (events, value) => events.findIndex((event) => has(event, value))
 
-test("check prepares Tokens and declarations before consumers without starting browsers or production builds", async (t) => {
-  const { events, error } = await exercise(t, "check")
+for (const mode of ["check", "test"]) test(`${mode} prepares current public artifacts once and runs fast Node and SSR regressions`, async (t) => {
+  const { events, error } = await exercise(t, mode)
   assert.ifError(error)
+  const tests = events.filter((event) => has(event, "--test"))
+  assert.equal(tests.length, 1, "fast regressions must run once")
+  assert.ok(has(tests[0], "packages/docs/tests/node/docs-example-copy-ssr.test.mjs"), "public SSR belongs to fast checks")
+  assert.ok(has(tests[0], "packages/docs/tests/node/docs-snippets.test.mjs"), "pure snippet helpers belong to fast checks")
+  const { fastNodeTests, integrationNodeTests } = await import("../../../../scripts/test-suites.mjs")
+  assert.deepEqual(tests[0].args, ["--test", "--test-concurrency=2", ...fastNodeTests])
+  for (const suite of integrationNodeTests) assert.ok(!has(tests[0], suite), suite)
+  assert.ok(!has(tests[0], "packages/*/tests/**/*.test.mjs"))
+  for (const item of ["build:js", "build:cjs", "check:built"]) assert.equal(events.filter((event) => has(event, item)).length, 1, item)
+  const builds = events.filter((event) => has(event, "@exre/exui") && has(event, "build"))
+  assert.equal(builds.length, 1, "prepare the public package exactly once")
   assert.ok(index(events, "build:js") < index(events, "build:cjs"))
   assert.ok(index(events, "build:cjs") < index(events, "check:built"))
-  assert.ok(index(events, "check:built") < index(events, "build:types"))
+  assert.ok(index(events, "check:built") < index(events, "build"))
+  assert.ok(index(events, "build") < index(events, "--test"))
+  assert.equal(index(events, "build:types"), -1, "component build already emits declarations")
+  assert.ok(!events.some((event) => has(event, "@exre/exui") && has(event, "typecheck")), "component build already checks its types")
   const docsTypes = events.findIndex((event) => has(event, "@exre/exui-docs") && has(event, "typecheck"))
-  assert.ok(index(events, "build:types") < docsTypes)
+  if (mode === "check") assert.ok(index(events, "build") < docsTypes)
+  else assert.equal(docsTypes, -1)
   for (const event of events) {
-    assert.ok(!event.args.includes("build"), JSON.stringify(event))
-    assert.ok(!event.args.includes("--test"), "check must not duplicate the regression phase")
-    assert.ok(!event.args.some((arg) => /verify-docs-|verify-packages|verify-examples|docs-example-styles\.mjs|test:visual/.test(arg)), JSON.stringify(event))
+    assert.ok(!(has(event, "@exre/exui-docs") && has(event, "build")), JSON.stringify(event))
+    assert.ok(!event.args.some((arg) => /verify-docs-|verify-packages|verify-examples|scripts\/docs-example-styles\.mjs|scripts\/docs-snippets\.mjs|test:visual/.test(arg)), JSON.stringify(event))
   }
-  for (const source of ["scripts/reui-sync.mjs", "scripts/reui-exports.mjs", "scripts/reui-foundation-diff.mjs", "scripts/generate-reui-luma.mjs", "scripts/docs-content.mjs", "scripts/docs-examples.mjs", "scripts/docs-example-assets.mjs", "scripts/exui-capabilities.mjs", "scripts/exui-skill/sync-references.mjs", "scripts/exui-skill/update-inventories.mjs", "scripts/exui-skill/verify.mjs"]) {
-    assert.ok(index(events, source) >= 0, source)
+  for (const source of ["lint", "scripts/reui-sync.mjs", "scripts/reui-exports.mjs", "scripts/reui-foundation-diff.mjs", "scripts/generate-reui-luma.mjs", "scripts/docs-content.mjs", "scripts/docs-examples.mjs", "scripts/docs-example-assets.mjs", "scripts/exui-capabilities.mjs", "scripts/exui-skill/sync-references.mjs", "scripts/exui-skill/update-inventories.mjs", "scripts/exui-skill/verify.mjs"]) {
+    assert.equal(index(events, source) >= 0, mode === "check", source)
   }
 })
 
@@ -64,6 +78,21 @@ test("failed token checks stop before declarations, consumers and later gates", 
   assert.equal(index(events, "build:types"), -1)
   assert.equal(index(events, "scripts/docs-content.mjs"), -1)
   assert.ok(logs.some((line) => /Token/.test(line)))
+})
+
+for (const mode of ["check", "test"]) test(`${mode} reports fast regression failures without continuing to integration gates`, async (t) => {
+  const { events, error } = await exercise(t, mode, [], { fail: "packages/docs/tests/node/docs-example-copy-ssr.test.mjs" })
+  assert.match(error?.message ?? "", /Fast Node and SSR regressions exited with 7/)
+  assert.equal(events.filter((event) => has(event, "--test")).length, 1)
+  assert.ok(has(events.at(-1), "--test"))
+  assert.ok(!events.some((event) => has(event, "test:visual") || has(event, "packages/components/tests/consumers/verify-packages.mjs")))
+})
+
+test("a failed public-package build stops check before docs types and fast regressions", async (t) => {
+  const { events, error } = await exercise(t, "check", [], { fail: "build" })
+  assert.match(error?.message ?? "", /Build components exited with 7/)
+  assert.ok(!events.some((event) => has(event, "@exre/exui-docs")))
+  assert.equal(index(events, "--test"), -1)
 })
 
 test("focused test paths are passed literally after one public-package preparation", async (t) => {
@@ -78,8 +107,17 @@ test("focused test paths are passed literally after one public-package preparati
   assert.ok(index(events, "build") < index(events, "--test"))
 })
 
-for (const mode of ["test", "verify"]) test(`${mode} includes every regression and builds each prerequisite only once`, async (t) => {
-  const { events, error } = await exercise(t, mode, [], { env: { EXUI_DOCS_BASE: "/unexpected/" } })
+test("unselected test:node retains every Node suite after public-package preparation", async (t) => {
+  const { events, error } = await exercise(t, "test:node")
+  assert.ifError(error)
+  assert.deepEqual(events.at(-1).args, ["--test", "--test-concurrency=2", "packages/*/tests/**/*.test.mjs"])
+  for (const item of ["build:js", "build:cjs", "check:built"]) assert.equal(events.filter((event) => has(event, item)).length, 1, item)
+  assert.equal(events.filter((event) => has(event, "@exre/exui") && has(event, "build")).length, 1)
+  assert.equal(events.filter((event) => has(event, "--test")).length, 1)
+})
+
+test("verify includes every regression and builds each prerequisite only once", async (t) => {
+  const { events, error } = await exercise(t, "verify", [], { env: { EXUI_DOCS_BASE: "/unexpected/" } })
   assert.ifError(error)
   for (const item of ["build:js", "build:cjs", "check:built"]) assert.equal(events.filter((event) => has(event, item)).length, 1, item)
   assert.equal(events.filter((event) => has(event, "@exre/exui") && has(event, "build")).length, 1)
@@ -89,7 +127,7 @@ for (const mode of ["test", "verify"]) test(`${mode} includes every regression a
   assert.deepEqual(tests[0].args, ["--test", "--test-concurrency=2", "packages/*/tests/**/*.test.mjs"])
   for (const gate of ["scripts/docs-example-styles.mjs", "scripts/docs-snippets.mjs", "packages/components/tests/tooling/skill/verify-examples.mjs", "packages/components/tests/consumers/verify-packages.mjs", "test:visual"]) assert.ok(index(events, gate) >= 0, gate)
   for (const gate of ["lint", "scripts/release-bootstrap/verify.mjs", "scripts/reui-sync.mjs", "git"]) {
-    assert.equal(index(events, gate) >= 0, mode === "verify", `${gate} belongs to verification`)
+    assert.ok(index(events, gate) >= 0, `${gate} belongs to verification`)
   }
   const tail = events.slice(-3)
   assert.ok(has(tail[0], "@exre/exui-docs") && has(tail[0], "build"))
