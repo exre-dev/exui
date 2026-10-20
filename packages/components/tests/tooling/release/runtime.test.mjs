@@ -40,6 +40,26 @@ function release(f, extra = false) {
   return f.git("rev-parse", "HEAD")
 }
 function ok(result) { assert.equal(result.status, 0, result.stderr); return JSON.parse(result.stdout) }
+
+function hideRemoteTag(f, persistent = false) {
+  const uploadPack = join(f.base, "upload-pack.mjs")
+  const counter = join(f.base, "reads.txt")
+  // Keep real Git transport, hiding the first post-push read or all later reads.
+  writeFileSync(uploadPack, `
+    import { existsSync, readFileSync, writeFileSync } from "node:fs";
+    import { spawnSync } from "node:child_process";
+    const counter = ${JSON.stringify(counter)};
+    const reads = existsSync(counter) ? Number(readFileSync(counter, "utf8")) + 1 : 1;
+    writeFileSync(counter, String(reads));
+    const config = reads >= 2 && (${persistent} || reads === 2)
+      ? ["-c", "uploadpack.hideRefs=refs/tags/@exre/exui@0.2.0"] : [];
+    const result = spawnSync("git", [...config, "upload-pack", ...process.argv.slice(2)], { stdio: "inherit" });
+    process.exit(result.status ?? 1);
+  `)
+  const quote = (path) => `'${path.replaceAll("\\", "/").replaceAll("'", "'\\''")}'`
+  f.git("config", "remote.origin.uploadpack", `${quote(process.execPath)} ${quote(uploadPack)}`)
+}
+
 test("an ordinary merge without Changesets is a successful no-op without credentials", (t) => {
   const f = fixture(t)
   assert.equal(ok(f.cli("plan.mjs")).mode, "no-op")
@@ -76,6 +96,27 @@ test("a release commit recovers annotated tags idempotently at the same SHA", (t
   assert.equal(context.RELEASE_PACKAGE, "@exre/exui")
   assert.equal(context.RELEASE_VERSION, "0.2.0")
 })
+test("tag creation tolerates a temporarily missing remote advertisement after a successful push", (t) => {
+  const f = fixture(t), sha = release(f)
+  const plan = join(f.base, "plan.json")
+  writeFileSync(plan, JSON.stringify(ok(f.cli("plan.mjs"))))
+  hideRemoteTag(f)
+  assert.equal(ok(f.cli("tags.mjs", "--plan", plan, "--commit", sha)).tags[0].state, "created")
+  assert.equal(f.git("--git-dir", join(f.base, "remote.git"), "rev-parse", "@exre/exui@0.2.0^{}"), sha)
+  assert.equal(ok(f.cli("tags.mjs", "--plan", plan, "--commit", sha)).tags[0].state, "existing")
+})
+
+test("tag verification still fails when the pushed tag never becomes visible", (t) => {
+  const f = fixture(t), sha = release(f)
+  const plan = join(f.base, "plan.json")
+  writeFileSync(plan, JSON.stringify(ok(f.cli("plan.mjs"))))
+  hideRemoteTag(f, true)
+  const result = f.cli("tags.mjs", "--plan", plan, "--commit", sha)
+  assert.notEqual(result.status, 0)
+  assert.match(result.stderr, /TAG_PUSH_FAILED/)
+  assert.equal(f.git("--git-dir", join(f.base, "remote.git"), "rev-parse", "@exre/exui@0.2.0^{}"), sha)
+})
+
 test("a private tokens package version bump never becomes a release", (t) => {
   const f = fixture(t)
   f.write(".changeset/feature.md", '---\n"@exre/exui": patch\n---\nFeature\n')

@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { setTimeout as delay } from "node:timers/promises";
 import { args, fail, git, json, parseTag, resolveRoot } from "./_lib.mjs";
 import { committedRelease } from "./release-diff.mjs";
 
@@ -74,7 +75,14 @@ for (const release of plan.releases) {
     continue;
   }
   createAndPush(root, release.tag, options.commit);
-  const verified = remoteTag(root, release.tag);
+  let verified = remoteTag(root, release.tag);
+  // A successful push can precede visibility in the remote's ref advertisement.
+  // Retry only absence; conflicting or invalid tags must still fail closed.
+  for (const wait of [250, 500, 1000, 2000]) {
+    if (verified !== null) break;
+    await delay(wait);
+    verified = remoteTag(root, release.tag);
+  }
   if (verified !== options.commit) fail("TAG_PUSH_FAILED", `${release.tag} did not resolve to ${options.commit}`);
   result.push({ tag: release.tag, state: "created" });
 }
