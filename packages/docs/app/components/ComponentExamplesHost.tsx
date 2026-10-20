@@ -1,5 +1,5 @@
 import { Component, useEffect, useState, type ComponentType, type ReactNode } from "react"
-import { ExMessageContext, GlassSeed, TooltipProvider } from "@exre/exui"
+import { GlassSeed, Toaster, TooltipProvider } from "@exre/exui"
 import { catalogPages } from "../../src/showcase/catalog"
 import { componentLoaders } from "../../src/showcase/component-loaders.generated"
 import { ExampleNavigationContext } from "../../src/showcase/example-navigation"
@@ -62,7 +62,7 @@ export function ComponentExamplesHost({ family, target, density }: { family: str
   if (!ready) return <div className="docs-examples-state" data-testid="examples-hydration-placeholder" aria-busy="true">{language === "zh-CN" ? "正在加载示例…" : "Loading examples…"}</div>
   return <TooltipProvider>
     <GlassSeed />
-    <ExMessageContext />
+    <Toaster position="top-right" duration={3000} visibleToasts={3} />
     <FamilySession key={family} family={family} target={target} density={density} />
   </TooltipProvider>
 }

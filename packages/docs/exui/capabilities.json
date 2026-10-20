@@ -145,40 +145,40 @@
       "origin": "native",
       "pages": ["exui/form"],
       "families": [],
-      "symbols": ["useForm", "Form", "FormItem", "FormErrorSummary"],
-      "examples": ["exui-form-1"],
-      "sources": ["packages/components/src/hooks/use-form.ts", "packages/components/src/components/patterns/form.tsx", "packages/components/src/components/patterns/form-item.tsx"],
-      "guides": [{ "docs": "exui/form", "skill": "exui/form.md" }]
+      "symbols": ["useForm", "useFormContext", "useWatch", "useFieldArray", "Form", "FormField", "FormList", "FormErrorSummary", "FormFieldProps", "FormFieldLayout", "FormFieldSpan", "FormComposedProps"],
+      "examples": ["exui-form-1", "exui-form-models"],
+      "sources": ["packages/components/src/hooks/use-form.ts", "packages/components/src/components/patterns/form.tsx", "packages/components/src/components/patterns/form-shell.tsx", "packages/components/src/components/patterns/form-field.tsx", "packages/components/src/components/patterns/form-field-layout.tsx", "packages/components/src/components/patterns/form-list.tsx", "packages/components/src/components/patterns/form-error-summary.tsx", "packages/components/src/lib/forms/types.ts"],
+      "guides": [{"docs": "exui/form", "skill": "exui/form.md"}]
     },
     {
       "id": "configured-forms",
       "origin": "native",
-      "pages": ["exui/ex-form"],
+      "pages": ["exui/form"],
       "families": [],
-      "symbols": ["ExForm", "useForm"],
-      "examples": ["exui-ex-form-1"],
-      "sources": ["packages/components/src/components/patterns/ex-form.tsx", "packages/components/src/lib/forms/types.ts"],
-      "guides": [{ "docs": "exui/ex-form", "skill": "exui/form.md" }]
+      "symbols": ["Form", "useForm", "FormConfiguredSchemaProps", "FormConfiguredInstanceProps", "FormConfiguredCommonProps", "FormFooterArguments"],
+      "examples": ["exui-form-configured", "exui-form-models"],
+      "sources": ["packages/components/src/components/patterns/form.tsx", "packages/components/src/components/patterns/form-configured.tsx", "packages/components/src/components/patterns/form-shell.tsx", "packages/components/src/lib/forms/types.ts"],
+      "guides": [{"docs": "exui/form", "skill": "exui/form.md"}]
     },
     {
-      "id": "standalone-ex-item",
+      "id": "field-layout",
       "origin": "native",
-      "pages": ["exui/ex-item"],
-      "families": [],
-      "symbols": ["ExItem", "Input"],
-      "examples": ["exui-ex-item-1"],
-      "sources": ["packages/components/src/components/patterns/ex-item.tsx"],
-      "guides": [{ "docs": "exui/ex-item", "skill": "exui/form.md" }]
+      "pages": ["components/field"],
+      "families": ["field"],
+      "symbols": ["Field", "FieldContent", "FieldLabel", "FieldDescription", "FieldError", "FieldTitle", "FieldSet", "FieldLegend"],
+      "examples": ["exui-field-settings", "exui-field-display", "exui-field-layout"],
+      "sources": ["packages/components/src/components/ui/field.tsx"],
+      "guides": [{"docs": "components/field", "skill": "field"}, {"docs": "components/field", "skill": "exui/field-layout.md"}]
     },
     {
-      "id": "message-host",
-      "origin": "native",
-      "pages": ["exui/ex-message", "components/sonner"],
+      "id": "sonner-notifications",
+      "origin": "adapted",
+      "pages": ["components/sonner"],
       "families": ["sonner"],
-      "symbols": ["ExMessage", "ExMessageContext", "Toaster", "toast"],
-      "examples": ["exui-ex-message-1", "c-sonner-1"],
-      "sources": ["packages/components/src/components/ex-message-context.tsx", "packages/components/src/lib/ex-message-controller.ts", "packages/components/src/components/ui/sonner.tsx"],
-      "guides": [{ "docs": "exui/ex-message", "skill": "exui/notifications.md" }, { "docs": "components/sonner", "skill": "sonner" }]
+      "symbols": ["Toaster", "toast"],
+      "examples": ["c-sonner-4", "c-sonner-7", "c-sonner-21"],
+      "sources": ["packages/components/src/components/ui/sonner.tsx"],
+      "guides": [{ "docs": "components/sonner", "skill": "sonner" }]
     },
     {
       "id": "theme-host",

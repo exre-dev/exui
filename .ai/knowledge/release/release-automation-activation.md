@@ -4,7 +4,7 @@
 
 ## 仓库内的流水线不等于已启用的发布能力
 
-`.github/workflows/release.yml` 存在且通过 `pnpm release:verify` 校验，但它的整个作业有一个显式开关：
+`.github/workflows/release.yml` 存在且通过 `node scripts/release-bootstrap/verify.mjs --root .` 校验，但它的整个作业有一个显式开关：
 
 ```yaml
 if: >-
@@ -16,7 +16,7 @@ if: >-
 
 因此有两条容易误判的结论：
 
-- "CI 全绿 + 发布配置校验通过" **不证明发布可用**。`pnpm release:verify` 校验的是声明与文件的一致性，`pnpm test:release` 校验的是脚本逻辑，两者都在本地/CI 中运行，都不接触真实注册表。
+- "CI 全绿 + 发布配置校验通过" **不证明发布可用**。`node scripts/release-bootstrap/verify.mjs --root .` 校验的是声明与文件的一致性，`node --test "packages/components/tests/tooling/release/*.test.mjs"` 校验的是脚本逻辑，两者都在本地/CI 中运行，都不接触真实注册表。
 - 首次发布无法由流水线完成。npm 只能为已存在的包配置 Trusted Publisher，所以初始版本必须人工发布一次，之后自动化才有意义。
 
 ## 无法在本地发布

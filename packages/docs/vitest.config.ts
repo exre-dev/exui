@@ -7,11 +7,11 @@ import { showcaseSharing } from "./sharing-plugin.js"
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), showcaseSharing()],
-  resolve: { dedupe: ["react", "react-dom"] },
+  resolve: { dedupe: ["react", "react-dom", "@exre/exui"] },
   optimizeDeps: { include: [...exampleDependencies, "react-router"] },
   test: {
     name: "visual",
-    include: ["src/**/*.vrt.test.tsx"],
+    include: ["tests/browser/**/*.vrt.test.tsx"],
     fileParallelism: false,
     browser: {
       enabled: true,

@@ -8,7 +8,7 @@ ExUI 的内建可缩放默认值以 16px 设计基准写成 `rem`。根字号设
 
 显式数字参数仍表示像素：`sideOffset={8}`、`indent={20}`、列宽和受控 resize 状态不会被重新解释。接受 CSS 长度的参数可以传入 rem 字符串。DOM 测量值、SVG 内容坐标、图表数据与签名笔迹保持原语义。
 
-通过内置 `Recharts` 和 `TanStackTable` 命名空间使用已适配的 React 默认尺寸；Toaster/ExMessage、Resizable、MessageScroller 也会缩放其自有默认值。底层非 React API `TanStackTable.constructTable` 保留上游像素默认值；InputOTP 私有密码管理器预留与探测仍为 40px/18px。文档主题适配已命名的 Fumadocs 位移动画与滚动条，预设版本由应用自行安装。根字号也影响应用中其他 `rem`，无需缩放时保持 16px。
+通过内置 `Recharts` 和 `TanStackTable` 命名空间使用已适配的 React 默认尺寸；Toaster、Resizable、MessageScroller 也会缩放其自有默认值。底层非 React API `TanStackTable.constructTable` 保留上游像素默认值；InputOTP 私有密码管理器预留与探测仍为 40px/18px。文档主题适配已命名的 Fumadocs 位移动画与滚动条，预设版本由应用自行安装。根字号也影响应用中其他 `rem`，无需缩放时保持 16px。
 
 {/* exui-capabilities:begin:docs */}
 ## ExUI 能力

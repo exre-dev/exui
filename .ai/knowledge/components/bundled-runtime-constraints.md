@@ -10,7 +10,7 @@
 
 - 消费者用自己的 Radix / Base UI provider 包裹 ExUI 组件，ExUI 组件读不到该 provider 的值，因为它在读自己那份实现里的 context。要共享状态必须使用 ExUI 导出的 provider。
 - 这一点在图表上后果最隐蔽：从 `recharts` 直接导入图表原语时组件照常渲染，但 `ChartTooltip` 与 `ChartLegend` 的内容消失，且没有任何报错。必须从根入口的 `Recharts` 命名空间取原语，见 [[components/02-bundled-recharts-namespace]]。
-- ReUI `DataGrid` 与表格模型通过根入口的 `TanStackTable` 命名空间共享同一份 TanStack Table v9。消息宿主、`ExMessage` 和公共 `toast` 则共享 ExUI 打包的 Sonner；从消费者自装的 Sonner 导入 `toast` 会进入另一份实例。
+- ReUI `DataGrid` 与表格模型通过根入口的 `TanStackTable` 命名空间共享同一份 TanStack Table v9。公共 `Toaster` 和 `toast` 共享 ExUI 打包的 Sonner；从消费者自装的 Sonner 导入 `toast` 会进入另一份实例。
 
 **判断方法**：如果消费者代码里出现来自 `radix-ui`、`recharts`、`@tanstack/react-table`、`vaul`、`cmdk`、`sonner` 等包的导入，且这些组件需要与 ExUI 组件协作，就存在两份实例的风险。
 

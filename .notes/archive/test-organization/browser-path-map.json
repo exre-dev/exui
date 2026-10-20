@@ -1,0 +1,487 @@
+[
+  {
+    "from": "packages/docs/src/showcase/Accordion.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Accordion.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Attachment.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Attachment.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Badge.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Badge.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ButtonGroup.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ButtonGroup.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Calendar.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Calendar.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/CalendarCopy.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/CalendarCopy.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/CalendarLayouts.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/CalendarLayouts.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/CalendarRemSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/CalendarRemSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Cascader.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Cascader.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Checkbox.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Checkbox.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ComplexRemSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ComplexRemSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ComponentRecipeContract.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ComponentRecipeContract.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ComponentsOverview.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DocsOverview.vrt.test.tsx",
+    "action": "retire legacy shell; unique current-host assertions retained"
+  },
+  {
+    "from": "packages/docs/src/showcase/DataGridRemSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DataGridRemSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Dialog.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Dialog.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/DialogComposition.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DialogComposition.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/DialogEnhancements.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DialogEnhancements.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/DocsExamples.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DocsExamples.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/DocsFormGallery.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DocsFormGallery.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/DocsOverview.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DocsOverview.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/DocsSettings.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DocsSettings.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/EmojiPicker.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/EmojiPicker.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ExMessage.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ExMessage.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ExuiCapabilities.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ExuiCapabilities.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ExUIPages.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ExUIPages.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FieldLayout.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FieldLayout.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Filters.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Filters.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Form.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Form.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FormApi.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FormApi.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FormAsync.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FormAsync.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FormContentSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FormContentSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FormControls.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FormControls.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FormSteps.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FormSteps.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FormSurfaceOutline.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FormAppearance.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/FormSurfaces.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/FormAppearance.vrt.test.tsx",
+    "action": "merge background assertions"
+  },
+  {
+    "from": "packages/docs/src/showcase/Glass.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Glass.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/InputGroup.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/InputGroup.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/InteractiveCursor.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/InteractiveCursor.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/NavigationMenu.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/NavigationMenu.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/PhoneInput.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/PhoneInput.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Questionnaire.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Questionnaire.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/RadioGroup.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/RadioGroup.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/RemSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/RemSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Resizable.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Resizable.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/RuntimeRemSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/RuntimeRemSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Scrollspy.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Scrollspy.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ShowcaseCatalog.vrt.test.tsx",
+    "to": null,
+    "action": "retire legacy shell; unique current-host assertions retained"
+  },
+  {
+    "from": "packages/docs/src/showcase/ShowcaseExampleCoverage.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ShowcaseExampleCoverage.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ShowcaseExampleInteractions.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ShowcaseExampleInteractions.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ShowcaseExampleStyles.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ShowcaseExampleStyles.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ShowcaseLocale.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DocsSettings.vrt.test.tsx",
+    "action": "retire legacy shell; unique current-host assertions retained"
+  },
+  {
+    "from": "packages/docs/src/showcase/ShowcaseSharing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/DocsExamples.vrt.test.tsx",
+    "action": "retire legacy shell; unique current-host assertions retained"
+  },
+  {
+    "from": "packages/docs/src/showcase/Sonner.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Sonner.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/StaticRemSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/StaticRemSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Tabs.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Tabs.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ThirdPartyRemSizing.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/ThirdPartyRemSizing.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Toggle.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Toggle.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/Trace.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/Trace.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/TraceCopy.vrt.test.tsx",
+    "to": "packages/docs/tests/browser/TraceCopy.vrt.test.tsx",
+    "action": "move"
+  },
+  {
+    "from": "packages/docs/src/showcase/ComponentRecipeContract.tsx",
+    "to": "packages/docs/tests/browser/fixtures/ComponentRecipeContract.tsx",
+    "action": "move test-exclusive fixture"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-dark-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-dark-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "6b8ba9a587d9810e68bf5e2e9cc3b14f744f6473ca218b7ffe67cbc0dc52899e"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-dark-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-dark-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "ff640c96058ce9543dc3f65ea5c708d74b4d966834d6741a28433a32b088fae3"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-light-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-light-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "0f3a01f87ccdeec586acb37c086099a5193ff0557492d5d8fc0163a5578d4e28"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-light-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-light-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "b01e7029615c51653cfce069ad8b04ba315c1fdf67260a2f905c8d26bb037314"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-pitch-black-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-pitch-black-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "e3c139286f9af0a89f8407fe5cc5e63a88cad2026d55e53d98bce6f41a073a20"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-pitch-black-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-contract-pitch-black-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "06097361893de88dbb91e7719e234963b7c5688d45c220e2d46b6f222343840d"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-dark-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-dark-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "7452d655e04c1be5b0cba5afb1ab88d5063bd46832650395b5901057e3c3f406"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-dark-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-dark-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "454e12d8d2dacf8014d1c1dc7f122f56d9724f82632d788e0cc48b85df8db36f"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-light-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-light-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "04fa45796340c2100c32ef51f9c0801baf4cc49581f3181e14e6a3740399f234"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-light-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-light-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "1a5bda5a4034004a1d0ba350c2ea5a5f6116398f30695511636f2c07922e99ff"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-pitch-black-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-pitch-black-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "bdda654adcea5e1cf3a004741a47b50170c0c27be332ac028bbc29db148c1b73"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-pitch-black-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-dialog-pitch-black-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "454e12d8d2dacf8014d1c1dc7f122f56d9724f82632d788e0cc48b85df8db36f"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-dark-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-dark-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "ca6038975264c665f7e8f9bfcd57ad6cea7d2985f62f39948b86ad007bf9b383"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-dark-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-dark-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "d149916ef3c7169a5ef8509fddd4327ce1cfd456e413f1686bad55ab6e4a683c"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-light-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-light-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "5f6afef199f074fa0e0bf4e6d8cdae74bc442e4634af1fb9ff285863ecbe048b"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-light-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-light-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "76730da6cdbcf7dfb3776f6494c6b8cc97a6f8b9606489db96625ac8be244276"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-pitch-black-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-pitch-black-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "89c3cd14f1c3244d06d51467ebd2e5d76dc587ea3b544246cf3ddd54875d3acc"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-pitch-black-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-menu-pitch-black-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "85c250cee8abbc92d7a67e13c6bba90e4625f39c3e8bd98b4e32de8fd07cb6d0"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-dark-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-dark-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "94c10a349756e62acc4e75d957d9f9521b2ffc8a42bc133d86eb6b2a3e9cf68d"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-dark-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-dark-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "8c3025bb0ad4e3faf04fbd1b139d9af00085f2ba19dd23ffc5175b4afa49dde9"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-light-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-light-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "3ed80ad8da76de7bd9b1626885b62f9a1a9f4f69c26104e84448fdff6e5a4127"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-light-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-light-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "e3ee8e28a6b0214c4b76deb38de11687f92da3414d0264c94e2c4e5e784aa6eb"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-pitch-black-desktop-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-pitch-black-desktop-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "38c19af8ad2f7f1535378b68a6783357859ffeb476496ba42032022fce25e436"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-pitch-black-mobile-chromium-win32.png",
+    "to": "packages/docs/tests/browser/__screenshots__/ComponentRecipeContract.vrt.test.tsx/recipe-tabs-pitch-black-mobile-chromium-win32.png",
+    "action": "move baseline bytes",
+    "sha256": "b6be97cf0cfaf1b9c7222510cedcfbd3a010467fc971a3ff4d6289a00e7a92a2"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/showcase-button-dark-chromium-win32.png",
+    "to": null,
+    "action": "remove obsolete shell baseline",
+    "sha256": "931b281b665d6c63fbc9ce27bb18731e9ca55fef978715244e92022502b07c9c"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/showcase-button-light-chromium-win32.png",
+    "to": null,
+    "action": "remove obsolete shell baseline",
+    "sha256": "1f32038c70ade35fefffb8ca7050447001daa188abd79a374ef5183abe3b0d13"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/showcase-button-pitch-black-chromium-win32.png",
+    "to": null,
+    "action": "remove obsolete shell baseline",
+    "sha256": "e861a8d1c322cccca06af78524e16056c94939af8f879912df83ad06daa13dd0"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/Showcase-component-pages-loads-a-real-preview-for-every-navigation-entry-in-en-1.png",
+    "to": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/Showcase-component-pages-loads-a-real-preview-for-every-navigation-entry-in-en-1.png",
+    "action": "preserve ignored local failure artifact",
+    "sha256": "b9d3292a47b51168fd22a92424ede24298dd933bc9184850605beff9f4ff59a7"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/Showcase-component-pages-loads-a-real-preview-for-every-navigation-entry-in-zh-CN-1.png",
+    "to": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/Showcase-component-pages-loads-a-real-preview-for-every-navigation-entry-in-zh-CN-1.png",
+    "action": "preserve ignored local failure artifact",
+    "sha256": "633dba74f12c9e19ed01808d0570a1f7250b58f7225eb72a02a6a0141cda5458"
+  },
+  {
+    "from": "packages/docs/src/showcase/__screenshots__/ShowcaseCatalog.vrt.test.tsx/Showcase-component-pages-navigates-to-an-independent-ExUI-page-and-restores-browser-history-1.png",
+    "to": null,
+    "action": "remove ignored failure screenshot generated after baseline backup",
+    "sha256": "dd68def8dce166a8f15f6dc2f649468f76e702e0ff7b306dd5f62f09dcc524f4"
+  },
+  {
+    "from": null,
+    "to": "packages/docs/tests/browser/fixtures/docs-examples.tsx",
+    "action": "add test route adapter using production host/providers/section"
+  }
+]

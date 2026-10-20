@@ -17,4 +17,4 @@
 
 重新审视条件：确认不再有受支持的消费者需要 CommonJS 入口时，在下一次主版本移除。
 
-证据：`packages/tokens/package.json` 的 `main` / `module` / `exports` 双条件；`scripts/write-cjs-package.mjs` 写入的目录标记；`verify-cjs.mjs` 的 require/import 等值断言、深度冻结断言，以及"防止产物为空或截断被两边都空掩盖"的键名集合断言；`scripts/package-contract.mjs` 的 `requireExportsEntry` 对两个条件目标路径的精确锁定；`scripts/verify-packages.mjs` 中 `.cts` 消费者使用 `import = require` 并以 `tsc --listFiles` 断言加载了 `dist/tokens/cjs/index.d.ts`；`packages/tokens/README.md` 的 Module formats 段。
+证据：`packages/tokens/package.json` 的 `main` / `module` / `exports` 双条件；`scripts/write-cjs-package.mjs` 写入的目录标记；`verify-cjs.mjs` 的 require/import 等值断言、深度冻结断言，以及"防止产物为空或截断被两边都空掩盖"的键名集合断言；`scripts/package-contract.mjs` 的 `requireExportsEntry` 对两个条件目标路径的精确锁定；`packages/components/tests/consumers/verify-packages.mjs` 中 `.cts` 消费者使用 `import = require` 并以 `tsc --listFiles` 断言加载了 `dist/tokens/cjs/index.d.ts`；`packages/tokens/README.md` 的 Module formats 段。

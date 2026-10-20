@@ -17,4 +17,4 @@
 
 重新审视条件：Recharts 或其后继者提供跨实例共享 context 的机制时；或引入按需子路径导出使命名空间不再是唯一可行做法时。
 
-证据：`packages/components/src/index.ts` 对 `components/ui/chart` 的转发与根入口导出的 `Recharts`；`packages/components/src/components/ui/chart.tsx` 的 context 提供方；`packages/components/README.md` 的 Charts and migration 段及其"独立安装的 Recharts 副本会静默丢失内容"的说明；`scripts/verify-packages.mjs` 的 React 消费者 fixture 以 `Recharts` 解构图表原语并搭配 `ChartTooltipContent` / `ChartLegendContent`；`scripts/verify-react-browser.mjs` 对图例内容与 hover 后 tooltip 取值的浏览器断言；`scripts/verify-packages.mjs` 把 `recharts` 列入禁止进入 tokens-only 依赖树的包集合。
+证据：`packages/components/src/index.ts` 对 `components/ui/chart` 的转发与根入口导出的 `Recharts`；`packages/components/src/components/ui/chart.tsx` 的 context 提供方；`packages/components/README.md` 的 Charts and migration 段及其"独立安装的 Recharts 副本会静默丢失内容"的说明；`packages/components/tests/consumers/verify-packages.mjs` 的 React 消费者 fixture 以 `Recharts` 解构图表原语并搭配 `ChartTooltipContent` / `ChartLegendContent`；`packages/components/tests/consumers/verify-react-browser.mjs` 对图例内容与 hover 后 tooltip 取值的浏览器断言；`packages/components/tests/consumers/verify-packages.mjs` 把 `recharts` 列入禁止进入 tokens-only 依赖树的包集合。

@@ -13,8 +13,8 @@
 
 理由：让 Showcase 成为与外部消费者同构的使用方，它的视觉测试便同时充当公共入口的集成验证：入口缺失、产物缺文件、样式表没带上 Token 变量都会在 Showcase 直接暴露。反过来，如果 Showcase 走源码路径，这类问题只能等到发布后由消费者发现。
 
-影响：Showcase 无法使用组件包尚未导出的符号，也不能依赖只有源码才存在的路径。开发时修改组件源码必须重新构建组件包才能看到效果；`pnpm dev` 会先构建 tokens 与组件，但不监听它们的源码变化。Showcase 因此也没有自己的 Tailwind 构建，只能使用组件产物已含的工具类，夹具中的额外样式需要写成 inline `style`。
+影响：Showcase 无法使用组件包尚未导出的符号，也不能依赖只有源码才存在的路径。开发时修改组件源码必须重新构建组件包才能看到效果；当前开发协调器自动监听重建并刷新文档页，仍保留公共产物消费边界，见 [`源码监听约束`](../../knowledge/release/watch-rebuilds.md)。历史 Showcase 没有自己的 Tailwind 构建，只能使用组件产物已含的工具类，夹具中的额外样式需要写成 inline `style`；当前 docs 的私有工具类边界见 [`docs/site.md`](../../architectures/docs/site.md)。
 
 重新审视条件：需要在 Showcase 中演示尚未发布的组件时；或引入监听式库构建，使源码路径不再是唯一的快速反馈手段时。
 
-证据：`packages/showcase/package.json` 的 `@exre/exui: workspace:*` 依赖与 `test:visual` 脚本；`packages/showcase/vite.config.ts` 只有 `@vitejs/plugin-react`，既无 Tailwind 插件也无 `resolve.alias`；`packages/showcase/src/main.tsx` 与四个 `*.vrt.test.tsx` 的导入；根 `README.md` 关于 `pnpm dev` 不监听库构建、Showcase 消费已构建公开入口的说明；`CONTRIBUTING.md` 的"保持 Showcase 导入走公开入口"与 `TESTING.md` 的"先构建 workspace 再跑视觉测试"要求；`RemSizing.vrt.test.tsx` 中关于 Showcase 没有自有 Tailwind 的注释。
+证据：原 `packages/showcase/package.json` 的 `@exre/exui: workspace:*` 依赖与 `test:visual` 脚本；原 `packages/showcase/vite.config.ts` 只有 `@vitejs/plugin-react`，既无 Tailwind 插件也无 `resolve.alias`；原 `packages/showcase/src/main.tsx` 与四个 `*.vrt.test.tsx` 的导入。当前消费边界见 `packages/docs/package.json`、`packages/docs/vite.config.ts`、`scripts/dev.mjs` 与根 `TESTING.md`。

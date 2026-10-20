@@ -6,6 +6,7 @@ import { exampleDependencies } from "./example-dependencies"
 import { normalizeBase } from "./lib/site-contract.mjs"
 import { exampleAssetBase } from "./lib/example-assets"
 import { exampleSources } from "./lib/example-sources"
+import { libraryReload } from "./lib/library-reload.mjs"
 import { writeContentManifest } from "../../scripts/docs-content.mjs"
 
 function contentManifest(): Plugin {
@@ -28,7 +29,7 @@ function contentManifest(): Plugin {
 export default defineConfig({
   base: normalizeBase(process.env.EXUI_DOCS_BASE ?? "/"),
   server: { watch: { ignored: ["**/build/**"] } },
-  plugins: [exampleSources(), exampleAssetBase(), contentManifest(), ...fumadocsMdx({ macro: false }), tailwindcss(), reactRouter()],
+  plugins: [libraryReload(), exampleSources(), exampleAssetBase(), contentManifest(), ...fumadocsMdx({ macro: false }), tailwindcss(), reactRouter()],
   resolve: { dedupe: ["react", "react-dom"] },
   optimizeDeps: { include: exampleDependencies },
 })

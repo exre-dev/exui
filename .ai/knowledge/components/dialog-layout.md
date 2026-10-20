@@ -16,4 +16,4 @@ Radix 的默认挂载 autofocus 会选择首个可操作元素。有 Tooltip 的
 
 放大字号或极低视口可能让标题和底部操作的总高超过可用高度。正文至少保留一行可滚动高度，外层允许滚动兜底，避免底部操作不可达；普通高度仍只滚动正文。该退化由 640×320 视口、32px 根字号和多行标题/说明的浏览器用例覆盖。
 
-证据：`packages/components/src/components/ui/dialog.tsx`、`dialog.css`，以及 `packages/docs/src/showcase/DialogEnhancements.vrt.test.tsx` 的完整 docs 样式、主题/密度、根字号、视口切换、独立滚动和同一输入节点检查。原有 `Dialog.vrt.test.tsx` 保留关闭与 ARIA 行为覆盖。测试命令见根目录 `TESTING.md`。
+证据：`packages/components/src/components/ui/dialog.tsx`、`dialog.css`，以及 `packages/docs/tests/browser/DialogEnhancements.vrt.test.tsx` 的完整 docs 样式、主题/密度、根字号、视口切换、独立滚动和同一输入节点检查。原有 `Dialog.vrt.test.tsx` 保留关闭与 ARIA 行为覆盖。测试命令见根目录 `TESTING.md`。

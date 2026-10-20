@@ -2,7 +2,9 @@
 
 最后更新：2026-09-29
 
-状态：已接受，已实现
+状态：历史决策，原方案已实施后被统一 Form / 独立 Field 组合取代
+
+当前结构见 [表单结构](../../architectures/components/forms.md)；以下保留 2026-09-29 的决策背景，不作为当前公开 API 用法。
 模块：components
 日期：2026-09-29
 来源：[ExItem 布局设计](../../../.notes/ex-form/specs/2026-09-29-ex-item-layout-design.md)、[实现 RFC](../../../.notes/ex-form/rfcs/ex-item-layout-rfc.md)
@@ -19,4 +21,4 @@
 
 重新审视条件：独立 Item 需要管理自身校验状态，或真实消费场景证明单直接 `Input` 的受限自动关联不足以提供可访问用法时，应重新评估展示与绑定边界。
 
-证据：公开入口与展示边界见 `packages/components/src/index.ts`、`packages/components/src/components/patterns/ex-item.tsx`、`form-item.tsx`、`form.tsx` 和 `packages/components/src/form.css`；布局、关联与服务端渲染行为见 `packages/showcase/src/showcase/ExItem.vrt.test.tsx`，打包消费者边界见 `scripts/form-consumer-fixture.mjs`。目标行为与取舍见上述设计和 RFC。
+证据：公开入口与展示边界见 `packages/components/src/index.ts`、`packages/components/src/components/patterns/ex-item.tsx`、`form-item.tsx`、`form.tsx` 和 `packages/components/src/form.css`；布局、关联与服务端渲染行为见 `packages/showcase/src/showcase/ExItem.vrt.test.tsx`，打包消费者边界见 `packages/components/tests/consumers/form-consumer-fixture.mjs`。目标行为与取舍见上述设计和 RFC。

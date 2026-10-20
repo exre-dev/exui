@@ -105,8 +105,11 @@ export async function loadShareExamples(root = repository) {
   const exui = parse(exuiSource, read(path.join(root, exuiSource)))
   const pageFunctions = new Map()
   walk(exui, node => {
-    if (ts.isVariableDeclaration(node) && node.name.getText() === 'pages') {
-      for (const item of node.initializer.properties) pageFunctions.set(item.initializer.text, item.name.text)
+    if (ts.isVariableDeclaration(node) && ['pages', 'previewFamilies'].includes(node.name.getText())) {
+      for (const item of node.initializer.properties) {
+        if (node.name.getText() === 'previewFamilies') pageFunctions.set(item.name.text, item.initializer.text)
+        else if (!pageFunctions.has(item.initializer.text)) pageFunctions.set(item.initializer.text, item.name.text)
+      }
     }
   })
   for (const statement of exui.statements.filter(ts.isFunctionDeclaration)) {
@@ -176,7 +179,7 @@ function isolateExui(text, example) {
   const statements = source.statements.filter(node => {
     if (ts.isImportDeclaration(node)) return node.moduleSpecifier.text !== '../Preview'
     if (ts.isFunctionDeclaration(node)) return node.name.text === 'useCopy'
-    return ts.isVariableStatement(node) && !node.declarationList.declarations.some(declaration => declaration.name.getText(source) === 'pages')
+    return ts.isVariableStatement(node) && !node.declarationList.declarations.some(declaration => ['pages', 'previewFamilies'].includes(declaration.name.getText(source)))
   })
   const output = printer.printFile(ts.factory.updateSourceFile(source, [...statements, entry]))
   transformed.dispose()
@@ -241,7 +244,7 @@ export function createSourceDocument(root, example, base = '/') {
   files.set('tsconfig.json', JSON.stringify({ compilerOptions: { target: 'ES2023', lib: ['ES2023', 'DOM', 'DOM.Iterable'], module: 'ESNext', moduleResolution: 'Bundler', jsx: 'react-jsx', strict: true, skipLibCheck: true, resolveJsonModule: true, esModuleInterop: true, noEmit: true }, include: ['src'] }, null, 2) + '\n')
   files.set('vite.config.ts', 'import { defineConfig } from "vite"\nimport react from "@vitejs/plugin-react"\nimport tailwindcss from "@tailwindcss/vite"\nexport default defineConfig({ plugins: [react(), tailwindcss()] })\n')
   files.set('index.html', '<!doctype html>\n<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>ExUI example</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n')
-  files.set('src/main.tsx', `import { createRoot } from "react-dom/client"\nimport { ExMessageContext, GlassSeed, TooltipProvider } from "@exre/exui"\nimport "@exre/exui/style.css"\nimport "./showcase/example-utilities.css"\nimport "./example.css"\nimport Example from "./${entry.replace(/^src\//, '').replace(/\.(?:tsx?|jsx?)$/, '')}"\n\ncreateRoot(document.getElementById("root")!).render(\n  <TooltipProvider><GlassSeed /><ExMessageContext /><div className="exui-example-stage"><Example /></div></TooltipProvider>\n)\n`)
+  files.set('src/main.tsx', `import { createRoot } from "react-dom/client"\nimport { GlassSeed, Toaster, TooltipProvider } from "@exre/exui"\nimport "@exre/exui/style.css"\nimport "./showcase/example-utilities.css"\nimport "./example.css"\nimport Example from "./${entry.replace(/^src\//, '').replace(/\.(?:tsx?|jsx?)$/, '')}"\n\ncreateRoot(document.getElementById("root")!).render(\n  <TooltipProvider><GlassSeed /><Toaster position="top-right" duration={3000} visibleToasts={3} /><div className="exui-example-stage"><Example /></div></TooltipProvider>\n)\n`)
   const sharedLayout = read(path.join(projectRoot, 'src/showcase/ShowcasePages.css')).match(/\.showcase-(?:row|stack|stack-wide|sr-only)\s*\{[^}]*\}/g) ?? []
   files.set('src/example.css', 'body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); }\n.exui-example-stage { display: flex; align-items: center; justify-content: center; min-height: 12rem; padding: 2rem; }\n' + sharedLayout.join('\n') + '\n')
   files.set('src/vite-env.d.ts', '/// <reference types="vite/client" />\n')

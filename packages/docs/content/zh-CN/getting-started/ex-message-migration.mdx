@@ -1,0 +1,143 @@
+---
+id: getting-started/ex-message-migration
+title: 从 ExMessage 升级
+description: 将旧消息宿主和加载句柄迁移到公开 Toaster 与 toast。
+---
+
+适用于移除了 `ExMessage`、`ExMessageContext` 及其类型的 ExUI 版本。这是破坏性变更；实际发布版本以安装包和发布记录为准。全局通知统一从 `@exre/exui` 导入 `Toaster` 与 `toast`，无需另装 Sonner。页面内的持续提示继续使用 `Alert`。
+
+## 替换宿主和调用
+
+删除旧消息导入，在稳定的应用根节点挂载一次 `Toaster`，先完成挂载再触发通知。不要让每个页面各自挂载宿主，也不要在整个宿主上使用随页面变化的 key。下面示例的 `NotificationHost` 显式保留旧呈现配置：右上角、普通通知 3000ms、最多同时显示三条。
+
+| 旧用法 | 升级后 |
+| --- | --- |
+| `ExMessageContext` | `Toaster` |
+| 宿主 `placement` | 宿主 `position` |
+| `ExMessage.info/success/error` | `toast.info/success/error` |
+| `ExMessage.warn` | `toast.warning` |
+| `ExMessage.loading` 返回句柄 | `toast.loading` 返回消息 ID |
+| `handle.onSuccess(text)` | `toast.success(text, { id })` |
+| `handle.onError(text)` | `toast.error(text, { id })` |
+| `handle.dismiss()`、`ExMessage.dismiss(id)` | `toast.dismiss(id)` |
+| 宿主 `maxCount` 淘汰旧记录 | 没有等价属性；`visibleToasts` 只限制可见条数 |
+
+完成回调继续传入原 ID，才能更新原来的 loading；不传 ID 会创建另一条通知。结果通知可单独设置 `duration`。
+
+## 完整迁移示例
+
+以下都是消费应用内的代码，不是 ExUI 新增导出。将 `NotificationHost` 挂在根节点；普通 Promise 任务使用 `PromiseNotificationExample`。回调式上传把自己的订阅函数传给 `CallbackNotificationExample`：订阅函数接收进度、成功、失败三个回调，并返回取消或解除订阅的函数。你可以按自己的上传 API 实现这层连接。
+
+`startUploadWithNotice` 的状态属于当前任务：完成后不再接受重复结果；取消、截止或卸载后不再接受迟到回调。订阅同步给出结果时，也会在订阅函数返回后完成退订。示例的 10 秒截止只关闭提示，不把超时解释为业务失败。返回的清理函数还能关闭已完成的结果通知。
+
+```tsx verify
+import "@exre/exui/style.css"
+import * as React from "react"
+import { Button, Toaster, toast } from "@exre/exui"
+
+type Subscribe = (
+  onProgress: (percent: number) => void,
+  onSuccess: () => void,
+  onError: (error: unknown) => void,
+) => () => void
+
+export function startUploadWithNotice(subscribe: Subscribe, timeoutMs = 10000): () => void {
+  const id = toast.loading("Uploading... 0%")
+  let active = true
+  let cancelled = false
+  let unsubscribe: (() => void) | undefined
+  let timer: ReturnType<typeof setTimeout> | undefined
+
+  const finish = (kind: "success" | "error", message: string) => {
+    if (!active) return
+    active = false
+    clearTimeout(timer)
+    unsubscribe?.()
+    unsubscribe = undefined
+    if (kind === "success") toast.success(message, { id, duration: 3000 })
+    else toast.error(message, { id, duration: 3000 })
+  }
+
+  const cancel = () => {
+    if (cancelled) return
+    cancelled = true
+    active = false
+    clearTimeout(timer)
+    unsubscribe?.()
+    unsubscribe = undefined
+    toast.dismiss(id)
+  }
+
+  timer = setTimeout(cancel, timeoutMs)
+  try {
+    const stop = subscribe(
+      (percent) => { if (active) toast.loading(`Uploading... ${percent}%`, { id }) },
+      () => finish("success", "Upload complete"),
+      (error) => finish("error", `Upload failed: ${error instanceof Error ? error.message : String(error)}`),
+    )
+    if (active) unsubscribe = stop
+    else stop() // A synchronous result arrived before subscribe returned its cleanup.
+  } catch (error) {
+    finish("error", `Upload failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  return cancel
+}
+
+export function CallbackNotificationExample({ subscribe, timeoutMs }: { subscribe: Subscribe; timeoutMs?: number }) {
+  const cancelRef = React.useRef<(() => void) | null>(null)
+  React.useEffect(() => () => { cancelRef.current?.(); cancelRef.current = null }, [])
+  return <div>
+    <Button onClick={() => { cancelRef.current?.(); cancelRef.current = startUploadWithNotice(subscribe, timeoutMs) }}>Start upload</Button>
+    <Button variant="outline" onClick={() => { cancelRef.current?.(); cancelRef.current = null }}>Cancel upload</Button>
+  </div>
+}
+
+export default CallbackNotificationExample
+
+export function NotificationHost() {
+  return <Toaster position="top-right" duration={3000} visibleToasts={3} />
+}
+
+export function PromiseNotificationExample({ save }: { save: () => Promise<void> }) {
+  return <Button type="button" onClick={() => toast.promise(Promise.resolve().then(save), {
+    loading: "Saving...", success: "Saved", error: "Save failed",
+  })}>Save</Button>
+}
+
+export type NotificationHostProps = React.ComponentProps<typeof Toaster>
+export type NotificationPosition = NonNullable<NotificationHostProps["position"]>
+export type NotificationOptions = NonNullable<Parameters<typeof toast.success>[1]>
+export type NotificationId = ReturnType<typeof toast.loading>
+```
+
+## 迁移类型
+
+四个旧类型不再导出。上面示例中的新类型从实际公开组件和函数派生：
+
+| 已删除类型 | 应用内替代类型 |
+| --- | --- |
+| `ExMessageContextProps` | `NotificationHostProps` |
+| `ExMessagePlacement` | `NotificationPosition` |
+| `ExMessageOptions` | `NotificationOptions` |
+| `ExMessageLoadingHandle` | `NotificationId`；完成和关闭改为按 ID 调用 |
+
+不要把旧句柄类型改成新名称后继续调用 `onSuccess` 或 `onError`。新的 loading 返回值是 ID。
+
+## 检查行为差异
+
+- `visibleToasts={3}` 不淘汰第四条消息之前的记录。需要淘汰策略时，由应用明确实现。
+- loading 持续显示，直到更新或关闭。它的 `duration` 不能替代旧句柄的截止计时；任务计时器要在完成、取消和卸载时清理。
+- `toast.dismiss(id)` 只关闭提示，不取消网络请求或 Promise。裸 `toast.promise` 也不会替你阻止所有取消后的结果；需要这类语义时，采用上面的回调式状态保护，或在应用自己的任务模型中做等价检查。
+- 卸载 `Toaster` 不会清空消息 store。页面只关闭自己拥有的消息；不要用无参数 `toast.dismiss()` 清除别的任务提示。
+- 旧宿主的重复挂载异常、参数校验和特定 effect 时序缓冲已移除。初始化提示应在宿主就绪后发送。
+
+## 升级自查
+
+1. 搜索旧的两个运行时名称和四个类型，清理导入及调用；确认 `warn` 已改为 `warning`。
+2. 确认宿主与所有通知都来自同一份 `@exre/exui`，应用根节点只挂一个稳定宿主。
+3. 验证普通通知、Promise 成功/失败、回调式进度与同 ID 完成、主动关闭。
+4. 验证取消、截止、页面离开和重复回调，确认过期结果不会重新出现。
+5. 将旧页面或分享链接改为 [Sonner 文档](../components/sonner.mdx)。旧 `exui/ex-message` 家族页及两个 `exui-ex-message-*` 分享 ID 已移除，不保留兼容路由。
+
+完整通知模式、状态图标和呈现选项见 [Sonner](../components/sonner.mdx)。

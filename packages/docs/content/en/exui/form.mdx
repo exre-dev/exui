@@ -14,25 +14,49 @@ Form: Connects a shared draft to validation and submission.
 
 ### ExUI Form lifecycle
 
-`useForm` owns one stable draft and validation schema; `Form` connects submission and field state. The schema's input and output types can differ after transformation, and validation or submission may be asynchronous. `FormItem` binds a named field; `FormErrorSummary` reports validation issues. Keep the form instance stable across rerenders and render field errors in the form even if a notification also appears.
+`useForm` owns one stable draft and validation schema; `Form` connects submission and field state. The schema's input and output types can differ after transformation, and validation or submission may be asynchronous. `FormField` binds a named field; `FormErrorSummary` reports validation issues. A composed Form requires children and an ExUI instance, without fields or configured footer/step props; use `FormComposedProps<I, O>` for its wrappers. Keep the form instance stable across rerenders and render field errors in the form even if a notification also appears.
 
 Install `zod` in the consuming application when using the Zod schema shown below.
 
 ```tsx verify
-import { Button, Form, FormItem, useForm } from "@exre/exui"
+import { Button, Form, FormField, useForm } from "@exre/exui"
 import { z } from "zod"
 
 const schema = z.object({ name: z.string().min(1) })
 export function ProjectForm() {
   const form = useForm({ schema, defaultValues: { name: "" } })
   return <Form form={form} onSubmit={(value) => console.log(value.name)}>
-    <FormItem form={form} name="name" label="Project name" control="text" />
+    <FormField form={form} name="name" label="Project name" control="text" />
     <Button type="submit">Save</Button>
   </Form>
 }
 ```
 
 - [Live example](../../../../examples/exui-form-1/)
+- [Live example](../../../../examples/exui-form-models/)
+
+**ExUI addition**
+
+### Configured Form
+
+`Form` renders configured fields and optional steps. Choose either `schema` with `defaultValues`, or an existing `form` from `useForm`; passing both is an error. Step validation belongs to each edit step, and review steps render a snapshot. Configured children appear before fields or review content, and the footer follows them. Omit `footer` for built-in actions; use `null`, a node, or a callback to replace them. `fields !== undefined` selects this branch, including an empty array; use a new React key to switch to composed mode. Use `FormConfiguredSchemaProps<S>` or `FormConfiguredInstanceProps<I, O>` for wrappers. Keep a schema object stable across rerenders, and create browser-only schemas that reference `File` in browser code.
+
+Install `zod` in the consuming application when using this example.
+
+```tsx verify
+import { Form } from "@exre/exui"
+import { z } from "zod"
+
+const schema = z.object({ name: z.string().min(1) })
+export function ProjectSetup() {
+  return <Form schema={schema} defaultValues={{ name: "" }}
+    fields={[{ name: "name", label: "Project name", control: "text" }]}
+    onSubmit={(value) => console.log(value.name)} />
+}
+```
+
+- [Live example](../../../../examples/exui-form-configured/)
+- [Live example](../../../../examples/exui-form-models/)
 {/* exui-capabilities:end:docs */}
 
 ## Basic usage
@@ -42,16 +66,40 @@ Create one form draft, bind fields to it, and route validation errors to the cor
 ### Current example source excerpt
 
 ```tsx source="exui-form-1"
-import { Form, FormErrorSummary, FormItem } from "@exre/exui"
+import { Form, FormErrorSummary, FormField } from "@exre/exui"
 
 <Form form={form} onSubmit={(data) => setSaved(data.name)} formatIssue={(message) => c(message, issueTranslations[message] ?? message)}>
   <FormErrorSummary title={c("Check these fields", "请检查以下字段")} />
-  <FormItem form={form} name="name" label={c("Project name", "项目名称")} />
+  <FormField form={form} name="name" label={c("Project name", "项目名称")} control="text" />
 </Form>
 ```
 
 [View complete source](../../../../examples/exui-form-1/)
 
-## Related guides
 
-Use [ExForm](./ex-form.mdx) for schema-driven field configuration and [ExItem](./ex-item.mdx) for a standalone labelled control.
+## Composition and configuration
+
+Use `Form form={form}` with `FormField` children for custom layout, or add `fields` for configured controls and a default footer. Alternatively provide `schema` and `defaultValues` with `fields`. A form instance and a schema are mutually exclusive. Each preview owns its own draft; keep one native form and one owner. `footer={null}` disables the configured footer.
+
+Use [Field](../components/field.mdx) for standalone controls and display content. Field has no form binding or inherited form layout.
+
+```tsx verify
+import { Button, Form, FormField, useForm } from "@exre/exui"
+import { z } from "zod"
+const schema = z.object({ name: z.string().min(1) })
+export function FormModels() {
+  const composed = useForm({ schema, defaultValues: { name: "" } })
+  const configured = useForm({ schema, defaultValues: { name: "" } })
+  const fields = [{ name: "name", label: "Name", control: "text" }] as const
+  return <div>
+    <Form form={composed} onSubmit={values => console.log(values.name)}>
+      <FormField form={composed} name="name" label="Name" control="text" />
+      <Button type="submit">Save</Button>
+    </Form>
+    <Form form={configured} fields={fields} onSubmit={values => console.log(values.name)} />
+    <Form schema={schema} defaultValues={{ name: "" }} fields={fields} onSubmit={values => console.log(values.name)} />
+  </div>
+}
+```
+
+Use `FormComposedProps`, `FormConfiguredInstanceProps`, or `FormConfiguredSchemaProps` for the selected branch. `FormConfiguredCommonProps` and `FormFooterArguments` describe shared configured behavior. `FormFieldProps`, `FormFieldLayout` and `FormFieldSpan` describe bound field composition.

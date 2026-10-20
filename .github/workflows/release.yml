@@ -50,7 +50,7 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @exre/exui-docs exec playwright install --with-deps chromium
       - name: Verify release configuration
-        run: pnpm release:verify
+        run: node scripts/release-bootstrap/verify.mjs --root .
       - name: Check trusted main and prepare release plan
         id: plan
         run: |
@@ -73,12 +73,12 @@ jobs:
         run: |
           node scripts/release-bootstrap/version.mjs --root . --plan "$PLAN_FILE" > "$RUNNER_TEMP/version-result.json"
           pnpm install --lockfile-only --ignore-scripts --no-frozen-lockfile
-          pnpm tokens:check
+          pnpm --filter @exre/exui-tokens tokens:check
           pnpm typecheck
           pnpm lint
           pnpm build
           pnpm verify:pack
-          pnpm test:release
+          node --test "packages/components/tests/tooling/release/*.test.mjs"
           node scripts/release-bootstrap/version.mjs --root . --plan "$PLAN_FILE" --verify true > "$RUNNER_TEMP/version-result.json"
       - name: Create a repository-scoped Release App token
         if: steps.plan.outputs.mode != 'no-op'

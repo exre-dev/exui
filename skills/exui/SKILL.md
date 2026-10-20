@@ -7,7 +7,7 @@ description: "Use when building or restyling interfaces with @exre/exui, choosin
 
 ExUI provides reusable components, shared Tokens, forms, Glass surfaces, and application notifications. Use this skill in consuming applications. Package-source maintenance follows the repository's own instructions.
 
-**Components** are basic UI elements, such as Button, Input, and Dialog. **Blocks** are reusable interface sections assembled from these basic components. The docs category previously labeled ExUI is labeled Blocks; its existing `exui/` URLs remain stable.
+**Components** are basic UI elements, such as Button, Input, and Dialog. **Blocks** are reusable interface sections assembled from these basic components. The docs category previously labeled ExUI is labeled Blocks; retained block pages keep their existing `exui/` URLs.
 
 ## Authority
 
@@ -37,11 +37,12 @@ Complete the loop only when every component used has a verified public import an
 | Colors, status, charts | [Color](rules/color.md) |
 | Lucide icons and icon buttons | [Icons](rules/icons.md) |
 | Themes, density, sizing | [Theming](rules/theming.md), [theme usage](references/exui/theme-usage.md), [scaling](references/exui/scaling.md) |
-| Configured/composed forms, object lists, steps, standalone settings rows | [Form](references/exui/form.md) |
+| Configured/composed forms, object lists, steps | [Form](references/exui/form.md) |
+| Standalone settings rows, display fields and explicit labels | [Field layout](references/exui/field-layout.md) |
 | Translucent surfaces and optional refraction | [Glass](references/exui/glass.md) |
 | Elevation, focus rings, glass edge composition | [Shadows](references/exui/shadows.md) |
 | CSS/JS Tokens and component recipes, including non-React use | [Token usage](references/exui/token-usage.md), [customization](references/exui/token-customization.md), [exact inventory](references/generated/token-paths.md) |
-| Global notifications | [Notifications](references/exui/notifications.md) |
+| Global notifications | [Notifications](references/exui/notifications.md), [ExMessage migration](references/exui/ex-message-migration.md) |
 | Fumadocs | [Docs theme](references/exui/docs-theme.md) |
 | Animation and reduced motion | [Motion](rules/motion.md) |
 | Package installation or upstream registry confusion | [CLI](rules/cli.md), [registry boundary](rules/registry.md) |
@@ -57,7 +58,7 @@ Find all 87 documented component families and ExUI-native capabilities by use ca
 | Use case | Component references |
 | --- | --- |
 | Actions | [Button / ActionButton](references/components/button.md), [ButtonGroup](references/components/button-group.md), [Toggle](references/components/toggle.md), [ToggleGroup](references/components/toggle-group.md) |
-| Form structure and field presentation | [ExForm / Form](references/exui/form.md), [ExItem](references/exui/form.md#item-presentation-and-layout), [Field](references/components/field.md), [Label](references/components/label.md) |
+| Form structure and field presentation | [Form / FormField](references/exui/form.md), [Field layout](references/exui/field-layout.md), [Field](references/components/field.md), [Label](references/components/label.md) |
 | Text and numeric input | [Input](references/components/input.md), [InputGroup](references/components/input-group.md), [InputOTP](references/components/input-otp.md), [Textarea](references/components/textarea.md), [NumberField](references/components/number-field.md), [PhoneInput](references/components/phone-input.md) |
 | Selection and pickers | [Checkbox](references/components/checkbox.md), [RadioGroup](references/components/radio-group.md), [Switch](references/components/switch.md), [Slider](references/components/slider.md), [Select](references/components/select.md), [NativeSelect](references/components/native-select.md), [Combobox](references/components/combobox.md), [Autocomplete](references/components/autocomplete.md), [Cascader](references/components/cascader.md), [ColorPicker](references/components/color-picker.md), [EmojiPicker](references/components/emoji-picker.md), [Rating](references/components/rating.md) |
 | Dates and time | [Calendar](references/components/calendar.md), [DateSelector](references/components/date-selector.md), [TimePicker](references/components/time-picker.md) |
@@ -71,7 +72,7 @@ Find all 87 documented component families and ExUI-native capabilities by use ca
 | Feedback and loading | [Alert](references/components/alert.md), [Empty](references/components/empty.md), [Progress](references/components/progress.md), [Skeleton](references/components/skeleton.md), [Spinner](references/components/spinner.md), [Sonner patterns](references/components/sonner.md) |
 | Messaging and attachments | [Attachment](references/components/attachment.md), [Bubble](references/components/bubble.md), [Message](references/components/message.md), [MessageScroller](references/components/message-scroller.md), [Marker](references/components/marker.md) |
 | File input and signing | [File upload / useFileUpload](references/components/file-upload.md), [SignaturePad](references/components/signature-pad.md) |
-| Global notifications | [Toaster / toast](references/exui/notifications.md), [ExMessage / ExMessageContext](references/exui/notifications.md) |
+| Global notifications, loading and Promise results | [Toaster / toast](references/exui/notifications.md) |
 | Themes and materials | [ThemeProvider / useTheme](references/exui/theme-usage.md), [GlassSeed / glass / ex-glass](references/exui/glass.md), [Shadows](references/exui/shadows.md) |
 
 Use the ExUI references for native forms, notifications, themes and materials. File upload is a composed pattern backed by `useFileUpload`, not an exported `FileUpload` component. The [catalog](references/components.md) and linked `c-*` pages provide pattern guidance; they do not define ExUI exports or props. Use Dialog for overlays formerly using Modal.

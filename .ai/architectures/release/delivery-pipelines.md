@@ -2,11 +2,13 @@
 
 > 当前私有应用是 `packages/docs`（`@exre/exui-docs`），其静态文档站边界见 [`docs/site.md`](../docs/site.md)。下文原 Showcase 测试的历史证据按原名保留。
 
-最后更新：2026-10-16
+最后更新：2026-10-19
 
 `release` 模块不产出可安装的包，它由三类互相衔接的门禁组成：合并前质量门禁、打包消费者门禁与基于标签的发布流水线。
 
 ## CI 质量门禁
+
+测试按所属工作区归档到 `tests/`；仓库开发、发布与 Skill 测试由 `packages/components/tests/tooling/` 持有，不新增工作区。`scripts/test-suites.mjs` 将所有 Node 套件显式分为快速回归和集成回归，发现测试拒绝遗漏、重复及失效路径。`check` 共用一次 Token 和公开组件库准备，完成静态检查与快速 Node/SSR 回归；`test` 可独立运行同一组快速回归，`test:node` 保留显式全部或定向 Node 入口。PR 与主分支 CI 统一执行完整 `verify`，保留所有 Node、浏览器、隔离消费者、示例及双 base 文档门禁。取舍理由见 [[release/04-local-check-full-ci]]；测试编写原则与执行时机由 [TESTING.md](../../../TESTING.md) 统一维护。
 
 `.github/workflows/ci.yml` 在 `pull_request` 与推送 `main` 时运行，只有一个执行作业：
 
@@ -17,7 +19,7 @@
 | 预置 | 缓存并安装 Playwright Chromium（缓存键为 `pnpm-lock.yaml` 哈希） |
 | 顶层权限 | `contents: read` |
 
-步骤顺序固定：ReUI 缓存恢复与来源/适配校验 → tokens 校验 → 类型检查 → lint → 构建 → 文档内容、公开用法与根路径静态验收 → 示例分享 → ReUI 恢复与组件契约回归 → 图表/监听回归 → 技能自测 → 技能生成物一致性 → 技能示例 → 视觉测试 → 打包消费者 → 发布配置校验 → 发布自动化测试 → Pages 来源与产物守卫测试 → `/exui/` 文档构建及同前缀静态/分享验收 → 仅 main push 上传文档产物。前置校验失败会阻断后续所有需要构建产物的步骤。文档验证命令见 [TESTING.md](../../../TESTING.md)；ReUI 缓存与锁定来源的边界见 [`../components/public-surface.md`](../components/public-surface.md)，CI 不自行维护另一份版本或哈希。
+CI 和本地完整验证共同调用 `scripts/tasks.mjs` 的 `verify` 流程。协调器按依赖顺序执行来源与 Token 检查、组件构建、lint 与源一致性、根路径 docs 构建、全部 Node 回归、文档片段与生产样式、skill 示例、视觉与打包消费者、发布与空白检查，再验证根路径静态/分享输出，最后顺序构建并验证 `/exui/` 静态/分享输出。组件与 docs 构建包含自身类型检查，不再额外重复生成同一组声明；Token 的 ESM/CommonJS 编译同时承担对应配置的类型检查。每一步保留名称并在失败时终止。仅完整验证成功的 main push 上传最终前缀产物。各阶段命令以协调器源码为准；ReUI 缓存与锁定来源的边界见 [`../components/public-surface.md`](../components/public-surface.md)。
 
 第二个作业 `ci-gate` 以 `if: always()` 依赖 `verify`，把 `verify` 的结果字符串与 `success` 比较。分支保护只要求这一个聚合检查名，因此新增或重命名 `verify` 内部步骤不会改变必需检查的名称。
 
@@ -33,11 +35,11 @@ Pages 中间产物命名为 `github-pages-<deploy_run_id>-<prepare_run_attempt>`
 
 恢复接口是完整重跑。来源产物缺失或过期需要重跑当前 main 的整个 CI；Pages 准备或部署失败则在来源仍合格时重跑整个 Docs Pages。部分作业重跑会改变运行次数，不能回退消费前一次的同名来源，也不能按 deploy 的次数猜测 prepare 产物。内容回退使用 main 上的新 revert 提交。工作流不自动启用 Pages；本地验证不证明远端 environment、deployment 或公开站点已验收。
 
-证据：`.github/workflows/ci.yml`、`.github/workflows/docs-pages.yml`、`scripts/docs-pages.test.mjs`。站点产物边界见 [`../docs/site.md`](../docs/site.md)。
+证据：`.github/workflows/ci.yml`、`.github/workflows/docs-pages.yml`、`packages/docs/tests/node/docs-pages.test.mjs`。站点产物边界见 [`../docs/site.md`](../docs/site.md)。
 
 ## 发布声明
 
-`.release-bootstrap.yaml` 是仓库的对外声明，`pnpm release:verify` 逐字段校验它：
+`.release-bootstrap.yaml` 是仓库的对外声明，`node scripts/release-bootstrap/verify.mjs --root .` 逐字段校验它：
 
 | 字段 | 值 | 含义 |
 | --- | --- | --- |
@@ -62,7 +64,7 @@ Pages 中间产物命名为 `github-pages-<deploy_run_id>-<prepare_run_attempt>`
 ```text
 checkout EXPECTED_MAIN（= 被验证的 head_sha，fetch-depth: 0）
   → 安装依赖
-  → pnpm release:verify
+  → node scripts/release-bootstrap/verify.mjs --root .
   → 计划：拉取 origin/main 并要求其仍等于 EXPECTED_MAIN；
          强制建立本地 main 引用（Changesets 按 baseBranch 解析本地 ref，
          而 checkout 处于 detached 状态）；
@@ -99,7 +101,7 @@ checkout 标签（fetch-depth: 0）
 
 ## 打包消费者门禁
 
-`scripts/verify-packages.mjs` 用 `pnpm verify:pack` 运行，是唯一在 workspace 之外验证产物的环节。它先做仓库边界检查（根包与文档应用必须私有，且不得占用公开包名），再 pack 公共包并按 `package-contract.mjs` 校验 manifest 与产物清单，然后建立独立的临时消费者 fixture：
+`packages/components/tests/consumers/verify-packages.mjs` 用 `pnpm verify:pack` 运行，是唯一在 workspace 之外验证产物的环节。它先做仓库边界检查（根包与文档应用必须私有，且不得占用公开包名），再 pack 公共包并按 `package-contract.mjs` 校验 manifest 与产物清单，然后建立独立的临时消费者 fixture：
 
 | fixture | 断言重点 |
 | --- | --- |
@@ -107,14 +109,14 @@ checkout 标签（fetch-depth: 0）
 | tokens 类型消费者 | 在 `skipLibCheck: false` 下用 Bundler 与 NodeNext 两种解析编译 `.ts`/`.mts`/`.cts`；`.cts` 走 `import = require` 并断言非法属性与赋值被拒绝；通过 `tsc --listFiles` 证明加载的是 CommonJS 声明入口 |
 | tokens 样式消费者 | 独立 Vite 构建能解析字体资源、含配方变量、且不泄漏组件 Tailwind 样式 |
 | React 消费者 | `skipLibCheck: false` 类型检查、生产构建、服务端渲染冒烟（Button、字段、Chart），并断言包与消费者解析到**同一个** React 实例 |
-| 生产构建的浏览器断言 | `scripts/verify-react-browser.mjs` 在 Chromium 中验证图表两点数据、ExUI 图例与 hover 后变化的 tooltip 值、Dialog 经 portal 打开、表单提交、Escape 归还焦点，以及 16px / 32px 根字号下的 Button 几何与 portal Dialog 内边距 |
-| ExForm 隔离消费者 | `scripts/form-consumer-fixture.mjs` 按 Zod 3.25.28 与 4.6.5 各建一个临时消费者，依次做 `skipLibCheck: false` 类型检查、生产构建、`--ssr` 构建与 SSR 冒烟；再由 `scripts/verify-form-browser.mjs` 在 Chromium 中断言 schema 错误到达绑定控件（含 `aria-invalid`）、非法输出不调用 `onSubmit`、成功解析恰好调用一次、解析后的数值输出不覆盖字符串草稿、重新校验成功后清除错误，且无浏览器运行时错误 |
+| 生产构建的浏览器断言 | `packages/components/tests/consumers/verify-react-browser.mjs` 在 Chromium 中验证图表两点数据、ExUI 图例与 hover 后变化的 tooltip 值、Dialog 经 portal 打开、表单提交、Escape 归还焦点，以及 16px / 32px 根字号下的 Button 几何与 portal Dialog 内边距 |
+| Form 隔离消费者 | `packages/components/tests/consumers/form-consumer-fixture.mjs` 按 Zod 3.25.28 与 4.6.5 各建一个临时消费者，依次做 `skipLibCheck: false` 类型检查、生产构建、`--ssr` 构建与 SSR 冒烟；再由 `packages/components/tests/consumers/verify-form-browser.mjs` 在 Chromium 中断言 schema 错误到达绑定控件（含 `aria-invalid`）、非法输出不调用 `onSubmit`、成功解析恰好调用一次、解析后的数值输出不覆盖字符串草稿、重新校验成功后清除错误，且无浏览器运行时错误 |
 
 fixture 一律建在 `os.tmpdir()` 下的临时目录并在 `finally` 中清理；控制器复用文档应用锁定的 Playwright 依赖，浏览器只服务隔离消费者的构建产物。打包与技能示例校验共用 `scripts/run-command.mjs`：Windows 上通过当前 Node 的 npm/Corepack JavaScript 入口执行包管理器，保留参数边界；浏览器仍在独立子进程中运行，以便清理临时目录前释放原生绑定。门禁的失效模式与不可替代性见 [[release/03-packed-consumer-gates]]。
 
 ## 脚本模块
 
-`scripts/release-bootstrap/` 是一组可单测的纯模块，由 `pnpm test:release` 用 Node 内置测试运行器覆盖（`*.test.mjs`），测试使用临时本地 Git 仓库并注入 npm 注册表边界，从不真实发布：
+`scripts/release-bootstrap/` 是一组可单测的纯模块，由 `node --test "packages/components/tests/tooling/release/*.test.mjs"` 用 Node 内置测试运行器覆盖（`*.test.mjs`），测试使用临时本地 Git 仓库并注入 npm 注册表边界，从不真实发布：
 
 | 模块 | 职责 |
 | --- | --- |

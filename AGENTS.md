@@ -40,14 +40,15 @@ Maintain `skills/exui` as the single consumer skill. After adding or modifying U
 Use pnpm 11.9.0, as declared in `package.json`.
 
 - `pnpm install`: install dependencies.
-- `pnpm dev`: start the Vite development server.
-- `pnpm tokens:check`: type-check and validate generated Token data, CSS, semantics, and exports.
+- `pnpm dev`: build and watch the library, start docs, and reload after successful library rebuilds.
+- `pnpm check`: the single routine local validation entry; prepare the public library once and run lint, types, source consistency and fast Node/SSR regressions without Chromium.
+- `pnpm verify`: run the complete workflow used by both PR and main CI, verifying all regressions and root and `/exui/` docs output sequentially.
 - `pnpm typecheck`: run TypeScript checks across all three workspaces.
 - `pnpm lint`: run Oxlint with React and TypeScript rules.
 - `pnpm build`: build Tokens, components, declarations, and the private static docs site in dependency order.
-- `pnpm docs:content:check`: validate two-locale docs coverage, metadata, and links.
-- `pnpm docs:snippets:verify`: check documented snippets against the public package.
-- `pnpm docs:static:verify`: inspect and exercise the static docs output after a build.
+- `pnpm test`: prepare the public library and run fast Node/SSR regressions independently; already included in `check`.
+- `pnpm test:node [files...]`: prepare the public library and run all or selected Node regressions from package `tests/` directories.
+- `pnpm test:visual`: run the docs Chromium fixtures after building.
 - `pnpm verify:pack`: pack the public tarball and run the isolated packed-consumer gates (npm and pnpm tokens-only installs, token type and stylesheet checks, and a React consumer with strict type-checking, a production build, server-render smoke, and Chromium chart/dialog/form interactions).
 - `pnpm changeset`: create a release note for user-facing package changes.
 - `pnpm version-packages`: apply pending Changesets to versions and changelogs.
@@ -58,7 +59,7 @@ Write TypeScript and TSX using the existing component style. Prefer named export
 
 ## Testing Guidelines
 
-Follow the engineering testing policy in `TESTING.md`. If that file is not present yet, keep changes conservative and run at least `pnpm typecheck`, `pnpm lint`, and `pnpm build`. There is currently no dedicated `pnpm test` script. When adding test infrastructure, document naming conventions, placement, and commands in `TESTING.md`.
+Follow `TESTING.md` for test authoring and execution timing. Suite classification and validation steps are maintained in `scripts/test-suites.mjs` and `scripts/tasks.mjs`.
 
 ## Commit & Pull Request Guidelines
 

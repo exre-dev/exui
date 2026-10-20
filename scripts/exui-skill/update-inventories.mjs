@@ -29,7 +29,6 @@ function referenceFor(sourceFile) {
   const name = posix(sourceFile)
   if (/\/(patterns|lib\/forms)\//.test(name) || /\/hooks\/use-form/.test(name)) return "../exui/form.md"
   if (name.includes("glass-seed")) return "../exui/glass.md"
-  if (/ex-message/.test(name)) return "../exui/notifications.md"
   if (name.includes("theme-provider")) return "../exui/theme-usage.md"
   const match = name.match(/\/components\/(?:ui|reui)\/([^/.]+)/)
   if (match && existsSync(path.join(skillRoot, "references/components", `${match[1]}.md`))) return `../components/${match[1]}.md`

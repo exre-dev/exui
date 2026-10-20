@@ -1,4 +1,4 @@
-import { isValidElement, Suspense, useCallback, useEffect, type ReactNode } from "react"
+import { isValidElement, Suspense, useCallback, useEffect, useMemo, type ReactNode } from "react"
 import { useLocation, useNavigate, type ShouldRevalidateFunctionArgs } from "react-router"
 import { DocsLayout } from "fumadocs-ui/layouts/glass"
 import { DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layouts/glass/page"
@@ -56,12 +56,13 @@ export default function Documentation({ loaderData: page }: Route.ComponentProps
     persistPreference(preferenceKeys.language, next)
     navigate(`/${next}/docs/${page.id}/${search}`)
   }, [navigate, page.id, search])
+  const languageContext = useMemo(() => ({ language: page.locale, setLanguage }), [page.locale, setLanguage])
   useEffect(() => { persistPreference(preferenceKeys.language, page.locale) }, [page.locale])
   const unknownTarget = target && !page.examples.includes(target)
   const body = <Suspense fallback={<p aria-busy="true">{page.locale === "zh-CN" ? "正在加载文档…" : "Loading documentation…"}</p>}>
     <DocumentBody locale={page.locale} path={page.path} />
   </Suspense>
-  return <LanguageContext.Provider value={{ language: page.locale, setLanguage }}>
+  return <LanguageContext.Provider value={languageContext}>
     <DocsLayout tree={page.tree} tabs={false} nav={{ title: <span className="docs-brand"><ExIcon />ExUI</span>, url: overviewPath(page.locale, base) }} slots={{ themeSwitch: Settings }}>
       <DocsPage toc={page.toc} full={page.full}>
         <DocsTitle>{page.title}</DocsTitle>
@@ -69,7 +70,7 @@ export default function Documentation({ loaderData: page }: Route.ComponentProps
         {page.family && <section className="docs-examples not-prose" aria-label={page.locale === "zh-CN" ? "示例" : "Examples"}>
           <h2 id="examples">{page.locale === "zh-CN" ? "示例" : "Examples"}</h2>
           {unknownTarget && <p role="status">{page.locale === "zh-CN" ? "未找到示例" : "Example not found"}: {target}</p>}
-          <ComponentExamplesHost key={page.id} family={page.family} target={unknownTarget ? undefined : target} density={density} />
+          <ComponentExamplesHost family={page.family} target={unknownTarget ? undefined : target} density={density} />
         </section>}
         {page.family ? <div className="docs-family-description">{body}</div> : body}
       </DocsPage>

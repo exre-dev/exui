@@ -4,8 +4,8 @@
  * The material rules are deliberately unlayered. Component recipes live in the
  * utilities layer, and an unlayered declaration outranks every layer, so a
  * caller cannot accidentally defeat the material by reordering a class string.
- * The one layered rule below is the `@layer base` reset, which has to lose to
- * the utilities that carry a host's shadow. The material only ever sets paint
+ * The theme values and host-shadow reset below stay in `@layer base`, so the
+ * reset loses to utilities that carry a host's shadow. The material only sets paint
  * properties: it never writes display, position, z-index, width, height,
  * padding, gap, radius, overflow, or pointer-events, and it never sets a border
  * width. The visible edge is an inset shadow instead, so a plain `div` does not
@@ -22,6 +22,13 @@
  */
 
 @layer base {
+  /* White highlights need less intensity against a dark surface. */
+  .dark,
+  .pitch-black {
+    --_exui-glass-highlight-alpha: 0.3;
+    --_exui-glass-drawer-highlight-alpha: 0.3;
+  }
+
   /*
    * Reset the run-time composition variables on each surface. Token variables
    * are allowed to inherit, but a stale host shadow must not leak out of an
@@ -71,7 +78,7 @@
     var(--tw-ring-shadow, 0 0 #0000),
     var(--_exui-glass-host-shadow, 0 0 #0000),
     var(--exui-glass-shadow),
-    inset 0 1px 3px rgba(255, 255, 255, 0.5);
+    inset 0 1px 3px rgba(255, 255, 255, var(--_exui-glass-highlight-alpha, 0.7));
 }
 
 /*
@@ -129,7 +136,7 @@
     var(--_exui-glass-reference, brightness(1));
   box-shadow:
     var(--tw-shadow, 0 0 #0000),
-    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, var(--_exui-glass-drawer-highlight-alpha, 0.7)),
     var(--exui-glass-shadow);
 }
 

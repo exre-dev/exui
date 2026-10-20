@@ -1,7 +1,7 @@
 import { loader } from "fumadocs-core/source"
 import { zhDocs, enDocs } from "../../.source/server"
 import manifest from "../../.generated/pages.json"
-import { docPath, normalizeBase, overviewPath } from "../../lib/site-contract.mjs"
+import { docPath, normalizeBase, overviewPath, navigationGroup } from "../../lib/site-contract.mjs"
 
 const base = normalizeBase(process.env.EXUI_DOCS_BASE ?? "/")
 export const sources = {
@@ -16,7 +16,7 @@ export function documentTree(locale: "zh-CN" | "en") {
     type: "folder" as const,
     name: labels[index],
     defaultOpen: true,
-    children: manifest.pages.filter(page => page.locale === locale && page.group === group)
+    children: manifest.pages.filter(page => page.locale === locale && navigationGroup(page) === group)
       .sort((a, b) => group === "components" || group === "exui" ? a.title.localeCompare(b.title, "en") : 0)
       .map(page => ({ type: "page" as const, name: page.title, url: docPath(locale, page.id, base) })),
   }))] }

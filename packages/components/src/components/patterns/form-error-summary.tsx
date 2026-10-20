@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { CircleAlertIcon } from "lucide-react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/reui/alert"
 import { FormContext, getInternal } from "@/lib/forms/context"
 import type { FormErrorNode, FormErrorSummaryProps, FormInstance, FormPath, FormValues } from "@/lib/forms/types"
 import { cn } from "@/lib/utils"
@@ -17,12 +19,15 @@ export function FormErrorSummary<I extends FormValues, O>({ form: providedForm, 
   const message = (source: string) => context.formatIssue?.(source) ?? source
   const separator = context.issueSeparator ?? "；"
   if (!fields.length && !roots.length) return null
-  return <div role="alert" className={cn("ex-form-summary", className)} data-span="full">
-    <p className="ex-form-summary-title">{title}</p>
-    <ul>{fields.map(([name, node]) => <li key={name}>
-      <button type="button" onClick={() => internal.navigateToField(name as FormPath<I>)} className="ex-form-summary-link">
-        {internal.getFieldMetadata(name)?.label ?? name}: {[...new Set(node!.issues.map((issue) => message(issue.message)))].join(separator)}
-      </button>
-    </li>)}{roots.map(([key, node]) => <li key={`root:${key}`}>{[...new Set(node.issues.map((issue) => message(issue.message)))].join(separator)}</li>)}</ul>
-  </div>
+  return <Alert variant="destructive" className={cn("ex-form-summary", className)} data-span="full">
+    <CircleAlertIcon aria-hidden="true" />
+    <AlertTitle>{title}</AlertTitle>
+    <AlertDescription>
+      <ul className="mt-1 list-inside list-disc space-y-0.5 text-sm">{fields.map(([name, node]) => <li key={name}>
+        <button type="button" onClick={() => internal.navigateToField(name as FormPath<I>)} className="ex-form-summary-link">
+          {internal.getFieldMetadata(name)?.label ?? name}: {[...new Set(node!.issues.map((issue) => message(issue.message)))].join(separator)}
+        </button>
+      </li>)}{roots.map(([key, node]) => <li key={`root:${key}`}>{[...new Set(node.issues.map((issue) => message(issue.message)))].join(separator)}</li>)}</ul>
+    </AlertDescription>
+  </Alert>
 }

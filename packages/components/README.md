@@ -30,7 +30,7 @@ The React root is ESM-only and supports React 19 (`>=19.0.0 <20`). General-purpo
 
 ### Components and 1.0 migration
 
-Import components, subcomponents, hooks, and public types from `@exre/exui`. The catalog includes data grids, scheduling, date and time pickers, navigation, media, and interactive workflows alongside the basic controls. `ExForm`, composed `Form`, and `ExMessage` retain their APIs.
+Import components, subcomponents, hooks, and public types from `@exre/exui`. The catalog includes data grids, scheduling, date and time pickers, navigation, media, and interactive workflows alongside the basic controls. `Form` unifies configured and composed forms; `FormField` binds named fields, and Field primitives compose standalone rows.
 
 `Modal` and its public types have been removed. Migrate overlays to `Dialog`, `DialogContent`, `DialogHeader`, `DialogBody`, and `DialogFooter`, or use the quick Dialog composition. Dialog supports header actions and opt-in mobile fullscreen.
 
@@ -40,7 +40,7 @@ Badge no longer accepts `variant="ghost"` or `variant="link"`. Choose a supporte
 
 ### Schema-driven forms
 
-Use `ExForm` for typed field configuration, or compose `Form`, `FormItem`, `FormList` and `FormErrorSummary`. Install a Standard Schema V1 implementation yourself; the examples use Zod:
+Use `Form` with `fields` for typed configuration, or compose `Form`, `FormField`, `FormList` and `FormErrorSummary` with an ExUI `useForm` instance. Install a Standard Schema V1 implementation yourself; this example uses Zod:
 
 ```bash
 npm add zod
@@ -48,61 +48,52 @@ npm add zod
 
 ```tsx
 import { z } from "zod"
-import { ExForm, FormErrorSummary } from "@exre/exui"
+import { Form, FormErrorSummary } from "@exre/exui"
 
-const schema = z.object({
-  age: z.string().min(1).regex(/^\d+$/).transform(Number),
-})
-
+const schema = z.object({ age: z.string().min(1).regex(/^\d+$/).transform(Number) })
 export function AgeForm() {
-  return <ExForm schema={schema} defaultValues={{ age: "" }}
+  return <Form schema={schema} defaultValues={{ age: "" }}
     fields={[{ name: "age", label: "Age", control: "number" }]}
-    onSubmit={(output) => { console.log(output.age) }}>
+    onSubmit={(output) => console.log(output.age)}>
     <FormErrorSummary />
-  </ExForm>
+  </Form>
 }
 ```
 
-Controls and form methods follow schema Input (`age` is a string); submission receives parsed Output (`age` is a number). Parsing does not replace the draft. Keep initialization and step schemas stable outside render or with `useMemo`. A form instance comes only from ExUI's `useForm`; its hooks and providers share the bundled RHF instance, so consumers need no RHF or resolver installation.
+Controls and form methods follow schema Input (age is a string); successful submission receives parsed Output (age is a number). Parsing does not replace the draft. Keep initialization and step schemas stable outside render or with `useMemo`. Form hooks and providers share ExUI's bundled RHF instance; no RHF or resolver installation is needed.
 
-`ExForm` takes either `schema`/`defaultValues` or an existing `form`. Steps require explicit stable scope schemas at the original input paths; final submission always checks the full schema. `reset` cancels pending work and establishes a new baseline; `cancelPending` preserves the draft. Close handlers for a Dialog that remains mounted should call one of those methods. Submission cancellation signals cooperative abort and cannot undo server operations already sent.
+There are three named props branches: `FormComposedProps<I, O>` requires `form`, `onSubmit` and children; `FormConfiguredSchemaProps<S>` requires schema/defaultValues/fields; `FormConfiguredInstanceProps<I, O>` requires form/fields. Existing instances cannot also receive initialization props. `fields !== undefined` selects configured mode, including an empty array; switching to/from composed mode requires a new React key. Composed forms own their actions in children. Configured children appear before generated fields or review content, followed by a footer: omit `footer` for built-in actions, or pass null, a node or callback to replace it.
 
-`ExForm` does not add an error summary automatically. Place `FormErrorSummary` inside `ExForm` when you want one; it reads the nearest form instance and navigates to its fields. The summary also works inside a composed `Form`. Outside a form, it has no form state to display.
+Steps declare stable scope schemas at original input paths; final submission always checks the full schema. `reset` cancels pending work and establishes a baseline; `cancelPending` preserves the draft. A Dialog that stays mounted on close should call one of them. Cancellation signals cooperative abort and cannot undo a server operation already sent. `FormErrorSummary` is opt-in and reads the nearest form owner.
 
-`ExItem` is a standalone presentation container for a title, description, and control. It also works directly inside `Form` or `ExForm` without registering a field. A single direct ExUI `Input` receives a stable ID and description association automatically; wrapped, custom, or multiple controls use `controlId` plus the same ID on the focusable control. `FormItem` and configured fields keep `label`, `description`, and `colSpan`, and can set `layout="vertical"` or `layout="horizontal"` to override the form default. Horizontal items wrap by their own available width. `Form` and `ExForm` can set `contentMaxWidth` (CSS width or pixels as a number) and `contentAlign="left" | "right"` defaults; `ExItem`, `FormItem`, and configured fields can override each independently. The limit includes validation errors. Use `contentMaxWidth="none"` to remove an inherited limit. Vertical and narrow wrapped items fill the available width.
+`FormField` and configured fields accept layout, content-width and alignment overrides. Horizontal fields respond to their own width; vertical and narrow fields fill available space. For standalone settings and display rows, compose `Field`, `FieldContent`, `FieldLabel`, `FieldDescription` and `FieldError` with explicit IDs and ARIA on actual focusable controls. Field primitives do not register state or infer child associations.
 
-See the [Form reference](../../skills/exui/references/exui/form.md), [item layout example](../../skills/exui/examples/form-item-layout.tsx), [complete configured example](../../skills/exui/examples/form-configured.tsx) and [complete composed example](../../skills/exui/examples/form-composed.tsx). The consumer gates install Zod 3.25.28 and 4.6.5 independently, compile with `skipLibCheck` disabled, server-render without `document`/`File` access, and test parsed ExForm submission in Chromium.
+See the [Form guide](../../skills/exui/references/exui/form.md), [Field layout guide](../../skills/exui/references/exui/field-layout.md), [configured example](../../skills/exui/examples/form-configured.tsx), [existing-instance example](../../skills/exui/examples/form-configured-instance.tsx) and [composed example](../../skills/exui/examples/form-composed.tsx). Isolated consumers exercise fixed Zod 3.25.28 and 4.6.5 with strict types, SSR and parsed Form submission in Chromium.
 
 ### Themes
 
 In a browser application, wrap the app with the root `ThemeProvider` and use `useTheme()` to switch between `"light"`, `"dark"`, and `"system"`. The default is `"system"`, and choices are stored under the `"theme"` localStorage key. Mount `Toaster` and call `toast` from the same `@exre/exui` root for notifications that follow the provider.
 
-For a single application-wide notification policy, mount `<ExMessageContext />` once inside `ThemeProvider` and call `ExMessage` from any module. The host renders ExUI's existing `Toaster`; do not mount another one for these messages. The default is three active messages at the top right, with ordinary messages and completed loading messages shown for 3000 ms. `duration`, `placement`, and `maxCount` configure the host; `{ duration }` overrides an individual call. `ExMessage` exposes `info`, `warn`, `error`, `success`, `loading`, and `dismiss(id)`.
+Mount one stable `Toaster` and use the root `toast` methods from any module after the host mounts. Set `position`, `duration`, and `visibleToasts` on the host; a message can override its own duration. `visibleToasts` limits visible notifications without evicting older entries.
 
 ```tsx
-import { ExMessage, ExMessageContext, ThemeProvider } from "@exre/exui"
+import { Toaster, toast, ThemeProvider } from "@exre/exui"
 
-function App() {
-  return <ThemeProvider><ExMessageContext /><SaveButton /></ThemeProvider>
+function App({ save }: { save: () => Promise<void> }) {
+  return <ThemeProvider><Toaster position="top-right" duration={3000} visibleToasts={3} /><SaveButton save={save} /></ThemeProvider>
 }
 
-function SaveButton() {
-  async function save() {
-    const pending = ExMessage.loading("Saving")
-    try {
-      await Promise.resolve()
-      pending.onSuccess("Saved")
-    } catch {
-      pending.onError("Save failed")
-    }
+function SaveButton({ save }: { save: () => Promise<void> }) {
+  function notify() {
+    toast.promise(save, { loading: "Saving", success: "Saved", error: "Save failed" })
   }
-  return <button onClick={save}>Save</button>
+  return <button onClick={notify}>Save</button>
 }
 ```
 
-Loading stays visible until completion or `dismiss()`; pass `{ duration }` to `loading` for an automatic deadline. A deadline closes the message without reporting an error. New managed messages evict the oldest managed message when `maxCount` is reached. Direct `toast` calls remain supported and share the host's visual limit, but do not participate in managed eviction. `ExMessage` requires a mounted host and throws if called before mount or after unmount. `<ExMessageContext />` is a self-contained host, not a provider wrapping children.
+For callback-based tasks, keep the ID returned by `toast.loading("Saving")` and pass it to `toast.success("Saved", { id })` or `toast.error("Save failed", { id })`. Use `toast.dismiss(id)` to close the notification. Applications own cancellation, loading deadlines, late-callback guards, and cleanup; unmounting `Toaster` does not clear the notification store. See the [ExMessage migration guide](../docs/content/en/getting-started/ex-message-migration.mdx) for the removed API and lifecycle differences.
 
-The shared `Toaster` uses Sonner with Lucide status icons for success, info, warning, error, and loading. `ExMessage` retains its call and lifecycle API and uses this same bundled Sonner instance. The icon colors follow the theme's feedback and primary CSS variables. A direct `<Toaster />` accepts Sonner's `icons` prop when an application needs different icons.
+The shared `Toaster` uses Sonner with Lucide status icons for success, info, warning, error, and loading. The icon colors follow the theme's feedback and primary CSS variables. `<Toaster />` accepts Sonner's `icons` prop when an application needs different icons.
 
 `ThemeProvider` reads localStorage during rendering and cannot render on a server. Mount it only in the browser after hydration when using an SSR framework; `"use client"` alone does not prevent prerendering. The `.pitch-black` token class is managed separately and is not a provider theme value.
 
@@ -136,7 +127,7 @@ export function App() {
 - Restyle it with `--exui-glass-background`, `--exui-glass-foreground`, `--exui-glass-border`, `--exui-glass-shadow`, `--exui-glass-blur`, and `--exui-glass-saturation`, declared on the surface or any ancestor.
 - Where `backdrop-filter` is unavailable the surface falls back to an opaque themed background. A non-`none` `backdrop-filter` also makes the element a containing block for absolutely and fixed positioned descendants, so keep viewport-anchored content in a portal rather than inside a glass surface.
 
-The built-in blur is `0.25rem` and the inset edge is `0.0625rem`; both scale with the root font size. The stylesheet also adds a fixed-pixel white inset highlight. `CSS.supports` checks syntax acceptance only: the automated checks cover computed styles and lifecycle, not the rendered refraction effect.
+The built-in blur is `0.25rem` and the inset edge is `0.0625rem`; both scale with the root font size. The stylesheet also adds a fixed-pixel white inset highlight, with stronger intensity in light themes and softer intensity in dark and pitch-black themes. `CSS.supports` checks syntax acceptance only: the automated checks cover computed styles and lifecycle, not the rendered refraction effect.
 
 ### Customizing tokens
 
@@ -227,7 +218,7 @@ ExUI never sets a root font size itself and declares no scale variable, so this 
 
 Hairline borders and dividers, focus rings, drop shadows, capsule radii and border compensation stay fixed. Glass blur is `0.25rem`; its inset edge is `0.0625rem`. Omitted numeric defaults for positioning and virtual layouts resolve from rem at runtime, while explicit numeric props and resize state remain pixels. Measured DOM geometry, SVG drawing coordinates and user data keep their original units.
 
-The bundled `Recharts` and `TanStackTable` React boundaries adapt supported axis, tooltip, legend and column defaults. Toaster/ExMessage, Resizable and MessageScroller adapt their owned defaults too. The non-React `TanStackTable.constructTable` entry retains upstream pixel defaults. InputOTP's private password-manager badge reserve/probe remains 40px/18px. See the [scaling guide](../../skills/exui/references/exui/scaling.md) for these boundaries.
+The bundled `Recharts` and `TanStackTable` React boundaries adapt supported axis, tooltip, legend and column defaults. Toaster, Resizable and MessageScroller adapt their owned defaults too. The non-React `TanStackTable.constructTable` entry retains upstream pixel defaults. InputOTP's private password-manager badge reserve/probe remains 40px/18px. See the [scaling guide](../../skills/exui/references/exui/scaling.md) for these boundaries.
 
 Numeric positioning props such as `sideOffset` and `alignOffset` keep their upstream pixel contract and are never multiplied by the root font size.
 
@@ -304,7 +295,7 @@ pnpm lint
 pnpm verify:pack
 ```
 
-The documentation site, retained browser fixtures, and consumer skill use the public package entries. Run the workspace, browser, skill, and isolated packed-consumer gates in [Testing](../../TESTING.md); each verifies a different consumption boundary.
+The documentation site, retained browser fixtures, and consumer skill use the public package entries. CI verifies workspace, browser, skill, and isolated packed-consumer boundaries; follow [Testing](../../TESTING.md) for test authoring and execution timing.
 
 ## Versioning
 
@@ -328,4 +319,4 @@ There is no local `pnpm release` command. Maintainers must configure the Release
 
 ## Source maintenance
 
-Component source locks, licenses, public export metadata, and adapter patches are maintained with the package. See [Testing](../../TESTING.md#source-maintenance-gates) for cache restoration, integrity checks, and deliberate source updates. Raw source caches and maintenance tooling are excluded from the published package; required third-party notices remain included.
+Component source locks, licenses, public export metadata, and adapter patches are maintained with the package. Cache restoration and source maintenance use the repository's `scripts/reui-*.mjs` tools. Raw source caches and maintenance tooling are excluded from the published package; required third-party notices remain included.

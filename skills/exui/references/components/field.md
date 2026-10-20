@@ -14,6 +14,14 @@
 <!-- exui-capabilities:begin:skill -->
 ## ExUI capability notes
 
+**ExUI addition**
+
+### Standalone Field composition
+
+`Field`, `FieldContent`, `FieldLabel`, `FieldDescription` and `FieldError` compose settings rows and display values without form registration. Put a stable ID on the real focusable control; use it in `FieldLabel htmlFor`, and explicitly reference description and current error IDs in `aria-describedby`.
+
+Read [Standalone Field composition](../exui/field-layout.md) for the ExUI contract and complete examples.
+
 **ExUI adaptation**
 
 ### Checkbox inside FieldLabel

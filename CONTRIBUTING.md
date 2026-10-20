@@ -16,21 +16,18 @@ Please be respectful and constructive in all interactions with the community.
 
 ## Development Setup
 
-Use Node.js 24 and pnpm 11.9.0. Install from the repository root and use the aggregate checks:
+Use Node.js 24 and pnpm 11.9.0. Install from the repository root and use the single local validation entry:
 
 ```bash
 pnpm install
-pnpm tokens:check
-pnpm typecheck
-pnpm lint
-pnpm build
-pnpm --filter @exre/exui-docs exec playwright install chromium
-pnpm verify:pack
+pnpm check
 ```
+
+`pnpm check` includes fast Node/React SSR regressions and needs no Chromium installation. Both pull-request and main-push CI run the complete `pnpm verify`, including browser and isolated-consumer checks. See [TESTING.md](TESTING.md) for execution timing.
 
 Run shadcn commands from `packages/components`. The repository root, `packages/docs`, and the internal `packages/tokens` workspace are private; only `@exre/exui` participates in Changesets and publication.
 
-Follow [TESTING.md](TESTING.md) for the complete checks, including docs content, static output, visual tests, and consumer examples. Keep docs examples and the retained Showcase fixture on the public `@exre/exui` entries.
+Follow [TESTING.md](TESTING.md) for test authoring principles. Keep docs examples and the retained Showcase fixture on the public `@exre/exui` entries.
 
 ## Documentation and pull requests
 

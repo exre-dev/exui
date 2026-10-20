@@ -1,0 +1,227 @@
+[
+  {
+    "old": "packages/docs/src/showcase/ComponentsOverview.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/DocsOverview.vrt.test.tsx",
+    "classification": "consolidated",
+    "old_snapshot_sha256": "33bfc57ca7d546447064e30c69cf3947d18268ca5ffe94b99955f914739886b1",
+    "current_sha256": "a6610f47134ca769d948967f0aab41ff10e69599165388b8f8b612892cde5e4c",
+    "form_assertions": "retained-in-consolidated-target",
+    "review_note": "External removal of legacy-shell suite; 89-family loading, ordered 87+2 groups, one inert link per card, real router/history/settings coverage is now in DocsOverview. Legacy screenshots are not reproduced or approved by this Form review."
+  },
+  {
+    "old": "packages/docs/src/showcase/DocsFormGallery.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/DocsFormGallery.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "dcec274f9313c38e5a6d3e0d3a63523df928c606e8bb0d8e254c4b71ec89f5d6",
+    "current_sha256": "1dc263ff28634bf6b59a0e233d94e0d457ad2884f9cdcc1d489cdc82c8fa5cd5",
+    "content_comparison": "relative-import-and-root-path-rewrite",
+    "form_assertions": "retained",
+    "review_note": "Complete files compared; changes only relocate source imports/repository or fixture roots. Form assertions and verifier strictness are unchanged."
+  },
+  {
+    "old": "packages/docs/src/showcase/DocsOverview.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/DocsOverview.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "7edf23a4c0d384c4f89d690f9373b2c367776f716d1935c60121e28449cd8d14",
+    "current_sha256": "a6610f47134ca769d948967f0aab41ff10e69599165388b8f8b612892cde5e4c",
+    "content_comparison": "external-host-adaptation",
+    "form_assertions": "retained",
+    "review_note": "External host expansion/consolidation. Form-task 87 Components + 2 Blocks assertions remain; real router, settings, all 89 thumbnails, inert controls and single links remain covered."
+  },
+  {
+    "old": "packages/docs/src/showcase/ExUIPages.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/ExUIPages.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "7eadfc978cdc5d458c946853bdd3b33740ab51e410b27cc6a438764dfb558d02",
+    "current_sha256": "0c165c075064b3f1a6c5d431fd0e44520ab311bd222a9230deafe928a6285895",
+    "content_comparison": "relative-import-and-root-path-rewrite",
+    "form_assertions": "retained",
+    "review_note": "Complete files compared; changes only relocate source imports/repository or fixture roots. Form assertions and verifier strictness are unchanged."
+  },
+  {
+    "old": "packages/docs/src/showcase/FieldLayout.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FieldLayout.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "2f557dc5120a7c400be5016f3e99d52cc13207fe328dbfe9c96e813a1a81c214",
+    "current_sha256": "4eb7025f70989220f55d5e179c9bbd6c0061a881bc84682d88d34568d392df71",
+    "content_comparison": "canonical-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "packages/docs/src/showcase/Form.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/Form.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "0721b232390fd5cc72c4da06d617d13a7decbbfefad31340a745edf2405e0663",
+    "current_sha256": "3c55b7742e25ece6897047819b5652d3d2a1e9cc468e29c7f1e6ee172531c9b1",
+    "content_comparison": "canonical-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "packages/docs/src/showcase/FormApi.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FormApi.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "de78ac8f95a5db5907a279c9a0739f5892703d0e29679d378e463ae886806268",
+    "current_sha256": "de78ac8f95a5db5907a279c9a0739f5892703d0e29679d378e463ae886806268",
+    "content_comparison": "byte-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "packages/docs/src/showcase/FormAsync.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FormAsync.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "84f94d378bc9ac9294a9a22422a99bad6f30b2d423ea1bb05ee0115264b1a220",
+    "current_sha256": "1dd6387e48dbd356478c62b4623fef625dab3077f257dedb8adec9406bd85793",
+    "content_comparison": "canonical-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "packages/docs/src/showcase/FormContentSizing.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FormContentSizing.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "bf37543bf9a93b03d9782fc77cda755cc9b6f930348858abcaaaff81ba219a81",
+    "current_sha256": "ed44cb59590fa2a734411947e01ea6fd6cc4d18dcf54566899c07e79a0d54282",
+    "content_comparison": "relative-import-and-root-path-rewrite",
+    "form_assertions": "retained",
+    "review_note": "Complete files compared; changes only relocate source imports/repository or fixture roots. Form assertions and verifier strictness are unchanged."
+  },
+  {
+    "old": "packages/docs/src/showcase/FormControls.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FormControls.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "c27149b2d0b0013386d7ff77042a9bcb15458b89f7102ddc71cae5063482716d",
+    "current_sha256": "f7589cadf5c403f89123f91d5d8ceecfefae4679c6b5d47cc1d513eeebcd72bb",
+    "content_comparison": "canonical-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "packages/docs/src/showcase/FormSteps.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FormSteps.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "389a413ecc61780a55603e2ea51e4d786c1a4d0d1ad5fdc6d649676a34ad9db0",
+    "current_sha256": "b4b47db256b8e9ba5864b57db2e2f0f1f44036e67a022412fbae5076c25a5c37",
+    "content_comparison": "canonical-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "packages/docs/src/showcase/FormSurfaceOutline.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FormAppearance.vrt.test.tsx",
+    "classification": "consolidated",
+    "old_snapshot_sha256": "952bbb9e8fcfbef31cddccb2409a8af94c092b4a83269f6e2dc52d8350312028",
+    "current_sha256": "5e079dc97d6b381318859d8dfab5fefb7e440f8420f75d315893c72d8c82e61e",
+    "form_assertions": "retained-in-consolidated-target",
+    "review_note": "All six surface border assertions and the three-theme loop are retained."
+  },
+  {
+    "old": "packages/docs/src/showcase/FormSurfaces.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/FormAppearance.vrt.test.tsx",
+    "classification": "consolidated",
+    "old_snapshot_sha256": "76056dc3a0cd009bd23ffa182fe2603a3610733b4c5f82c8637e3f4b6883beab",
+    "current_sha256": "5e079dc97d6b381318859d8dfab5fefb7e440f8420f75d315893c72d8c82e61e",
+    "form_assertions": "retained-in-consolidated-target",
+    "review_note": "Four-control equal idle-background assertion is retained and now runs inside the three-theme loop, with host-scoped selectors."
+  },
+  {
+    "old": "packages/docs/src/showcase/ShowcaseCatalog.vrt.test.tsx",
+    "new": null,
+    "classification": "externally-removed",
+    "old_snapshot_sha256": "4b3e9b55f32f72b5bb64dfa16d56392ae37c9fba950fa84f05784629b9413f8c",
+    "current_sha256": null,
+    "form_assertions": "covered-by-current-form-tests; legacy-shell-specific assertions retired",
+    "review_note": "Legacy shell/navigation/screenshot suite was removed by the concurrent task. Form-related family cardinality/traversal remains in current DocsOverview and ShowcaseExampleCoverage; this review does not approve the unrelated shell test retirement."
+  },
+  {
+    "old": "packages/docs/src/showcase/ShowcaseExampleCoverage.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/ShowcaseExampleCoverage.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "868cee68f133a412753b8fc60271eec879d58ee61e26dc71c97a1978dd3c8f13",
+    "current_sha256": "afe9a8681cd1bda9a5c9f34f65ce2fe87a4cccdcd5573f360f9eb26a4b390e00",
+    "content_comparison": "external-host-adaptation",
+    "form_assertions": "retained",
+    "review_note": "External host migration to production ComponentExamplesHost through docs-examples route fixture. Full two-locale family loop, 86+3 module counts, real content/ARIA/SVG/resource assertions are retained."
+  },
+  {
+    "old": "packages/docs/src/showcase/ShowcaseExampleInteractions.vrt.test.tsx",
+    "new": "packages/docs/tests/browser/ShowcaseExampleInteractions.vrt.test.tsx",
+    "classification": "relocated",
+    "old_snapshot_sha256": "e674a26d4d0302f30309b6cd7d63fd788e7ea2653554fe6b098dffed1a06d2bc",
+    "current_sha256": "c938b5b4f77aa4cee36342111ce1aafe448848f443d463d40b1004f2f8f43711",
+    "content_comparison": "external-host-adaptation",
+    "form_assertions": "retained",
+    "review_note": "External host/provider migration. Form project-card scoping, localized errors, retained input node/draft and saved status remain. Status is scoped further to the preview to exclude source-copy status."
+  },
+  {
+    "old": "packages/docs/src/showcase/ShowcaseSharing.vrt.test.tsx",
+    "new": null,
+    "classification": "externally-removed",
+    "old_snapshot_sha256": "5e535b7ed2430432f73e5d290ea8bc3df890279112db8318fd6194043c852340",
+    "current_sha256": null,
+    "form_assertions": "covered-by-current-form-tests; legacy-shell-specific assertions retired",
+    "review_note": "Legacy shell copy/header suite was removed by the concurrent task. Form/Field canonical IDs and source ownership remain in docs-sharing Node tests; 3 Form cards/4 forms and 14 Field cards remain in DocsFormGallery. Exact legacy 14-header assertion is retired, not falsely claimed unchanged; current source exports and built HTTP triples are independently verified."
+  },
+  {
+    "old": "scripts/docs-content.test.mjs",
+    "new": "packages/docs/tests/node/docs-content.test.mjs",
+    "classification": "relocated",
+    "old_snapshot_sha256": "b47d316c7e728462d8d21cd1e04955a70253112610407d6597aa8c4e1980a731",
+    "current_sha256": "c047b4e4848d5d37ada83a159c06cb61cbfd10c19fa1ae32850b3e7a225b1ef3",
+    "content_comparison": "relative-import-and-root-path-rewrite",
+    "form_assertions": "retained",
+    "review_note": "Complete files compared; changes only relocate source imports/repository or fixture roots. Form assertions and verifier strictness are unchanged."
+  },
+  {
+    "old": "scripts/docs-sharing.test.mjs",
+    "new": "packages/docs/tests/node/docs-sharing.test.mjs",
+    "classification": "relocated",
+    "old_snapshot_sha256": "967892cdd82c880cd1927ab1a7ef24158920d2a26d2c9396cef75da7bfb53a06",
+    "current_sha256": "cf2e605a3d3b8addcfed3b7dd270105168cb5b4d109b30ff8b7c5d2d6922994d",
+    "content_comparison": "external-host-adaptation",
+    "form_assertions": "retained",
+    "review_note": "External removal of separate Vite dev-source test; Form-task ten full standalone consumers and all six canonical Form/Field source-owner assertions remain. Dev-server reorganization is outside Form scope."
+  },
+  {
+    "old": "scripts/docs-snippets.test.mjs",
+    "new": "packages/docs/tests/node/docs-snippets.test.mjs",
+    "classification": "relocated",
+    "old_snapshot_sha256": "84976ad686f977fba7911631a6ca268b81d9233bd7b49eeb0ab2dc7e73c4f3b9",
+    "current_sha256": "8cdefb6dc7086bd1411dc527915ff3a7a1da04f85cf691078da2b1fb1fcb322d",
+    "content_comparison": "relative-import-and-root-path-rewrite",
+    "form_assertions": "retained",
+    "review_note": "Complete files compared; changes only relocate source imports/repository or fixture roots. Form assertions and verifier strictness are unchanged."
+  },
+  {
+    "old": "scripts/fixtures/docs-site-baseline.json",
+    "new": "packages/docs/tests/fixtures/docs-site-baseline.json",
+    "classification": "relocated",
+    "old_snapshot_sha256": "43f49b9514669b98091efa193ba9c3f822b339d3bf15cf3d6074a89d24a0b69d",
+    "current_sha256": "43f49b9514669b98091efa193ba9c3f822b339d3bf15cf3d6074a89d24a0b69d",
+    "content_comparison": "byte-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "scripts/form-consumer-fixture.mjs",
+    "new": "packages/components/tests/consumers/form-consumer-fixture.mjs",
+    "classification": "relocated",
+    "old_snapshot_sha256": "e7c592728e3fd2c0896fdce1216b20ed232bfc26f4b4fb535a0437a8371aa618",
+    "current_sha256": "e7c592728e3fd2c0896fdce1216b20ed232bfc26f4b4fb535a0437a8371aa618",
+    "content_comparison": "byte-identical",
+    "form_assertions": "retained",
+    "review_note": "Complete file content compared with the reviewed snapshot; no logical assertion or fixture changes."
+  },
+  {
+    "old": "scripts/verify-docs-static.mjs",
+    "new": "packages/docs/tests/integration/verify-docs-static.mjs",
+    "classification": "relocated",
+    "old_snapshot_sha256": "a4e353d05c9427db963ca077969e517107feddb7024e40546b60624de6c04723",
+    "current_sha256": "44e85cf58e9de23508fe5ab1fc0843114199121a9c60bc5ea231ad3948d0d2f8",
+    "content_comparison": "relative-import-and-root-path-rewrite",
+    "form_assertions": "retained",
+    "review_note": "Complete files compared; changes only relocate source imports/repository or fixture roots. Form assertions and verifier strictness are unchanged."
+  }
+]

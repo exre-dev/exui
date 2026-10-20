@@ -1,6 +1,6 @@
 # Showcase 消费模型与视觉测试
 
-> 本文记录迁移前 Showcase 外壳与保留的内部示例/测试夹具。其历史 `packages/showcase` 路径用于追溯原始证据；现行代码位于 `packages/docs/src/showcase/`，生产入口已改为静态文档站。当前结构见 [`docs/site.md`](../docs/site.md)，验证分工见 [`TESTING.md`](../../../TESTING.md#static-docs-site)。
+> 本文记录迁移前 Showcase 外壳与保留的内部示例/测试夹具。其历史 `packages/showcase` 路径用于追溯原始证据；现行代码位于 `packages/docs/src/showcase/`，生产入口已改为静态文档站。当前结构见 [`docs/site.md`](../docs/site.md)，测试规范见 [`TESTING.md`](../../../TESTING.md)。
 
 最后更新：2026-10-16
 
@@ -13,7 +13,7 @@
 - 它消费的是**构建后的公共包产物**，不是组件源码。因此视觉测试前必须先完成一次 workspace 构建，否则测试会对着上一版产物运行。
 - Showcase 用自己的 Tailwind 4.3.2 编译上游示例布局类；私有 `example-utilities.css` 只扫描 `examples/` 与 `pages/components/`，不导入 Preflight，也不设根品牌或密度变量。公开组件的 CSS 仍由公共包提供。私有样式边界只为 Showcase 示例服务，不扩展公共包的消费契约。
 
-`packages/showcase/upstream/reui/source-lock.json` 固定来源与示例 ID，`coverage.json` 记录每例状态和家族模式。当前候选示例均指向已适配文件，通用家族均使用 `upstream` 模式；File Upload 原例按锁中记录排除。`scripts/showcase-examples.mjs` 校验锁、覆盖、页面绑定及生成产物。每族 `examples/<family>/index.generated.ts` 注册示例，`component-loaders.generated.ts` 按族导入组件页；`page-loaders.ts` 把各目录页包装并缓存为稳定的 `React.lazy` 身份。原先通用组件的五个聚合页模块已移除；五个 ExUI 页仍经原 `pages/exui` 模块加载。完整状态的检查方式见 [`TESTING.md`](../../../TESTING.md#reui-example-and-legacy-showcase-fixture-maintenance)。
+`packages/showcase/upstream/reui/source-lock.json` 固定来源与示例 ID，`coverage.json` 记录每例状态和家族模式。当前候选示例均指向已适配文件，通用家族均使用 `upstream` 模式；File Upload 原例按锁中记录排除。`scripts/showcase-examples.mjs` 校验锁、覆盖、页面绑定及生成产物。每族 `examples/<family>/index.generated.ts` 注册示例，`component-loaders.generated.ts` 按族导入组件页；`page-loaders.ts` 把各目录页包装并缓存为稳定的 `React.lazy` 身份。原先通用组件的五个聚合页模块已移除；五个 ExUI 页仍经原 `pages/exui` 模块加载。当前完整状态检查由 `scripts/docs-examples.mjs check` 承担。
 
 示例的逐族双语文案在 `examples/<family>/copy.generated.ts`，共享语言与实例资源域在 [`examples/_shared/example-runtime.tsx`](../../../packages/docs/src/showcase/examples/_shared/example-runtime.tsx)。它为各预览提供稳定实例身份，并管理本例的异步任务与消息清理；业务值和输入草稿保持原义。图片、国旗与 emoji 的本地资源来源及字节校验分别记录在 `packages/showcase/upstream/reui/{asset,flag,emoji}-provenance.json`。这些私有数据不进入公共组件包。
 
@@ -21,15 +21,15 @@
 
 ## 组件目录
 
-`Showcase` 是桌面组件预览应用，品牌名称为 ExUI。固定左侧导航包含“全部组件”入口，以及“通用组件”和“ExUI”两组，组内按组件名称的英文字母顺序展示 90 个组件家族页面；不提供目录搜索、移动布局或移动抽屉。通用组覆盖基础 UI 与 ReUI 家族，ExUI 组分别展示 ExForm、ExItem、ExMessage、Form、Glass。hooks、类型与纯 Provider 不独立成页，DirectionProvider 合并到输入组示例。首页卡片和侧栏采用同一分组和名称排序，不改变 `catalog.ts` 的页面注册顺序。
+`Showcase` 是桌面组件预览夹具，品牌名称为 ExUI；不提供目录搜索、移动布局或移动抽屉。固定侧栏与首页卡片展示同一目录，按名称排序；展示分类、规范模块与示例所有权沿用[当前站点目录](../docs/site.md#内容与路由)。hooks、类型与纯 Provider 不独立成页，DirectionProvider 合并到输入组示例，不改变 `catalog.ts` 的页面注册顺序。
 
 组件详情页包含当前组件名称、示例 HeaderBar 和真实预览，允许组件自身的标题、字段、校验错误、Tooltip 与 CodeBlock；没有外层说明、Agent 提示、安装/API/源码面板或 JSON 调试输出。`Preview.tsx` 与 `ShowcasePages.css` 提供双列小预览和通栏复杂预览，使用公开语义 Token。`ExampleGallery.tsx` 从注册项渲染官方示例的稳定 `data-example-id`；InputGroup 的 RTL 示例作为 ExUI 扩展，仅标记 `data-example-kind="exui-extension"`，不占用官方 ID。所有可分享预览的外层另有 `data-share-example-id`，ExUI 原生预览使用显式 `shareId`。`Showcase.css` 仍由共享样式入口导入。
 
 `resolvePage` 将 `#/components/button`、`#/exui/glass` 等 hash 解析为详情页。空地址、`#/` 和 `#/components` 归一到首页 `#/components/`，Logo 与“全部组件”也指向首页；未知详情页面与组别不匹配继续回到 Button。首页不保留示例定位参数。导航使用真实锚点，监听 hashchange 支持浏览器前进和后退。`page-loaders.ts` 缓存稳定的 React.lazy 组件；切换主题、密度、语言不会替换当前页面实例。`ComponentRecipeContract.tsx` 是独立的确定性测试夹具，不进入用户目录。
 
-`ComponentsOverview.tsx` 由同一个目录生成全部卡片，`ComponentsOverview.css` 提供随主区宽度调整列数的等尺寸网格。卡片接近视口时才懒加载该家族的第一份真实示例，避免导入整组详情页；五个 ExUI 家族使用 `OverviewExUIPreviews.tsx` 的精简组合。预览通过 ResizeObserver 缩放以适合固定区域，跟随共享主题、密度与语言。预览区域设为 `inert` 和 `aria-hidden`，导航链接是卡片内唯一可聚焦目标，通过覆盖层覆盖整张卡片，避免把示例控件嵌入链接。首页预览不加入官方示例清单或分享 ID。
+`ComponentsOverview.tsx` 由同一个目录生成全部卡片，`ComponentsOverview.css` 提供随主区宽度调整列数的等尺寸网格。卡片接近视口时才懒加载该家族的第一份真实示例，避免导入整组详情页；exui 模块使用 `OverviewExUIPreviews.tsx` 的精简组合。预览通过 ResizeObserver 缩放以适合固定区域，跟随共享主题、密度与语言。预览区域设为 `inert` 和 `aria-hidden`，导航链接是卡片内唯一可聚焦目标，通过覆盖层覆盖整张卡片，避免把示例控件嵌入链接。首页预览不加入官方示例清单或分享 ID。
 
-`ShowcaseContent` 挂载唯一的 GlassSeed、TooltipProvider 和 ExMessageContext。消息页保存 loading 句柄，完成、关闭或页面卸载时清理；加载期间禁用普通消息发布，避免容量淘汰使句柄示例失效。消息控制器的边界见 [`components/ex-message`](../components/ex-message.md)。Tree 的真实 Headless Tree 实例与日期视图的 date-fns locale 由 Showcase 自己声明消费侧依赖。
+`ShowcaseContent` 挂载唯一的 GlassSeed、TooltipProvider 和 Toaster。Sonner 示例由自己的 runtime 追踪消息 ID、计时器和异步代次，卸载时只清理自己创建的资源。公开通知边界见 [全局通知](../components/notifications.md)。Tree 的真实 Headless Tree 实例与日期视图的 date-fns locale 由 Showcase 自己声明消费侧依赖。
 
 ### 示例分享与可读源码
 
@@ -39,7 +39,7 @@
 
 `sharing-plugin.ts` 在开发服务器按需返回资料，在生产构建结束时写入 `examples/<id>/index.html` 和 `source.md`。分享 HTML 本身含完整可读资料，复用构建后的应用脚本；浏览器入口在挂载前把地址切回应用根及具体 hash，随后展示原组件页。普通 HTTP 读取不执行该切换，直接取得当前例的源码。分享链接不携带主题、密度、语言或交互快照，访问者设置继续由现有本地存储管理。
 
-生成器要求绝对路径形式的 Vite base，以确保固定入口和子目录部署的资源链接一致；可读源码不进入初始应用 JavaScript，只在点击复制时获取。测试与部署产物要求见 [`TESTING.md`](../../../TESTING.md#showcase-example-sharing)。
+生成器要求绝对路径形式的 Vite base，以确保固定入口和子目录部署的资源链接一致；可读源码不进入初始应用 JavaScript，只在点击复制时获取。当前部署产物边界见 [`docs/site.md`](../docs/site.md)。
 
 ## 主题与密度
 
@@ -57,7 +57,7 @@
 
 | 项 | 取值 |
 | --- | --- |
-| `include` | `src/**/*.vrt.test.tsx` |
+| `include` | `tests/browser/**/*.vrt.test.tsx` |
 | `fileParallelism` | `false`（串行，避免多文件并发争用同一浏览器实例） |
 | provider | `@vitest/browser-playwright` |
 | contextOptions | `deviceScaleFactor: 1`、`locale: "en-US"`、`reducedMotion: "reduce"`、`timezoneId: "UTC"` |
@@ -65,7 +65,7 @@
 
 这些取值决定了截图的归一化程度：分数像素比、固定语言区域、禁用动效、固定时区。基线文件名按 `浏览器-平台` 归类，因此同一份用例在不同平台上会寻找不同的基线文件。
 
-应用外壳与目录用例只在桌面实例执行；组件本身的 Dialog、Form、Tokens 等回归继续运行两个视口，不能据此声称 Showcase 支持手机。Showcase 自己的 `.gitignore` 仅放行经审阅的三张 Windows 桌面外壳基线，其余临时截图继续忽略。
+浏览器用例归档在 `packages/docs/tests/browser/`，共用示例与生产文档站通过真实 `ComponentExamplesHost` 和 Router/Preferences 接线验证。旧 hash 外壳的目录、语言与分享套件已退役；组件回归仍按两种视口运行。`.gitignore` 保留 24 张 Windows 组件配方截图基线，移除旧外壳的三张 Button 页面基线。
 
 ## 测试套件
 
@@ -75,26 +75,25 @@
 | `RemSizing.vrt.test.tsx` | 根字号矩阵下的可缩放几何，以及固定像素例外 | 否 |
 | `InteractiveCursor.vrt.test.tsx` | 交互元素的 `cursor` 取值与刻意保留的例外 | 否 |
 | `InputGroup.vrt.test.tsx` | 输入组在多个状态下的背景与边框叠加 | 否 |
-| `ShowcaseCatalog.vrt.test.tsx` | 桌面目录、hash 历史、设置保留草稿、中英逐页挂载、三个主题的 Button 页面 | 是，桌面应用外壳 |
-| `ComponentsOverview.vrt.test.tsx` | 首页入口、全部家族卡片和分组排序、Logo/卡片/侧栏导航、浏览器历史、设置切换与全部缩略预览加载 | 否 |
-| `ShowcaseLocale.vrt.test.tsx` | 手动语言持久化、预览文字切换、输入 DOM/草稿与按钮状态保留 | 否 |
+| `DocsOverview.vrt.test.tsx` | 当前 Router 导航、单一链接/inert、所有家族缩略图和设置变化 | 否 |
+| `DocsSettings.vrt.test.tsx`、`DocsExamples.vrt.test.tsx` | 生产设置持久化、源码抽屉、复制、焦点与预览草稿 | 否 |
 | `ShowcaseExampleStyles.vrt.test.tsx` | 四个代表性 ReUI 示例的布局与交互、公开控件计算样式、主题/密度/语言切换后的实例保留 | 否 |
 | `ShowcaseExampleCoverage.vrt.test.tsx` | 中英分别遍历所有目录页，核对逐例 ID、可见内容、DOM/SVG/ARIA 关联和浏览器资源错误 | 否 |
 | `ShowcaseExampleInteractions.vrt.test.tsx` | 代表性交互、弹层、Chart、设置切换、实例范围及清理 | 否 |
-| `ExUIPages.vrt.test.tsx` | Form 真实提交、ExForm 确认后提交与重置、消息句柄及页面卸载清理 | 否 |
+| `ExUIPages.vrt.test.tsx` | Form 组合式提交、配置式确认后提交与重置 | 否 |
 | `Dialog.vrt.test.tsx` | 公开组合式 Dialog 的 portal、关闭与焦点行为 | 否 |
 | `CalendarCopy.vrt.test.tsx` | 日历编辑时区分预设翻译与用户原文，语言切换不覆盖编辑草稿 | 否 |
-| `ExMessage.vrt.test.tsx` | 全局消息的容量、时限、加载句柄与宿主生命周期 | 否 |
+| `Sonner.vrt.test.tsx`、`SonnerCallbacks.vrt.test.tsx` | Sonner 呈现及应用取消、截止和迟到回调清理 | 否 |
 | `Form.vrt.test.tsx` | 错误摘要仅在显式组合时渲染、Input 草稿与 Output 输出的类型边界、错误归属与生命周期、作用域投影与只读快照、稳定键与脏值比较 | 否 |
 | `FormAsync.vrt.test.tsx` | 异步校验的请求合并与批次合并、同步请求合并、本地成功不使整体转为有效、`reset` / `cancelPending` / `unmount` 的取消语义、提交锁期间的 touched 记录 | 否 |
 | `FormControls.vrt.test.tsx` | 各内置控件在真实可聚焦元素上的绑定：日历弹层的默认日期与可选边界、Today 的出现条件、月份与年份下拉、Select 的标签与失焦、布尔与数组取值、radio 与多选中搜索文本与字段值的隔离 | 否 |
 | `FormSteps.vrt.test.tsx` | 分步校验作用域、受控 `currentStep` 的确认与撤销、跨父级渲染保留草稿与待定导航、原生提前提交与业务提交的区别 | 否 |
-| `ExItem.vrt.test.tsx` | 独立条目的内容限宽与对齐、表单布局继承与逐项覆盖、直接 `Input` 的 id 与 `aria-describedby` 关联、服务端渲染后生成 id 的保留、按自身宽度换行、span 与根 `div` 属性 | 否 |
+| `FieldLayout.vrt.test.tsx` | 绑定 FormField 的内容限宽、逐项覆盖、按自身宽度换行及关联 | 否 |
+| `DocsFormGallery.vrt.test.tsx` | 真实 Form/Field gallery 的规范所有权、独立草稿、显式 ARIA 与宽窄几何 | 否 |
 | `FormContentSizing.vrt.test.tsx` | Showcase 中切换共享尺寸与对齐后草稿不丢失，窄行回退为填满可用宽度 | 否 |
-| `FormSurfaceOutline.vrt.test.tsx` | 三套主题下每个表单输入表面都保留 1px 实线边框，既不透明也不与自身背景同色，且各表面颜色一致 | 否 |
-| `FormSurfaces.vrt.test.tsx` | 文本、多选、日期与文件四类控件在空闲态使用同一个字段背景色 | 否 |
+| `FormAppearance.vrt.test.tsx` | 三主题下表单背景一致、透明 Input 边框与其他控件共享描边 | 否 |
 
-当前完整 Windows Chromium 视觉套件已覆盖中英文全部目录页、代表性交互和三张 Button 截图；测试运行约束见[视觉测试知识](../../knowledge/showcase/visual-test-constraints.md)，本次交付的独立结论见[最终复审](../../../.notes/showcase-component-pages/reviews/reui-example-coverage-final-review.md)。
+逐例检查仍覆盖共享示例的 DOM/SVG/ARIA 关联与资源加载；交互用例保留真实业务状态。测试运行约束见[视觉测试知识](../../knowledge/showcase/visual-test-constraints.md)，测试编写原则与执行时机由 [`TESTING.md`](../../../TESTING.md) 维护。
 
 ### 公共夹具模式
 
@@ -114,6 +113,6 @@
 两类断言并存，互不替代：
 
 - **计算样式与几何断言**跨平台稳定，覆盖颜色、阴影、内边距、圆角、字号、间距以及交互后的状态值。
-- **截图比对**（`toMatchScreenshot`）只用于渲染结果无法用计算样式穷举的场景（配方总览、Tabs、Menu、Dialog），基线文件提交在 `src/showcase/__screenshots__/<测试文件>/` 下。
+- **截图比对**（`toMatchScreenshot`）只用于渲染结果无法用计算样式穷举的场景（配方总览、Tabs、Menu、Dialog），基线文件提交在 `tests/browser/__screenshots__/<测试文件>/` 下。
 
 基线策略与运行平台的绑定关系见 [[showcase/02-windows-pinned-visual-baselines]]，运行视觉测试时的操作约束见 `knowledge/showcase/visual-test-constraints.md`。

@@ -9,3 +9,5 @@ export declare function overviewPath(locale: Locale, base?: string, group?: Cata
 export declare function examplePath(id: string, base?: string): string
 export declare function searchPath(locale: Locale, base?: string): string
 export declare function resolveLegacyHash(hash: string, locale: Locale, catalog: CatalogFamily[], base?: string): string | null
+
+export declare function navigationGroup<T extends string>(page: { id: string; group: T }): T | "components"

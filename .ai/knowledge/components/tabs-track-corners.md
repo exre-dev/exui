@@ -6,4 +6,4 @@
 
 选中投影复用随主题变化的 card shadow。`line` 在轨道内重设选中投影和原有圆角；选中项的 `focus-visible` 仍须优先显示焦点环。
 
-验证必须加载完整文档站样式，并测量实际内外框与四角的几何关系。`packages/docs/src/showcase/Tabs.vrt.test.tsx` 从公共包渲染真实的 `c-tabs-3`、`c-tabs-6`，覆盖桌面与移动视口、三种主题、两档密度、根字号缩放及首尾项切换，并单独检查 line、primary 和键盘焦点。仅检查 Token 数值相等，或仅加载公共组件样式，无法证明嵌套曲线和最终投影正确。
+验证必须加载完整文档站样式，并测量实际内外框与四角的几何关系。`packages/docs/tests/browser/Tabs.vrt.test.tsx` 从公共包渲染真实的 `c-tabs-3`、`c-tabs-6`，覆盖桌面与移动视口、三种主题、两档密度、根字号缩放及首尾项切换，并单独检查 line、primary 和键盘焦点。仅检查 Token 数值相等，或仅加载公共组件样式，无法证明嵌套曲线和最终投影正确。

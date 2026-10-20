@@ -73,3 +73,8 @@ export function resolveLegacyHash(hash, locale, catalog, base = "/") {
   const example = new URLSearchParams(query).get("example")
   return example && segmentPattern.test(example) ? `${url}?example=${encodeURIComponent(example)}` : url
 }
+
+// Presentation classification is independent from URL and module ownership.
+export function navigationGroup(page) {
+  return page.id === "form" || page.id === "exui/form" ? "components" : page.group
+}

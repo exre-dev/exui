@@ -1,10 +1,10 @@
 # ExUI 仓库知识库
 
-最后更新：2026-10-16
+最后更新：2026-10-19
 
 本目录记录 ExUI 仓库中**不能直接从源码读出来**的知识：系统边界与依赖方向、已被接受的技术决策及其理由、以及只有在真实运行或 CI 中才会暴露的约束。已落地行为以源码和运行证据为准；已批准但尚未实施的设计只放在标明“待实现”的决策记录中，不能当作当前行为。这些结论来自仓库证据或已批准设计，不包含未被接受的推测。
 
-普通的使用说明、安装步骤和入门指引不在这里：React 消费者看 `packages/components/README.md`；唯一维护的消费 skill 是 [`skills/exui/SKILL.md`](../skills/exui/SKILL.md)，涵盖组件组合、Form、Glass、Shadow 与 Tokens。其组件文档使用 skill 内的本地链接，公开符号与 Token 索引由仓库级 `scripts/exui-skill/` 生成，示例校验脚本也位于该目录。经核查的 ExUI 扩展与适配说明通过能力清单同步至 docs 和 skill，其维护边界见 [`architectures/docs/site.md`](architectures/docs/site.md#exui-公开差异的文档边界)。维护命令见 [`TESTING.md`](../TESTING.md#exui-skill-reference-maintenance)。测试与提交流程看 `TESTING.md`、`CONTRIBUTING.md`。
+普通的使用说明、安装步骤和入门指引不在这里：React 消费者看 `packages/components/README.md`；唯一维护的消费 skill 是 [`skills/exui/SKILL.md`](../skills/exui/SKILL.md)，涵盖组件组合、Form、Glass、Shadow 与 Tokens。其组件文档使用 skill 内的本地链接，公开符号与 Token 索引由仓库级 `scripts/exui-skill/` 生成，隔离示例校验脚本归入 `packages/components/tests/tooling/skill/`。经核查的 ExUI 扩展与适配说明通过能力清单同步至 docs 和 skill，其维护边界见 [`architectures/docs/site.md`](architectures/docs/site.md#exui-公开差异的文档边界)。测试规范与提交流程看 `TESTING.md`、`CONTRIBUTING.md`。
 
 ## 模块划分
 
@@ -15,7 +15,7 @@
 | `tokens` | `packages/tokens`：私有工作区 `@exre/exui-tokens`，框架中立的 Token 源、生成器与校验 |
 | `components` | `packages/components`：唯一公开发布包 `@exre/exui`，React 19、固定 ReUI 源及 ExUI 适配、公开入口与子路径 |
 | `docs` | `packages/docs`：私有 React Router/Fumadocs 静态文档站，维护双语内容、静态分享和新站浏览器验证 |
-| `showcase` | `packages/docs/src/showcase`：原 Showcase 示例与浏览器测试夹具；相关决策与复审记录保留原模块名 |
+| `showcase` | `packages/docs/src/showcase`：共享示例；浏览器回归与专用夹具位于 `packages/docs/tests/browser`，相关决策与复审记录保留原模块名 |
 | `release` | 仓库级交付：`scripts/`、`scripts/release-bootstrap/`、`.github/workflows/`、`.release-bootstrap.yaml`、`.changeset/` |
 
 跨模块的事实写在本文件所在的 `architectures/overview.md`，不在各模块中重复。
@@ -61,9 +61,9 @@ Windows 检出换行与公开导出校验的约束见 [`knowledge/components/sou
 
 Tabs 横向胶囊与竖向轨道的嵌套圆角、选中投影及焦点优先级见 [`knowledge/components/tabs-track-corners.md`](knowledge/components/tabs-track-corners.md)。
 
-表单模块：当前结构见 [`architectures/components/forms.md`](architectures/components/forms.md)，异步任务与消费约束见 [`knowledge/components/forms-lifecycle.md`](knowledge/components/forms-lifecycle.md)；ExItem 展示边界的决策见 [[components/07-ex-item-presentation-boundary]]。消费 API 用法继续由 `skills/exui/references/exui/form.md` 维护；本目录不复制完整签名。
+表单模块：当前结构见 [`architectures/components/forms.md`](architectures/components/forms.md)，异步任务与消费约束见 [`knowledge/components/forms-lifecycle.md`](knowledge/components/forms-lifecycle.md)；旧 ExItem 展示边界的历史决策见 [[components/07-ex-item-presentation-boundary]]。消费 API 用法由 `skills/exui/references/exui/form.md` 和 `field-layout.md` 维护；本目录不复制完整签名。
 
-全局消息模块：宿主和状态边界见 [`architectures/components/ex-message.md`](architectures/components/ex-message.md)，订阅时序与句柄约束见 [`knowledge/components/ex-message-lifecycle.md`](knowledge/components/ex-message-lifecycle.md)，共享宿主的取舍见 [[components/06-single-ex-message-host]]。
+全局通知模块：实例和任务边界见 [`architectures/components/notifications.md`](architectures/components/notifications.md)，订阅时序与应用清理约束见 [`knowledge/components/notification-lifecycle.md`](knowledge/components/notification-lifecycle.md)，移除旧包装层的取舍见 [[components/08-native-sonner-notifications]]。
 
 Sonner 自定义通知的绘制层与几何验证边界见 [`knowledge/components/sonner-custom-surfaces.md`](knowledge/components/sonner-custom-surfaces.md)。
 
@@ -90,7 +90,7 @@ Questionnaire 操作按钮在桌面和移动端都随共享 Button 的尺寸与�
 Badge 实底前景色不能复用于浅底、描边标签，以及文档样式层对暗色配色的影响，见 [`knowledge/components/badge-color-contrast.md`](knowledge/components/badge-color-contrast.md)。
 
 - 工作区与构建：`package.json`、`pnpm-workspace.yaml`、`tsconfig.json`、各包的 `package.json` 与 `vite.config.ts`
-- 生成与校验：`packages/tokens/scripts/`（`generate-css.mjs`、`verify-cjs.mjs`、`validate-tokens.mjs`、`token-length-policy.mjs`、`color-contrast-policy.mjs`、`foundation-reference-policy.mjs`、`glass-policy.mjs`）、`scripts/package-contract.mjs`、`scripts/verify-packages.mjs`、`scripts/verify-react-browser.mjs`、`scripts/verify-form-browser.mjs`、`scripts/form-consumer-fixture.mjs`
-- 交付与发布：`.github/workflows/ci.yml`、`release.yml`、`tag-npm.yml`、`.release-bootstrap.yaml`、`scripts/release-bootstrap/`、`.changeset/config.json`
-- 测试与视觉基线：`TESTING.md`、`packages/docs/vitest.config.ts`、`packages/docs/src/showcase/*.vrt.test.tsx` 与其 `__screenshots__/` 基线；当前站点的静态产物见 [`architectures/docs/site.md`](architectures/docs/site.md)
+- 生成与校验：`packages/tokens/scripts/`（`generate-css.mjs`、`verify-cjs.mjs`、`validate-tokens.mjs`、`token-length-policy.mjs`、`color-contrast-policy.mjs`、`foundation-reference-policy.mjs`、`glass-policy.mjs`）、`scripts/package-contract.mjs`、`packages/components/tests/consumers/verify-packages.mjs`、`packages/components/tests/consumers/verify-react-browser.mjs`、`packages/components/tests/consumers/verify-form-browser.mjs`、`packages/components/tests/consumers/form-consumer-fixture.mjs`
+- 交付与发布：`.github/workflows/ci.yml`、`release.yml`、`tag-npm.yml`、`.release-bootstrap.yaml`、`scripts/release-bootstrap/`、`.changeset/config.json`；本地快速检查与全量 CI 的取舍见 [[release/04-local-check-full-ci]]，执行边界见 [`architectures/release/delivery-pipelines.md`](architectures/release/delivery-pipelines.md)
+- 测试与视觉基线：`TESTING.md`、`packages/docs/vitest.config.ts`、`packages/docs/tests/browser/*.vrt.test.tsx` 与其 `__screenshots__/` 基线；当前站点的静态产物见 [`architectures/docs/site.md`](architectures/docs/site.md)
 - 设计依据：`.notes/archive/`、`.notes/rem-sizing/` 与 `.notes/glass-effects/` 下已归档或已被实现印证的设计文档

@@ -5,7 +5,6 @@ import type { Input } from "@/components/ui/input"
 import type { Textarea } from "@/components/ui/textarea"
 import type { Checkbox } from "@/components/ui/checkbox"
 import type { Switch } from "@/components/ui/switch"
-import type { ExItemLayout, ExItemProps } from "@/components/patterns/ex-item"
 
 export type FormValues = Record<string, unknown>
 export type FormSchema = StandardSchemaV1<FormValues, unknown>
@@ -79,6 +78,13 @@ export interface FormFieldArray<I extends FormValues, P extends FormObjectArrayP
   move(from: number, to: number): void
   readonly issues: readonly FormIssue[]
 }
+export type FormFieldLayout = "vertical" | "horizontal"
+export type FormFieldSpan = 1 | 2 | 3 | 4 | "full"
+interface FormContentOptions {
+  /** Maximum content width in horizontal rows; numbers are CSS pixels. */
+  contentMaxWidth?: React.CSSProperties["maxWidth"]
+  contentAlign?: "left" | "right"
+}
 export type FormLayout = "vertical" | "horizontal" | "inline"
 export type FormColumnCount = 1 | 2 | 3 | 4
 export interface FormColumns { base?: FormColumnCount; sm?: FormColumnCount; md?: FormColumnCount; lg?: FormColumnCount }
@@ -88,10 +94,10 @@ export interface FormRenderArguments<I extends FormValues, P extends FormPath<I>
   state: FormFieldState & { readonly disabled: boolean }
   accessibility: { id: string; name: P; "aria-invalid": boolean; "aria-describedby"?: string; "aria-required"?: boolean }
 }
-export interface FormFieldBase<I extends FormValues, P extends FormPath<I>> extends Pick<ExItemProps, "contentMaxWidth" | "contentAlign"> {
+export interface FormFieldBase<I extends FormValues, P extends FormPath<I>> extends FormContentOptions {
   name: P; label?: React.ReactNode; description?: React.ReactNode; required?: boolean; disabled?: boolean
   dependencies?: readonly FormPath<I>[]; visibleWhen?: (snapshot: FormSnapshot<I>) => boolean; disabledWhen?: (snapshot: FormSnapshot<I>) => boolean
-  preserve?: boolean; validationScope?: FormValidationScope<I>; colSpan?: FormColumnCount | "full"; layout?: ExItemLayout; className?: string; noStyle?: boolean
+  preserve?: boolean; validationScope?: FormValidationScope<I>; colSpan?: FormColumnCount | "full"; layout?: FormFieldLayout; className?: string; noStyle?: boolean
 }
 type BindingProps = "name" | "value" | "defaultValue" | "checked" | "defaultChecked" | "onChange" | "onValueChange" | "onCheckedChange" | "onBlur" | "ref" | "id" | "disabled" | "aria-invalid" | "aria-describedby" | "required"
 export type FormInputControlProps = Omit<React.ComponentProps<typeof Input>, BindingProps | "type">
@@ -119,19 +125,27 @@ type BooleanControl<V> = [Exclude<V, undefined>] extends [boolean] ? boolean ext
 type EnumControl<V> = [Exclude<V, undefined>] extends [string] ? Builtin<"select" | "radio-group", FormSelectControlProps<Exclude<V, undefined> & string>> : never
 type ArrayControl<V> = [MutableArray<V>] extends [never] ? never : [MutableArray<V>] extends [string] ? Builtin<"checkbox-group" | "multi-select", FormMultiSelectControlProps<MutableArray<V> & string>> : [Exclude<V, undefined>] extends [File[]] ? Builtin<"files", FormFilesControlProps> : never
 export type FormFieldBinding<I extends FormValues, P extends FormPath<I>> = TextControl<FormPathValue<I, P>> | BooleanControl<FormPathValue<I, P>> | EnumControl<FormPathValue<I, P>> | ArrayControl<FormPathValue<I, P>> | { render: (args: FormRenderArguments<I, P>) => React.ReactNode; control?: never; controlProps?: never }
-export type FormItemProps<I extends FormValues, O, P extends FormPath<I>> = { form: FormInstance<I, O>; children?: never } & FormFieldBase<NoInfer<I>, P> & FormFieldBinding<NoInfer<I>, P>
+export type FormFieldProps<I extends FormValues, O, P extends FormPath<I>> = { form: FormInstance<I, O>; children?: never } & FormFieldBase<NoInfer<I>, P> & FormFieldBinding<NoInfer<I>, P>
 export type FormOrdinaryFieldConfig<I extends FormValues> = { [P in FormPath<I>]: FormFieldBase<I, P> & FormFieldBinding<I, P> & { kind?: "field" } }[FormPath<I>]
 export type FormListConfig<I extends FormValues> = { [P in FormObjectArrayPath<I>]: { kind: "list"; name: P; defaultItem: NoInfer<FormArrayItem<I, P>>; itemFields: readonly FormFieldConfig<FormArrayItem<I, P>>[]; label?: React.ReactNode; description?: React.ReactNode; className?: string; colSpan?: FormColumnCount | "full" } & FormLayoutOptions }[FormObjectArrayPath<I>]
 export type FormFieldConfig<I extends FormValues> = FormOrdinaryFieldConfig<I> | FormListConfig<I>
 export type FormListProps<I extends FormValues, O, P extends FormObjectArrayPath<I>> = { form: FormInstance<I, O>; name: P; defaultItem: NoInfer<FormArrayItem<I, P>>; render: (array: FormFieldArray<NoInfer<I>, P>) => React.ReactNode; label?: React.ReactNode; description?: React.ReactNode; className?: string; colSpan?: FormColumnCount | "full" } & FormLayoutOptions
-export interface FormProps<I extends FormValues, O> extends FormLayoutOptions, Pick<ExItemProps, "contentMaxWidth" | "contentAlign"> {
-  form: FormInstance<I, O>; onSubmit: FormSubmitHandler<NoInfer<I>, NoInfer<O>>; children: React.ReactNode
+export interface FormCommonProps<I extends FormValues, O> extends FormLayoutOptions, FormContentOptions {
+  onSubmit: FormSubmitHandler<NoInfer<I>, NoInfer<O>>
   name?: string; disabled?: boolean; clearOnDestroy?: boolean; onInvalid?: (errors: FormErrors<NoInfer<I>>) => void; onSubmitError?: (error: unknown) => void; submitErrorMessage?: string; formatIssue?: (message: string) => string; issueSeparator?: string; className?: string; style?: React.CSSProperties
   onReset?: never; noValidate?: never
 }
 export interface FormErrorSummaryProps<I extends FormValues, O> { form?: FormInstance<I, O>; className?: string; title?: React.ReactNode }
 export type FormStep<I extends FormValues> = ({ id: string; title: React.ReactNode; kind?: "edit"; fields: readonly FormPath<I>[]; validationSchema: FormSchema; validationDependencies?: readonly FormPath<I>[]; render?: never } | { id: string; title: React.ReactNode; kind: "review"; render: (snapshot: FormSnapshot<I>) => React.ReactNode; fields?: never; validationSchema?: never; validationDependencies?: never })
-export interface ExFormFooterArguments<I extends FormValues> { state: FormState<I>; currentStep?: string; isFirstStep: boolean; isLastStep: boolean; next(): Promise<boolean>; back(): void; goTo(id: string): Promise<boolean>; submit(): Promise<FormSubmitResult>; reset(): void }
-export type ExFormCommonProps<I extends FormValues, O> = Omit<FormProps<I, O>, "form" | "children"> & { children?: React.ReactNode; fields: readonly FormFieldConfig<NoInfer<I>>[]; steps?: readonly FormStep<NoInfer<I>>[]; currentStep?: string; onStepChange?: (id: string) => void; footer?: React.ReactNode | ((args: ExFormFooterArguments<NoInfer<I>>) => React.ReactNode); submitLabel?: React.ReactNode; resetLabel?: React.ReactNode; backLabel?: React.ReactNode; nextLabel?: React.ReactNode; stepsAriaLabel?: string }
-export type ExFormSchemaProps<S extends FormSchema> = FormOptions<S> & ExFormCommonProps<FormInput<S>, FormOutput<S>> & { form?: never }
-export type ExFormInstanceProps<I extends FormValues, O> = ExFormCommonProps<I, O> & { form: FormInstance<I, O>; schema?: never; defaultValues?: never; mode?: never; reValidateMode?: never }
+export interface FormFooterArguments<I extends FormValues> { state: FormState<I>; currentStep?: string; isFirstStep: boolean; isLastStep: boolean; next(): Promise<boolean>; back(): void; goTo(id: string): Promise<boolean>; submit(): Promise<FormSubmitResult>; reset(): void }
+export type FormConfiguredCommonProps<I extends FormValues, O> = FormCommonProps<I, O> & { children?: React.ReactNode; fields: readonly FormFieldConfig<NoInfer<I>>[]; steps?: readonly FormStep<NoInfer<I>>[]; currentStep?: string; onStepChange?: (id: string) => void; footer?: React.ReactNode | ((args: FormFooterArguments<NoInfer<I>>) => React.ReactNode); submitLabel?: React.ReactNode; resetLabel?: React.ReactNode; backLabel?: React.ReactNode; nextLabel?: React.ReactNode; stepsAriaLabel?: string }
+export type FormConfiguredSchemaProps<S extends FormSchema> = FormOptions<S> & FormConfiguredCommonProps<FormInput<S>, FormOutput<S>> & { form?: never }
+export type FormConfiguredInstanceProps<I extends FormValues, O> = FormConfiguredCommonProps<I, O> & { form: FormInstance<I, O>; schema?: never; defaultValues?: never; mode?: never; reValidateMode?: never }
+
+export interface FormComposedProps<I extends FormValues, O> extends FormCommonProps<I, O> {
+  form: FormInstance<I, O>
+  children: React.ReactNode
+  schema?: never; defaultValues?: never; mode?: never; reValidateMode?: never
+  fields?: never; steps?: never; currentStep?: never; onStepChange?: never; footer?: never
+  submitLabel?: never; resetLabel?: never; backLabel?: never; nextLabel?: never; stepsAriaLabel?: never
+}
