@@ -436,7 +436,7 @@ describe.each(scalingMatrix)(
       expectFixedShadow("the menu surface shadow", computed(menuSurface, "box-shadow"))
 
       const dialogSurface = locate("recipe-dialog-surface")
-      expectScaledProperty(dialogSurface, "padding-top", 16, scale)
+      expectScaledProperty(dialogSurface, "padding-top", 24, scale)
       expectScaledProperty(dialogSurface, "row-gap", 24, scale)
       expectScaledProperty(dialogSurface, "border-radius", 26, scale)
       expectFixedProperty(dialogSurface, "border-top-width", 1)
@@ -555,7 +555,7 @@ describe.each(scalingMatrix)(
       await page.getByTestId("recipe-dialog-trigger").click()
       const dialog = locate("recipe-dialog-content")
       await expect.element(page.getByTestId("recipe-dialog-content")).toBeVisible()
-      expectScaledProperty(dialog, "padding-top", 16, scale)
+      expectScaledProperty(dialog, "padding-top", 24, scale)
       expectScaledProperty(dialog, "row-gap", 24, scale)
       expectScaledProperty(dialog, "border-radius", 26, scale)
       expectScaledProperty(locate("recipe-dialog-title"), "font-size", 16, scale)
@@ -650,10 +650,10 @@ describe("root font size contract", () => {
 
     const dialog = locate("recipe-dialog-content")
     await expect.element(page.getByTestId("recipe-dialog-content")).toBeVisible()
-    expectScaledProperty(dialog, "padding-top", 16, 1)
+    expectScaledProperty(dialog, "padding-top", 24, 1)
 
     setRootFontSize("32px")
-    expectScaledProperty(dialog, "padding-top", 16, 2)
+    expectScaledProperty(dialog, "padding-top", 24, 2)
     expectScaledProperty(locate("recipe-dialog-title"), "font-size", 16, 2)
     await expect.element(page.getByTestId("recipe-dialog-content")).toBeVisible()
 
@@ -667,7 +667,7 @@ describe("root font size contract", () => {
     expect(dialogBox.bottom).toBeLessThanOrEqual(document.documentElement.clientHeight + 1)
 
     setRootFontSize("16px")
-    expectScaledProperty(dialog, "padding-top", 16, 1)
+    expectScaledProperty(dialog, "padding-top", 24, 1)
   })
 
   it("keeps an open Menu anchored to its trigger when the root font size changes", async () => {

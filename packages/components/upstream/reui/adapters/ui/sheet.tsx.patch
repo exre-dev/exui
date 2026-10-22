@@ -1,5 +1,5 @@
 diff --git a/packages/components/upstream/reui/source/registry/bases/radix/ui/sheet.tsx b/packages/components/src/components/ui/sheet.tsx
-index d95a5ca..3c2c797 100644
+index d95a5ca..97788ff 100644
 --- a/packages/components/upstream/reui/source/registry/bases/radix/ui/sheet.tsx
 +++ b/packages/components/src/components/ui/sheet.tsx
 @@ -1,11 +1,12 @@
@@ -81,7 +81,7 @@ index d95a5ca..3c2c797 100644
      <div
        data-slot="sheet-header"
 -      className={cn("cn-sheet-header flex flex-col", className)}
-+      className={cn("flex flex-col gap-1.5 p-4", className)}
++      className={cn("flex flex-col gap-1.5 p-6", className)}
        {...props}
      />
    )
@@ -90,7 +90,7 @@ index d95a5ca..3c2c797 100644
      <div
        data-slot="sheet-footer"
 -      className={cn("cn-sheet-footer mt-auto flex flex-col", className)}
-+      className={cn("mt-auto flex flex-col gap-2 p-4", className)}
++      className={cn("mt-auto flex flex-col gap-2 p-6", className)}
        {...props}
      />
    )

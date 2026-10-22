@@ -1,6 +1,6 @@
 ### Quick composition, header actions and mobile fullscreen
 
-Default content padding is `1rem` on every side (16px at a 16px root). Fullscreen uses the larger of this padding and each corresponding safe-area inset.
+Default content padding is `1.5rem` on every side (24px at a 16px root), matching ReUI. Fullscreen uses the larger of this padding and each corresponding safe-area inset.
 
 Supply `title` on `Dialog` to generate the Content/Header/Body/Footer structure. `title`, optional `description` and optional `footer` accept React nodes; children become the body. Without `title`, keep the existing explicit composition. Both forms use `open`/`onOpenChange` or `defaultOpen` and start closed by default. Quick mode uses an external trigger and restores focus to the previously focused element when closing, unless `contentProps.onCloseAutoFocus` prevents it. Non-modal dialogs retain focus on an outside target that dismisses them.
 

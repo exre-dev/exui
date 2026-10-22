@@ -168,7 +168,7 @@ export const componentRecipes: ComponentRecipes = {
   dialog: {
     overlay: { background: semantic("surface.overlay"), backdropBlur: "0.25rem", duration: "100ms" },
     surface: {
-      padding: "1rem", gap: "1.5rem", radius: "1.625rem", background: semantic("surface.modal"),
+      padding: "1.5rem", gap: "1.5rem", radius: "1.625rem", background: semantic("surface.modal"),
       foreground: semantic("text.primary"), border: semantic("border.default"), shadow: semantic("shadow.modal"),
     },
     title: {

@@ -232,7 +232,7 @@
   --exui-component-dialog-surface-border: var(--exui-border-default);
   --exui-component-dialog-surface-foreground: var(--exui-text-primary);
   --exui-component-dialog-surface-gap: 1.5rem;
-  --exui-component-dialog-surface-padding: 1rem;
+  --exui-component-dialog-surface-padding: 1.5rem;
   --exui-component-dialog-surface-radius: 1.625rem;
   --exui-component-dialog-surface-shadow: var(--exui-shadow-modal);
   --exui-component-dialog-title-font-family: var(--exui-font-family);
