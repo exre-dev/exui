@@ -14,7 +14,7 @@ Dialog：在模态层中聚焦一项任务。
 
 ### 快捷写法、标题动作与手机全屏
 
-内容区默认四边 padding 均为 `1rem`，根字号为 16px 时即 16px。全屏时，各方向取此 padding 与对应安全区 inset 的较大值。
+内容区默认四边 padding 均为 `1.5rem`，根字号为 16px 时即 24px，与 ReUI 一致。全屏时，各方向取此 padding 与对应安全区 inset 的较大值。
 
 给 `Dialog` 提供 `title`，即可自动生成 Content/Header/Body/Footer 结构。`title`、可选的 `description` 和 `footer` 支持 React 节点，children 作为正文。不传 `title` 时继续使用显式组合写法。两种写法都沿用 `open`/`onOpenChange` 或 `defaultOpen`，默认关闭。快捷写法由外部按钮触发，关闭时恢复此前的焦点；可通过 `contentProps.onCloseAutoFocus` 阻止默认恢复。非模态弹窗由外部交互关闭时，保留该外部目标的焦点。
 

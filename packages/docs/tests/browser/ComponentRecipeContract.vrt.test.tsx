@@ -247,7 +247,7 @@ describe.each(themes)("%s recipe contract", (theme) => {
     expect(menu.boxShadow).toBe(resolvedProperty("box-shadow", "--exui-component-menu-surface-shadow"))
 
     const dialog = getComputedStyle(page.getByTestId("recipe-dialog-surface").element())
-    expect(pixels(dialog.paddingTop)).toBe(16)
+    expect(pixels(dialog.paddingTop)).toBe(24)
     expect(pixels(dialog.rowGap)).toBe(24)
     expect(pixels(dialog.borderRadius)).toBe(26)
     expect(dialog.backgroundColor).toBe(colorFromVariable("--exui-component-dialog-surface-background"))
@@ -362,7 +362,7 @@ describe.each(themes)("%s recipe contract", (theme) => {
     const dialog = page.getByTestId("recipe-dialog-content")
     await expect.element(dialog).toBeVisible()
     const dialogStyle = getComputedStyle(dialog.element())
-    expect(pixels(dialogStyle.paddingTop)).toBe(16)
+    expect(pixels(dialogStyle.paddingTop)).toBe(24)
     expect(pixels(dialogStyle.rowGap)).toBe(24)
     expect(pixels(dialogStyle.borderRadius)).toBe(26)
     expect(dialogStyle.backgroundColor).toBe(colorFromVariable("--exui-component-dialog-surface-background"))

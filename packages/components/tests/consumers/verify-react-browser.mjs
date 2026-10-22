@@ -399,10 +399,10 @@ async function verifyReactBrowser(consumerRoot) {
         if (!element) {
           return false
         }
-        return Math.abs(Number.parseFloat(getComputedStyle(element).paddingTop) - 32) <= 0.5
+        return Math.abs(Number.parseFloat(getComputedStyle(element).paddingTop) - 48) <= 0.5
       })
       const scaledPadding = await measure(scaledDialog, "padding-top")
-      closeEnough(scaledPadding.value, 32, "the portal Dialog padding at a 32px root font size")
+      closeEnough(scaledPadding.value, 48, "the portal Dialog padding at a 32px root font size")
       await page.keyboard.press("Escape")
       await scaledDialog.waitFor({ state: "hidden" })
     } finally {

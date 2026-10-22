@@ -24,7 +24,7 @@
       "source": "registry/bases/radix/ui/alert-dialog.tsx",
       "target": "components/ui/alert-dialog.tsx",
       "sourceSha256": "62ad5292954092897bfe1f1707d41f7d1e30bf46dbb8b4cd85736d06cf4a8cfd",
-      "adaptedSha256": "ba0f36e0b8236a79e1796692dac4d7e148350693df87d836c4aead7e7452bac8",
+      "adaptedSha256": "571e23ca07f296310fc2c41aef8263f3e66ccdd12badbfc41a3b6b87b5aed5dd",
       "patch": "adapters/ui/alert-dialog.tsx.patch",
       "changedLines": 43,
       "category": "reviewable ExUI adaptation"
@@ -357,7 +357,7 @@
       "source": "registry/bases/radix/ui/sheet.tsx",
       "target": "components/ui/sheet.tsx",
       "sourceSha256": "0b90787b36db17aa84acc5c30d9df896eae06581955ed4f1d7ab28986e659aed",
-      "adaptedSha256": "182317cc66945974226e892435b77851c5f11d0014a4ad622f615c1e86a7a5eb",
+      "adaptedSha256": "3f2e1c469ad7bcfece6647ba0e89a508b786a8414362249cfd986e7841a5c579",
       "patch": "adapters/ui/sheet.tsx.patch",
       "changedLines": 43,
       "category": "reviewable ExUI adaptation"
