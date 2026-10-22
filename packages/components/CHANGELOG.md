@@ -1,5 +1,11 @@
 # @exre/exui
 
+## 1.1.1
+
+### Patch Changes
+
+- 1faef7f: Align Dialog and AlertDialog content padding and Sheet header/footer padding with ReUI at 1.5rem.
+
 ## 1.1.0
 
 ### Minor Changes
