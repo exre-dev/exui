@@ -89,7 +89,8 @@ describe("Docs component overview", () => {
     await expect.element(page.getByTestId("components-overview")).toBeVisible()
     const card = container.querySelector<HTMLElement>('[data-overview-card="button"]')!
     card.scrollIntoView({ block: "center" })
-    await expect.poll(() => card.querySelector("button")?.textContent).toBe("Default")
+    // Scrolling starts a lazy module fetch; use the same cold-load budget as the all-thumbnails check.
+    await expect.poll(() => card.querySelector("button")?.textContent, { timeout: 5000 }).toBe("Default")
     const button = card.querySelector("button")!
     const height = button.getBoundingClientRect().height
     const background = getComputedStyle(card).backgroundColor
