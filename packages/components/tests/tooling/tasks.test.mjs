@@ -19,7 +19,7 @@ async function exercise(t, mode, files = [], { fail = "", env = {} } = {}) {
 import { appendFileSync } from "node:fs"
 const [command, ...args] = process.argv.slice(2)
 appendFileSync(process.env.TASK_EVENTS, JSON.stringify({ command, args, cwd: process.cwd(), base: process.env.EXUI_DOCS_BASE }) + "\\n")
-if (args.includes(process.env.TASK_FAIL)) process.exitCode = 7
+if (args.includes(process.env.TASK_FAIL) && (!process.env.TASK_FAIL_WORKSPACE || args.includes(process.env.TASK_FAIL_WORKSPACE))) process.exitCode = 7
 `)
   const logs = []
   const { runTasks } = await import(runner.href)
@@ -125,7 +125,7 @@ test("verify includes every regression and builds each prerequisite only once", 
   const tests = events.filter((event) => has(event, "--test"))
   assert.equal(tests.length, 1)
   assert.deepEqual(tests[0].args, ["--test", "--test-concurrency=2", "packages/*/tests/**/*.test.mjs"])
-  for (const gate of ["scripts/docs-example-styles.mjs", "scripts/docs-snippets.mjs", "packages/components/tests/tooling/skill/verify-examples.mjs", "packages/components/tests/consumers/verify-packages.mjs", "test:visual"]) assert.ok(index(events, gate) >= 0, gate)
+  for (const gate of ["scripts/docs-example-styles.mjs", "scripts/docs-snippets.mjs", "packages/components/tests/tooling/skill/verify-examples.mjs", "packages/components/tests/consumers/verify-packages.mjs", "vitest"]) assert.ok(index(events, gate) >= 0, gate)
   for (const gate of ["lint", "scripts/release-bootstrap/verify.mjs", "scripts/reui-sync.mjs", "git"]) {
     assert.ok(index(events, gate) >= 0, `${gate} belongs to verification`)
   }
@@ -138,6 +138,65 @@ test("verify includes every regression and builds each prerequisite only once", 
   assert.equal(rootBuild.base, "/")
   const rootStatic = events.find((event) => has(event, "packages/docs/tests/integration/verify-docs-static.mjs"))
   assert.equal(rootStatic.args.at(-1), "/")
+})
+
+test("isolated CI groups retain full verification coverage without building unrelated docs bases", async (t) => {
+  const full = await exercise(t, "verify")
+  assert.ifError(full.error)
+  const signatures = ({ events, cli }) => events.map(event => JSON.stringify({ args: event.args.filter(arg => arg !== cli), base: event.base }))
+  const combined = new Set()
+  const cases = [
+    { group: "checks", gates: ["scripts/reui-sync.mjs", "lint", "docs:prepare", "--test", "scripts/docs-snippets.mjs", "packages/components/tests/tooling/skill/verify-examples.mjs", "scripts/release-bootstrap/verify.mjs", "git"] },
+    { group: "docs-root", gates: ["scripts/docs-example-styles.mjs", "packages/docs/tests/integration/verify-docs-static.mjs", "packages/docs/tests/integration/verify-docs-sharing.mjs"], base: "/" },
+    { group: "docs-prefix", gates: ["packages/docs/tests/integration/verify-docs-static.mjs", "packages/docs/tests/integration/verify-docs-sharing.mjs"], base: "/exui/" },
+    { group: "visual", gates: ["docs:prepare", "vitest", "chromium-desktop"] },
+    { group: "consumers", gates: ["packages/components/tests/consumers/verify-packages.mjs"] },
+  ]
+  for (const { group, gates, base } of cases) await t.test(group, async () => {
+    const result = await exercise(t, "verify:part", [group])
+    assert.ifError(result.error)
+    const { events } = result
+    for (const prerequisite of ["build:js", "build:cjs", "check:built"]) assert.equal(events.filter(event => has(event, prerequisite)).length, 1, prerequisite)
+    const libraryBuild = events.findIndex(event => has(event, "@exre/exui") && has(event, "build"))
+    assert.ok(index(events, "check:built") < libraryBuild)
+    for (const gate of gates) {
+      assert.ok(index(events, gate) >= 0, `${group}: ${gate}`)
+      if (gate !== "scripts/reui-sync.mjs") assert.ok(index(events, gate) > libraryBuild, `${group}: ${gate} requires the public package`)
+    }
+    const docsBuilds = events.filter(event => has(event, "@exre/exui-docs") && has(event, "build"))
+    assert.equal(docsBuilds.length, base ? 1 : 0, `${group} builds only its own docs base`)
+    const styles = index(events, "scripts/docs-example-styles.mjs")
+    if (group === "docs-root") assert.ok(events.indexOf(docsBuilds[0]) < styles, "production styles require this job's completed docs build")
+    else assert.equal(styles, -1, "production style checks must stay with the root docs build")
+    if (base) {
+      assert.equal(docsBuilds[0].base, base)
+      const output = events.slice(-2)
+      assert.deepEqual(output.map(event => event.args), [
+        ["packages/docs/tests/integration/verify-docs-static.mjs", "packages/docs/build/client", base],
+        ["packages/docs/tests/integration/verify-docs-sharing.mjs", "packages/docs/build/client", base],
+      ])
+    }
+    if (group === "checks") {
+      const tests = events.find(event => has(event, "--test"))
+      assert.deepEqual(tests.args, ["--test", "--test-concurrency=2", "packages/*/tests/**/*.test.mjs"])
+      assert.ok(index(events, "docs:prepare") < index(events, "--test"))
+    }
+    if (group === "visual") {
+      assert.ok(index(events, "docs:prepare") < index(events, "vitest"))
+      const browser = events.find(event => has(event, "vitest"))
+      assert.deepEqual(browser.args.slice(1), ["--filter", "@exre/exui-docs", "exec", "vitest", "run", "--project", "chromium-desktop"])
+    }
+    for (const event of events) assert.ok(!has(event, "chromium-mobile") && !has(event, "test:visual"), "CI must select the desktop project explicitly")
+    for (const signature of signatures(result)) combined.add(signature)
+  })
+  assert.deepEqual([...combined].sort(), [...new Set(signatures(full))].sort(), "full verification and CI must cover the same stages")
+})
+
+test("a failed docs group never validates or publishes the failed build output", async (t) => {
+  const { events, error } = await exercise(t, "verify:part", ["docs-prefix"], { fail: "build", env: { TASK_FAIL_WORKSPACE: "@exre/exui-docs" } })
+  assert.match(error?.message ?? "", /Build docs \(\/exui\/\) exited with 7/)
+  assert.equal(events.at(-1).base, "/exui/")
+  assert.ok(!events.some(event => event.args.some(arg => arg.includes("verify-docs-"))))
 })
 
 test("typecheck prepares public Tokens before declarations and docs types", async (t) => {
@@ -156,7 +215,7 @@ test("build orders public packages before the docs and preserves a requested dep
 })
 
 test("CLI rejects unknown modes and extra non-test arguments before launching work", () => {
-  for (const args of [["unknown"], ["build", "packages/components/tests/node/chart-style.test.mjs"], ["test", "packages/components/tests/node/chart-style.test.mjs"]]) {
+  for (const args of [["unknown"], ["build", "packages/components/tests/node/chart-style.test.mjs"], ["test", "packages/components/tests/node/chart-style.test.mjs"], ["verify:part"], ["verify:part", "mobile"], ["verify:part", "checks", "visual"]]) {
     const result = spawnSync(process.execPath, [fileURLToPath(runner), ...args], { encoding: "utf8" })
     assert.equal(result.status, 1)
     assert.match(result.stderr, /Usage:/)

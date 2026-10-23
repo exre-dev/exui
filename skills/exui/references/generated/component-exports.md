@@ -2,7 +2,7 @@
 
 # ExUI public exports
 
-Generated from the current repository package root (@exre/exui, source manifest version 1.1.0); 1541 names. The version is source metadata, not a statement about a published tarball. This symbol inventory does not define props; read the installed package declarations for the consuming version.
+Generated from the current repository package root (@exre/exui); 1541 names. This inventory describes repository source, not a published tarball. It does not define props; read the installed package declarations for the consuming version.
 
 | Public name | Kind | Related contract |
 | --- | --- | --- |
