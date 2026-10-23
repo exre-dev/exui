@@ -45,7 +45,7 @@ const exportLines = symbols.map((symbol) => {
   const kind = resolved.flags & ts.SymbolFlags.Value ? (resolved.flags & ts.SymbolFlags.Type ? "value + type" : "value") : "type"
   return `| \`${symbol.name}\` | ${kind} | [contract](${referenceFor(file)}) |`
 })
-const exportsMarkdown = [notice, "", "# ExUI public exports", "", `Generated from the current repository package root (${manifest.name}, source manifest version ${manifest.version}); ${symbols.length} names. The version is source metadata, not a statement about a published tarball. This symbol inventory does not define props; read the installed package declarations for the consuming version.`, "", "| Public name | Kind | Related contract |", "| --- | --- | --- |", ...exportLines, ""].join("\n")
+const exportsMarkdown = [notice, "", "# ExUI public exports", "", `Generated from the current repository package root (${manifest.name}); ${symbols.length} names. This inventory describes repository source, not a published tarball. It does not define props; read the installed package declarations for the consuming version.`, "", "| Public name | Kind | Related contract |", "| --- | --- | --- |", ...exportLines, ""].join("\n")
 
 const tokensTarget = manifest.exports["./tokens"].import
 const tokenFile = typeof tokensTarget === "string" ? tokensTarget : tokensTarget.default

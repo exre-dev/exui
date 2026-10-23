@@ -92,6 +92,8 @@ checkout EXPECTED_MAIN（= 被验证的 head_sha，fetch-depth: 0）
 
 `release-diff.mjs` 对版本提交只允许公开包版本、关联依赖、锁文件、对应 changelog 和 Changeset 删除。Changeset 文件名的主体必须匹配 `[A-Za-z0-9_-]+`；Changesets 本身接受的点号名称仍会被这里拒绝。准备发布说明时就应采用兼容名称，避免直到版本应用后才触发差异守卫。
 
+消费 skill 的导出清单由 `scripts/exui-skill/update-inventories.mjs` 从当前源码生成，不嵌入包版本号。仅提升版本时公开面未变，清单必须继续通过检查，避免版本提交后出现无关的清单过期失败；真正的导出变化仍需显式重新生成。清单只表示源码中的符号，消费者的版本契约仍以已安装包的声明为准。
+
 ## npm 发布钩子
 
 `.github/workflows/tag-npm.yml` 只在推送匹配 `@exre/exui@*` 的标签时运行，使用 `npm-release` environment 并申请 `id-token: write` 以走 OIDC，不依赖长期 npm 写令牌。步骤顺序：

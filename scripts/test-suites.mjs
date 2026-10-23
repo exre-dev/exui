@@ -8,6 +8,7 @@ export const fastNodeTests = [
   "packages/components/tests/tooling/release/npm.test.mjs",
   "packages/components/tests/tooling/release/package-contract.test.mjs",
   "packages/components/tests/tooling/run-command.test.mjs",
+  "packages/components/tests/tooling/skill/inventories.test.mjs",
   "packages/components/tests/tooling/skill/sync-references.test.mjs",
   "packages/components/tests/tooling/tasks.test.mjs",
   "packages/components/tests/tooling/test-discovery.test.mjs",
