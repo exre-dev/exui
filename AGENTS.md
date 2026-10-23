@@ -42,7 +42,8 @@ Use pnpm 11.9.0, as declared in `package.json`.
 - `pnpm install`: install dependencies.
 - `pnpm dev`: build and watch the library, start docs, and reload after successful library rebuilds.
 - `pnpm check`: the single routine local validation entry; prepare the public library once and run lint, types, source consistency and fast Node/SSR regressions without Chromium.
-- `pnpm verify`: run the complete workflow used by both PR and main CI, verifying all regressions and root and `/exui/` docs output sequentially.
+- `pnpm verify`: run the approved CI checks sequentially, including all Node regressions, desktop Chromium and both docs bases.
+- `pnpm verify:part <checks|docs-root|docs-prefix|visual|consumers>`: run one isolated CI group; PR and main CI run these five groups in parallel on Windows. Follow `TESTING.md` for execution timing and browser scope.
 - `pnpm typecheck`: run TypeScript checks across all three workspaces.
 - `pnpm lint`: run Oxlint with React and TypeScript rules.
 - `pnpm build`: build Tokens, components, declarations, and the private static docs site in dependency order.

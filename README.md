@@ -84,7 +84,8 @@ pnpm dev
 | Command | Purpose |
 | --- | --- |
 | `pnpm check` | Run routine local validation: prepare the public library once, then check lint, types, source consistency and fast Node/SSR regressions without Chromium. |
-| `pnpm verify` | Run the complete workflow used by both PR and main CI, including builds, all regressions, Chromium, packed consumers and both docs deployment bases. |
+| `pnpm verify` | Run the complete CI validation sequentially, including builds, all Node regressions, desktop Chromium, packed consumers and both docs deployment bases. |
+| `pnpm verify:part <checks\|docs-root\|docs-prefix\|visual\|consumers>` | Run one isolated verification group; PR and main CI run the five groups in parallel on Windows. |
 | `pnpm build` | Build Tokens, components and the static docs site. |
 | `pnpm typecheck` / `pnpm lint` | Run a focused workspace check. |
 | `pnpm test` | Prepare the public library and run the fast Node/SSR regressions independently; already included in `check`. |

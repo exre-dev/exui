@@ -2,15 +2,15 @@
 
 > 当前私有应用是 `packages/docs`（`@exre/exui-docs`），其静态文档站边界见 [`docs/site.md`](../docs/site.md)。下文原 Showcase 测试的历史证据按原名保留。
 
-最后更新：2026-10-19
+最后更新：2026-10-23
 
 `release` 模块不产出可安装的包，它由三类互相衔接的门禁组成：合并前质量门禁、打包消费者门禁与基于标签的发布流水线。
 
 ## CI 质量门禁
 
-测试按所属工作区归档到 `tests/`；仓库开发、发布与 Skill 测试由 `packages/components/tests/tooling/` 持有，不新增工作区。`scripts/test-suites.mjs` 将所有 Node 套件显式分为快速回归和集成回归，发现测试拒绝遗漏、重复及失效路径。`check` 共用一次 Token 和公开组件库准备，完成静态检查与快速 Node/SSR 回归；`test` 可独立运行同一组快速回归，`test:node` 保留显式全部或定向 Node 入口。PR 与主分支 CI 统一执行完整 `verify`，保留所有 Node、浏览器、隔离消费者、示例及双 base 文档门禁。取舍理由见 [[release/04-local-check-full-ci]]；测试编写原则与执行时机由 [TESTING.md](../../../TESTING.md) 统一维护。
+测试按所属工作区归档到 `tests/`；仓库开发、发布与 Skill 测试由 `packages/components/tests/tooling/` 持有，不新增工作区。`scripts/test-suites.mjs` 将所有 Node 套件显式分为快速回归和集成回归，发现测试拒绝遗漏、重复及失效路径。`check` 共用一次 Token 和公开组件库准备，完成静态检查与快速 Node/SSR 回归；`test` 可独立运行同一组快速回归，`test:node` 保留显式全部或定向 Node 入口。PR 与主分支 CI 共用五组完整桌面验证，保留所有 Node、隔离消费者、示例及双 base 文档门禁，排除手机浏览器项目。取舍理由见 [[release/04-local-check-full-ci]]；测试编写原则、执行时机及性能验收口径由 [TESTING.md](../../../TESTING.md) 统一维护。
 
-`.github/workflows/ci.yml` 在 `pull_request` 与推送 `main` 时运行，只有一个执行作业：
+`.github/workflows/ci.yml` 在 `pull_request` 与推送 `main` 时运行，`verify` 矩阵启动五个独立作业：
 
 | 项 | 取值 |
 | --- | --- |
@@ -19,13 +19,23 @@
 | 预置 | 缓存并安装 Playwright Chromium（缓存键为 `pnpm-lock.yaml` 哈希） |
 | 顶层权限 | `contents: read` |
 
-CI 和本地完整验证共同调用 `scripts/tasks.mjs` 的 `verify` 流程。协调器按依赖顺序执行来源与 Token 检查、组件构建、lint 与源一致性、根路径 docs 构建、全部 Node 回归、文档片段与生产样式、skill 示例、视觉与打包消费者、发布与空白检查，再验证根路径静态/分享输出，最后顺序构建并验证 `/exui/` 静态/分享输出。组件与 docs 构建包含自身类型检查，不再额外重复生成同一组声明；Token 的 ESM/CommonJS 编译同时承担对应配置的类型检查。每一步保留名称并在失败时终止。仅完整验证成功的 main push 上传最终前缀产物。各阶段命令以协调器源码为准；ReUI 缓存与锁定来源的边界见 [`../components/public-surface.md`](../components/public-surface.md)。
+| 分组 | 验证内容 |
+| --- | --- |
+| `checks` | 来源锁定、lint 与一致性、全部 Node 回归、文档片段、Skill 示例、发布声明及空白检查 |
+| `docs-root` | `/` 的完整 docs 构建、生产样式、静态与分享输出 |
+| `docs-prefix` | `/exui/` 的完整 docs 构建、静态与分享输出，以及 main 产物上传 |
+| `visual` | `chromium-desktop` 的全部浏览器用例和现有 Windows 截图基线 |
+| `consumers` | 全部独立打包消费者 |
 
-第二个作业 `ci-gate` 以 `if: always()` 依赖 `verify`，把 `verify` 的结果字符串与 `success` 比较。分支保护只要求这一个聚合检查名，因此新增或重命名 `verify` 内部步骤不会改变必需检查的名称。
+每个 CI 作业在独立 checkout 中准备 Token 和公开组件库，不传递或共享可写构建目录。`checks` 与 `visual` 显式执行 `docs:prepare`，不再依赖其他作业的 docs 构建生成内容和 MDX manifest。两种 base 的构建及其输出验证必须在所属作业内连续完成。组件与 docs 构建包含自身类型检查；Token 的 ESM/CommonJS 编译同时承担对应配置的类型检查。每组内按依赖顺序执行并在失败时中止，矩阵通过 `fail-fast: false` 保留其他组的执行。
+
+本地 `pnpm verify` 和 CI 的 `pnpm verify:part` 共同调用 `scripts/tasks.mjs` 的相同分组定义。本地只准备一次公开包，再顺序运行分组，最后保留已验证的 `/exui/` 产物。各阶段命令以协调器源码为准；ReUI 缓存与锁定来源的边界见 [`../components/public-surface.md`](../components/public-surface.md)。
+
+`ci-gate` 以 `if: always()` 依赖整个 `verify` 矩阵，把聚合结果字符串与 `success` 比较。分支保护只要求这一个聚合检查名。工作流并发组按事件和 PR 编号合并同一个 PR 的运行，并取消旧提交；非 PR 使用唯一 run ID，避免 main 的排队运行被替换。
 
 ## 文档 Pages 交付
 
-CI 末尾将通过 `/exui/` 静态与分享验证的 `packages/docs/build/client` 保存为 `docs-site-<run_id>-<run_attempt>`，保留七天并包含隐藏文件。上传属于 CI 门禁；PR 不上传可发布产物。
+main 的 `docs-prefix` 作业将通过 `/exui/` 静态与分享验证的 `packages/docs/build/client` 保存为 `docs-site-<run_id>-<run_attempt>`，保留七天并包含隐藏文件。上传属于该作业的门禁；PR 不上传可发布产物。其他组尚未结束时产物可能已经上传，但 Pages 仅在整个来源 CI 成功后获得消费资格。
 
 `.github/workflows/docs-pages.yml` 是成功 main CI 的独立消费者，与 npm Release 平行。`prepare` 只持有仓库和 Actions 读取权限，核对工作流名、事件、结论、分支、来源仓库与 head 仓库，按精确运行 ID 和次数取产物。它在下载前检查 main，下载时要求摘要一致，打包前检查站点根、中英文总览、搜索、路由数据、资源和示例源码，并拒绝符号链接及仓库元数据。部署作业不 checkout、不执行站点文件、不重新构建。
 
