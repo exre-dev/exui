@@ -13,6 +13,7 @@
     "test:visual": "pnpm --filter @exre/exui-docs test:visual",
     "check": "node scripts/tasks.mjs check",
     "verify": "node scripts/tasks.mjs verify",
+    "verify:part": "node scripts/tasks.mjs verify:part",
     "verify:pack": "node packages/components/tests/consumers/verify-packages.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version"
