@@ -265,7 +265,7 @@ const timePickerZh: TimePickerI18nConfig = {
 
 const emojiPickerZh: EmojiPickerI18nConfig = {
   labels: {
-    trigger: "添加表情", panel: "表情选择器", search: "搜索表情", clearSearch: "清除搜索",
+    trigger: "添加表情", panel: "表情选择器", search: "搜索表情", clearSearch: "清除搜索", remove: "移除表情",
     list: "表情", categories: "表情分类", frequent: "常用", recent: "最近使用",
     searchResults: "搜索结果", custom: "自定义", smileys: "笑脸与情感", people: "人物与身体",
     nature: "动物与自然", food: "食物与饮品", travel: "旅行与地点", activities: "活动",

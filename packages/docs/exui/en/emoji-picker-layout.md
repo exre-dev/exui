@@ -1,6 +1,6 @@
 ### Search visibility and default layout
 
-`EmojiPicker` accepts `hideSearch?: boolean`, defaulting to `false`. Set it to `true` to omit the search field from both inline panels and popovers. It also applies to an explicitly composed `EmojiPickerSearch`. Category browsing and keyboard selection remain available; a popup without search focuses its emoji grid.
+`EmojiPicker` accepts `hideSearch?: boolean`, defaulting to `false`. The search field defaults to `2rem` high. Set `hideSearch` to `true` to omit the search field from both inline panels and popovers. It also applies to an explicitly composed `EmojiPickerSearch`. Category browsing and keyboard selection remain available; a popup without search focuses its emoji grid.
 
 The default panel contains search, categories and the emoji grid. It has no information footer, preview or skin-tone selector. `EmojiPickerFooter`, `EmojiPickerPreview` and `EmojiPickerSkinTone` remain available for explicit custom compositions. `hideSearch` controls the search UI without clearing an existing `query`.
 
@@ -11,5 +11,29 @@ export function BrowseEmoji() {
   return <EmojiPicker hideSearch>
     <EmojiPickerPanel />
   </EmojiPicker>
+}
+```
+
+### Remove the selected emoji
+
+Single selection supports `onRemove?: () => void`. When a callback and a selected value are present, a round `2rem` ghost button with an X icon appears at the right of the category row, separated from its tabs. It disappears when there is no value. Configure its title and accessible name through `i18n.labels.remove`. Multiple selection does not accept this property.
+
+Clicking clears the value, closes the popup, then fires `onRemove`. Clearing notifies `onValueChange(null)`; controlled consumers must update `value` and respond to `onOpenChange(false)` for controlled popovers. Removal does not fire `onEmojiSelect`.
+
+`hideSearch` leaves removal available without reserving an extra header row. The default panel and an explicitly composed `EmojiPickerCategories` both include the action. Category tabs scroll horizontally in narrow panels while removal stays on the right. Removal is outside the tab list and emoji grid; reach it with Tab and activate it with Enter. It remains available during search. Closing a popup returns focus to its trigger or `returnFocus` target. Inline panels remain visible and focus the emoji grid after removal; the callback may hide the containing panel.
+
+```tsx verify
+import { useState } from "react"
+import { EmojiPicker } from "@exre/exui"
+
+export function RemovableEmoji() {
+  const [value, setValue] = useState<string | null>("🎯")
+  const [removed, setRemoved] = useState(false)
+  return <>
+    <EmojiPicker value={value}
+      onValueChange={(next) => { setValue(next); setRemoved(false) }}
+      onRemove={() => setRemoved(true)} />
+    <p role="status">{removed ? "Emoji removed" : null}</p>
+  </>
 }
 ```
