@@ -156,6 +156,7 @@ export type EmojiPickerLabels = {
   /** Search placeholder and name. */
   search: string
   clearSearch: string
+  remove?: string
   /** Names the grid. */
   list: string
   /** Names the category tabs. */
@@ -214,6 +215,7 @@ export const DEFAULT_EMOJI_PICKER_I18N: EmojiPickerI18nConfig = {
     panel: "Emoji picker",
     search: "Search emoji",
     clearSearch: "Clear search",
+    remove: "Remove emoji",
     list: "Emoji",
     categories: "Emoji categories",
     frequent: "Frequently used",
@@ -1141,6 +1143,7 @@ type EmojiPickerContextValue = {
   setFocused: (focused: boolean) => void
   pick: (emoji: EmojiPickerEmoji, event?: { shiftKey?: boolean }) => void
   clear: () => void
+  remove: (() => void) | undefined
   isSelected: (emoji: EmojiPickerEmoji) => boolean
   /** True when `max` is reached: unselected cells refuse a pick. */
   full: boolean
@@ -1211,6 +1214,8 @@ type EmojiPickerSingleProps = {
   value?: string | null
   defaultValue?: string | null
   onValueChange?: (value: string | null) => void
+  /** Shows a removal action when selected. Fires after clearing the value and closing the popup. */
+  onRemove?: () => void
   max?: never
 }
 
@@ -1220,6 +1225,7 @@ type EmojiPickerMultipleProps = {
   value?: string[]
   defaultValue?: string[]
   onValueChange?: (value: string[]) => void
+  onRemove?: never
   /** The most values a person can pick; cells refuse further picks at the cap. */
   max?: number
 }
@@ -1846,6 +1852,15 @@ export function EmojiPicker(props: EmojiPickerProps) {
     setFocused,
     pick,
     clear: () => commitValues([]),
+    remove: !multiple && values.length > 0 && props.onRemove
+      ? () => {
+          if (disabled) return
+          commitValues([])
+          if (open) setOpen(false)
+          else listRef.current?.focus({ preventScroll: true })
+          props.onRemove?.()
+        }
+      : undefined,
     isSelected,
     full,
     valueMode,
@@ -2322,7 +2337,7 @@ export function EmojiPickerHeader({
     <div
       data-slot="emoji-picker-header"
       className={cn(
-        "flex items-center gap-2 px-(--emoji-picker-padding) pt-(--emoji-picker-padding) pb-2",
+        "flex items-center gap-2 px-(--emoji-picker-padding) pt-(--emoji-picker-padding) pb-2 empty:hidden",
         className
       )}
       {...props}
@@ -2340,7 +2355,7 @@ export type EmojiPickerSearchProps = Omit<
 >
 
 /**
- * The search field, a default shadcn InputGroup. Focus stays here while the
+ * The 2rem search field. Focus stays here while the
  * arrow keys move through the grid (a combobox over the listbox); Enter picks
  * the highlighted emoji.
  */
@@ -2382,10 +2397,11 @@ export function EmojiPickerSearch({
   return (
     <InputGroup
       data-slot="emoji-picker-search"
-      className={cn("flex-1", className)}
+      className={cn("h-8 flex-1", className)}
     >
       <InputGroupAddon>{SEARCH_ICON}</InputGroupAddon>
       <InputGroupInput
+        className="h-full min-h-0 py-0"
         type="text"
         role="combobox"
         aria-expanded="true"
@@ -2541,9 +2557,8 @@ export function EmojiPickerSkinTone({
 /*                                 Categories                                 */
 /* -------------------------------------------------------------------------- */
 
-/* The triggers share the row evenly, so any number of categories fits; a
-   trigger's own padding would overflow a row of 11. */
-const TAB_CLASS = "max-w-9 min-w-0 px-0"
+/* Share spare width, but keep a usable target when the category row scrolls. */
+const TAB_CLASS = "max-w-9 min-w-6 px-0"
 
 export type EmojiPickerCategoriesProps = ComponentProps<"div">
 
@@ -2557,6 +2572,7 @@ export function EmojiPickerCategories({
   ...props
 }: EmojiPickerCategoriesProps) {
   const context = useEmojiPickerContext("EmojiPickerCategories")
+  const removeLabel = context.i18n.labels.remove ?? "Remove emoji"
   const searching = !!context.query.trim()
   const placeholder = context.status !== "ready"
   const tabs = placeholder ? context.placeholderTabs : context.tabs
@@ -2568,18 +2584,18 @@ export function EmojiPickerCategories({
       className={cn(
         /* A divider on the grid's side: below the tabs over the grid, above
            them under it. */
-        "shrink-0 border-b px-(--emoji-picker-padding) first:pt-(--emoji-picker-padding) last:pb-(--emoji-picker-padding) [[data-slot=emoji-picker-list]~&]:border-t [[data-slot=emoji-picker-list]~&]:border-b-0 [[data-slot=emoji-picker-list]~&]:pt-1",
+        "flex shrink-0 items-center gap-1 border-b px-(--emoji-picker-padding) first:pt-(--emoji-picker-padding) last:pb-(--emoji-picker-padding) [[data-slot=emoji-picker-list]~&]:border-t [[data-slot=emoji-picker-list]~&]:border-b-0 [[data-slot=emoji-picker-list]~&]:pt-1",
         className
       )}
       {...props}
     >
       {/* Controlled by the scroll, not by a pick: a click jumps, and the
           grid's scroll then moves the tab, so the current tab jumps too. */}
-      <Tabs value={current} activationMode="manual">
+      <Tabs value={current} activationMode="manual" className="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <TabsList
           variant="line"
           aria-label={context.i18n.labels.categories}
-          className="w-full justify-between"
+          className="w-full min-w-max justify-between gap-0"
         >
           {tabs.map((tab) => (
             <TabsTrigger
@@ -2599,6 +2615,22 @@ export function EmojiPickerCategories({
           ))}
         </TabsList>
       </Tabs>
+      {context.remove && <>
+        <span aria-hidden="true" className="h-4 w-px shrink-0 bg-border" />
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="size-8 rounded-full"
+          data-slot="emoji-picker-remove"
+          disabled={context.disabled}
+          aria-label={removeLabel}
+          title={removeLabel}
+          onClick={context.remove}
+        >
+          <XIcon className="size-4" aria-hidden="true" />
+        </Button>
+      </>}
     </div>
   )
 }

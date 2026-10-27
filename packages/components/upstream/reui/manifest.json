@@ -220,7 +220,7 @@
       "sourceSha256": "c47ec6d73081b047491a99ccbe21c1fdd7b4cb6fded8a46e4c4a518442be72da",
       "target": "components/reui/emoji-picker.tsx",
       "adaptation": "registry-json-luma",
-      "adaptedSha256": "048e67db14da332ab7a84aa153c43d1b89bb5dee6e1d3e7dd82c2e35a2ad52a0"
+      "adaptedSha256": "c75948efa1445a85f74ad7e208f274af18058d84cf32e19d43cfc0663350a6ab"
     },
     {
       "source": "registry-reui/bases/radix/reui/event-calendar/event-calendar-agenda-view.tsx",

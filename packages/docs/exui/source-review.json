@@ -43,7 +43,7 @@
     "packages/components/src/components/reui/data-grid/data-grid-table.tsx": "0f2877da73116b8bfd6d45bb3c8bbcfd1ede78dd3b99f7ee67d03e4e8908314f",
     "packages/components/src/components/reui/data-grid/data-grid.tsx": "6604e2b92ad1659f8ed62fd98c91c701d693c40b412d74097a6caedc98b47571",
     "packages/components/src/components/reui/date-selector.tsx": "b887e5be03a44287961f15391d39c3cda806db4c00dd14be7749183e0c27e5e1",
-    "packages/components/src/components/reui/emoji-picker.tsx": "048e67db14da332ab7a84aa153c43d1b89bb5dee6e1d3e7dd82c2e35a2ad52a0",
+    "packages/components/src/components/reui/emoji-picker.tsx": "c75948efa1445a85f74ad7e208f274af18058d84cf32e19d43cfc0663350a6ab",
     "packages/components/src/components/reui/event-calendar/event-calendar-agenda-view.tsx": "6d5b356424d4d2f06a4cacc554d8ef004bb1d76d52eb6798c3f4023d95c5820a",
     "packages/components/src/components/reui/event-calendar/event-calendar-content.tsx": "f380d40011018f3fc167582b5f6557e20893c5da7c0c6f0b031008da9f67830e",
     "packages/components/src/components/reui/event-calendar/event-calendar-dnd.tsx": "fd5bbb5d767d97a61b5ca58669c977682ba215bad2bf98f432e773d0121f1ba6",

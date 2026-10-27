@@ -8,6 +8,8 @@ function SearchVisibility() {
   const copy = usePreviewCopy()
   const { language, locales } = useExampleRuntime()
   const [hideSearch, setHideSearch] = useState(true)
+  const [value, setValue] = useState<string | null>(null)
+  const [removed, setRemoved] = useState(false)
   const id = useId()
   return <div className="flex w-full flex-col items-center gap-4">
     <label htmlFor={id} className="flex items-center gap-2 text-sm">
@@ -16,6 +18,9 @@ function SearchVisibility() {
     </label>
     <Card className="w-fit py-0">
       <EmojiPicker
+        value={value}
+        onValueChange={(next) => { setValue(next); setRemoved(false) }}
+        onRemove={() => setRemoved(true)}
         hideSearch={hideSearch}
         i18n={locales.emojiPicker}
         locale={language === "zh-CN" ? "zh" : "en"}
@@ -24,6 +29,11 @@ function SearchVisibility() {
         <EmojiPickerPanel />
       </EmojiPicker>
     </Card>
+    <p role="status" className="text-muted-foreground text-center text-sm">
+      {removed ? copy("Emoji removed", "已移除表情") : value
+        ? copy(`Selected: ${value}`, `已选择：${value}`)
+        : copy("Choose an emoji to show removal beside the categories", "选择表情后，分类栏右侧显示移除按钮")}
+    </p>
   </div>
 }
 

@@ -3,6 +3,7 @@
 
 import { ExampleRuntimeProvider, ExampleText, useExampleRuntime, createExampleRandom } from "../_shared/example-runtime"
 import dictionary from "./copy.generated"
+import { usePreviewCopy } from "../../preview-copy"
 import { FileTextIcon, SmilePlusIcon } from "lucide-react"
 const exampleRandom = createExampleRandom("c-emoji-picker-4")
 import { useId, useLayoutEffect, useRef, useState } from "react"
@@ -54,7 +55,7 @@ const RANDOM_CATEGORIES = new Set<string>([
 function IconMenuTitle({ titleId }: { titleId: string }) {
   const { id: exampleId } = useExampleRuntime()
 
-  const { emojis, value, select, clear, setOpen } = useEmojiPicker()
+  const { emojis, select } = useEmojiPicker()
 
   return (
     <div className="flex items-center justify-between gap-2 px-(--emoji-picker-padding) pt-(--emoji-picker-padding)">
@@ -76,19 +77,6 @@ function IconMenuTitle({ titleId }: { titleId: string }) {
           }}
         >
           {<ExampleText>Random </ExampleText>}</Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          disabled={!value}
-          onClick={() => {
-            /* Closing hands focus back to the trigger, the same button now
-               reading Add icon. */
-            clear()
-            setOpen(false)
-          }}
-        >
-          {<ExampleText>Remove </ExampleText>}</Button>
       </div>
     </div>
   )
@@ -96,11 +84,13 @@ function IconMenuTitle({ titleId }: { titleId: string }) {
 
   function OriginalPattern() {
   const { id: exampleId, copy: copyExample, language: exampleLanguage, locales: exampleLocales } = useExampleRuntime()
+  const copy = usePreviewCopy()
 
   const titleId = useId()
   /* Preselected: the page already has a stored icon, kept as the emoji
      itself so it fits a plain text column. */
   const [icon, setIcon] = useState<string | null>("🎯")
+  const [removed, setRemoved] = useState(false)
   const slotRef = useRef<HTMLDivElement>(null)
 
   /* Every style pads a ghost button differently, so the pull is read off the
@@ -126,7 +116,9 @@ function IconMenuTitle({ titleId }: { titleId: string }) {
   }, [])
 
   return (
-    <EmojiPicker i18n={exampleLocales.emojiPicker} locale={exampleLanguage === "zh-CN" ? "zh" : "en"} dataUrl="/examples/reui/emoji/emojibase-data-17.0.0" value={icon} onValueChange={setIcon} aria-label={copyExample("Page icon")}>
+    <EmojiPicker i18n={exampleLocales.emojiPicker} locale={exampleLanguage === "zh-CN" ? "zh" : "en"} dataUrl="/examples/reui/emoji/emojibase-data-17.0.0" value={icon}
+      onValueChange={(next) => { setIcon(next); setRemoved(false) }}
+      onRemove={() => setRemoved(true)} aria-label={copyExample("Page icon")}>
       <Card className="w-full max-w-xl">
         <CardHeader>
           <Breadcrumb>
@@ -189,6 +181,9 @@ function IconMenuTitle({ titleId }: { titleId: string }) {
                     {<ExampleText>Add icon </ExampleText>}</EmojiPickerTrigger>
                 )}</ExampleText>}
               </div>
+              <span role="status" className="text-muted-foreground text-sm">
+                {removed ? copy("Page icon removed", "已移除页面图标") : null}
+              </span>
               <div className="flex flex-col gap-2">
                 <h2 className="text-3xl font-semibold tracking-tight">
                   {<ExampleText>Q4 planning </ExampleText>}</h2>
