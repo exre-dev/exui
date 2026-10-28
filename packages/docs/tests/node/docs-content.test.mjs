@@ -11,6 +11,20 @@ import { remarkContentLinks, rewriteContentLink } from "../../lib/content-links.
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..")
 
+test("Icons is a localized standalone landing page directly after the component overview", async () => {
+  const contract = await import("../../lib/site-contract.mjs")
+  assert.equal(typeof contract.iconsPath, "function")
+  for (const base of ["/", "/exui/"]) for (const locale of ["zh-CN", "en"]) {
+    assert.equal(contract.iconsPath(locale, base), `${base}${locale}/docs/icons/`)
+    assert.deepEqual(contract.landingNavigation(locale, base), [
+      { type: "page", name: locale === "zh-CN" ? "组件总览" : "All components", url: `${base}${locale}/docs/` },
+      { type: "page", name: "Icons", url: `${base}${locale}/docs/icons/` },
+    ])
+  }
+  assert.throws(() => contract.iconsPath("unknown"), TypeError)
+  assert.throws(() => contract.iconsPath("en", "/../bad/"), TypeError)
+})
+
 test("authored content links resolve from source files to public locale routes", () => {
   for (const base of ["/", "/exui/"]) {
     for (const locale of ["en", "zh-CN"]) {

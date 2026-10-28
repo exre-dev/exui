@@ -51,7 +51,7 @@ import { CameraIcon, HeartIcon } from "@exre/exui/icons/glass-icons"
 
 Icons default to `8rem` square with a `128 × 128` viewBox. Numeric `size` values are pixels; strings accept CSS lengths. Explicit `width`, `height`, `className`, `style`, SVG attributes and React 19 refs are supported. An unlabeled icon is decorative; use `title`, `aria-label` or `aria-labelledby` when it conveys meaning. Keep the accessible name on an icon-only button itself.
 
-Each React icon accepts `color="blue"`, `"green"`, `"purple"`, `"pink"`, `"coral"` or `"orange"`. Presets recolor the gradients, translucent glass tint, inner shade and shadows while preserving highlights, opacity and blur. Omit `color` to retain the original artwork. Import `GlassIconColor` for the preset type. Arbitrary CSS colors and hex values are not supported.
+Each React icon accepts `color="blue"`, `"green"`, `"purple"`, `"pink"`, `"coral"` or `"orange"`. Presets recolor the gradients, translucent glass tint, inner shade and shadows while preserving highlights, opacity and blur. Omit `color` to retain the original artwork. Import `GlassIconColor` for the preset type. Arbitrary CSS colors and hex values are not supported. The docs Icons page previews these presets and includes the selected `color` in copied React usage; SVG imports and downloads retain their original colors.
 
 Bundler consumers can also import the transparent SVG files:
 

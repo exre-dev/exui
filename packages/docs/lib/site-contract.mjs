@@ -49,6 +49,19 @@ export function overviewPath(locale, base = "/", group) {
   return `${normalizeBase(base)}${locale}/docs/${group ? `${group}/` : ""}`
 }
 
+export function iconsPath(locale, base = "/") {
+  requireLocale(locale)
+  return `${normalizeBase(base)}${locale}/docs/icons/`
+}
+
+/** @returns {{type: "page", name: string, url: string}[]} */
+export function landingNavigation(locale, base = "/") {
+  return [
+    { type: "page", name: locale === "zh-CN" ? "组件总览" : "All components", url: overviewPath(locale, base) },
+    { type: "page", name: "Icons", url: iconsPath(locale, base) },
+  ]
+}
+
 export function examplePath(id, base = "/") {
   requireExampleId(id)
   return `${normalizeBase(base)}examples/${id}/`

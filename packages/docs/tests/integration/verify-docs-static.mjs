@@ -6,7 +6,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadShareExamples } from '../../../../scripts/docs-sharing.mjs'
 import { loadCatalog } from '../../../../scripts/docs-examples.mjs'
-import { navigationGroup, docPath, examplePath, locales, normalizeBase, overviewPath } from '../../lib/site-contract.mjs'
+import { navigationGroup, docPath, examplePath, iconsPath, locales, normalizeBase, overviewPath } from '../../lib/site-contract.mjs'
 
 const repository = fileURLToPath(new URL('../../../../', import.meta.url))
 const docsRoot = path.join(repository, 'packages/docs')
@@ -185,7 +185,8 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
   assert.equal(pageManifest.schemaVersion, 1)
   const pageByRoute = new Map(pageManifest.pages.map(page => [`/${page.locale}/docs/${page.id}/`, page]))
   const overviewRoutes = locales.flatMap(locale => [overviewPath(locale), overviewPath(locale, '/', 'components'), overviewPath(locale, '/', 'exui')])
-  assert.deepEqual(new Set(paths.filter(route => route.includes('/docs/'))), new Set([...pageByRoute.keys(), ...overviewRoutes]), 'Document prerender paths must cover content and both overviews')
+  const iconsRoutes = locales.map(locale => iconsPath(locale))
+  assert.deepEqual(new Set(paths.filter(route => route.includes('/docs/'))), new Set([...pageByRoute.keys(), ...overviewRoutes, ...iconsRoutes]), 'Document prerender paths must cover content, overviews and Icons')
   const examples = await loadShareExamples(repository)
   const baseline = JSON.parse(readFileSync(path.join(repository, 'packages/docs/tests/fixtures/docs-site-baseline.json'), 'utf8'))
   const catalog = await loadCatalog(repository)
@@ -222,6 +223,14 @@ export async function verifyDocsStatic({ output = path.join(docsRoot, 'build/cli
           assert.ok(html.includes(`data-overview-card="${family.id}"`), `${route} missing card ${family.id} without JavaScript`)
           assert.ok(html.includes(`href="${docPath(locale, `${family.group}/${family.id}`, normalizedBase)}"`), `${route} missing link ${family.id}`)
         }
+      }
+      if (iconsRoutes.includes(route)) {
+        const locale = route.split('/')[1]
+        assert.equal((html.match(/data-icon-card(?:=|\s|>)/g) ?? []).length, 50, `${route} must prerender all 50 icons`)
+        const iconLink = `href="${iconsPath(locale, normalizedBase)}"`
+        assert.ok(html.includes(iconLink), `${route} missing the Icons navigation link`)
+        assert.ok(html.includes('CameraIcon') && html.includes('PaperPlusIcon'), `${route} missing icon component names`)
+        assert.ok(!html.includes('icons-prototype') && !html.includes('ip-switcher'), `${route} leaked the throwaway prototype`)
       }
       for (const match of html.matchAll(/(?:src|href)="([^"?#]+\.(?:js|css|svg|png|jpe?g|webp|woff2?|ico))"/g)) {
         if (match[1].startsWith(normalizedBase)) assetUrls.add(match[1])
