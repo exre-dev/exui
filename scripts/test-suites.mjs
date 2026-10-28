@@ -2,6 +2,8 @@
 // these explicit paths with packages/*/tests/**/*.test.mjs to reject omissions.
 // Pure Node policies, bounded fixtures and current public-package SSR stay fast.
 export const fastNodeTests = [
+  "packages/icons/tests/assets.test.mjs",
+  "packages/icons/tests/react.test.mjs",
   "packages/components/tests/node/module-specifiers.test.mjs",
   "packages/components/tests/node/rem.test.mjs",
   "packages/components/tests/tooling/dev.test.mjs",
@@ -36,6 +38,7 @@ export const fastNodeTests = [
 // Chromium, real Vite servers, release Git orchestration and repeated full-tree
 // copies/compiler programs remain in complete verification and explicit test:node.
 export const integrationNodeTests = [
+  "packages/icons/tests/build.test.mjs",
   "packages/components/tests/node/chart-style.test.mjs",
   "packages/components/tests/tooling/release/runtime.test.mjs",
   "packages/components/tests/upstream/reui-exports.test.mjs",

@@ -1110,6 +1110,7 @@ try {
   await verifyDocsThemeConsumer(componentPackage.filename)
   await verifyTokensOnlyConsumer(componentPackage.filename, { packageManager: "pnpm" })
   await verifyReactConsumer(componentPackage.filename)
+  console.log(run(process.execPath, [fileURLToPath(new URL("./verify-icons-consumer.mjs", import.meta.url)), componentPackage.filename], repositoryRoot))
   await verifyFormConsumer(componentPackage.filename, "3.25.28")
   await verifyFormConsumer(componentPackage.filename, "4.6.5")
 

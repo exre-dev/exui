@@ -27,7 +27,7 @@ test("dev starts docs after library readiness, reloads on success and releases d
     }
   }, { once: true })
   try {
-    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts"]) {
+    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts", "packages/icons/glass-icons", "packages/icons/src", "packages/icons/scripts"]) {
       await mkdir(join(root, directory), { recursive: true })
     }
     const log = join(root, "events.log")
@@ -85,7 +85,7 @@ test("dev can stop during the initial build without starting docs or leaving des
     }
   }, { once: true })
   try {
-    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts"]) {
+    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts", "packages/icons/glass-icons", "packages/icons/src", "packages/icons/scripts"]) {
       await mkdir(join(root, directory), { recursive: true })
     }
     const log = join(root, "events.log")

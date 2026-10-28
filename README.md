@@ -69,6 +69,7 @@ This repository is a private pnpm workspace. Only `@exre/exui` is published:
 | Workspace | Responsibility |
 | --- | --- |
 | `packages/tokens` | Private, framework-neutral token sources; generated artifacts ship through `@exre/exui/tokens`. |
+| `packages/icons` | Private Glass SVG sources and React icon modules; artifacts ship through `@exre/exui/icons/glass-icons`. |
 | `packages/components` | The React 19 `@exre/exui` library, complete stylesheet, and public token entries. |
 | `packages/docs` | Private React Router/Fumadocs site; examples consume only public package entries. The former Showcase remains in `src/showcase` as an internal fixture. |
 
@@ -97,7 +98,7 @@ Use `pnpm check` before creating or updating a PR; it needs no Chromium installa
 
 See [Testing](TESTING.md) for test authoring and execution timing. See [Contributing](CONTRIBUTING.md) for Changesets and DCO requirements.
 
-Changesets version only the public package; the private docs and tokens workspaces must never be selected for release.
+Changesets version only the public package; the private docs, icons and tokens workspaces must never be selected for release.
 
 ## Docs hosting
 

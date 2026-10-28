@@ -40,6 +40,17 @@ test("top-level zod verification is allowed but private subpaths remain rejected
   assert.throws(() => extractVerifiedModules(verified.replace('"zod"', '"zod/private"'), "test.mdx"), /unsupported import/i)
 })
 
+test("glass icon collection and SVG asset subpaths are public snippet imports", () => {
+  for (const entry of ["@exre/exui/icons/glass-icons", "@exre/exui/icons/glass-icons/camera.svg", "@exre/exui/icons/glass-icons/paper-plus.svg"]) {
+    const module = `\`\`\`tsx verify\nimport Icon from "${entry}"\nexport const Example = Icon\n\`\`\``
+    assert.equal(extractVerifiedModules(module, "icons.mdx").length, 1)
+  }
+  for (const entry of ["@exre/exui-icons", "@exre/exui/icons/private", "@exre/exui/icons/glass-icons/runtime.js", "@exre/exui/icons/glass-icons/../camera.svg"]) {
+    const module = `\`\`\`tsx verify\nimport Icon from "${entry}"\nexport const Example = Icon\n\`\`\``
+    assert.throws(() => extractVerifiedModules(module, "icons.mdx"), /unsupported import/)
+  }
+})
+
 test("guide module cardinality ignores bounded capability additions", () => {
   const module = '```tsx verify\nimport { Button } from "@exre/exui"\nexport const Example = Button\n```'
   for (const [start, end] of [

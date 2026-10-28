@@ -31,6 +31,8 @@ function publicManifest() {
       "./tokens/style.css": { types: "./dist/tokens/style.css.d.ts", default: "./dist/tokens/style.css" },
       "./tokens/font.css": { types: "./dist/tokens/font.css.d.ts", default: "./dist/tokens/font.css" },
       "./docs/theme.css": { types: "./types/docs/theme.css.d.ts", default: "./dist/docs/theme.css" },
+      "./icons/glass-icons": { types: "./dist/icons/glass-icons/index.d.ts", import: "./dist/icons/glass-icons/index.js" },
+      "./icons/glass-icons/*.svg": { types: "./dist/icons/glass-icons/*.svg.d.ts", default: "./dist/icons/glass-icons/*.svg" },
     },
     peerDependencies: { react: ">=19.0.0 <20", "react-dom": ">=19.0.0 <20" },
     peerDependenciesMeta: { react: { optional: true }, "react-dom": { optional: true } },
@@ -44,6 +46,21 @@ test("a valid single-package tarball manifest satisfies the shared contract", ()
       expectedVersion: "0.1.0",
     })
   )
+})
+
+test("glass icons must be available through public subpaths without installing the private workspace", () => {
+  const complete = publicManifest()
+  for (const entry of ["./icons/glass-icons", "./icons/glass-icons/*.svg"]) {
+    const exports = { ...complete.exports }
+    delete exports[entry]
+    assert.throws(() => assertPublishableManifest({ ...complete, exports }), /icons/)
+  }
+  for (const field of ["dependencies", "optionalDependencies", "peerDependencies"]) {
+    assert.throws(() => assertPublishableManifest({
+      ...complete,
+      [field]: { ...complete[field], "@exre/exui-icons": "0.0.0" },
+    }), /private icons workspace/)
+  }
 })
 
 test("private, mirrored, and mismatched manifests fail closed", () => {

@@ -16,3 +16,25 @@ export function StyledStatus() {
   return <Badge>Ready</Badge>
 }
 ```
+
+## Glass icons
+
+Import colored glass artwork from the dedicated entry; it needs React 19 but no ExUI stylesheet. The icons default to `8rem` square and retain their own colors and transparent backgrounds. Numeric `size` is pixels; strings, SVG dimensions and CSS can override the default. Unlabeled icons are decorative; use `title` or an ARIA label for meaningful artwork. Internal gradient/filter IDs are isolated per React instance, including during SSR.
+
+```tsx verify
+import { CameraIcon, HeartIcon } from "@exre/exui/icons/glass-icons"
+
+export function GlassArtwork() {
+  return <div><CameraIcon title="Camera" /><HeartIcon size="4rem" aria-label="Favorites" /></div>
+}
+```
+
+Bundlers can also load the SVG asset directly. File names use lowercase kebab-case, such as `camera.svg`, `paper-plus.svg` and `arrow-02.svg`. Standard SVG filters preserve the blur between the artwork's own layers; they do not dynamically blur the host page. The assets share the `@exre/exui` release and need no separate icons installation.
+
+```tsx verify
+import cameraUrl from "@exre/exui/icons/glass-icons/camera.svg"
+
+export function CameraImage() {
+  return <img src={cameraUrl} width={128} height={128} alt="Camera" />
+}
+```

@@ -67,6 +67,7 @@ React 入口仅支持 ESM，并要求 React 19。样式表已包含 Token 变量
 | 工作区 | 职责 |
 | --- | --- |
 | `packages/tokens` | 私有、框架中立的 Token 源；生成产物通过 `@exre/exui/tokens` 提供。 |
+| `packages/icons` | 私有 Glass SVG 源与 React 图标生成；产物通过 `@exre/exui/icons/glass-icons` 提供。 |
 | `packages/components` | React 19 组件库 `@exre/exui`、完整样式表及公开 Token 入口。 |
 | `packages/docs` | 私有 React Router/Fumadocs 文档站；示例只使用公开包入口。原 Showcase 留在 `src/showcase` 作为内部夹具。 |
 
@@ -92,7 +93,7 @@ pnpm dev
 
 创建或更新 PR 前运行 `pnpm check`，无需安装 Chromium。组件构建与源码检查会自动恢复并校验固定版本的源缓存；完整缓存支持离线使用。显式复现浏览器或完整 CI 门禁前需通过 `pnpm --filter @exre/exui-docs exec playwright install chromium` 安装 Chromium。`verify` 最后保留已构建并验证的 `/exui/` 文档产物；独立 `build` 使用 `EXUI_DOCS_BASE`，默认值为 `/`。测试编写原则与执行时机见[测试规范](TESTING.md)。
 
-DCO 与 Changeset 要求见[贡献指南](CONTRIBUTING.md)。Changesets 只管理公开包版本，私有 docs 和 tokens 工作区不得参与发布。
+DCO 与 Changeset 要求见[贡献指南](CONTRIBUTING.md)。Changesets 只管理公开包版本，私有 docs、icons 和 tokens 工作区不得参与发布。
 
 ## 文档站托管
 

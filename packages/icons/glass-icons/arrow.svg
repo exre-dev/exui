@@ -1,0 +1,119 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <use href="#exui-blur-1-scene" mask="url(#exui-blur-1-mask)" />
+    <g clip-path="url(#exui-blur-1-clip)">
+      <use href="#exui-blur-1-scene" filter="url(#exui-blur-1-filter)" />
+    </g>
+    <g>
+      <g>
+        <g>
+          <g>
+            <g>
+              <g>
+                <g id="Path_4" filter="url(#filter2_d_0_1)" data-figma-bg-blur-radius="15">
+                  <path d="M65.4557 54.9949C64.2307 53.8107 64.2307 51.8916 65.4148 50.6666C66.0273 50.0541 66.8032 49.7682 67.6198 49.7682C68.3957 49.7682 69.1715 50.0541 69.7432 50.6666L83.994 64.8357C84.5657 65.4074 84.8923 66.1832 84.8923 66.9999C84.8923 67.8166 84.5657 68.5924 83.994 69.1641L69.7432 83.3332C68.559 84.5582 66.6398 84.5582 65.4148 83.3332C64.2307 82.1491 64.2307 80.1891 65.4557 79.0049L77.5015 66.9999L65.4557 54.9949Z" fill="url(#paint2_linear_0_1)" />
+                  <path d="M67.6196 49.8678C68.371 49.8678 69.1198 50.1451 69.6704 50.735L69.6724 50.7379L83.9233 64.9069C84.4763 65.4599 84.7924 66.21 84.7925 66.9997C84.7925 67.6906 84.5505 68.3517 84.1196 68.8766L83.9233 69.0934L69.6724 83.2624L69.6714 83.2633C68.5272 84.447 66.6725 84.4489 65.4858 83.2624C64.341 82.1175 64.3405 80.2219 65.5249 79.0768L65.5259 79.0758L77.5718 67.071L77.6431 66.9997L77.5718 66.9294L65.5259 54.9245L65.5249 54.9225C64.3417 53.7784 64.3397 51.9236 65.4858 50.737C66.078 50.1449 66.8276 49.8679 67.6196 49.8678Z" stroke="url(#paint3_linear_0_1)" stroke-opacity="0.5" stroke-width="0.2" />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <defs>
+    <filter id="filter0_f_0_1" x="11.4683" y="18.1667" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="8" result="effect1_foregroundBlur_0_1" />
+    </filter>
+    <clipPath id="bgblur_0_0_1_clip_path" transform="translate(-7.6665 -1.16666)">
+      <path d="M73.4995 25.6667C96.2747 25.6667 114.833 44.2245 114.833 66.9997C114.833 89.8161 96.2745 108.334 73.4995 108.334H73.4927L72.3511 108.318L72.3433 108.317C50.0611 107.704 32.1665 89.429 32.1665 66.9997C32.1667 44.2249 50.6833 25.6668 73.4995 25.6667Z" />
+    </clipPath>
+    <filter id="filter2_d_0_1" x="49.5317" y="34.7682" width="50.3604" height="64.4837" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+      <feOffset dx="5" dy="5" />
+      <feGaussianBlur stdDeviation="5" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.454902 0 0 0 0 0.870588 0 0 0 0 0.376471 0 0 0 0.5 0" />
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1" />
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape" />
+    </filter>
+    <clipPath id="bgblur_1_0_1_clip_path" transform="translate(-49.5317 -34.7682)">
+      <path d="M65.4557 54.9949C64.2307 53.8107 64.2307 51.8916 65.4148 50.6666C66.0273 50.0541 66.8032 49.7682 67.6198 49.7682C68.3957 49.7682 69.1715 50.0541 69.7432 50.6666L83.994 64.8357C84.5657 65.4074 84.8923 66.1832 84.8923 66.9999C84.8923 67.8166 84.5657 68.5924 83.994 69.1641L69.7432 83.3332C68.559 84.5582 66.6398 84.5582 65.4148 83.3332C64.2307 82.1491 64.2307 80.1891 65.4557 79.0049L77.5015 66.9999L65.4557 54.9949Z" />
+    </clipPath>
+    <linearGradient id="paint0_linear_0_1" x1="73.6665" y1="20.1667" x2="31.361" y2="69.6451" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9BF763" />
+      <stop offset="1" stop-color="#26AB5B" />
+    </linearGradient>
+    <linearGradient id="paint1_linear_0_1" x1="45.6665" y1="35.6809" x2="97.7612" y2="100.201" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0.25" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="paint2_linear_0_1" x1="83.4488" y1="55.9953" x2="60.7533" y2="56.4322" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0.2" />
+    </linearGradient>
+    <linearGradient id="paint3_linear_0_1" x1="66.725" y1="61.3359" x2="84.0143" y2="61.3922" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </linearGradient>
+    <g id="exui-blur-0-scene">
+      <g>
+        <g>
+          <g>
+            <g>
+              <g>
+                <g id="Bg">
+                  <path id="Path" d="M43.6665 80.1667C60.1965 80.1667 73.6665 66.7267 73.6665 50.1667C73.6665 33.6367 60.1965 20.1667 43.6665 20.1667C27.1065 20.1667 13.6665 33.6367 13.6665 50.1667C13.6665 66.446 26.6548 79.7102 42.8272 80.1551L43.6665 80.1667Z" fill="url(#paint0_linear_0_1)" />
+                  <g id="Path_2" opacity="0.5" filter="url(#filter0_f_0_1)">
+                    <path d="M43.4683 66.1667C52.2843 66.1667 59.4683 58.9987 59.4683 50.1667C59.4683 41.3507 52.2843 34.1667 43.4683 34.1667C34.6363 34.1667 27.4683 41.3507 27.4683 50.1667C27.4683 58.849 34.3953 65.9232 43.0206 66.1605L43.4683 66.1667Z" fill="#2BA22C" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <clipPath id="exui-blur-0-clip">
+      <path d="M73.4995 25.6667C96.2747 25.6667 114.833 44.2245 114.833 66.9997C114.833 89.8161 96.2745 108.334 73.4995 108.334H73.4927L72.3511 108.318L72.3433 108.317C50.0611 107.704 32.1665 89.429 32.1665 66.9997C32.1667 44.2249 50.6833 25.6668 73.4995 25.6667Z" />
+    </clipPath>
+    <mask id="exui-blur-0-mask" maskUnits="userSpaceOnUse" x="-128" y="-128" width="384" height="384">
+      <rect x="-128" y="-128" width="384" height="384" fill="white" />
+      <path d="M73.4995 25.6667C96.2747 25.6667 114.833 44.2245 114.833 66.9997C114.833 89.8161 96.2745 108.334 73.4995 108.334H73.4927L72.3511 108.318L72.3433 108.317C50.0611 107.704 32.1665 89.429 32.1665 66.9997C32.1667 44.2249 50.6833 25.6668 73.4995 25.6667Z" fill="black" />
+    </mask>
+    <filter id="exui-blur-0-filter" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="12" />
+    </filter>
+    <g id="exui-blur-1-scene">
+      <use href="#exui-blur-0-scene" mask="url(#exui-blur-0-mask)" />
+      <g clip-path="url(#exui-blur-0-clip)">
+        <use href="#exui-blur-0-scene" filter="url(#exui-blur-0-filter)" />
+      </g>
+      <g>
+        <g>
+          <g>
+            <g>
+              <g>
+                <g>
+                  <path id="Path_3" data-figma-bg-blur-radius="24" d="M73.4995 25.6667C96.2747 25.6667 114.833 44.2245 114.833 66.9997C114.833 89.8161 96.2745 108.334 73.4995 108.334H73.4927L72.3511 108.318L72.3433 108.317C50.0611 107.704 32.1665 89.429 32.1665 66.9997C32.1667 44.2249 50.6833 25.6668 73.4995 25.6667Z" fill="#72DC60" fill-opacity="0.35" stroke="url(#paint1_linear_0_1)" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <clipPath id="exui-blur-1-clip">
+      <path d="M65.4557 54.9949C64.2307 53.8107 64.2307 51.8916 65.4148 50.6666C66.0273 50.0541 66.8032 49.7682 67.6198 49.7682C68.3957 49.7682 69.1715 50.0541 69.7432 50.6666L83.994 64.8357C84.5657 65.4074 84.8923 66.1832 84.8923 66.9999C84.8923 67.8166 84.5657 68.5924 83.994 69.1641L69.7432 83.3332C68.559 84.5582 66.6398 84.5582 65.4148 83.3332C64.2307 82.1491 64.2307 80.1891 65.4557 79.0049L77.5015 66.9999L65.4557 54.9949Z" />
+    </clipPath>
+    <mask id="exui-blur-1-mask" maskUnits="userSpaceOnUse" x="-128" y="-128" width="384" height="384">
+      <rect x="-128" y="-128" width="384" height="384" fill="white" />
+      <path d="M65.4557 54.9949C64.2307 53.8107 64.2307 51.8916 65.4148 50.6666C66.0273 50.0541 66.8032 49.7682 67.6198 49.7682C68.3957 49.7682 69.1715 50.0541 69.7432 50.6666L83.994 64.8357C84.5657 65.4074 84.8923 66.1832 84.8923 66.9999C84.8923 67.8166 84.5657 68.5924 83.994 69.1641L69.7432 83.3332C68.559 84.5582 66.6398 84.5582 65.4148 83.3332C64.2307 82.1491 64.2307 80.1891 65.4557 79.0049L77.5015 66.9999L65.4557 54.9949Z" fill="black" />
+    </mask>
+    <filter id="exui-blur-1-filter" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="7.5" />
+    </filter>
+  </defs>
+</svg>

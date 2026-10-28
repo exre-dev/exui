@@ -62,6 +62,10 @@ async function run() {
     "dist/tokens/font.css",
     "dist/tokens/font.css.d.ts",
     "dist/docs/theme.css",
+    "dist/icons/glass-icons/index.js",
+    "dist/icons/glass-icons/index.d.ts",
+    "dist/icons/glass-icons/camera.svg",
+    "dist/icons/glass-icons/camera.svg.d.ts",
     "types/index.d.ts",
     "types/index.css.d.ts",
     "types/docs/theme.css.d.ts",
@@ -71,6 +75,15 @@ async function run() {
       await pathExists(path.join(packageRoot, relative)),
       `public artifact is missing: ${relative}`
     )
+  }
+
+  const iconsRoot = path.join(distRoot, "icons/glass-icons")
+  const icons = await collectFiles(iconsRoot, ".svg")
+  requireCondition(icons.length === 50, `expected 50 glass SVGs, received ${icons.length}`)
+  for (const file of [...await collectFiles(iconsRoot, ".js"), ...await collectFiles(iconsRoot, ".d.ts")]) {
+    const text = await readFile(file, "utf8")
+    const offenders = [...extractBareSpecifiers(text)].filter((specifier) => !isHostRuntime(specifier))
+    requireCondition(offenders.length === 0, `icons must only import React: ${file}: ${offenders.join(", ")}`)
   }
 
   // The component bundle may only import the host runtime as external

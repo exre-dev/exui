@@ -1,6 +1,7 @@
 export const OFFICIAL_NPM_REGISTRY = "https://registry.npmjs.org/"
 export const EXUI_REPOSITORY_URL = "https://github.com/exre-dev/exui.git"
 export const TOKEN_PACKAGE_NAME = "@exre/exui-tokens"
+export const ICONS_PACKAGE_NAME = "@exre/exui-icons"
 export const COMPONENT_PACKAGE_NAME = "@exre/exui"
 export const PUBLIC_PACKAGE_NAMES = Object.freeze([COMPONENT_PACKAGE_NAME])
 
@@ -90,6 +91,10 @@ export function assertPublishableManifest(manifest, { expectedName, expectedVers
         name !== TOKEN_PACKAGE_NAME,
         `${COMPONENT_PACKAGE_NAME} ${field} must not reference the private tokens workspace`
       )
+      requireCondition(
+        name !== ICONS_PACKAGE_NAME,
+        `${COMPONENT_PACKAGE_NAME} ${field} must not reference the private icons workspace`
+      )
     }
   }
 
@@ -122,6 +127,14 @@ export function assertPublishableManifest(manifest, { expectedName, expectedVers
   requireExportsEntry(manifest, "./docs/theme.css", {
     types: "./types/docs/theme.css.d.ts",
     default: "./dist/docs/theme.css",
+  })
+  requireExportsEntry(manifest, "./icons/glass-icons", {
+    types: "./dist/icons/glass-icons/index.d.ts",
+    import: "./dist/icons/glass-icons/index.js",
+  })
+  requireExportsEntry(manifest, "./icons/glass-icons/*.svg", {
+    types: "./dist/icons/glass-icons/*.svg.d.ts",
+    default: "./dist/icons/glass-icons/*.svg",
   })
 
   requireCondition(

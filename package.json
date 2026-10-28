@@ -7,7 +7,7 @@
     "dev": "node scripts/dev.mjs",
     "build": "node scripts/tasks.mjs build",
     "typecheck": "node scripts/tasks.mjs typecheck",
-    "lint": "oxlint scripts && pnpm --filter @exre/exui-tokens lint && pnpm --filter @exre/exui lint && pnpm --filter @exre/exui-docs lint",
+    "lint": "oxlint scripts && pnpm --filter @exre/exui-tokens lint && pnpm --filter @exre/exui lint && pnpm --filter @exre/exui-docs lint && pnpm --filter @exre/exui-icons lint",
     "test": "node scripts/tasks.mjs test",
     "test:node": "node scripts/tasks.mjs test:node",
     "test:visual": "pnpm --filter @exre/exui-docs test:visual",
