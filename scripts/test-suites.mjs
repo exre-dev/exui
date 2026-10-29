@@ -18,6 +18,7 @@ export const fastNodeTests = [
   "packages/components/tests/upstream/reui-luma.test.mjs",
   "packages/components/tests/upstream/reui-restore.test.mjs",
   "packages/docs/tests/node/docs-content.test.mjs",
+  "packages/docs/tests/node/docs-icons.test.mjs",
   "packages/docs/tests/node/docs-example-assets.test.mjs",
   "packages/docs/tests/node/docs-example-base.test.mjs",
   "packages/docs/tests/node/docs-example-copy-ssr.test.mjs",

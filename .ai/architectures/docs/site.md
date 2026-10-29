@@ -46,6 +46,8 @@ Glass 侧栏的折叠分组使用 `overflow: hidden`，会裁切菜单项外扩�
 
 `app/routes/icons.tsx` 提供真实文档外壳、站点偏好和语言切换；`app/components/icons/IconsGallery.tsx` 管理本地搜索、背景与详情状态。有限目录 `catalog.ts` 只通过公共 ExUI 子路径导入 React 图标及 SVG URL；SVG 下载直接使用对应公开资源，保留其原始字节。图标打包与消费契约见 [Glass icons](../icons/glass-icons.md)，此处不复制该接口说明。
 
+目录对应关系由快速 Node 回归 `tests/node/docs-icons.test.mjs` 校验：规范 SVG 文件名、公共入口的实际导出、图库名称及其 React/SVG 配对必须完整一致，不能只凭数量相同判定正确。该校验解析当前显式目录，图库数量文案直接取目录长度；目录仍由手工维护。
+
 全部图标随静态 HTML 输出。卡片图案打开详情，标题复制完整 React 导出名；这两个操作使用同级按钮，避免嵌套交互控件。卡片不展示 SVG 文件名，但搜索继续匹配资源名。详情使用公共 Sheet，关闭后恢复预览按钮焦点，标题与代码复制提供成功或失败反馈。页面控件和强调色使用站点 `primary`/`ring` 主题变量，图标的预设配色独立于界面主题。浏览器回归见 `tests/browser/DocsIcons.vrt.test.tsx`；路径、入口顺序及双部署前缀的静态映射见 `tests/node/docs-content.test.mjs` 和 `docs-static.test.mjs`。原型比较代码不属于正式路由。
 
 复制反馈归属于当前文本。切换配色造成用法代码变化时，已完成的反馈被重置，旧请求及其计时器失效；旧 Clipboard 请求随后成功或失败都不能更新新文本的反馈。失效处理只控制界面反馈，不撤回已经交给浏览器的剪贴板写入。

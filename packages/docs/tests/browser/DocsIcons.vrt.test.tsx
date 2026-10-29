@@ -18,6 +18,19 @@ afterEach(() => { root.unmount(); container.remove(); vi.restoreAllMocks() })
 function render(locale: "zh-CN" | "en" = "en") { root.render(<IconsGallery locale={locale} />) }
 
 describe("Icons gallery", () => {
+  it.each(["en", "zh-CN"] as const)("uses the current catalog size in the %s description", async locale => {
+    const length = iconCatalog.length
+    try {
+      iconCatalog.push({ ...iconCatalog[0], name: "ExtraIcon", slug: "extra" })
+      render(locale)
+      const description = locale === "en"
+        ? `${length + 1} Glass icons, available as React components and SVG assets.`
+        : `${length + 1} 个 Glass 图标，支持 React 组件与 SVG 资源。`
+      await expect.element(page.getByText(description, { exact: true })).toBeVisible()
+    } finally {
+      iconCatalog.splice(length)
+    }
+  })
   it("lists all icons and searches component names and asset names", async () => {
     render()
     await expect.poll(() => container.querySelectorAll("[data-icon-card]").length).toBe(50)
