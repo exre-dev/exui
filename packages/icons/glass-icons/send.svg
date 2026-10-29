@@ -1,0 +1,126 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <use href="#exui-blur-1-scene" mask="url(#exui-blur-1-mask)" />
+    <g clip-path="url(#exui-blur-1-clip)">
+      <use href="#exui-blur-1-scene" filter="url(#exui-blur-1-filter)" />
+    </g>
+    <g>
+      <g>
+        <g>
+          <g>
+            <g>
+              <g>
+                <g id="Rectangle 1018" filter="url(#filter2_d_0_1)" data-figma-bg-blur-radius="15">
+                  <rect x="60.5" y="71.9434" width="29" height="5" rx="2.5" transform="rotate(-45 60.5 71.9434)" fill="url(#paint2_linear_0_1)" />
+                  <rect x="60.7828" y="71.9434" width="28.6" height="4.6" rx="2.3" transform="rotate(-45 60.7828 71.9434)" stroke="url(#paint3_linear_0_1)" stroke-width="0.4" />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <defs>
+    <filter id="filter0_f_0_1" x="27.3428" y="12.4824" width="69" height="69" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="7" result="effect1_foregroundBlur_0_1" />
+    </filter>
+    <clipPath id="bgblur_0_0_1_clip_path" transform="translate(3.375 -4.56079)">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M82.1525 53.6744L55.4855 80.5196L24.2647 61.3036C20.1737 58.7851 21.0029 52.572 25.6116 51.2343L99.3228 29.7858C103.515 28.5727 107.39 32.5026 106.135 36.7139L84.2645 110.349C82.8947 114.957 76.7513 115.755 74.2683 111.641L55.4855 80.5196" />
+    </clipPath>
+    <filter id="filter2_d_0_1" x="46.5356" y="37.4728" width="51.9705" height="51.9706" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+      <feOffset dx="5" dy="5" />
+      <feGaussianBlur stdDeviation="5" />
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.580392 0 0 0 0 0.247059 0 0 0 0.5 0" />
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1" />
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape" />
+    </filter>
+    <clipPath id="bgblur_1_0_1_clip_path" transform="translate(-46.5356 -37.4728)">
+      <rect x="60.5" y="71.9434" width="29" height="5" rx="2.5" transform="rotate(-45 60.5 71.9434)" />
+    </clipPath>
+    <linearGradient id="paint0_linear_0_1" x1="59" y1="13.6875" x2="59" y2="82.4375" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFB37F" />
+      <stop offset="1" stop-color="#FF7B0D" />
+    </linearGradient>
+    <linearGradient id="paint1_linear_0_1" x1="35.1158" y1="39.436" x2="89.1773" y2="106.392" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0.25" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="paint2_linear_0_1" x1="87.4439" y1="72.8463" x2="56.2228" y2="78.7504" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0.2" />
+    </linearGradient>
+    <linearGradient id="paint3_linear_0_1" x1="65.1163" y1="72.5259" x2="66.0075" y2="78.9273" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0.25" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </linearGradient>
+    <g id="exui-blur-0-scene">
+      <g>
+        <g>
+          <g>
+            <g>
+              <g>
+                <g id="Bg">
+                  <path id="Send_3" fill-rule="evenodd" clip-rule="evenodd" d="M73.7255 33.2473L52.0929 55.0244L26.7663 39.4362C23.4477 37.3932 24.1203 32.353 27.8589 31.2679L87.6542 13.8687C91.0546 12.8846 94.1986 16.0726 93.1803 19.4888L75.4387 79.2224C74.3275 82.9604 69.344 83.6077 67.3297 80.2701L52.0929 55.0244" fill="url(#paint0_linear_0_1)" />
+                  <g id="Send_4" opacity="0.5" filter="url(#filter0_f_0_1)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M70.6245 38.1472L57.7236 51.1342L42.6198 41.838C40.6407 40.6196 41.0418 37.6138 43.2714 36.9667L78.9311 26.5905C80.959 26.0036 82.8339 27.9048 82.2267 29.9421L71.6462 65.565C70.9836 67.7943 68.0115 68.1803 66.8103 66.1899L57.7236 51.1342" fill="#E46800" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <clipPath id="exui-blur-0-clip">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M82.1525 53.6744L55.4855 80.5196L24.2647 61.3036C20.1737 58.7851 21.0029 52.572 25.6116 51.2343L99.3228 29.7858C103.515 28.5727 107.39 32.5026 106.135 36.7139L84.2645 110.349C82.8947 114.957 76.7513 115.755 74.2683 111.641L55.4855 80.5196" />
+    </clipPath>
+    <mask id="exui-blur-0-mask" maskUnits="userSpaceOnUse" x="-128" y="-128" width="384" height="384">
+      <rect x="-128" y="-128" width="384" height="384" fill="white" />
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M82.1525 53.6744L55.4855 80.5196L24.2647 61.3036C20.1737 58.7851 21.0029 52.572 25.6116 51.2343L99.3228 29.7858C103.515 28.5727 107.39 32.5026 106.135 36.7139L84.2645 110.349C82.8947 114.957 76.7513 115.755 74.2683 111.641L55.4855 80.5196" fill="black" />
+    </mask>
+    <filter id="exui-blur-0-filter" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="12" />
+    </filter>
+    <g id="exui-blur-1-scene">
+      <use href="#exui-blur-0-scene" mask="url(#exui-blur-0-mask)" />
+      <g clip-path="url(#exui-blur-0-clip)">
+        <use href="#exui-blur-0-scene" filter="url(#exui-blur-0-filter)" />
+      </g>
+      <g>
+        <g>
+          <g>
+            <g>
+              <g>
+                <g>
+                  <g id="Send_5" data-figma-bg-blur-radius="24">
+                    <mask id="path-3-outside-1_0_1" maskUnits="userSpaceOnUse" x="20.625" y="27.5625" width="87" height="88" fill="black">
+                      <rect fill="white" x="20.625" y="27.5625" width="87" height="88" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M82.1525 53.6744L55.4855 80.5196L24.2647 61.3036C20.1737 58.7851 21.0029 52.572 25.6116 51.2343L99.3228 29.7858C103.515 28.5727 107.39 32.5026 106.135 36.7139L84.2645 110.349C82.8947 114.957 76.7513 115.755 74.2683 111.641L55.4855 80.5196" />
+                    </mask>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M82.1525 53.6744L55.4855 80.5196L24.2647 61.3036C20.1737 58.7851 21.0029 52.572 25.6116 51.2343L99.3228 29.7858C103.515 28.5727 107.39 32.5026 106.135 36.7139L84.2645 110.349C82.8947 114.957 76.7513 115.755 74.2683 111.641L55.4855 80.5196" fill="#FFCBB9" fill-opacity="0.35" />
+                    <path d="M82.862 54.3791C83.2512 53.9873 83.2491 53.3541 82.8573 52.9649C82.4655 52.5757 81.8323 52.5778 81.4431 52.9696L82.1525 53.6744L82.862 54.3791ZM55.4855 80.5196L54.9613 81.3712C55.3567 81.6146 55.8677 81.5538 56.1949 81.2243L55.4855 80.5196ZM24.2647 61.3036L23.7405 62.1552L23.7405 62.1552L24.2647 61.3036ZM25.6116 51.2343L25.8903 52.1947L25.891 52.1945L25.6116 51.2343ZM99.3228 29.7858L99.0448 28.8252L99.0434 28.8257L99.3228 29.7858ZM106.135 36.7139L105.177 36.4283L105.176 36.4292L106.135 36.7139ZM84.2645 110.349L85.223 110.634L85.2231 110.634L84.2645 110.349ZM74.2683 111.641L75.1245 111.124L75.1245 111.124L74.2683 111.641ZM56.3416 80.0029C56.0562 79.53 55.4416 79.3781 54.9687 79.6634C54.4959 79.9488 54.3439 80.5635 54.6293 81.0363L55.4855 80.5196L56.3416 80.0029ZM82.1525 53.6744L81.4431 52.9696L54.776 79.8148L55.4855 80.5196L56.1949 81.2243L82.862 54.3791L82.1525 53.6744ZM55.4855 80.5196L56.0096 79.668L24.7889 60.452L24.2647 61.3036L23.7405 62.1552L54.9613 81.3712L55.4855 80.5196ZM24.2647 61.3036L24.7889 60.452C21.4316 58.3852 22.1205 53.2889 25.8903 52.1947L25.6116 51.2343L25.3328 50.274C19.8853 51.8551 18.9158 59.185 23.7405 62.1552L24.2647 61.3036ZM25.6116 51.2343L25.891 52.1945L99.6022 30.746L99.3228 29.7858L99.0434 28.8257L25.3322 50.2742L25.6116 51.2343ZM99.3228 29.7858L99.6008 30.7464C103.022 29.7563 106.209 32.9648 105.177 36.4283L106.135 36.7139L107.093 36.9996C108.571 32.0405 104.007 27.3892 99.0448 28.8253L99.3228 29.7858ZM106.135 36.7139L105.176 36.4292L83.3058 110.064L84.2645 110.349L85.2231 110.634L107.094 36.9986L106.135 36.7139ZM84.2645 110.349L83.3059 110.064C82.182 113.845 77.1557 114.49 75.1245 111.124L74.2683 111.641L73.4121 112.157C76.3469 117.02 83.6073 116.069 85.223 110.634L84.2645 110.349ZM74.2683 111.641L75.1245 111.124L56.3416 80.0029L55.4855 80.5196L54.6293 81.0363L73.4122 112.157L74.2683 111.641Z" fill="url(#paint1_linear_0_1)" mask="url(#path-3-outside-1_0_1)" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <clipPath id="exui-blur-1-clip">
+      <rect x="60.5" y="71.9434" width="29" height="5" rx="2.5" transform="rotate(-45 60.5 71.9434)" />
+    </clipPath>
+    <mask id="exui-blur-1-mask" maskUnits="userSpaceOnUse" x="-128" y="-128" width="384" height="384">
+      <rect x="-128" y="-128" width="384" height="384" fill="white" />
+      <rect x="60.5" y="71.9434" width="29" height="5" rx="2.5" transform="rotate(-45 60.5 71.9434)" fill="black" />
+    </mask>
+    <filter id="exui-blur-1-filter" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="7.5" />
+    </filter>
+  </defs>
+</svg>

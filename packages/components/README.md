@@ -38,6 +38,31 @@ Badge no longer accepts `variant="ghost"` or `variant="link"`. Choose a supporte
 
 `DataGrid` uses the bundled TanStack Table v9 instance. Import its primitives through the root `TanStackTable` namespace; a separately installed table package does not share that instance. Chart primitives similarly use the root `Recharts` namespace. Components use ExUI token colors, Lucide icons, and opt-in Glass where supported.
 
+### Glass icons
+
+The 50 colored glass icons are available through a separate, tree-shakeable entry. They do not need the ExUI stylesheet:
+
+```tsx
+import { CameraIcon, HeartIcon } from "@exre/exui/icons/glass-icons"
+
+<CameraIcon title="Camera" />
+<HeartIcon color="blue" size="4rem" aria-label="Favorites" />
+```
+
+Icons default to `8rem` square with a `128 × 128` viewBox. Numeric `size` values are pixels; strings accept CSS lengths. Explicit `width`, `height`, `className`, `style`, SVG attributes and React 19 refs are supported. An unlabeled icon is decorative; use `title`, `aria-label` or `aria-labelledby` when it conveys meaning. Keep the accessible name on an icon-only button itself.
+
+Each React icon accepts `color="blue"`, `"green"`, `"purple"`, `"pink"`, `"coral"` or `"orange"`. Presets recolor the gradients, translucent glass tint, inner shade and shadows while preserving highlights, opacity and blur. Omit `color` to retain the original artwork. Import `GlassIconColor` for the preset type. Arbitrary CSS colors and hex values are not supported. The docs Icons page previews these presets and includes the selected `color` in copied React usage; SVG imports and downloads retain their original colors.
+
+Bundler consumers can also import the transparent SVG files:
+
+```tsx
+import cameraUrl from "@exre/exui/icons/glass-icons/camera.svg"
+
+<img src={cameraUrl} width={128} height={128} alt="Camera" />
+```
+
+The SVGs retain their own colors, gradients and standard blur filters. Their glass appearance composites the icon's own vector layers; it does not dynamically blur the surrounding application. React instances isolate internal IDs, including for repeated icons and SSR. The private `packages/icons` workspace is built into this package and is not installed or published separately.
+
 ### Schema-driven forms
 
 Use `Form` with `fields` for typed configuration, or compose `Form`, `FormField`, `FormList` and `FormErrorSummary` with an ExUI `useForm` instance. Install a Standard Schema V1 implementation yourself; this example uses Zod:

@@ -40,6 +40,18 @@ Glass 侧栏的折叠分组使用 `overflow: hidden`，会裁切菜单项外扩�
 
 新站与旧 Showcase 共用 `src/showcase/ComponentsOverview.tsx` 的代表预览；新站注入 Router 链接和来自详情页同一分享清单的示例数量，旧夹具保留 hash 导航。预览接近视口后才加载，内部控件通过 `inert` 与 `aria-hidden` 退出交互和可访问树，卡片链接承担导航；密度类仅作用于预览区域。总览没有独立搜索和右侧目录，全文搜索仍由文档站外壳提供。
 
+## Icons 展示页
+
+`/<locale>/docs/icons/` 是独立 Router 页面，不计入 MDX 内容清单或组件家族数量。`lib/site-contract.mjs` 的 `iconsPath` 与 `landingNavigation` 统一处理语言、部署前缀及入口顺序；所有文档侧栏都在组件总览之后显示同级 `Icons` 项。该路由单独加入预渲染集合、静态 HTML/data 目录映射及静态验证器。
+
+`app/routes/icons.tsx` 提供真实文档外壳、站点偏好和语言切换；`app/components/icons/IconsGallery.tsx` 管理本地搜索、背景与详情状态。有限目录 `catalog.ts` 只通过公共 ExUI 子路径导入 React 图标及 SVG URL；SVG 下载直接使用对应公开资源，保留其原始字节。图标打包与消费契约见 [Glass icons](../icons/glass-icons.md)，此处不复制该接口说明。
+
+目录对应关系由快速 Node 回归 `tests/node/docs-icons.test.mjs` 校验：规范 SVG 文件名、公共入口的实际导出、图库名称及其 React/SVG 配对必须完整一致，不能只凭数量相同判定正确。该校验解析当前显式目录，图库数量文案直接取目录长度；目录仍由手工维护。
+
+全部图标随静态 HTML 输出。卡片图案打开详情，标题复制完整 React 导出名；这两个操作使用同级按钮，避免嵌套交互控件。卡片不展示 SVG 文件名，但搜索继续匹配资源名。详情使用公共 Sheet，关闭后恢复预览按钮焦点，标题与代码复制提供成功或失败反馈。页面控件和强调色使用站点 `primary`/`ring` 主题变量，图标的预设配色独立于界面主题。浏览器回归见 `tests/browser/DocsIcons.vrt.test.tsx`；路径、入口顺序及双部署前缀的静态映射见 `tests/node/docs-content.test.mjs` 和 `docs-static.test.mjs`。原型比较代码不属于正式路由。
+
+复制反馈归属于当前文本。切换配色造成用法代码变化时，已完成的反馈被重置，旧请求及其计时器失效；旧 Clipboard 请求随后成功或失败都不能更新新文本的反馈。失效处理只控制界面反馈，不撤回已经交给浏览器的剪贴板写入。
+
 ## ExUI 公开差异的文档边界
 
 公开导出索引只能证明名称存在，不能证明使用者能在组件家族页找到对应说明。`packages/docs/exui/capabilities.json` 将经源码核查的 ExUI 新增能力和适配差异关联到公开符号、实现证据、文档页、skill 家族、示例与共享指南；同目录的双语片段是这些差异说明的维护源。`scripts/exui-capabilities.mjs` 只更新文档中的有界生成段；`scripts/exui-skill/sync-references.mjs` 将英文说明合入 skill 家族参考页，后面继续保留上游模式资料。两种输出不以复制后手工编辑的方式维护。

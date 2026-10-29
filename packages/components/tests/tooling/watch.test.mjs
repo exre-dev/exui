@@ -30,13 +30,13 @@ async function removeTempRoot(root) {
   }
 }
 
-test("watch ignores generated token CSS and builds once per source edit", async () => {
+test("watch ignores generated token CSS and rebuilds the public library for token and icon edits", async () => {
   const root = await mkdtemp(join(tmpdir(), "exui-watch-test-"))
   const logPath = join(root, "builds.log")
   const fakePnpm = join(root, "fake-pnpm.mjs")
   let watcher
   try {
-    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts"]) {
+    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts", "packages/icons/glass-icons", "packages/icons/src", "packages/icons/scripts"]) {
       await mkdir(join(root, directory), { recursive: true })
     }
     await writeFile(logPath, "")
@@ -67,6 +67,11 @@ if (target === "@exre/exui-tokens") {
     await new Promise((resolve) => setTimeout(resolve, 500))
     assert.deepEqual((await readFile(logPath, "utf8")).trim().split("\n"), afterEdit,
       "one source edit must schedule only one token and component build")
+
+    await writeFile(join(root, "packages/icons/glass-icons/camera.svg"), '<svg viewBox="0 0 128 128"/>')
+    const afterIconEdit = await waitForBuilds(logPath, 5)
+    assert.deepEqual(afterIconEdit.slice(4), ["@exre/exui"],
+      "editing an icon must rebuild the public package containing its output")
   } finally {
     if (watcher && watcher.exitCode === null) {
       const closed = new Promise((resolve) => watcher.once("close", resolve))
@@ -82,7 +87,7 @@ test("library readiness and reload notifications follow complete successful buil
   const logPath = join(root, "builds.log")
   let watcher
   try {
-    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts"]) {
+    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts", "packages/icons/glass-icons", "packages/icons/src", "packages/icons/scripts"]) {
       await mkdir(join(root, directory), { recursive: true })
     }
     await writeFile(logPath, "")
@@ -128,7 +133,7 @@ test("watch exits when the initial build fails", async () => {
   const root = await mkdtemp(join(tmpdir(), "exui-watch-initial-failure-"))
   let watcher
   try {
-    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts"]) {
+    for (const directory of ["packages/tokens/src", "packages/tokens/scripts", "packages/components/src", "packages/components/scripts", "packages/icons/glass-icons", "packages/icons/src", "packages/icons/scripts"]) {
       await mkdir(join(root, directory), { recursive: true })
     }
     const fakePnpm = join(root, "fake-pnpm.mjs")

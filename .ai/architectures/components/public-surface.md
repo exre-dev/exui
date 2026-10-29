@@ -1,6 +1,6 @@
 # 公共包的入口与构建边界
 
-最后更新：2026-10-16
+最后更新：2026-10-28
 
 ## 源码布局
 
@@ -29,7 +29,7 @@ packages/components/
 
 ## 公开入口
 
-`exports` 显式列出六个入口，不使用通配符：
+`exports` 显式列出组件、Token、主题及图标集合入口；仅 SVG 资源使用限定在图标集内的路径模式：
 
 | 入口 | 产物 | 契约 |
 | --- | --- | --- |
@@ -39,6 +39,10 @@ packages/components/
 | `@exre/exui/tokens/style.css` | `dist/tokens/style.css` | 仅 Token 变量，保留三套主题 |
 | `@exre/exui/tokens/font.css` | `dist/tokens/font.css` | 可选字体，资源可解析 |
 | `@exre/exui/docs/theme.css` | `dist/docs/theme.css` | 未预编译的三条固定顺序 `@import`；要求消费者自装 `fumadocs-ui`，包不声明任何依赖 |
+| `@exre/exui/icons/glass-icons` | `dist/icons/glass-icons/index.js` + `index.d.ts` | 独立 ESM React 图标集合，不引入主库或 CSS |
+| `@exre/exui/icons/glass-icons/*.svg` | 对应 SVG + `.svg.d.ts` | 透明静态资源，打包器解析为 URL |
+
+图标的私有源码、生成和复制所有权见 [Glass 图标](../icons/glass-icons.md)。
 
 React 与 React DOM 是**可选 peer**，范围 `>=19.0.0 <20`，`peerDependenciesMeta.optional` 为 `true`。包不会代装它们；tokens-only 消费者不需要它们。`@exre/exui/docs/theme.css` 面向消费者自己的 Fumadocs 安装，manifest 中不出现 `fumadocs-ui`，理由与边界见 [[components/03-docs-theme-subpath]]。入口形状与依赖排除由 `scripts/package-contract.mjs` 的 `requireExportsEntry` / `assertPublishableManifest` 逐项锁死，任何尝试改动都会在 `pnpm verify:pack` 阶段失败。
 

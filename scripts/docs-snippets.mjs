@@ -74,7 +74,8 @@ export function extractVerifiedModules(source, path) {
     const code = match[2].trim()
     if (!/^import\s/m.test(code) || !/^export\s/m.test(code)) throw new Error(`${path}: verify block must be a complete imported and exported module`)
     for (const specifier of code.matchAll(/(?:from\s*|import\s*)["']([^"']+)["']/g)) {
-      if (!new Set(["@exre/exui", "@exre/exui/style.css", "@exre/exui/tokens", "@exre/exui/tokens/style.css", "@exre/exui/tokens/font.css", "@exre/exui/docs/theme.css", "lucide-react", "react", "zod"]).has(specifier[1])) {
+      const publicIcon = specifier[1] === "@exre/exui/icons/glass-icons" || /^@exre\/exui\/icons\/glass-icons\/[a-z0-9]+(?:-[a-z0-9]+)*\.svg$/.test(specifier[1])
+      if (!publicIcon && !new Set(["@exre/exui", "@exre/exui/style.css", "@exre/exui/tokens", "@exre/exui/tokens/style.css", "@exre/exui/tokens/font.css", "@exre/exui/docs/theme.css", "lucide-react", "react", "zod"]).has(specifier[1])) {
         throw new Error(`${path}: unsupported import ${specifier[1]}`)
       }
     }
@@ -220,7 +221,9 @@ export async function verifySnippets(root = repoRoot) {
       const path = join(root, "packages/docs/content", page.locale, page.contentPath)
       const source = await readFile(path, "utf8")
       const modules = extractVerifiedModules(source, path)
-      const expectedModules = page.id === "getting-started/skills" ? 0 : 1
+      // Styles documents component styling, standalone React artwork and an
+      // asset URL separately; all three examples must remain type-checked.
+      const expectedModules = page.id === "getting-started/skills" ? 0 : page.id === "getting-started/styles" ? 3 : 1
       if (["getting-started", "tokens"].includes(page.group) && authoredGuideModules(source, path).length !== expectedModules) {
         throw new Error(`${path}: guide must contain exactly ${expectedModules} verified module(s)`)
       }

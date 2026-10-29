@@ -27,7 +27,7 @@
 
 ## Project Structure & Module Organization
 
-This repository is a private pnpm workspace for the ExUI visual foundation. `packages/tokens` is the private workspace where framework-neutral token sources are generated and validated; its artifacts ship through the public package's `@exre/exui/tokens` subpath and the workspace itself is never published. `packages/components` publishes the React 19 `@exre/exui` component library as the single public package, with public exports in `packages/components/src/index.ts`, shared styling in `packages/components/src/index.css`, and shadcn/ui primitives under `packages/components/src/components/ui`. `packages/docs` is a private React Router/Fumadocs static documentation site and may consume components only through the public `@exre/exui` package entries. Its `content/` directory holds English and Chinese pages; `src/showcase/` holds internal examples and legacy browser fixtures. Build output under package `dist/`, `types/`, and `packages/docs/build/` directories is generated and must not be edited by hand.
+This repository is a private pnpm workspace for the ExUI visual foundation. `packages/tokens` is the private workspace where framework-neutral token sources are generated and validated; its artifacts ship through the public package's `@exre/exui/tokens` subpath and the workspace itself is never published. `packages/icons` privately owns the canonical Glass SVGs and generates React icons for the public `@exre/exui/icons/glass-icons` entries; when changing its assets, runtime or build, read `.ai/architectures/icons/glass-icons.md`. `packages/components` publishes the React 19 `@exre/exui` component library as the single public package, with public exports in `packages/components/src/index.ts`, shared styling in `packages/components/src/index.css`, and shadcn/ui primitives under `packages/components/src/components/ui`. `packages/docs` is a private React Router/Fumadocs static documentation site and may consume components only through the public `@exre/exui` package entries. Its `content/` directory holds English and Chinese pages; `src/showcase/` holds internal examples and legacy browser fixtures. Build output under package `dist/`, `types/`, and `packages/docs/build/` directories is generated and must not be edited by hand.
 
 ## Documentation Locations
 
@@ -44,7 +44,7 @@ Use pnpm 11.9.0, as declared in `package.json`.
 - `pnpm check`: the single routine local validation entry; prepare the public library once and run lint, types, source consistency and fast Node/SSR regressions without Chromium.
 - `pnpm verify`: run the approved CI checks sequentially, including all Node regressions, desktop Chromium and both docs bases.
 - `pnpm verify:part <checks|docs-root|docs-prefix|visual|consumers>`: run one isolated CI group; PR and main CI run these five groups in parallel on Windows. Follow `TESTING.md` for execution timing and browser scope.
-- `pnpm typecheck`: run TypeScript checks across all three workspaces.
+- `pnpm typecheck`: check the workspace types and prepare public declarations, including icons.
 - `pnpm lint`: run Oxlint with React and TypeScript rules.
 - `pnpm build`: build Tokens, components, declarations, and the private static docs site in dependency order.
 - `pnpm test`: prepare the public library and run fast Node/SSR regressions independently; already included in `check`.

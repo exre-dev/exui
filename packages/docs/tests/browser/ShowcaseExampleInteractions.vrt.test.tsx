@@ -274,13 +274,18 @@ describe.skipIf(window.innerWidth < 1000)("adapted source example interactions",
     expect(grid.isConnected).toBe(true)
   })
 
-  it("sorts and selects real Data Grid rows", async () => {
+  // Each scene() reopens the components page, so one page load per test keeps
+  // the work inside the browser-mode test timeout on slower CI runners.
+  it("sorts real Data Grid rows", async () => {
     const sorted = await scene("data-grid", "c-data-grid-11")
     const header = sorted.querySelector<HTMLElement>('th[data-col-id="name"]')
     expect(header).not.toBeNull()
     const direction = header!.getAttribute("aria-sort")
     await within(header!, "button").click()
     await expect.poll(() => header!.getAttribute("aria-sort")).not.toBe(direction)
+  })
+
+  it("selects real Data Grid rows", async () => {
     const selected = await scene("data-grid", "c-data-grid-7")
     const firstRow = selected.querySelector<HTMLElement>("tbody tr[data-row-id]")
     expect(firstRow).not.toBeNull()

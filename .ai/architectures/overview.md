@@ -1,14 +1,15 @@
 # 跨模块总览
 
-最后更新：2026-10-16
+最后更新：2026-10-28
 
 ## 仓库形态
 
-仓库是一个私有 pnpm workspace，根目录本身是私有的编排层，永不发布。成员只有三个，各自承担一种角色：
+仓库是一个私有 pnpm workspace，根目录本身是私有的编排层，永不发布。四个成员各自承担一种角色：
 
 | 成员 | 包名 | 可见性 | 角色 |
 | --- | --- | --- | --- |
 | `packages/tokens` | `@exre/exui-tokens` | 私有 | Token 源、生成器与校验的构建位置 |
+| `packages/icons` | `@exre/exui-icons` | 私有 | Glass 图标 SVG 源码与 React 模块生成；产物复制进公共包 |
 | `packages/components` | `@exre/exui` | 公开 | 唯一的发布包，拥有组件根、`style.css` 与 tokens 子路径 |
 | `packages/docs` | `@exre/exui-docs` | 私有 | React Router/Fumadocs 静态文档站；示例经公开入口消费组件库 |
 
@@ -28,13 +29,15 @@ packages/components  (@exre/exui，唯一公开包)
 packages/docs  (私有；示例只 import @exre/exui 的公开入口)
 ```
 
+`packages/icons` 也是 `components` 的构建期上游，通过公共 `dist/icons/` 汇入同一发布包；不向 Token 或 docs 建立反向依赖。
+
 - `tokens` 不依赖任何人，其 JavaScript 入口无 React、DOM、存储、网络或全局 CSS 副作用。
-- `components` 对 tokens 只有**开发期工作区依赖**（`workspace:*`，位于 `devDependencies`）。打包后的产物不得引用内部包名，由 `assertPublishableManifest` 的 production 依赖字段检查保证。
+- `components` 对 tokens、icons 只有**开发期工作区依赖**（`workspace:*`，位于 `devDependencies`）。打包后的产物不得引用内部包名，由 `assertPublishableManifest` 的 production 依赖字段检查保证。
 - `docs` 依赖 `@exre/exui` 的 `workspace:*` 链接；示例只消费公开入口。原 Showcase 源码保留在 `packages/docs/src/showcase/` 作为夹具。
 
 ## 构建链
 
-根 `package.json` 的 `build` 脚本按依赖顺序串联三个成员：
+根 `package.json` 的 `build` 脚本按依赖顺序构建公共产物与文档；icons 的构建嵌入公共包的声明准备阶段：
 
 ```text
 tokens: build:js + build:cjs → generate-css → copy-css → validate
@@ -44,16 +47,18 @@ tokens: build:js + build:cjs → generate-css → copy-css → validate
            └─► docs: tsc 类型检查 → React Router/Vite 静态预渲染 (`build/client`)
 ```
 
-两个跨成员的产物移动点：
+跨成员的产物移动点：
 
 1. `packages/tokens/src/index.css` 不参与；`packages/components/src/index.css` 通过 `@import "@exre/exui-tokens/style.css"` 与 `font.css` 在**构建期**把 Token 变量与字体并进组件样式表，最终产出 `dist/index.css`。
 2. `packages/components/scripts/copy-tokens-dist.mjs` 在 Vite 清空 `dist/` **之后**把 tokens 的完整产物（ESM/CJS JavaScript、类型、`style.css`、`font.css` 及其声明）复制到 `dist/tokens/`。顺序不可交换，否则复制的产物会被清掉。
+3. `build:types` 末尾构建并复制 icons 到公共 `dist/icons/`；详情见 [Glass 图标产物](icons/glass-icons.md)。
 
 `typecheck` 与 `lint` 同样按成员逐个展开，`typecheck` 额外包含 `components` 的 `build:types`，因此声明整合阶段的失败会在类型检查阶段暴露。
 
 ## 模块文档
 
 - Token 生成与消费结构：`architectures/tokens/token-pipeline.md`
+- Glass 图标源码与产物：`architectures/icons/glass-icons.md`
 - 公共包的入口与构建边界：`architectures/components/public-surface.md`
 - 当前静态文档站与示例边界：`architectures/docs/site.md`
 - 原 Showcase 示例与测试夹具：`architectures/showcase/consumption.md`

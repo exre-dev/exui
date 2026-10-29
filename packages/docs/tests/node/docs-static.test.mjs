@@ -6,6 +6,18 @@ import { test } from 'node:test'
 import { buildStaticMapping, normalizeBase, normalizeDocsStatic } from '../../../../scripts/docs-static.mjs'
 import { assertDocumentLinks, assertExampleInventory } from '../integration/verify-docs-static.mjs'
 
+test('Icons landing pages have standalone HTML/data output in both deployment bases', () => {
+  for (const base of ['/', '/exui/']) {
+    const mapping = buildStaticMapping({ base, prerenderPaths: ['/en/docs/icons/', '/zh-CN/docs/icons/'] })
+    const prefix = base === '/' ? '' : 'exui/'
+    for (const locale of ['en', 'zh-CN']) {
+      assert.ok(mapping.some(entry => entry.source === `${prefix}${locale}/docs/icons/index.html` && entry.target === `${locale}/docs/icons/index.html`))
+      assert.ok(mapping.some(entry => entry.source === `${prefix}${locale}/docs/icons/_.data` && entry.target === `${locale}/docs/icons/_.data`))
+    }
+  }
+  assert.throws(() => buildStaticMapping({ prerenderPaths: ['/en/docs/icons-prototype/'] }), /Unexpected prerender route/)
+})
+
 test('rendered document links must resolve to static routes within the deployment base', () => {
   const routes = new Set(['/en/docs/components/button/', '/en/docs/tokens/density/'])
   for (const base of ['/', '/exui/']) {

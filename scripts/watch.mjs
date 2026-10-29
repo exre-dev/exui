@@ -119,6 +119,9 @@ export function watchLibrary({ root = process.cwd(), onBuild = () => {} } = {}) 
   watchDirectory("packages/tokens/scripts", "tokens");
   watchDirectory("packages/components/src", "components");
   watchDirectory("packages/components/scripts", "components");
+  watchDirectory("packages/icons/glass-icons", "components");
+  watchDirectory("packages/icons/src", "components");
+  watchDirectory("packages/icons/scripts", "components");
   console.log("Watching Token and component sources for rebuilds. Press Ctrl+C to stop.");
   scheduleBuild("tokens");
   return { ready, close };

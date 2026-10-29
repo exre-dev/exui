@@ -53,7 +53,7 @@ export function buildStaticMapping({ base = '/', prerenderPaths, publicFiles = [
       add(`${prefix}${relative}.data`, `${relative}.data`)
       continue
     }
-    if (relative && relative !== '404' && !/^(?:zh-CN|en)\/docs(?:\/(?:components|exui)|\/[a-z0-9-]+\/[a-z0-9-]+)?$|^examples\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(relative)) throw new Error(`Unexpected prerender route: ${route}`)
+    if (relative && relative !== '404' && !/^(?:zh-CN|en)\/docs(?:\/(?:components|exui|icons)|\/[a-z0-9-]+\/[a-z0-9-]+)?$|^examples\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(relative)) throw new Error(`Unexpected prerender route: ${route}`)
     const directory = relative ? `${relative}/` : ''
     add(`${prefix}${directory}index.html`, `${directory}index.html`)
     const data = relative ? `${relative}/_.data` : '_.data'

@@ -21,7 +21,7 @@ Family pages start with ExUI-native or ExUI-adapted notes where the installed AP
 
 1. **Choose** the component family in the [component directory](#component-directory); for a screen, read [compose](rules/compose.md) and state its regions, density and data states.
 2. **Read** [setup](references/exui/setup.md), the relevant rules below, and the selected component/example documents. Resolve exact symbol names through the [public export inventory](references/generated/component-exports.md).
-3. **Adapt** data and documented props while keeping the component's own geometry, focus behavior and motion. Import components only through `@exre/exui`.
+3. **Adapt** data and documented props while keeping the component's own geometry, focus behavior and motion. Import components only through public `@exre/exui` entries; colored Glass artwork uses `@exre/exui/icons/glass-icons`.
 4. **Check** [quality](rules/quality.md) and [anti-patterns](rules/anti-patterns.md). Report actual validation and any unverified behavior.
 
 Complete the loop only when every component used has a verified public import and every data region has the states the task needs.
@@ -35,7 +35,7 @@ Complete the loop only when every component used has a verified public import an
 | Reusing an upstream pattern or a docs example source link | [Adapting](rules/adapting.md), [workflow](rules/workflow.md) |
 | Compact Kanban cards and matching drag outlines | [Kanban composition](references/exui/kanban.md) |
 | Colors, status, charts | [Color](rules/color.md) |
-| Lucide icons and icon buttons | [Icons](rules/icons.md) |
+| Lucide icons, colored Glass icons and icon buttons | [Icons](rules/icons.md) |
 | Themes, density, sizing | [Theming](rules/theming.md), [theme usage](references/exui/theme-usage.md), [scaling](references/exui/scaling.md) |
 | Configured/composed forms, object lists, steps | [Form](references/exui/form.md) |
 | Standalone settings rows, display fields and explicit labels | [Field layout](references/exui/field-layout.md) |

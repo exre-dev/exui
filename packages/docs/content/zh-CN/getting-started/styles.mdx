@@ -16,3 +16,25 @@ export function StyledStatus() {
   return <Badge>已就绪</Badge>
 }
 ```
+
+## Glass 图标
+
+从专用入口导入彩色 Glass 图标，需要 React 19，但不需要 ExUI 样式表。图标默认宽高为 `8rem`，保留自身颜色和透明背景。数字 `size` 以像素为单位，字符串、SVG 宽高属性或 CSS 可以覆盖默认尺寸。没有标签的图标默认为装饰用途；有意义的图标可以使用 `title` 或 ARIA 标签。渐变和滤镜的内部 ID 在每个 React 实例中隔离，SSR 也适用。
+
+```tsx verify
+import { CameraIcon, HeartIcon } from "@exre/exui/icons/glass-icons"
+
+export function GlassArtwork() {
+  return <div><CameraIcon title="Camera" /><HeartIcon size="4rem" aria-label="Favorites" /></div>
+}
+```
+
+打包器也可以直接加载 SVG 资源。文件名采用小写短横线格式，例如 `camera.svg`、`paper-plus.svg` 和 `arrow-02.svg`。标准 SVG 滤镜保留图标自身图层之间的模糊效果，不会动态模糊宿主页面。图标资源随 `@exre/exui` 一同发布，无需单独安装图标包。
+
+```tsx verify
+import cameraUrl from "@exre/exui/icons/glass-icons/camera.svg"
+
+export function CameraImage() {
+  return <img src={cameraUrl} width={128} height={128} alt="Camera" />
+}
+```

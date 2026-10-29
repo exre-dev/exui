@@ -1,6 +1,6 @@
 # ExUI 仓库知识库
 
-最后更新：2026-10-19
+最后更新：2026-10-28
 
 本目录记录 ExUI 仓库中**不能直接从源码读出来**的知识：系统边界与依赖方向、已被接受的技术决策及其理由、以及只有在真实运行或 CI 中才会暴露的约束。已落地行为以源码和运行证据为准；已批准但尚未实施的设计只放在标明“待实现”的决策记录中，不能当作当前行为。这些结论来自仓库证据或已批准设计，不包含未被接受的推测。
 
@@ -13,6 +13,7 @@
 | 模块 | 覆盖范围 |
 | --- | --- |
 | `tokens` | `packages/tokens`：私有工作区 `@exre/exui-tokens`，框架中立的 Token 源、生成器与校验 |
+| `icons` | `packages/icons`：私有工作区 `@exre/exui-icons`，Glass SVG 源码及 React 图标生成，产物通过公开包子路径发布 |
 | `components` | `packages/components`：唯一公开发布包 `@exre/exui`，React 19、固定 ReUI 源及 ExUI 适配、公开入口与子路径 |
 | `docs` | `packages/docs`：私有 React Router/Fumadocs 静态文档站，维护双语内容、静态分享和新站浏览器验证 |
 | `showcase` | `packages/docs/src/showcase`：共享示例；浏览器回归与专用夹具位于 `packages/docs/tests/browser`，相关决策与复审记录保留原模块名 |
@@ -50,6 +51,8 @@
 决策记录引用格式为 `[[<模块>/<NN>-<kebab-title>]]`，不使用裸编号。编号在模块内从 `01` 开始，模块内不复用。
 
 ## 主要证据来源
+
+Glass 图标的私有源码、公共子路径、透明背景模糊合成与实例 ID 隔离见 [`architectures/icons/glass-icons.md`](architectures/icons/glass-icons.md)。
 
 ButtonGroup 的内侧圆角和共享边框可能被应用样式层覆盖，文字段 slot 还影响 Select 隐藏控件旁的末段识别，见 [`knowledge/components/button-group-seams.md`](knowledge/components/button-group-seams.md)。
 
