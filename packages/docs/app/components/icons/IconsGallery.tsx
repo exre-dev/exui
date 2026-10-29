@@ -12,21 +12,25 @@ const swatches: Record<GlassIconColor, string> = { blue: "#477FFF", green: "#26A
 
 function useCopyFeedback(text: string) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  const request = useRef(0)
-  useEffect(() => () => { request.current++; clearTimeout(timer.current) }, [])
+  const lifecycle = useRef({ request: 0, timer: undefined as ReturnType<typeof setTimeout> | undefined })
+  useEffect(() => {
+    const state = lifecycle.current
+    setStatus("idle")
+    return () => { state.request++; clearTimeout(state.timer) }
+  }, [text])
   async function copy() {
-    const current = ++request.current
-    clearTimeout(timer.current)
+    const state = lifecycle.current
+    const current = ++state.request
+    clearTimeout(state.timer)
     try {
       await navigator.clipboard.writeText(text)
-      if (current !== request.current) return
+      if (current !== state.request) return
       setStatus("success")
     } catch {
-      if (current !== request.current) return
+      if (current !== state.request) return
       setStatus("error")
     }
-    timer.current = setTimeout(() => setStatus("idle"), 1600)
+    state.timer = setTimeout(() => setStatus("idle"), 1600)
   }
   return { status, copy }
 }

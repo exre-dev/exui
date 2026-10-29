@@ -48,6 +48,8 @@ Glass 侧栏的折叠分组使用 `overflow: hidden`，会裁切菜单项外扩�
 
 全部图标随静态 HTML 输出。卡片图案打开详情，标题复制完整 React 导出名；这两个操作使用同级按钮，避免嵌套交互控件。卡片不展示 SVG 文件名，但搜索继续匹配资源名。详情使用公共 Sheet，关闭后恢复预览按钮焦点，标题与代码复制提供成功或失败反馈。页面控件和强调色使用站点 `primary`/`ring` 主题变量，图标的预设配色独立于界面主题。浏览器回归见 `tests/browser/DocsIcons.vrt.test.tsx`；路径、入口顺序及双部署前缀的静态映射见 `tests/node/docs-content.test.mjs` 和 `docs-static.test.mjs`。原型比较代码不属于正式路由。
 
+复制反馈归属于当前文本。切换配色造成用法代码变化时，已完成的反馈被重置，旧请求及其计时器失效；旧 Clipboard 请求随后成功或失败都不能更新新文本的反馈。失效处理只控制界面反馈，不撤回已经交给浏览器的剪贴板写入。
+
 ## ExUI 公开差异的文档边界
 
 公开导出索引只能证明名称存在，不能证明使用者能在组件家族页找到对应说明。`packages/docs/exui/capabilities.json` 将经源码核查的 ExUI 新增能力和适配差异关联到公开符号、实现证据、文档页、skill 家族、示例与共享指南；同目录的双语片段是这些差异说明的维护源。`scripts/exui-capabilities.mjs` 只更新文档中的有界生成段；`scripts/exui-skill/sync-references.mjs` 将英文说明合入 skill 家族参考页，后面继续保留上游模式资料。两种输出不以复制后手工编辑的方式维护。

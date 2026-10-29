@@ -24,6 +24,8 @@ For a monochrome brand SVG, use an alpha mask with `background-color: currentCol
 
 Browse the docs Icons page at `/<locale>/docs/icons/`, directly below All components in the sidebar. Select a card's artwork to preview it, or its title to copy the complete component name, such as `CameraIcon`. Detail titles also copy the name. The solid color buttons in each icon's details preview its preset palette and update the copied React code; Original restores its canonical colors. The details also provide import examples and canonical SVG downloads. Prefix the route with the docs deployment base when applicable.
 
+Changing a preset clears feedback for the previous usage snippet. Select Copy usage again to copy the updated code.
+
 For colored glass illustrations, use named imports from `@exre/exui/icons/glass-icons`. This entry needs React 19 and no ExUI stylesheet. It shares the ExUI package/version; do not install a separate icons package.
 
 ```tsx
