@@ -1,5 +1,12 @@
 # @exre/exui
 
+## 1.3.0
+
+### Minor Changes
+
+- 24b4843: Add 50 transparent glass icons as SVG assets and React components under `@exre/exui/icons/glass-icons`, with scalable 8rem defaults, accessible labels and isolated instance filters.
+- 24b4843: Add per-instance glass icon color presets with `blue`, `green`, `purple`, `pink`, `coral` and `orange` values. Presets recolor gradients, glass tint and shadows while preserving the original material. Omitted colors and standalone SVG assets retain their original artwork.
+
 ## 1.2.0
 
 ### Minor Changes
